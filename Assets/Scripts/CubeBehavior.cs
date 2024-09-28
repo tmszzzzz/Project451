@@ -56,7 +56,7 @@ public class CubeBehavior : MonoBehaviour
         else if (Influence >= properties.exposeThreshold) return Properties.StateEnum.EXPOSED;
         else if (properties.state == Properties.StateEnum.NORMAL && Influence >= properties.awakeThreshold) return Properties.StateEnum.AWAKENED;
         else if (properties.state >= Properties.StateEnum.AWAKENED && Influence <= properties.supressThreshold) return Properties.StateEnum.NORMAL; 
-        else return properties.state;
+        else return (int)properties.state > 2 ? properties.state - 1 : properties.state;
         
     }
     public void SetState(Properties.StateEnum stateEnum)
