@@ -6,8 +6,6 @@ using UnityEngine;
 public class CubeBehavior : MonoBehaviour
 {
     public Properties properties;
-    public int posX;
-    public int posY;
     private Renderer objRenderer;
     private Dictionary<int, Color> ColorMap;
     // Start is called before the first frame update
@@ -44,19 +42,20 @@ public class CubeBehavior : MonoBehaviour
             Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
             return Properties.StateEnum.DEAD;
         }
-        List<GameObject> nList = cb.GetNeighbors(posX, posY);
+        List<GameObject> nList = cb.GetNeighbors(gameObject);
         int Influence = 0;
         foreach(GameObject go in nList)
         {
             CubeBehavior cub = go.GetComponent<CubeBehavior>();
             if (cub != null) Influence += cub.properties.state > 0 ? cub.properties.influence : 0;
+            if (cub != null) Influence -= cub.properties.state < 0 ? 2 * cub.properties.influence : 0;
         }
         //Debug.Log(2);
         if (properties.state == Properties.StateEnum.DEAD) return Properties.StateEnum.DEAD;
         else if (Influence >= properties.exposeThreshold) return Properties.StateEnum.EXPOSED;
         else if (properties.state == Properties.StateEnum.NORMAL && Influence >= properties.awakeThreshold) return Properties.StateEnum.AWAKENED;
         else if (properties.state >= Properties.StateEnum.AWAKENED && Influence <= properties.supressThreshold) return Properties.StateEnum.NORMAL; 
-        else return (int)properties.state > 2 ? properties.state - 1 : properties.state;
+        else return (int)properties.state > 1 ? properties.state - 1 : properties.state;
         
     }
     public void SetState(Properties.StateEnum stateEnum)
