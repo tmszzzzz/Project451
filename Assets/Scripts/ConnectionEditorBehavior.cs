@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Connection : MonoBehaviour
+public class ConnectionEditorBehavior : MonoBehaviour
 {
     public GameObject startNode;
     public GameObject endNode;

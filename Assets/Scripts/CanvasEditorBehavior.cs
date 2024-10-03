@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CanvasBehavior : MonoBehaviour
+public class CanvasEditorBehavior : MonoBehaviour
 {
     // A 2D array to store references to all Cube objects
     public GameObject cubePrefab;
@@ -53,7 +53,7 @@ public class CanvasBehavior : MonoBehaviour
         for (int i = 0; i < connectionList.Count; i++)
         {
             GameObject connectionObj = connectionList[i];
-            Connection connectionScript = connectionObj.GetComponent<Connection>();
+            ConnectionEditorBehavior connectionScript = connectionObj.GetComponent<ConnectionEditorBehavior>();
 
             if (connectionScript != null)
             {
@@ -141,7 +141,7 @@ public class CanvasBehavior : MonoBehaviour
                 if (connection.startNodeId < cubeList.Count && connection.endNodeId < cubeList.Count)
                 {
                     GameObject connectionObj = Instantiate(connectionPrefab, transform);
-                    Connection connectionScript = connectionObj.GetComponent<Connection>();
+                    ConnectionEditorBehavior connectionScript = connectionObj.GetComponent<ConnectionEditorBehavior>();
 
                     if (connectionScript != null)
                     {
@@ -190,14 +190,14 @@ public class CanvasBehavior : MonoBehaviour
             // 发射射线，检测是否点击到物体
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.GetComponent<CubeBehavior>() != null)
+                if (hit.collider.GetComponent<CubeEditorBehavior>() != null)
                 {
                     cubeList.Remove(hit.collider.gameObject);
                     Destroy(hit.collider.gameObject);
                     List<GameObject> toDelete = new List<GameObject>();
                     foreach(GameObject go in connectionList)
                     {
-                        if (go.GetComponent<Connection>().startNode == hit.collider.gameObject || go.GetComponent<Connection>().endNode == hit.collider.gameObject)
+                        if (go.GetComponent<ConnectionEditorBehavior>().startNode == hit.collider.gameObject || go.GetComponent<ConnectionEditorBehavior>().endNode == hit.collider.gameObject)
                         {
                             toDelete.Add(go);
                         }
@@ -217,7 +217,7 @@ public class CanvasBehavior : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.collider.GetComponent<CubeBehavior>() != null)
+                    if (hit.collider.GetComponent<CubeEditorBehavior>() != null)
                     {
                         connectionCreating.Add(hit.collider.gameObject);
                         if (connectionCreating.Count > 1)
@@ -240,7 +240,7 @@ public class CanvasBehavior : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
-                    if (hit.collider.GetComponent<CubeBehavior>() != null)
+                    if (hit.collider.GetComponent<CubeEditorBehavior>() != null)
                     {
                         connectionCreating.Add(hit.collider.gameObject);
                         if (connectionCreating.Count > 1)
@@ -248,8 +248,8 @@ public class CanvasBehavior : MonoBehaviour
                             if (connectionCreating[0] != connectionCreating[1] && ConnectionExist(connectionCreating[0], connectionCreating[1]) == null)
                             {
                                 GameObject connection = Instantiate(connectionPrefab, Vector3.zero, Quaternion.Euler(Vector3.zero), gameObject.transform);
-                                connection.GetComponent<Connection>().startNode = connectionCreating[0];
-                                connection.GetComponent<Connection>().endNode = connectionCreating[1];
+                                connection.GetComponent<ConnectionEditorBehavior>().startNode = connectionCreating[0];
+                                connection.GetComponent<ConnectionEditorBehavior>().endNode = connectionCreating[1];
                                 connectionList.Add(connection);
                                 Debug.Log("Created connection.");
                             }
@@ -295,7 +295,7 @@ public class CanvasBehavior : MonoBehaviour
     {
         foreach(GameObject go in connectionList)
         {
-            Connection script = go.GetComponent<Connection>();
+            ConnectionEditorBehavior script = go.GetComponent<ConnectionEditorBehavior>();
             if ((script.startNode == g1 && script.endNode == g2) || (script.startNode == g2 && script.endNode == g1))
             {
                 return go;

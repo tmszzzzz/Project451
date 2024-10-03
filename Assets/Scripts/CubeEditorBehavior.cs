@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CubeBehavior : MonoBehaviour
+public class CubeEditorBehavior : MonoBehaviour
 {
     public Properties properties;
     private Renderer objRenderer;
@@ -34,9 +34,10 @@ public class CubeBehavior : MonoBehaviour
         objRenderer.material.color = ColorMap[(int)properties.state];
     }
 
-    public Properties.StateEnum RefreshState()
-    {
-        CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
+    //public Properties.StateEnum RefreshState()
+    //{
+        /*
+        CanvasEditorBehavior cb = transform.parent.GetComponent<CanvasEditorBehavior>();
         if(cb == null)
         {
             Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
@@ -46,7 +47,7 @@ public class CubeBehavior : MonoBehaviour
         int Influence = 0;
         foreach(GameObject go in nList)
         {
-            CubeBehavior cub = go.GetComponent<CubeBehavior>();
+            CubeEditorBehavior cub = go.GetComponent<CubeEditorBehavior>();
             if (cub != null) Influence += cub.properties.state > 0 ? cub.properties.influence : 0;
             if (cub != null) Influence -= cub.properties.state < 0 ? 2 * cub.properties.influence : 0;
         }
@@ -56,8 +57,8 @@ public class CubeBehavior : MonoBehaviour
         else if (properties.state == Properties.StateEnum.NORMAL && Influence >= properties.awakeThreshold) return Properties.StateEnum.AWAKENED;
         else if (properties.state >= Properties.StateEnum.AWAKENED && Influence <= properties.supressThreshold) return Properties.StateEnum.NORMAL; 
         else return (int)properties.state > 1 ? properties.state - 1 : properties.state;
-        
-    }
+        */
+    //}
     public void SetState(Properties.StateEnum stateEnum)
     {
         properties.state = stateEnum;

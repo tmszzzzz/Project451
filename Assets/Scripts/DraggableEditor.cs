@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Draggable : MonoBehaviour
+public class DraggableEditor : MonoBehaviour
 {
     private Vector3 offset;
     private Camera cam;
