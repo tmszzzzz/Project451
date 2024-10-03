@@ -5,6 +5,7 @@ using System.Drawing;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CanvasEditorBehavior : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class CanvasEditorBehavior : MonoBehaviour
     private List<GameObject> connectionCreating;
     public bool cubeDelete = false;
     public bool connectionDelete = false;
+    public int uniqueId = 0;
 
 
     public void SavePositions()
@@ -37,7 +39,7 @@ public class CanvasEditorBehavior : MonoBehaviour
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
         string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // 添加时间戳到文件名
         System.IO.File.WriteAllText(saveFilePath, json);*/
-        List<PositionData> positions = new List<PositionData>();
+        List<NodeData> positions = new List<NodeData>();
         List<ConnectionData> connections = new List<ConnectionData>();
 
         // 保存位置数据
@@ -45,7 +47,11 @@ public class CanvasEditorBehavior : MonoBehaviour
         {
             GameObject obj = cubeList[i];
             float[] f = { obj.transform.position.x, obj.transform.position.y, obj.transform.position.z };
-            PositionData data = new PositionData(i, f);
+            CubeEditorBehavior cubeBehavior = obj.GetComponent<CubeEditorBehavior>();
+            Properties properties = cubeBehavior != null ? cubeBehavior.properties : null; 
+
+            NodeData data = new NodeData(i, f, properties);
+
             positions.Add(data);
         }
 
@@ -84,14 +90,22 @@ public class CanvasEditorBehavior : MonoBehaviour
     }
 
     [System.Serializable]
-    public class PositionData
+    public class NodeData
     {
+        //存储cube时使用
         public int id;
         public float[] position;
-        public PositionData(int id, float[] position)
+        public Properties properties;
+        public NodeData(int id, float[] position, Properties properties = null)
         {
             this.id = id;
             this.position = new float[] { position[0], position[1], position[2] };
+            this.properties = properties ?? new Properties
+            {
+                awakeThreshold = 0, // default
+                exposeThreshold = 0, // default
+                maximumBooks = 0 // default
+            };
         }
 
         public Vector3 GetVector3Position()
@@ -103,6 +117,7 @@ public class CanvasEditorBehavior : MonoBehaviour
     [System.Serializable]
     public class ConnectionData
     {
+        //存储connection时使用
         public int startNodeId;
         public int endNodeId;
 
@@ -116,7 +131,8 @@ public class CanvasEditorBehavior : MonoBehaviour
     [System.Serializable]
     public class ConfigurationData
     {
-        public List<PositionData> positions;
+        //读取时使用
+        public List<NodeData> positions;
         public List<ConnectionData> connections;
     }
 
@@ -128,10 +144,24 @@ public class CanvasEditorBehavior : MonoBehaviour
             ConfigurationData configData = JsonConvert.DeserializeObject<ConfigurationData>(json);
 
             // 实例化节点
-            foreach (PositionData position in configData.positions)
+            foreach (NodeData position in configData.positions)
             {
                 GameObject node = Instantiate(cubePrefab, position.GetVector3Position(), Quaternion.identity, transform);
                 node.name = $"Node_{position.id}"; // 为节点命名
+                uniqueId++;
+                CubeEditorBehavior cubeBehavior = node.GetComponent<CubeEditorBehavior>();
+                if (cubeBehavior != null)
+                {
+                    Properties loadedProperties = position.properties ?? new Properties();
+
+                    // 如果字段为默认值，则填充默认值
+                    cubeBehavior.properties = new Properties
+                    {
+                        awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
+                        exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
+                        maximumBooks = loadedProperties.maximumBooks != 0 ? loadedProperties.maximumBooks : 0
+                    };
+                }
                 cubeList.Add(node);
             }
 
@@ -289,7 +319,10 @@ public class CanvasEditorBehavior : MonoBehaviour
         {
             point = ray.GetPoint(enter);
         }
-        cubeList.Add(Instantiate(cubePrefab, point, Quaternion.Euler(Vector3.zero), gameObject.transform));
+        GameObject newNode = Instantiate(cubePrefab, point, Quaternion.Euler(Vector3.zero), gameObject.transform);
+        newNode.name = $"Node_{uniqueId++}";
+        cubeList.Add(newNode);
+
     }
     public GameObject ConnectionExist(GameObject g1,GameObject g2)
     {

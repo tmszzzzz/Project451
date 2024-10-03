@@ -7,11 +7,11 @@ using UnityEngine;
 public class Properties
 {
    
-    public enum StateEnum
-    {
-        DEAD=-1, NORMAL=0, AWAKENED=1, EXPOSED=2
-    }
-    public StateEnum state;
+    //public enum StateEnum
+    //{
+    //    DEAD=-1, NORMAL=0, AWAKENED=1, EXPOSED=2
+    //}
+    //public StateEnum state;
     //public int influence;
     public int awakeThreshold;
     public int exposeThreshold;

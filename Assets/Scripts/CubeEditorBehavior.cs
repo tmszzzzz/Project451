@@ -8,6 +8,7 @@ public class CubeEditorBehavior : MonoBehaviour
     public Properties properties;
     private Renderer objRenderer;
     private Dictionary<int, Color> ColorMap;
+    public bool selected;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,16 +23,16 @@ public class CubeEditorBehavior : MonoBehaviour
         ColorMap.Add(2, Color.red);
     }
 
-    public void OnObjectClicked()
-    {
-        if (properties.state != Properties.StateEnum.EXPOSED) properties.state++;
-        else properties.state = Properties.StateEnum.DEAD;
-    }
+    //public void OnObjectClicked()
+    //{
+    //    if (properties.state != Properties.StateEnum.EXPOSED) properties.state++;
+    //    else properties.state = Properties.StateEnum.DEAD;
+    //}
 
     // Update is called once per frame
     void Update()
     {
-        objRenderer.material.color = ColorMap[(int)properties.state];
+        objRenderer.material.color = selected ? Color.red : Color.white;
     }
 
     //public Properties.StateEnum RefreshState()
@@ -59,8 +60,8 @@ public class CubeEditorBehavior : MonoBehaviour
         else return (int)properties.state > 1 ? properties.state - 1 : properties.state;
         */
     //}
-    public void SetState(Properties.StateEnum stateEnum)
-    {
-        properties.state = stateEnum;
-    }
+    //public void SetState(Properties.StateEnum stateEnum)
+    //{
+    //    properties.state = stateEnum;
+    //}
 }

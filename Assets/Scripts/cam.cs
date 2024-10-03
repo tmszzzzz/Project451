@@ -26,7 +26,10 @@ public class OrthographicCameraController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal"); // A/D 或 左/右箭头
         float vertical = Input.GetAxis("Vertical");     // W/S 或 上/下箭头
 
-        Vector3 move = new Vector3(horizontal, 0, vertical) * moveSpeed * Time.deltaTime;
+        Vector3 f = new(transform.forward.x, 0, transform.forward.z);
+        Vector3 r = new(transform.right.x, 0, transform.right.z);
+
+        Vector3 move = (vertical * f.normalized + horizontal * r.normalized) * moveSpeed * Time.deltaTime;
         transform.position += move;
     }
 
