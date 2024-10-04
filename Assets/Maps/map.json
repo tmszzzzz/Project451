@@ -1,0 +1,235 @@
+{
+  "positions": [
+    {
+      "id": 0,
+      "position": [
+        8.717222,
+        0.0,
+        9.841189
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 1,
+      "position": [
+        15.3889132,
+        0.0,
+        2.6951952
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 2,
+      "position": [
+        11.9432249,
+        0.0,
+        12.5103912
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 3,
+      "position": [
+        0.5989704,
+        0.0,
+        17.2538853
+      ],
+      "properties": {
+        "awakeThreshold": 17,
+        "exposeThreshold": 1,
+        "maximumBooks": 1
+      }
+    },
+    {
+      "id": 4,
+      "position": [
+        7.92404461,
+        0.0,
+        0.0338425636
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 5,
+      "position": [
+        24.5201454,
+        0.0,
+        -6.0399394
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 6,
+      "position": [
+        33.3929749,
+        0.0,
+        7.918548
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 7,
+      "position": [
+        23.0120049,
+        0.0,
+        24.2176723
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 8,
+      "position": [
+        0.6980095,
+        0.0,
+        -3.24183464
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 9,
+      "position": [
+        13.1607122,
+        0.0,
+        -11.9268856
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 10,
+      "position": [
+        4.635833,
+        0.0,
+        -15.6472445
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 11,
+      "position": [
+        35.9973755,
+        0.0,
+        -14.0468769
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    },
+    {
+      "id": 12,
+      "position": [
+        51.6409836,
+        0.0,
+        -19.1036911
+      ],
+      "properties": {
+        "awakeThreshold": 0,
+        "exposeThreshold": 0,
+        "maximumBooks": 0
+      }
+    }
+  ],
+  "connections": [
+    {
+      "startNodeId": 0,
+      "endNodeId": 1
+    },
+    {
+      "startNodeId": 2,
+      "endNodeId": 0
+    },
+    {
+      "startNodeId": 7,
+      "endNodeId": 6
+    },
+    {
+      "startNodeId": 5,
+      "endNodeId": 6
+    },
+    {
+      "startNodeId": 3,
+      "endNodeId": 4
+    },
+    {
+      "startNodeId": 4,
+      "endNodeId": 5
+    },
+    {
+      "startNodeId": 4,
+      "endNodeId": 0
+    },
+    {
+      "startNodeId": 1,
+      "endNodeId": 4
+    },
+    {
+      "startNodeId": 1,
+      "endNodeId": 5
+    },
+    {
+      "startNodeId": 3,
+      "endNodeId": 0
+    },
+    {
+      "startNodeId": 4,
+      "endNodeId": 8
+    },
+    {
+      "startNodeId": 4,
+      "endNodeId": 9
+    },
+    {
+      "startNodeId": 9,
+      "endNodeId": 10
+    },
+    {
+      "startNodeId": 8,
+      "endNodeId": 10
+    },
+    {
+      "startNodeId": 2,
+      "endNodeId": 11
+    }
+  ]
+}
