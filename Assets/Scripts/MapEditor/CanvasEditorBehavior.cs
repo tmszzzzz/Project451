@@ -48,7 +48,7 @@ public class CanvasEditorBehavior : MonoBehaviour
             GameObject obj = cubeList[i];
             float[] f = { obj.transform.position.x, obj.transform.position.y, obj.transform.position.z };
             CubeEditorBehavior cubeBehavior = obj.GetComponent<CubeEditorBehavior>();
-            Properties properties = cubeBehavior != null ? cubeBehavior.properties : null; 
+            PropertiesEditor properties = cubeBehavior != null ? cubeBehavior.properties : null; 
 
             NodeData data = new NodeData(i, f, properties);
 
@@ -95,12 +95,12 @@ public class CanvasEditorBehavior : MonoBehaviour
         //存储cube时使用
         public int id;
         public float[] position;
-        public Properties properties;
-        public NodeData(int id, float[] position, Properties properties = null)
+        public PropertiesEditor properties;
+        public NodeData(int id, float[] position, PropertiesEditor properties = null)
         {
             this.id = id;
             this.position = new float[] { position[0], position[1], position[2] };
-            this.properties = properties ?? new Properties
+            this.properties = properties ?? new PropertiesEditor
             {
                 awakeThreshold = 0, // default
                 exposeThreshold = 0, // default
@@ -152,10 +152,10 @@ public class CanvasEditorBehavior : MonoBehaviour
                 CubeEditorBehavior cubeBehavior = node.GetComponent<CubeEditorBehavior>();
                 if (cubeBehavior != null)
                 {
-                    Properties loadedProperties = position.properties ?? new Properties();
+                    PropertiesEditor loadedProperties = position.properties ?? new PropertiesEditor();
 
                     // 如果字段为默认值，则填充默认值
-                    cubeBehavior.properties = new Properties
+                    cubeBehavior.properties = new PropertiesEditor
                     {
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,

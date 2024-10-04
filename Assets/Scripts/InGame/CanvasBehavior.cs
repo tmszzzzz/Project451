@@ -35,7 +35,8 @@ public class CanvasBehavior : MonoBehaviour
             {
                 awakeThreshold = 0, // default
                 exposeThreshold = 0, // default
-                maximumBooks = 0 // default
+                //NumOfBooks = 0,
+                maximumNumOfBooks = 0 // default
             };
         }
 
@@ -89,7 +90,8 @@ public class CanvasBehavior : MonoBehaviour
                     {
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
-                        maximumBooks = loadedProperties.maximumBooks != 0 ? loadedProperties.maximumBooks : 0
+                        //NumOfBooks = loadedProperties.NumOfBooks != 0 ? loadedProperties.NumOfBooks : 0,
+                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0
                     };
                 }
                 nodeList.Add(node);
@@ -124,6 +126,7 @@ public class CanvasBehavior : MonoBehaviour
         plane = new Plane(Vector3.up, Vector3.zero);
         nodeList = new List<GameObject>();
         connectionList = new List<GameObject>();
+        LoadConfiguration("Assets/Maps/map.json");
     }
 
     void Update()
@@ -136,7 +139,15 @@ public class CanvasBehavior : MonoBehaviour
     {
         List<GameObject> neighbors = new List<GameObject>();
 
-        //TODO
+        foreach(GameObject con in connectionList)
+        {
+            ConnectionBehavior conB = con.GetComponent<ConnectionBehavior>();
+            if (conB != null)
+            {
+                if (conB.startNode == node) neighbors.Add(conB.endNode);
+                if (conB.endNode == node) neighbors.Add(conB.startNode);
+            }
+        }
 
         return neighbors;
     }

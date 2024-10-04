@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CubeEditorBehavior : MonoBehaviour
 {
-    public Properties properties;
+    public PropertiesEditor properties;
     private Renderer objRenderer;
     private Dictionary<int, Color> ColorMap;
     public bool selected;

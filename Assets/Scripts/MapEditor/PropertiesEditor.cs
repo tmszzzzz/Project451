@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Properties
+public class PropertiesEditor
 {
    
     //public enum StateEnum

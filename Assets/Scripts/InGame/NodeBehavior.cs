@@ -32,34 +32,48 @@ public class NodeBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        objRenderer.material.color = selected ? Color.red : Color.white;
+        //objRenderer.material.color = selected ? Color.red : Color.white;
     }
 
-    //public Properties.StateEnum RefreshState()
-    //{
-    /*
-    CanvasEditorBehavior cb = transform.parent.GetComponent<CanvasEditorBehavior>();
-    if(cb == null)
+    private void OnMouseDown()
     {
-        Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
-        return Properties.StateEnum.DEAD;
+        RefreshState();
     }
-    List<GameObject> nList = cb.GetNeighbors(gameObject);
-    int Influence = 0;
-    foreach(GameObject go in nList)
+
+    public Properties.StateEnum RefreshState()
     {
-        CubeEditorBehavior cub = go.GetComponent<CubeEditorBehavior>();
-        if (cub != null) Influence += cub.properties.state > 0 ? cub.properties.influence : 0;
-        if (cub != null) Influence -= cub.properties.state < 0 ? 2 * cub.properties.influence : 0;
+
+        CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
+        if (cb == null)
+        {
+            Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
+            return Properties.StateEnum.DEAD;
+        }
+        List<GameObject> nList = cb.GetNeighbors(gameObject);
+
+        foreach(GameObject nb in nList)
+        {
+            Debug.Log(nb.name);
+        }
+
+        int AwakeInfluence = 0;
+        int ExposeInfluence = 0;
+        foreach (GameObject go in nList)
+        {
+            NodeBehavior cub = go.GetComponent<NodeBehavior>();
+            if (cub != null)
+            {
+                AwakeInfluence += cub.properties.state > 0 ? cub.properties.NumOfBooks + 1 : 0;
+                ExposeInfluence += (cub.properties.state > 0 || cub.properties.state == Properties.StateEnum.DEAD) ? cub.properties.NumOfBooks + 1 : 0;
+            }
+        }
+        //Debug.Log(2);
+        if (properties.state == Properties.StateEnum.DEAD) return (Properties.StateEnum)Mathf.Max((int)properties.state,(int)Properties.StateEnum.DEAD);
+        else if (ExposeInfluence >= properties.exposeThreshold) return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.EXPOSED);
+        else if (AwakeInfluence >= properties.awakeThreshold) return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.AWAKENED);
+        else return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL);
+        //真的要让状态不可逆吗？此处存疑
     }
-    //Debug.Log(2);
-    if (properties.state == Properties.StateEnum.DEAD) return Properties.StateEnum.DEAD;
-    else if (Influence >= properties.exposeThreshold) return Properties.StateEnum.EXPOSED;
-    else if (properties.state == Properties.StateEnum.NORMAL && Influence >= properties.awakeThreshold) return Properties.StateEnum.AWAKENED;
-    else if (properties.state >= Properties.StateEnum.AWAKENED && Influence <= properties.supressThreshold) return Properties.StateEnum.NORMAL; 
-    else return (int)properties.state > 1 ? properties.state - 1 : properties.state;
-    */
-    //}
     //public void SetState(Properties.StateEnum stateEnum)
     //{
     //    properties.state = stateEnum;

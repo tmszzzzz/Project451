@@ -32,7 +32,7 @@ public class NodeInfoDisplay : MonoBehaviour
             if (cubeBehavior != null)
             {
                 // 获取 Properties 数据并展示
-                Properties properties = cubeBehavior.properties;
+                PropertiesEditor properties = cubeBehavior.properties;
                 if (properties != null)
                 {
                     // 显示属性值
