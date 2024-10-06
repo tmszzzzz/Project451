@@ -1,0 +1,223 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using Newtonsoft.Json;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class CanvasBehavior : MonoBehaviour
+{
+    //public GameObject nodePrefab;
+    public List<GameObject> nodePrefabMap;
+    public GameObject connectionPrefab;
+    private Camera cam;
+    private Plane plane; // 用于定义水平面
+    [SerializeField]
+    private List<GameObject> nodeList;
+    public List<GameObject> GetNodeList()
+    {
+        return nodeList;
+    }
+    [SerializeField]
+    private List<GameObject> connectionList;
+    public List<GameObject> GetConnectionList()
+    {
+        return connectionList;
+    }
+    public GameObject Me;//用于指示玩家节点的对象引用，这里粗略地设定为id=0的节点，后续再改
+
+
+    
+    [System.Serializable]
+    public class NodeData
+    {
+        //node
+        public int id;
+        public float[] position;
+        public Properties properties;
+        public NodeData(int id, float[] position, Properties properties = null)
+        {
+            this.id = id;
+            this.position = new float[] { position[0], position[1], position[2] };
+            this.properties = properties ?? new Properties
+            {
+                awakeThreshold = 0, // default
+                exposeThreshold = 0, // default
+                //NumOfBooks = 0,
+                maximumNumOfBooks = 0 // default
+            };
+        }
+
+        public Vector3 GetVector3Position()
+        {
+            return new Vector3(position[0], position[1], position[2]);
+        }
+    }
+
+    [System.Serializable]
+    public class ConnectionData
+    {
+        //connection
+        public int startNodeId;
+        public int endNodeId;
+
+        public ConnectionData(int startId, int endId)
+        {
+            startNodeId = startId;
+            endNodeId = endId;
+        }
+    }
+
+    [System.Serializable]
+    public class ConfigurationData
+    {
+        //读取时使用
+        public List<NodeData> positions;
+        public List<ConnectionData> connections;
+    }
+
+    public void LoadConfiguration(string filePath)
+    {
+        if (System.IO.File.Exists(filePath))
+        {
+            string json = System.IO.File.ReadAllText(filePath);
+            ConfigurationData configData = JsonConvert.DeserializeObject<ConfigurationData>(json);
+
+            // 实例化节点
+            foreach (NodeData position in configData.positions)
+            {
+                GameObject node = Instantiate(nodePrefabMap[(int)position.properties.type], position.GetVector3Position(), Quaternion.identity, transform);
+                node.name = $"Node_{position.id}"; // 为节点命名
+                NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
+                if (nodeBehavior != null)
+                {
+                    Properties loadedProperties = position.properties ?? new Properties();
+
+                    // 如果字段为默认值，则填充默认值
+                    nodeBehavior.properties = new Properties
+                    {
+                        type = loadedProperties.type != 0 ? loadedProperties.type : 0,
+                        awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
+                        exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
+                        //NumOfBooks = loadedProperties.NumOfBooks != 0 ? loadedProperties.NumOfBooks : 0,
+                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0
+                    };
+                }
+                nodeList.Add(node);
+            }
+            Me = nodeList[0];
+            // 实例化连接
+            foreach (ConnectionData connection in configData.connections)
+            {
+                if (connection.startNodeId < nodeList.Count && connection.endNodeId < nodeList.Count)
+                {
+                    GameObject connectionObj = Instantiate(connectionPrefab, transform);
+                    ConnectionBehavior connectionScript = connectionObj.GetComponent<ConnectionBehavior>();
+
+                    if (connectionScript != null)
+                    {
+                        connectionScript.startNode = nodeList[connection.startNodeId];
+                        connectionScript.endNode = nodeList[connection.endNodeId];
+                    }
+                    connectionList.Add(connectionObj);
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError($"File not found: {filePath}");
+        }
+    }
+
+    public void Initialization()
+    {
+        //这里是一些需要初始化的信息
+        Me.GetComponent<NodeBehavior>().properties.numOfBooks = 1;
+    }
+
+    void Start()
+    {
+        cam = Camera.main;
+        plane = new Plane(Vector3.up, Vector3.zero);
+        nodeList = new List<GameObject>();
+        connectionList = new List<GameObject>();
+        LoadConfiguration("Assets/Maps/map.json");
+        Initialization();
+    }
+
+    void Update()
+    {
+        
+    }
+
+
+    public List<GameObject> GetNeighbors(GameObject node)
+    {
+        List<GameObject> neighbors = new List<GameObject>();
+
+        foreach(GameObject con in connectionList)
+        {
+            ConnectionBehavior conB = con.GetComponent<ConnectionBehavior>();
+            if (conB != null)
+            {
+                if (conB.startNode == node) neighbors.Add(conB.endNode);
+                if (conB.endNode == node) neighbors.Add(conB.startNode);
+            }
+        }
+
+        return neighbors;
+    }
+
+    public void RefreshAllNodes()
+    {
+        //Debug.Log(1);
+        // 第一步：收集所有节点的即将改变为的状态
+        Dictionary<GameObject, Properties.StateEnum> newStateMap = new Dictionary<GameObject, Properties.StateEnum>();
+
+        foreach (GameObject node in nodeList)
+        {
+            //Debug.Log(2);
+            NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
+
+            if (nodeBehavior != null)
+            {
+                // 收集每个节点的新状态
+                Properties.StateEnum newState = nodeBehavior.RefreshState();
+                newStateMap.Add(node, newState);
+            }
+            else
+            {
+                Debug.LogWarning("Missing script \"NodeBehavior\" in " + node.name);
+            }
+        }
+
+        // 第二步：统一应用所有节点的新状态
+        foreach (var entry in newStateMap)
+        {
+            GameObject node = entry.Key;
+            Properties.StateEnum newState = entry.Value;
+
+            NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
+
+            if (nodeBehavior != null)
+            {
+                // 应用新状态
+                nodeBehavior.SetState(newState);
+            }
+        }
+    }
+    public void SetNodeNumOfBooks(GameObject node,int v)
+    {
+        NodeBehavior nb = node.GetComponent<NodeBehavior>();
+        if (nb != null) nb.properties.numOfBooks = v;
+        else Debug.LogWarning("NodeBehavior script is null.");
+    }
+    public void AddNodeNumOfBooks(GameObject node, int v)
+    {
+        NodeBehavior nb = node.GetComponent<NodeBehavior>();
+        if (nb != null) nb.properties.numOfBooks += v;
+        else Debug.LogWarning("NodeBehavior script is null.");
+    }
+}

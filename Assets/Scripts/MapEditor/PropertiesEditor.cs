@@ -7,13 +7,13 @@ using UnityEngine;
 public class PropertiesEditor
 {
    
-    //public enum StateEnum
-    //{
-    //    DEAD=-1, NORMAL=0, AWAKENED=1, EXPOSED=2
-    //}
-    //public StateEnum state;
+    public enum typeEnum
+    {
+        NORMAL=0, FIREFIGHTER=1, BIBLIOFHILE=2
+    }
+    public typeEnum type;
     //public int influence;
     public int awakeThreshold;
     public int exposeThreshold;
-    public int maximumBooks;
+    public int maximumNumOfBooks;
 }

@@ -11,6 +11,7 @@ public class CanvasEditorBehavior : MonoBehaviour
 {
     // A 2D array to store references to all Cube objects
     public GameObject cubePrefab;
+    //public List<GameObject> cubePrefabMap;
     public GameObject connectionPrefab;
     private Camera cam;
     private Plane plane; // 用于定义水平面
@@ -25,20 +26,7 @@ public class CanvasEditorBehavior : MonoBehaviour
 
 
     public void SavePositions()
-    {/*
-        List<PositionData> positions = new List<PositionData>();
-
-        for (int i = 0; i < cubeList.Count; i++)
-        {
-            GameObject obj = cubeList[i];
-            PositionData data = new PositionData(i, obj.transform.position);
-            positions.Add(data);
-        }
-
-        string json = JsonConvert.SerializeObject(positions, Formatting.Indented);
-        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // 添加时间戳到文件名
-        System.IO.File.WriteAllText(saveFilePath, json);*/
+    {
         List<NodeData> positions = new List<NodeData>();
         List<ConnectionData> connections = new List<ConnectionData>();
 
@@ -102,9 +90,10 @@ public class CanvasEditorBehavior : MonoBehaviour
             this.position = new float[] { position[0], position[1], position[2] };
             this.properties = properties ?? new PropertiesEditor
             {
+                type = PropertiesEditor.typeEnum.NORMAL,
                 awakeThreshold = 0, // default
                 exposeThreshold = 0, // default
-                maximumBooks = 0 // default
+                maximumNumOfBooks = 0 // default
             };
         }
 
@@ -157,9 +146,10 @@ public class CanvasEditorBehavior : MonoBehaviour
                     // 如果字段为默认值，则填充默认值
                     cubeBehavior.properties = new PropertiesEditor
                     {
+                        type = (PropertiesEditor.typeEnum)(loadedProperties.type != 0 ? loadedProperties.type : 0),
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
-                        maximumBooks = loadedProperties.maximumBooks != 0 ? loadedProperties.maximumBooks : 0
+                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0
                     };
                 }
                 cubeList.Add(node);
@@ -291,39 +281,6 @@ public class CanvasEditorBehavior : MonoBehaviour
         }
     }
 
-    
-    public List<GameObject> GetNeighbors(GameObject cube)
-    {
-        List<GameObject> neighbors = new List<GameObject>();
-
-        //TODO
-
-        return neighbors;
-    }
-
-    // Method to refresh the state of all cubes
-    public void RefreshAllCubes()
-    {
-        //TODO
-    }
-    public void ResetAllCubes()
-    {
-        //TODO
-    }
-    public void CreateCubes()
-    {
-        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
-        float enter;
-        Vector3 point = Vector3.zero;
-        if (plane.Raycast(ray, out enter))
-        {
-            point = ray.GetPoint(enter);
-        }
-        GameObject newNode = Instantiate(cubePrefab, point, Quaternion.Euler(Vector3.zero), gameObject.transform);
-        newNode.name = $"Node_{uniqueId++}";
-        cubeList.Add(newNode);
-
-    }
     public GameObject ConnectionExist(GameObject g1,GameObject g2)
     {
         foreach(GameObject go in connectionList)

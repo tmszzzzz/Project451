@@ -13,8 +13,13 @@ public class Properties
     }
     public StateEnum state;
     //public int influence;
+    public enum typeEnum
+    {
+        NORMAL = 0, FIREFIGHTER = 1, BIBLIOFHILE = 2
+    }
+    public typeEnum type;
     public int awakeThreshold;
     public int exposeThreshold;
-    public int NumOfBooks = 0;
+    public int numOfBooks = 0;
     public int maximumNumOfBooks;
 }
