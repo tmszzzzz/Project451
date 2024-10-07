@@ -281,6 +281,20 @@ public class CanvasEditorBehavior : MonoBehaviour
         }
     }
 
+    public void CreateCubes()
+    {
+        Ray ray = cam.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        float enter;
+        Vector3 point = Vector3.zero;
+        if (plane.Raycast(ray, out enter))
+        {
+            point = ray.GetPoint(enter);
+        }
+        GameObject newNode = Instantiate(cubePrefab, point, Quaternion.Euler(Vector3.zero), gameObject.transform);
+        newNode.name = $"Node_{uniqueId++}";
+        cubeList.Add(newNode);
+
+    }
     public GameObject ConnectionExist(GameObject g1,GameObject g2)
     {
         foreach(GameObject go in connectionList)
