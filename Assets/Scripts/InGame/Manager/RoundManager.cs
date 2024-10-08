@@ -6,36 +6,36 @@ using UnityEngine.EventSystems;
 
 public class RoundManager : MonoBehaviour
 {
-    // µ¥ÀýÊµÀý
+    // ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
     public static RoundManager Instance { get; private set; }
     private Camera mainCamera;
-    public GameObject textPrefab; // Ö¸ÏòTextMeshProUIÔ¤ÖÆÌå
+    public GameObject textPrefab; // Ö¸ï¿½ï¿½TextMeshProUIÔ¤ï¿½ï¿½ï¿½ï¿½
     public MessageBar messageBar;
     public int roundNum = 1;
     public int allocated = 0;
     public int held = 0;
     public CanvasBehavior canvas;
-    public Canvas uiCanvas; // ÕâÊÇÄãµÄUI Canvas
+    public Canvas uiCanvas; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UI Canvas
     public Dictionary<GameObject, int> bookAllocationMap; //<node,value>
     private Dictionary<GameObject, GameObject> activeTextMap = new Dictionary<GameObject, GameObject>();
 
-    //ÒÔÏÂÊÇÊÂ¼þ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½
     public event Action OnRoundChange;
 
-    // ³¡¾°³õÊ¼»¯Ê±µ÷ÓÃ
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
     private void Awake()
     {
-        // Èç¹ûÒÑÓÐÊµÀýÇÒ²»ÊÇµ±Ç°ÊµÀý£¬Ïú»Ùµ±Ç°ÊµÀý£¬È·±£µ¥ÀýÎ¨Ò»ÐÔ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½ï¿½Ò²ï¿½ï¿½Çµï¿½Ç°Êµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ùµï¿½Ç°Êµï¿½ï¿½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î¨Ò»ï¿½ï¿½
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        // ½«µ±Ç°ÊµÀýÉèÎªµ¥ÀýÊµÀý
+        // ï¿½ï¿½ï¿½ï¿½Ç°Êµï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½Êµï¿½ï¿½
         Instance = this;
 
-        // Ñ¡Ôñ±£ÁôÕâ¸ö¶ÔÏó£¬Ê¹ÆäÔÚ³¡¾°ÇÐ»»Ê±²»»á±»Ïú»Ù
+        // Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½Ð»ï¿½Ê±ï¿½ï¿½ï¿½á±»ï¿½ï¿½ï¿½ï¿½
         DontDestroyOnLoad(gameObject);
     }
     private void Start()
@@ -49,25 +49,27 @@ public class RoundManager : MonoBehaviour
     }
     private void Update()
     {
-        // ¼ì²â×ó¼üµã»÷
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log("Left Click");
             BookAllocation(0);
         }
-        // ¼ì²âÓÒ¼üµã»÷
+        // ï¿½ï¿½ï¿½ï¿½Ò¼ï¿½ï¿½ï¿½ï¿½
         if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log("Right Click");
             BookAllocation(1);
         }
         BookTexts();
     }
     void BookAllocation(int mouseButton)
     {
-        // ´ÓÊó±êÎ»ÖÃ´´½¨ÉäÏß
+        // ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        // Èç¹ûÉäÏß»÷ÖÐÁËÎïÌå
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         if (Physics.Raycast(ray, out hit))
         {
             if (hit.collider != null)
@@ -137,7 +139,7 @@ public class RoundManager : MonoBehaviour
 
     private void BookTexts()
     {
-        // ±éÀúbookAllocationMapµÄËùÓÐÏî
+        // ï¿½ï¿½ï¿½ï¿½bookAllocationMapï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         foreach (var entry in bookAllocationMap)
         {
             GameObject node = entry.Key;
@@ -145,10 +147,10 @@ public class RoundManager : MonoBehaviour
 
             if (bookCount != 0)
             {
-                // Èç¹û¸ÃNodeµÄÎÄ±¾ÉÐÎ´Éú³É£¬ÔòÉú³ÉÖ®
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Nodeï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö®
                 if (!activeTextMap.ContainsKey(node))
                 {
-                    // ´´½¨²¢ÏÔÊ¾ÎÄ±¾
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Ä±ï¿½
                     GameObject textObj = Instantiate(textPrefab,node.transform.position,Quaternion.LookRotation(node.transform.position - Camera.main.transform.position), node.transform);
                     TextMeshPro textComponent = textObj.GetComponent<TextMeshPro>();
                     if (textComponent != null)
@@ -156,12 +158,12 @@ public class RoundManager : MonoBehaviour
                         textComponent.text = bookCount.ToString();
                     }
 
-                    // ´æ´¢µ±Ç°ÎÄ±¾¶ÔÏó
+                    // ï¿½æ´¢ï¿½ï¿½Ç°ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
                     activeTextMap[node] = textObj;
                 }
                 else
                 {
-                    // Èç¹ûÒÑ¾­ÓÐÎÄ±¾£¬¸üÐÂÎÄ±¾ÄÚÈÝ
+                    // ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½
                     TextMeshPro textComponent = activeTextMap[node].GetComponent<TextMeshPro>();
                     if (textComponent != null)
                     {
@@ -171,7 +173,7 @@ public class RoundManager : MonoBehaviour
             }
             else
             {
-                // Èç¹ûµ±Ç°µÄbookCountÎª0ÇÒÎÄ±¾ÕýÔÚÏÔÊ¾£¬ÔòÏú»ÙÎÄ±¾
+                // ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½bookCountÎª0ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä±ï¿½
                 if (activeTextMap.ContainsKey(node))
                 {
                     Destroy(activeTextMap[node]);

@@ -72,7 +72,7 @@ public class NodeBehavior : BaseNodeBehavior
         }
         else if (AwakeInfluence >= properties.awakeThreshold) return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.AWAKENED);
         else return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL);
-        //ÕæµÄÒªÈÃ×´Ì¬²»¿ÉÄæÂğ£¿´Ë´¦´æÒÉ
+        //ï¿½ï¿½ï¿½Òªï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ£¿´Ë´ï¿½ï¿½ï¿½ï¿½ï¿½
     }
     public override void SetState(Properties.StateEnum stateEnum)
     {
