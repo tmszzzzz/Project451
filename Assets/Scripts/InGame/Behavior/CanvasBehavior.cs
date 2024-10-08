@@ -28,8 +28,58 @@ public class CanvasBehavior : MonoBehaviour
     }
     public GameObject Me;//用于指示玩家节点的对象引用，这里粗略地设定为id=0的节点，后续再改
 
+    public void SavePositions()
+    {
+        List<NodeData> positions = new List<NodeData>();
+        List<ConnectionData> connections = new List<ConnectionData>();
 
-    
+        // 保存位置数据
+        for (int i = 0; i < nodeList.Count; i++)
+        {
+            GameObject obj = nodeList[i];
+            float[] f = { obj.transform.position.x, obj.transform.position.y, obj.transform.position.z };
+            NodeBehavior cubeBehavior = obj.GetComponent<NodeBehavior>();
+            Properties properties = cubeBehavior != null ? cubeBehavior.properties : null;
+
+            NodeData data = new NodeData(i, f, properties);
+
+            positions.Add(data);
+        }
+
+        // 保存连接数据
+        for (int i = 0; i < connectionList.Count; i++)
+        {
+            GameObject connectionObj = connectionList[i];
+            ConnectionBehavior connectionScript = connectionObj.GetComponent<ConnectionBehavior>();
+
+            if (connectionScript != null)
+            {
+                // 查找 startNode 和 endNode 的 ID
+                int startNodeId = nodeList.IndexOf(connectionScript.startNode);
+                int endNodeId = nodeList.IndexOf(connectionScript.endNode);
+
+                // 确保 ID 有效
+                if (startNodeId != -1 && endNodeId != -1)
+                {
+                    ConnectionData connectionData = new ConnectionData(startNodeId, endNodeId);
+                    connections.Add(connectionData);
+                }
+            }
+        }
+
+        // 序列化位置和连接数据
+        var combinedData = new
+        {
+            positions = positions,
+            connections = connections
+        };
+
+        string json = JsonConvert.SerializeObject(combinedData, Formatting.Indented);
+        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // 添加时间戳到文件名
+        System.IO.File.WriteAllText(saveFilePath, json);
+    }
+
     [System.Serializable]
     public class NodeData
     {
