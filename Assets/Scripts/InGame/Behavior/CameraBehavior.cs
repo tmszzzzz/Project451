@@ -2,26 +2,42 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
-    public float zoomSpeed = 2f;  // Ïà»úËõ·ÅËÙ¶È
-    public float minZoom = 2f;     // ×îÐ¡Ëõ·ÅÖµ
-    public float maxZoom = 1000f;    // ×î´óËõ·ÅÖµ
+    public float zoomSpeed = 5000f;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+    public float minZoom = 2f;     // ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Öµ
+    public float maxZoom = 1000f;    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 
     private Camera cam;
-    public float rotationSpeed = 50f; // Ðý×ªËÙ¶È
+    public float rotationSpeed = 50f; // ï¿½ï¿½×ªï¿½Ù¶ï¿½
+    public float moveSpeed = 50f;
 
     void HandleMovement()
     {
-        // »ñÈ¡Ë®Æ½ÊäÈë£¨A ºÍ D ¼ü£©
-        float horizontalInput = Input.GetAxis("Horizontal");
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        // ¼ÆËãÐý×ª½Ç¶È
-        float rotationAmount = horizontalInput * rotationSpeed * Time.deltaTime;
+        Vector3 f = new(transform.forward.x, 0, transform.forward.z);
+        Vector3 r = new(transform.right.x, 0, transform.right.z);
 
-        // Î§ÈÆÊÀ½ç¿Õ¼äÖÐµÄÔ­µã(0, 0, 0)½øÐÐÐý×ª£¬Î§ÈÆyÖá£¨Vector3.up£©
-        transform.RotateAround(Vector3.zero, Vector3.up, rotationAmount);
+        Vector3 move = (vertical * f.normalized + horizontal * r.normalized) * moveSpeed * Time.deltaTime;
+        transform.position += move;
+    }
 
-        // Ê¼ÖÕ±£³ÖÏà»ú³¯ÏòÔ­µã
-        transform.LookAt(Vector3.zero);
+    void HandleRotation()
+    {
+        float spin = Input.GetAxis("Spin Clockwise");
+        if (spin != 0)
+        {
+            // Calculate the point where the camera's center line collides with the 0-0 surface
+            Ray ray = new Ray(transform.position, transform.forward);
+            Plane plane = new Plane(Vector3.up, Vector3.zero);
+            if (plane.Raycast(ray, out float enter))
+            {
+            Vector3 hitPoint = ray.GetPoint(enter);
+
+            // Rotate the camera around the hit point
+            transform.RotateAround(hitPoint, Vector3.up, spin * rotationSpeed * Time.deltaTime);
+            }
+        }
     }
 
     void Start()
@@ -32,6 +48,7 @@ public class CameraBehavior : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        HandleRotation();
         HandleZoom();
     }
 
@@ -42,18 +59,12 @@ public class CameraBehavior : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            // Ïà»úÔÚÆäÇ°Ïò·½Ïò£¨zÖá£©ÉÏÒÆ¶¯
-            Vector3 forward = transform.forward;
-            Vector3 newPosition = transform.position + forward * scroll * zoomSpeed;
+            // Calculate new FOV
+            float newFOV = cam.fieldOfView - scroll * zoomSpeed;
+            newFOV = Mathf.Clamp(newFOV, minZoom, maxZoom);
 
-            // ¼ÆËãÏà»úÓëÄ¿±êµãÖ®¼äµÄ¾àÀë
-            float distance = Vector3.Distance(Vector3.zero, transform.position);
-
-            // ÏÞÖÆÏà»úµÄËõ·Å¾àÀë
-            if (distance >= minZoom && distance <= maxZoom)
-            {
-                transform.position = newPosition;
-            }
+            // Apply new FOV
+            cam.fieldOfView = newFOV;
         }
     }
 }

@@ -1,0 +1,186 @@
+{
+  "positions": [
+    {
+      "id": 0,
+      "position": [
+        9.59975052,
+        9.536743E-07,
+        46.98332
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 1,
+      "position": [
+        17.85189,
+        -9.536743E-07,
+        45.3900681
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 2,
+      "position": [
+        29.4159012,
+        0.0,
+        39.36977
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 3,
+      "position": [
+        34.5097275,
+        0.0,
+        35.1056175
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 4,
+      "position": [
+        21.7235336,
+        0.0,
+        40.90736
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 5,
+      "position": [
+        16.4633751,
+        9.536743E-07,
+        29.2269058
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 6,
+      "position": [
+        21.488924,
+        -9.536743E-07,
+        30.7733841
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 7,
+      "position": [
+        21.5827179,
+        0.0,
+        22.90267
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 8,
+      "position": [
+        26.8289871,
+        0.0,
+        26.8072739
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    },
+    {
+      "id": 9,
+      "position": [
+        13.8724031,
+        0.0,
+        32.9532623
+      ],
+      "properties": {
+        "type": 0,
+        "awakeThreshold": 3,
+        "exposeThreshold": 7,
+        "maximumNumOfBooks": 0
+      }
+    }
+  ],
+  "connections": [
+    {
+      "startNodeId": 0,
+      "endNodeId": 1
+    },
+    {
+      "startNodeId": 1,
+      "endNodeId": 4
+    },
+    {
+      "startNodeId": 4,
+      "endNodeId": 2
+    },
+    {
+      "startNodeId": 3,
+      "endNodeId": 2
+    },
+    {
+      "startNodeId": 4,
+      "endNodeId": 5
+    },
+    {
+      "startNodeId": 5,
+      "endNodeId": 6
+    },
+    {
+      "startNodeId": 8,
+      "endNodeId": 7
+    },
+    {
+      "startNodeId": 6,
+      "endNodeId": 7
+    },
+    {
+      "startNodeId": 6,
+      "endNodeId": 8
+    },
+    {
+      "startNodeId": 9,
+      "endNodeId": 5
+    }
+  ]
+}
