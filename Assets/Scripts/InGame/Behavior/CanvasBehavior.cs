@@ -13,7 +13,7 @@ public class CanvasBehavior : MonoBehaviour
     public List<GameObject> nodePrefabMap;
     public GameObject connectionPrefab;
     private Camera cam;
-    private Plane plane; // ÓÃÓÚ¶¨ÒåË®Æ½Ãæ
+    private Plane plane; // ç”¨äºå®šä¹‰æ°´å¹³é¢
     [SerializeField]
     private List<GameObject> nodeList;
     public List<GameObject> GetNodeList()
@@ -26,14 +26,14 @@ public class CanvasBehavior : MonoBehaviour
     {
         return connectionList;
     }
-    public GameObject Me;//ÓÃÓÚÖ¸Ê¾Íæ¼Ò½ÚµãµÄ¶ÔÏóÒıÓÃ£¬ÕâÀï´ÖÂÔµØÉè¶¨Îªid=0µÄ½Úµã£¬ºóĞøÔÙ¸Ä
+    public GameObject Me;//ç”¨äºæŒ‡ç¤ºç©å®¶èŠ‚ç‚¹çš„å¯¹è±¡å¼•ç”¨ï¼Œè¿™é‡Œç²—ç•¥åœ°è®¾å®šä¸ºid=0çš„èŠ‚ç‚¹ï¼Œåç»­å†æ”¹
 
     public void SavePositions()
     {
         List<NodeData> positions = new List<NodeData>();
         List<ConnectionData> connections = new List<ConnectionData>();
 
-        // ±£´æÎ»ÖÃÊı¾İ
+        // ä¿å­˜ä½ç½®æ•°æ®
         for (int i = 0; i < nodeList.Count; i++)
         {
             GameObject obj = nodeList[i];
@@ -46,7 +46,7 @@ public class CanvasBehavior : MonoBehaviour
             positions.Add(data);
         }
 
-        // ±£´æÁ¬½ÓÊı¾İ
+        // ä¿å­˜è¿æ¥æ•°æ®
         for (int i = 0; i < connectionList.Count; i++)
         {
             GameObject connectionObj = connectionList[i];
@@ -54,11 +54,11 @@ public class CanvasBehavior : MonoBehaviour
 
             if (connectionScript != null)
             {
-                // ²éÕÒ startNode ºÍ endNode µÄ ID
+                // æŸ¥æ‰¾ startNode å’Œ endNode çš„ ID
                 int startNodeId = nodeList.IndexOf(connectionScript.startNode);
                 int endNodeId = nodeList.IndexOf(connectionScript.endNode);
 
-                // È·±£ ID ÓĞĞ§
+                // ç¡®ä¿ ID æœ‰æ•ˆ
                 if (startNodeId != -1 && endNodeId != -1)
                 {
                     ConnectionData connectionData = new ConnectionData(startNodeId, endNodeId);
@@ -67,7 +67,7 @@ public class CanvasBehavior : MonoBehaviour
             }
         }
 
-        // ĞòÁĞ»¯Î»ÖÃºÍÁ¬½ÓÊı¾İ
+        // åºåˆ—åŒ–ä½ç½®å’Œè¿æ¥æ•°æ®
         var combinedData = new
         {
             positions = positions,
@@ -76,7 +76,7 @@ public class CanvasBehavior : MonoBehaviour
 
         string json = JsonConvert.SerializeObject(combinedData, Formatting.Indented);
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // Ìí¼ÓÊ±¼ä´Áµ½ÎÄ¼şÃû
+        string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // æ·»åŠ æ—¶é—´æˆ³åˆ°æ–‡ä»¶å
         System.IO.File.WriteAllText(saveFilePath, json);
     }
 
@@ -123,7 +123,7 @@ public class CanvasBehavior : MonoBehaviour
     [System.Serializable]
     public class ConfigurationData
     {
-        //¶ÁÈ¡Ê±Ê¹ÓÃ
+        //è¯»å–æ—¶ä½¿ç”¨
         public List<NodeData> positions;
         public List<ConnectionData> connections;
     }
@@ -135,17 +135,17 @@ public class CanvasBehavior : MonoBehaviour
             string json = System.IO.File.ReadAllText(filePath);
             ConfigurationData configData = JsonConvert.DeserializeObject<ConfigurationData>(json);
 
-            // ÊµÀı»¯½Úµã
+            // å®ä¾‹åŒ–èŠ‚ç‚¹
             foreach (NodeData position in configData.positions)
             {
                 GameObject node = Instantiate(nodePrefabMap[(int)position.properties.type], position.GetVector3Position(), Quaternion.identity, transform);
-                node.name = $"Node_{position.id}"; // Îª½ÚµãÃüÃû
+                node.name = $"Node_{position.id}"; // ä¸ºèŠ‚ç‚¹å‘½å
                 NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
                 if (nodeBehavior != null)
                 {
                     Properties loadedProperties = position.properties ?? new Properties();
 
-                    // Èç¹û×Ö¶ÎÎªÄ¬ÈÏÖµ£¬ÔòÌî³äÄ¬ÈÏÖµ
+                    // å¦‚æœå­—æ®µä¸ºé»˜è®¤å€¼ï¼Œåˆ™å¡«å……é»˜è®¤å€¼
                     nodeBehavior.properties = new Properties
                     {
                         type = loadedProperties.type != 0 ? loadedProperties.type : 0,
@@ -158,7 +158,7 @@ public class CanvasBehavior : MonoBehaviour
                 nodeList.Add(node);
             }
             Me = nodeList[0];
-            // ÊµÀı»¯Á¬½Ó
+            // å®ä¾‹åŒ–è¿æ¥
             foreach (ConnectionData connection in configData.connections)
             {
                 if (connection.startNodeId < nodeList.Count && connection.endNodeId < nodeList.Count)
@@ -183,7 +183,7 @@ public class CanvasBehavior : MonoBehaviour
 
     public void Initialization()
     {
-        //ÕâÀïÊÇÒ»Ğ©ĞèÒª³õÊ¼»¯µÄĞÅÏ¢
+        //è¿™é‡Œæ˜¯ä¸€äº›éœ€è¦åˆå§‹åŒ–çš„ä¿¡æ¯
         Me.GetComponent<NodeBehavior>().properties.numOfBooks = 1;
     }
 
@@ -223,7 +223,7 @@ public class CanvasBehavior : MonoBehaviour
     public void RefreshAllNodes()
     {
         //Debug.Log(1);
-        // µÚÒ»²½£ºÊÕ¼¯ËùÓĞ½ÚµãµÄ¼´½«¸Ä±äÎªµÄ×´Ì¬
+        // ç¬¬ä¸€æ­¥ï¼šæ”¶é›†æ‰€æœ‰èŠ‚ç‚¹çš„å³å°†æ”¹å˜ä¸ºçš„çŠ¶æ€
         Dictionary<GameObject, Properties.StateEnum> newStateMap = new Dictionary<GameObject, Properties.StateEnum>();
 
         foreach (GameObject node in nodeList)
@@ -233,7 +233,7 @@ public class CanvasBehavior : MonoBehaviour
 
             if (nodeBehavior != null)
             {
-                // ÊÕ¼¯Ã¿¸ö½ÚµãµÄĞÂ×´Ì¬
+                // æ”¶é›†æ¯ä¸ªèŠ‚ç‚¹çš„æ–°çŠ¶æ€
                 Properties.StateEnum newState = nodeBehavior.RefreshState();
                 newStateMap.Add(node, newState);
             }
@@ -243,7 +243,7 @@ public class CanvasBehavior : MonoBehaviour
             }
         }
 
-        // µÚ¶ş²½£ºÍ³Ò»Ó¦ÓÃËùÓĞ½ÚµãµÄĞÂ×´Ì¬
+        // ç¬¬äºŒæ­¥ï¼šç»Ÿä¸€åº”ç”¨æ‰€æœ‰èŠ‚ç‚¹çš„æ–°çŠ¶æ€
         foreach (var entry in newStateMap)
         {
             GameObject node = entry.Key;
@@ -253,7 +253,7 @@ public class CanvasBehavior : MonoBehaviour
 
             if (nodeBehavior != null)
             {
-                // Ó¦ÓÃĞÂ×´Ì¬
+                // åº”ç”¨æ–°çŠ¶æ€
                 nodeBehavior.SetState(newState);
             }
         }

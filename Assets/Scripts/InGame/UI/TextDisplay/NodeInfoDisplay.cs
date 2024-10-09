@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class NodeInfoDisplay : MonoBehaviour
 {
-    private bool updateInfoWithoutClick = false;
-    public GameObject infoTextGo; // �� Inspector ��ָ���� UI Text ������ʾ��Ϣ
+    private bool updateInfoWithoutClick = false; // 是否在点击时更新信息
+    public GameObject infoTextGo; // 在 Inspector 中指定的 UI Text 用于显示信息
     private TextMeshProUGUI infoText;
     private Camera mainCamera;
 
@@ -14,13 +14,13 @@ public class NodeInfoDisplay : MonoBehaviour
     {
         mainCamera = Camera.main;
         infoText = infoTextGo.GetComponent<TextMeshProUGUI>();
-        // ��ʼ���ı�Ϊ��
+        // 初始化文本为空
         infoText.text = "";
     }
 
     void Update()
     {
-        // ���߼�����ָ�������
+        // 射线检测鼠标指向的物体
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -35,15 +35,15 @@ public class NodeInfoDisplay : MonoBehaviour
 
             GameObject hoveredObject = hit.collider.gameObject;
 
-            // ��������Ƿ��� CubeBehavior �ű�
+            // 检查物体是否有 CubeBehavior 脚本
             NodeBehavior node = hoveredObject.GetComponent<NodeBehavior>();
             if (node != null)
             {
-                // ��ȡ Properties ���ݲ�չʾ
+                // 获取 Properties 数据并展示
                 Properties properties = node.properties;
                 if (properties != null)
                 {
-                    // ��ʾ����ֵ
+                    // 显示属性值
                     infoText.text = $"Name: {hoveredObject.name}\n" +
                                     $"Identity: {properties.type}\n" +
                                     $"Awake Threshold: {properties.awakeThreshold}\n" +

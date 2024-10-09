@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class CameraBehavior : MonoBehaviour
 {
-    public float zoomSpeed = 5000f;  // ��������ٶ�
-    public float minZoom = 2f;     // ��С����ֵ
-    public float maxZoom = 1000f;    // �������ֵ
+    public float zoomSpeed = 5000f;  
+    public float minZoom = 2f;     
+    public float maxZoom = 1000f;    
 
     private Camera cam;
-    public float rotationSpeed = 50f; // ��ת�ٶ�
+    public float rotationSpeed = 50f; 
     public float moveSpeed = 50f;
 
     void HandleMovement()

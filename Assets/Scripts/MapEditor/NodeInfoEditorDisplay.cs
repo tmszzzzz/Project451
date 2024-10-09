@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class NodeInfoEditorDisplay : MonoBehaviour
 {
-    public GameObject infoTextGo; // ÔÚ Inspector ÖĞÖ¸¶¨µÄ UI Text ÓÃÓÚÏÔÊ¾ĞÅÏ¢
+    public GameObject infoTextGo; // åœ¨ Inspector ä¸­æŒ‡å®šçš„ UI Text ç”¨äºæ˜¾ç¤ºä¿¡æ¯
     private TextMeshProUGUI infoText;
     private Camera mainCamera;
     private CubeEditorBehavior selectedCB;
@@ -13,13 +13,13 @@ public class NodeInfoEditorDisplay : MonoBehaviour
     {
         mainCamera = Camera.main;
         infoText = infoTextGo.GetComponent<TextMeshProUGUI>();
-        // ³õÊ¼»¯ÎÄ±¾Îª¿Õ
+        // åˆå§‹åŒ–æ–‡æœ¬ä¸ºç©º
         infoText.text = "";
     }
 
     void Update()
     {
-        // ÉäÏß¼ì²âÊó±êÖ¸ÏòµÄÎïÌå
+        // å°„çº¿æ£€æµ‹é¼ æ ‡æŒ‡å‘çš„ç‰©ä½“
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -27,15 +27,15 @@ public class NodeInfoEditorDisplay : MonoBehaviour
         {
             GameObject hoveredObject = hit.collider.gameObject;
 
-            // ¼ì²éÎïÌåÊÇ·ñÓĞ CubeBehavior ½Å±¾
+            // æ£€æŸ¥ç‰©ä½“æ˜¯å¦æœ‰ CubeBehavior è„šæœ¬
             CubeEditorBehavior cubeBehavior = hoveredObject.GetComponent<CubeEditorBehavior>();
             if (cubeBehavior != null)
             {
-                // »ñÈ¡ Properties Êı¾İ²¢Õ¹Ê¾
+                // è·å– Properties æ•°æ®å¹¶å±•ç¤º
                 PropertiesEditor properties = cubeBehavior.properties;
                 if (properties != null)
                 {
-                    // ÏÔÊ¾ÊôĞÔÖµ
+                    // æ˜¾ç¤ºå±æ€§å€¼
                     infoText.text = $"Name: {hoveredObject.name}\n" +
                                     $"Awake Threshold: {properties.awakeThreshold}\n" +
                                     $"Expose Threshold: {properties.exposeThreshold}\n" +

@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public float moveSpeed = 5f; // Ïà»úÒÆ¶¯ËÙ¶È
-    public float zoomSpeed = 2f;  // Ïà»úËõ·ÅËÙ¶È
-    public float minZoom = 2f;     // ×îĞ¡Ëõ·ÅÖµ
-    public float maxZoom = 10f;    // ×î´óËõ·ÅÖµ
+    public float moveSpeed = 5f; // ç›¸æœºç§»åŠ¨é€Ÿåº¦
+    public float zoomSpeed = 2f;  // ç›¸æœºç¼©æ”¾é€Ÿåº¦
+    public float minZoom = 2f;     // æœ€å°ç¼©æ”¾å€¼
+    public float maxZoom = 10f;    // æœ€å¤§ç¼©æ”¾å€¼
 
     private Camera cam;
     private Vector3 lastMousePosition;
@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour
 
     void HandleMovement()
     {
-        float horizontal = Input.GetAxis("Horizontal"); // A/D »ò ×ó/ÓÒ¼ıÍ·
-        float vertical = Input.GetAxis("Vertical");     // W/S »ò ÉÏ/ÏÂ¼ıÍ·
+        float horizontal = Input.GetAxis("Horizontal"); // A/D æˆ– å·¦/å³ç®­å¤´
+        float vertical = Input.GetAxis("Vertical");     // W/S æˆ– ä¸Š/ä¸‹ç®­å¤´
         
 
         Vector3 f = new(transform.forward.x, 0, transform.forward.z);
@@ -49,27 +49,27 @@ public class CameraController : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll != 0)
         {
-            cam.orthographicSize -= scroll * zoomSpeed; // ĞŞ¸ÄÏà»úµÄ orthographicSize À´ÊµÏÖËõ·Å
-            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom); // ÏŞÖÆËõ·Å·¶Î§
+            cam.orthographicSize -= scroll * zoomSpeed; // ä¿®æ”¹ç›¸æœºçš„ orthographicSize æ¥å®ç°ç¼©æ”¾
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, minZoom, maxZoom); // é™åˆ¶ç¼©æ”¾èŒƒå›´
         }
     }
     void HandleRotation()
     {
         if (Input.GetMouseButtonDown(1))
         {
-            lastMousePosition = Input.mousePosition;  // ¼ÇÂ¼Êó±ê°´ÏÂÊ±µÄÎ»ÖÃ
+            lastMousePosition = Input.mousePosition;  // è®°å½•é¼ æ ‡æŒ‰ä¸‹æ—¶çš„ä½ç½®
         }
 
-        if (Input.GetMouseButton(1))  // ÓÒ¼ü°´×¡
+        if (Input.GetMouseButton(1))  // å³é”®æŒ‰ä½
         {
             Vector3 delta = Input.mousePosition - lastMousePosition;
             float rotationX = delta.x * 10 * Time.deltaTime;
             float rotationY = -delta.y * 10 * Time.deltaTime;
 
-            // Ğı×ªÏà»ú
+            // æ—‹è½¬ç›¸æœº
             transform.eulerAngles += new Vector3(rotationY, rotationX, 0);
 
-            lastMousePosition = Input.mousePosition;  // ¸üĞÂÊó±êÎ»ÖÃ
+            lastMousePosition = Input.mousePosition;  // æ›´æ–°é¼ æ ‡ä½ç½®
         }
     }
 }
