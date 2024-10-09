@@ -5,28 +5,28 @@ using UnityEngine;
 public class GlobalVar : MonoBehaviour
 {
     public static GlobalVar Instance { get; set; }
-    //�˴���Ÿ���ȫ����Ҫ�õ��ĳ��������������Ϸ���̿�����һ�����޸ġ�
-    //��ע��Ϊ�˼�㣬�˴���ֵ�ɳ�Ա������ʼ���õ����⽫�����ڴ˽ű����޸���Щ������Ч����Ҫ��inspector���޸ġ�
+    //此处存放各类全局需要用到的常量或变量，视游戏进程可以做一定的修改。
+    //请注意为了简便，此处的值由成员变量初始化得到，这将导致在此脚本内修改这些参数无效，需要在inspector内修改。
 
     public int allocationLimit = 1;
     public float exposeToDeathRate = 0.30f;
     public int NumOfBibliophileGiveBooks = 2;
     public int NumOfFirefighterGiveBooks = 1;
 
-    //���õ���ģʽ���������ο�ͨ�������ľ�̬����Instance���ô�Ψһʵ����
+    //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()
     {
-        // �������ʵ���Ҳ��ǵ�ǰʵ�������ٵ�ǰʵ����ȷ������Ψһ��
+        // 如果已有实例且不是当前实例，销毁当前实例，确保单例唯一性
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
-        // ����ǰʵ����Ϊ����ʵ��
+        // 将当前实例设为单例实例
         Instance = this;
 
-        // ѡ�����������ʹ���ڳ����л�ʱ���ᱻ����
+        // 选择保留这个对象，使其在场景切换时不会被销毁
         DontDestroyOnLoad(gameObject);
     }
 }

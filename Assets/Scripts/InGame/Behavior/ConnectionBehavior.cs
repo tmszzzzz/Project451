@@ -11,11 +11,11 @@ public class ConnectionBehavior : MonoBehaviour
     void Start()
     {
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.1f;  // Á¬½ÓÏßµÄÆğÊ¼¿í¶È
-        lineRenderer.endWidth = 0.1f;    // Á¬½ÓÏßµÄ½áÊø¿í¶È
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Ê¹ÓÃÄ¬ÈÏ²ÄÖÊ
-        lineRenderer.startColor = Color.white; // Á¬½ÓÏßµÄÆğÊ¼ÑÕÉ«
-        lineRenderer.endColor = Color.white;   // Á¬½ÓÏßµÄ½áÊøÑÕÉ«
+        lineRenderer.startWidth = 0.1f;  // è¿æ¥çº¿çš„èµ·å§‹å®½åº¦
+        lineRenderer.endWidth = 0.1f;    // è¿æ¥çº¿çš„ç»“æŸå®½åº¦
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // ä½¿ç”¨é»˜è®¤æè´¨
+        lineRenderer.startColor = Color.white; // è¿æ¥çº¿çš„èµ·å§‹é¢œè‰²
+        lineRenderer.endColor = Color.white;   // è¿æ¥çº¿çš„ç»“æŸé¢œè‰²
     }
 
     void Update()
@@ -28,8 +28,8 @@ public class ConnectionBehavior : MonoBehaviour
 
     private void UpdateLine()
     {
-        lineRenderer.positionCount = 2; // Á¬½ÓÏßÓĞÁ½¸öµã
-        lineRenderer.SetPosition(0, startNode.transform.position); // ÉèÖÃÆğÊ¼µã
-        lineRenderer.SetPosition(1, endNode.transform.position);   // ÉèÖÃ½áÊøµã
+        lineRenderer.positionCount = 2; // è¿æ¥çº¿æœ‰ä¸¤ä¸ªç‚¹
+        lineRenderer.SetPosition(0, startNode.transform.position); // è®¾ç½®èµ·å§‹ç‚¹
+        lineRenderer.SetPosition(1, endNode.transform.position);   // è®¾ç½®ç»“æŸç‚¹
     }
 }

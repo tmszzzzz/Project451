@@ -14,7 +14,7 @@ public class CanvasEditorBehavior : MonoBehaviour
     //public List<GameObject> cubePrefabMap;
     public GameObject connectionPrefab;
     private Camera cam;
-    private Plane plane; // ÓÃÓÚ¶¨ÒåË®Æ½Ãæ
+    private Plane plane; // ç”¨äºå®šä¹‰æ°´å¹³é¢
     [SerializeField]
     private List<GameObject> cubeList;
     [SerializeField]
@@ -30,7 +30,7 @@ public class CanvasEditorBehavior : MonoBehaviour
         List<NodeData> positions = new List<NodeData>();
         List<ConnectionData> connections = new List<ConnectionData>();
 
-        // ±£´æÎ»ÖÃÊı¾İ
+        // ä¿å­˜ä½ç½®æ•°æ®
         for (int i = 0; i < cubeList.Count; i++)
         {
             GameObject obj = cubeList[i];
@@ -43,7 +43,7 @@ public class CanvasEditorBehavior : MonoBehaviour
             positions.Add(data);
         }
 
-        // ±£´æÁ¬½ÓÊı¾İ
+        // ä¿å­˜è¿æ¥æ•°æ®
         for (int i = 0; i < connectionList.Count; i++)
         {
             GameObject connectionObj = connectionList[i];
@@ -51,11 +51,11 @@ public class CanvasEditorBehavior : MonoBehaviour
 
             if (connectionScript != null)
             {
-                // ²éÕÒ startNode ºÍ endNode µÄ ID
+                // æŸ¥æ‰¾ startNode å’Œ endNode çš„ ID
                 int startNodeId = cubeList.IndexOf(connectionScript.startNode);
                 int endNodeId = cubeList.IndexOf(connectionScript.endNode);
 
-                // È·±£ ID ÓĞĞ§
+                // ç¡®ä¿ ID æœ‰æ•ˆ
                 if (startNodeId != -1 && endNodeId != -1)
                 {
                     ConnectionData connectionData = new ConnectionData(startNodeId, endNodeId);
@@ -64,7 +64,7 @@ public class CanvasEditorBehavior : MonoBehaviour
             }
         }
 
-        // ĞòÁĞ»¯Î»ÖÃºÍÁ¬½ÓÊı¾İ
+        // åºåˆ—åŒ–ä½ç½®å’Œè¿æ¥æ•°æ®
         var combinedData = new
         {
             positions = positions,
@@ -73,14 +73,14 @@ public class CanvasEditorBehavior : MonoBehaviour
 
         string json = JsonConvert.SerializeObject(combinedData, Formatting.Indented);
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // Ìí¼ÓÊ±¼ä´Áµ½ÎÄ¼şÃû
+        string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // æ·»åŠ æ—¶é—´æˆ³åˆ°æ–‡ä»¶å
         System.IO.File.WriteAllText(saveFilePath, json);
     }
 
     [System.Serializable]
     public class NodeData
     {
-        //´æ´¢cubeÊ±Ê¹ÓÃ
+        //å­˜å‚¨cubeæ—¶ä½¿ç”¨
         public int id;
         public float[] position;
         public PropertiesEditor properties;
@@ -106,7 +106,7 @@ public class CanvasEditorBehavior : MonoBehaviour
     [System.Serializable]
     public class ConnectionData
     {
-        //´æ´¢connectionÊ±Ê¹ÓÃ
+        //å­˜å‚¨connectionæ—¶ä½¿ç”¨
         public int startNodeId;
         public int endNodeId;
 
@@ -120,7 +120,7 @@ public class CanvasEditorBehavior : MonoBehaviour
     [System.Serializable]
     public class ConfigurationData
     {
-        //¶ÁÈ¡Ê±Ê¹ÓÃ
+        //è¯»å–æ—¶ä½¿ç”¨
         public List<NodeData> positions;
         public List<ConnectionData> connections;
     }
@@ -132,18 +132,18 @@ public class CanvasEditorBehavior : MonoBehaviour
             string json = System.IO.File.ReadAllText(filePath);
             ConfigurationData configData = JsonConvert.DeserializeObject<ConfigurationData>(json);
 
-            // ÊµÀı»¯½Úµã
+            // å®ä¾‹åŒ–èŠ‚ç‚¹
             foreach (NodeData position in configData.positions)
             {
                 GameObject node = Instantiate(cubePrefab, position.GetVector3Position(), Quaternion.identity, transform);
-                node.name = $"Node_{position.id}"; // Îª½ÚµãÃüÃû
+                node.name = $"Node_{position.id}"; // ä¸ºèŠ‚ç‚¹å‘½å
                 uniqueId++;
                 CubeEditorBehavior cubeBehavior = node.GetComponent<CubeEditorBehavior>();
                 if (cubeBehavior != null)
                 {
                     PropertiesEditor loadedProperties = position.properties ?? new PropertiesEditor();
 
-                    // Èç¹û×Ö¶ÎÎªÄ¬ÈÏÖµ£¬ÔòÌî³äÄ¬ÈÏÖµ
+                    // å¦‚æœå­—æ®µä¸ºé»˜è®¤å€¼ï¼Œåˆ™å¡«å……é»˜è®¤å€¼
                     cubeBehavior.properties = new PropertiesEditor
                     {
                         type = (PropertiesEditor.typeEnum)(loadedProperties.type != 0 ? loadedProperties.type : 0),
@@ -155,7 +155,7 @@ public class CanvasEditorBehavior : MonoBehaviour
                 cubeList.Add(node);
             }
 
-            // ÊµÀı»¯Á¬½Ó
+            // å®ä¾‹åŒ–è¿æ¥
             foreach (ConnectionData connection in configData.connections)
             {
                 if (connection.startNodeId < cubeList.Count && connection.endNodeId < cubeList.Count)
@@ -201,13 +201,13 @@ public class CanvasEditorBehavior : MonoBehaviour
         }
         else connectionDelete = false;
 
-        if (Input.GetMouseButtonDown(0) && cubeDelete) // 0 ±íÊ¾×ó¼ü
+        if (Input.GetMouseButtonDown(0) && cubeDelete) // 0 è¡¨ç¤ºå·¦é”®
         {
             //Debug.Log("3");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // ·¢ÉäÉäÏß£¬¼ì²âÊÇ·ñµã»÷µ½ÎïÌå
+            // å‘å°„å°„çº¿ï¼Œæ£€æµ‹æ˜¯å¦ç‚¹å‡»åˆ°ç‰©ä½“
             if (Physics.Raycast(ray, out hit))
             {
                 if (hit.collider.GetComponent<CubeEditorBehavior>() != null)

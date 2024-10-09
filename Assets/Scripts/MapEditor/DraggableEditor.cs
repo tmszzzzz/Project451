@@ -4,12 +4,12 @@ public class DraggableEditor : MonoBehaviour
 {
     private Vector3 offset;
     private Camera cam;
-    private Plane plane; // ÓÃÓÚ¶¨ÒåË®Æ½Ãæ
+    private Plane plane; // ç”¨äºå®šä¹‰æ°´å¹³é¢
 
     void Start()
     {
         cam = Camera.main;
-        // ¶¨ÒåË®Æ½Ãæ£¬Í¨³£ÊÇ y = 0 µÄÆ½Ãæ
+        // å®šä¹‰æ°´å¹³é¢ï¼Œé€šå¸¸æ˜¯ y = 0 çš„å¹³é¢
         plane = new Plane(Vector3.up, Vector3.zero);
     }
 
@@ -31,6 +31,6 @@ public class DraggableEditor : MonoBehaviour
         {
             return ray.GetPoint(enter);
         }
-        return Vector3.zero; // Èç¹ûÃ»ÓĞÃüÖĞÆ½Ãæ£¬·µ»ØÁãÏòÁ¿
+        return Vector3.zero; // å¦‚æœæ²¡æœ‰å‘½ä¸­å¹³é¢ï¼Œè¿”å›é›¶å‘é‡
     }
 }

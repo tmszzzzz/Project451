@@ -5,17 +5,17 @@ using TMPro;
 
 public class MessageBar : MonoBehaviour
 {
-    public TextMeshProUGUI messageText; // ÓÃÓÚÏÔÊ¾ÏûÏ¢
-    private Queue<string> messageQueue = new Queue<string>(); // ÏûÏ¢¶ÓÁĞ
+    public TextMeshProUGUI messageText; // ç”¨äºæ˜¾ç¤ºæ¶ˆæ¯
+    private Queue<string> messageQueue = new Queue<string>(); // æ¶ˆæ¯é˜Ÿåˆ—
 
     private void Start()
     {
-        UpdateMessageDisplay(); // ³õÊ¼¸üĞÂ
+        UpdateMessageDisplay(); // åˆå§‹æ›´æ–°
     }
 
     private void Update()
     {
-        // ¸üĞÂÏûÏ¢ÏÔÊ¾£¬Èç¹û¶ÓÁĞ²»Îª¿Õ£¬ÏÔÊ¾×îĞÂÏûÏ¢
+        // æ›´æ–°æ¶ˆæ¯æ˜¾ç¤ºï¼Œå¦‚æœé˜Ÿåˆ—ä¸ä¸ºç©ºï¼Œæ˜¾ç¤ºæœ€æ–°æ¶ˆæ¯
         if (messageQueue.Count > 0)
         {
             UpdateMessageDisplay();
@@ -24,8 +24,8 @@ public class MessageBar : MonoBehaviour
 
     public void AddMessage(string message)
     {
-        messageQueue.Enqueue(message); // Ìí¼ÓÏûÏ¢µ½¶ÓÁĞ
-        StartCoroutine(RemoveMessageAfterDelay(5f)); // Æô¶¯Ğ­³Ì£¬5ÃëºóÒÆ³ıÏûÏ¢
+        messageQueue.Enqueue(message); // æ·»åŠ æ¶ˆæ¯åˆ°é˜Ÿåˆ—
+        StartCoroutine(RemoveMessageAfterDelay(5f)); // å¯åŠ¨åç¨‹ï¼Œ5ç§’åç§»é™¤æ¶ˆæ¯
     }
 
     private IEnumerator RemoveMessageAfterDelay(float delay)
@@ -33,14 +33,14 @@ public class MessageBar : MonoBehaviour
         yield return new WaitForSeconds(delay);
         if (messageQueue.Count > 0)
         {
-            messageQueue.Dequeue(); // ÒÆ³ı¶ÓÁĞÖĞµÄµÚÒ»¸öÏûÏ¢
-            UpdateMessageDisplay(); // ¸üĞÂÏÔÊ¾
+            messageQueue.Dequeue(); // ç§»é™¤é˜Ÿåˆ—ä¸­çš„ç¬¬ä¸€ä¸ªæ¶ˆæ¯
+            UpdateMessageDisplay(); // æ›´æ–°æ˜¾ç¤º
         }
     }
 
     private void UpdateMessageDisplay()
     {
-        // ÏÔÊ¾¶ÓÁĞÖĞµÄËùÓĞÏûÏ¢
+        // æ˜¾ç¤ºé˜Ÿåˆ—ä¸­çš„æ‰€æœ‰æ¶ˆæ¯
         messageText.text = string.Join("\n", messageQueue.ToArray());
     }
 }
