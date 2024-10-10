@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class CameraBehavior : MonoBehaviour
 {
@@ -9,6 +10,32 @@ public class CameraBehavior : MonoBehaviour
     private Camera cam;
     public float rotationSpeed = 50f; 
     public float moveSpeed = 50f;
+
+    public GameObject circleCenter;
+    public float cameraCircleRadius = 10f;
+    
+    Vector3 HandleOutBound(Vector3 newPosition, Vector3 oldPosition) {
+        Vector3 move = newPosition - oldPosition;
+
+        if (circleCenter != null)
+        {
+            Vector3 toCenter = circleCenter.transform.position - transform.position;
+            toCenter.y = 0;
+            float distance = toCenter.magnitude;
+            if (distance > cameraCircleRadius)
+            {
+                Vector3 toCenterDirection = toCenter.normalized;
+                Vector3 moveDirection = move.normalized;
+                float angle = Vector3.SignedAngle(toCenterDirection, moveDirection, Vector3.up);
+                if (angle > 90 || angle < -90)
+                {
+                    move = Quaternion.AngleAxis(-angle, Vector3.up) * move;
+                }
+            }
+        }
+
+        return oldPosition + move;
+    }
 
     void HandleMovement()
     {
@@ -36,6 +63,7 @@ public class CameraBehavior : MonoBehaviour
 
             // Rotate the camera around the hit point
             transform.RotateAround(hitPoint, Vector3.up, spin * rotationSpeed * Time.deltaTime);
+
             }
         }
     }
@@ -47,9 +75,13 @@ public class CameraBehavior : MonoBehaviour
 
     void Update()
     {
+        Vector3 oldPosition = transform.position;
         HandleMovement();
         HandleRotation();
+        transform.position = HandleOutBound(transform.position, oldPosition);
+        
         HandleZoom();
+
     }
 
     
