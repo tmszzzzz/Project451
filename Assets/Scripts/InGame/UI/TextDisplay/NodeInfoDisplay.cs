@@ -48,7 +48,8 @@ public class NodeInfoDisplay : MonoBehaviour
                                     $"Identity: {properties.type}\n" +
                                     $"Awake Threshold: {properties.awakeThreshold}\n" +
                                     $"Expose Threshold: {properties.exposeThreshold}\n" +
-                                    $"Books: {properties.numOfBooks}/{properties.maximumNumOfBooks}";
+                                    $"Books: {properties.numOfBooks}/{properties.maximumNumOfBooks}"+
+                                    $"\n\n    {properties.description}";
                 }
             }
         }

@@ -22,4 +22,5 @@ public class Properties
     public int exposeThreshold;
     public int numOfBooks = 0;
     public int maximumNumOfBooks;
+    public string description = "";
 }
