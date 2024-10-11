@@ -236,7 +236,7 @@ public class CanvasBehavior : MonoBehaviour
             if (nodeBehavior != null)
             {
                 // 收集每个节点的新状态
-                Properties.StateEnum newState = nodeBehavior.RefreshState();
+                Properties.StateEnum newState = nodeBehavior.RefreshState().state;
                 newStateMap.Add(node, newState);
             }
             else

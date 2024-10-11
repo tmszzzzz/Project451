@@ -39,39 +39,33 @@ public class NodeBehavior : BaseNodeBehavior
         selected = false;
     }
 
-    public override Properties.StateEnum RefreshState()
+    
+
+    public override StatePrediction RefreshState()
     {
 
         CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
         if (cb == null)
         {
             Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
-            return Properties.StateEnum.DEAD;
+            return new StatePrediction(Properties.StateEnum.DEAD,0);
         }
         List<GameObject> nList = cb.GetNeighbors(gameObject);
 
-        int AwakeInfluence = 0;
-        int ExposeInfluence = 0;
+        int influence = 0;
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null)
             {
-                AwakeInfluence += cub.properties.state > 0 ? cub.properties.numOfBooks + 1 : 0;
-                ExposeInfluence += (cub.properties.state > 0 || cub.properties.state == Properties.StateEnum.DEAD) ? cub.properties.numOfBooks + 1 : 0;
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks + 1 : 0;
             }
         }
         //Debug.Log(2);
-        if (properties.state == Properties.StateEnum.DEAD) return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.DEAD);
-        else if (ExposeInfluence >= properties.exposeThreshold)
-        {
-            float v = Random.value;
-            if (properties.state == Properties.StateEnum.EXPOSED && v < GlobalVar.Instance.exposeToDeathRate)
-                return Properties.StateEnum.DEAD;
-            else return Properties.StateEnum.EXPOSED;
-        }
-        else if (AwakeInfluence >= properties.awakeThreshold) return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.AWAKENED);
-        else return (Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL);
+        if (properties.state == Properties.StateEnum.DEAD) return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.DEAD),influence);
+        else if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
+        else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.AWAKENED), influence);
+        else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
     }
     public override void SetState(Properties.StateEnum stateEnum)
     {
