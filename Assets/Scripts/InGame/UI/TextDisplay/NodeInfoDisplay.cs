@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class NodeInfoDisplay : MonoBehaviour
 {
-    private bool updateInfoWithoutClick = false; // 是否在点击时更新信息
+    public bool updateInfoWithoutClick = true; // 是否在点击时更新信息
     public GameObject infoTextGo; // 在 Inspector 中指定的 UI Text 用于显示信息
     private TextMeshProUGUI infoText;
     private Camera mainCamera;
@@ -28,11 +28,16 @@ public class NodeInfoDisplay : MonoBehaviour
         {
             //return before updating the info text if the updateInfoWithoutClick is false and the left mouse button is not clicked
             //either wise the info text will be updated every frame
-            if ((updateInfoWithoutClick != true) && (Input.GetMouseButton(0) != true))
+            // Debug.Log(updateInfoWithoutClick);
+            if (updateInfoWithoutClick) 
+            goto Update;
+
+            if (Input.GetMouseButton(0) != true)
             {
                 return;
             }
 
+Update:
             GameObject hoveredObject = hit.collider.gameObject;
 
             // 检查物体是否有 CubeBehavior 脚本
