@@ -272,4 +272,18 @@ public class CanvasBehavior : MonoBehaviour
         if (nb != null) nb.properties.numOfBooks += v;
         else Debug.LogWarning("NodeBehavior script is null.");
     }
+    public void RefreshGlobalExposureValue()
+    {
+        bool exposed = false;
+        foreach(var i in nodeList)
+        {
+            NodeBehavior nb;
+            if((nb = i.GetComponent<NodeBehavior>()) != null && nb.properties.state == Properties.StateEnum.EXPOSED)
+            {
+                exposed = true;
+                GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfExposedNode);
+            }
+        }
+        if(!exposed) GlobalVar.Instance.RuduceGlobalExposureValue(GlobalVar.Instance.exposureValueReductionOfNoExposedNode);
+    }
 }

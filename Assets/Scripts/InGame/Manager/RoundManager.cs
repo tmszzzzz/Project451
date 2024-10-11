@@ -108,6 +108,7 @@ public class RoundManager : MonoBehaviour
     {
         if (held == 0)
         {
+            //这一段代码精确地控制了一些逻辑的触发顺序，可调整
             OnRoundChange?.Invoke();
             var keys = new List<GameObject>(bookAllocationMap.Keys);
             for (int i = 0; i < keys.Count; i++)
@@ -115,6 +116,7 @@ public class RoundManager : MonoBehaviour
                 canvas.AddNodeNumOfBooks(keys[i], bookAllocationMap[keys[i]]);
             }
             roundNum++;
+            canvas.RefreshGlobalExposureValue();
             canvas.RefreshAllNodes();
             for (int i = 0; i < keys.Count; i++)
             {

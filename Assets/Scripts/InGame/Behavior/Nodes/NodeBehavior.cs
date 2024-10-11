@@ -24,6 +24,7 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = RoundManager.Instance.messageBar;
+        RoundManager.Instance.OnRoundChange += OnRoundChange;
     }
     protected virtual void Update()
     {
@@ -39,7 +40,14 @@ public class NodeBehavior : BaseNodeBehavior
         selected = false;
     }
 
-    
+    protected virtual void OnRoundChange()
+    {
+        //if (properties.state == Properties.StateEnum.EXPOSED)
+        //{
+        //    GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfExposedNode);
+        //}
+        //这个实现方法看起来不好
+    }
 
     public override StatePrediction RefreshState()
     {
@@ -70,5 +78,10 @@ public class NodeBehavior : BaseNodeBehavior
     public override void SetState(Properties.StateEnum stateEnum)
     {
         properties.state = stateEnum;
+    }
+
+    protected void OnDestroy()
+    {
+        RoundManager.Instance.OnRoundChange -= OnRoundChange;
     }
 }

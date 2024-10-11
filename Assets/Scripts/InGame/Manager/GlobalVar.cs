@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,9 +8,21 @@ public class GlobalVar : MonoBehaviour
     public static GlobalVar Instance { get; set; }
     //此处存放各类全局需要用到的常量或变量，视游戏进程可以做一定的修改。
     //请注意为了简便，此处的值由成员变量初始化得到，这将导致在此脚本内修改这些参数无效，需要在inspector内修改。
+    public int globalExposureValue = 0;
 
+    public void AddGlobalExposureValue(int v)
+    {
+        globalExposureValue = Math.Min(globalExposureValue + v, maxGlobalExposureValue);
+    }
+    public void RuduceGlobalExposureValue(int v)
+    {
+        globalExposureValue = Math.Max(globalExposureValue - v, 0);
+    }
+
+    public const int maxGlobalExposureValue = 100;
+    public int exposureValueAdditionOfExposedNode = 1;
+    public int exposureValueReductionOfNoExposedNode = 1;
     public int allocationLimit = 1;
-    public float exposeToDeathRate = 0.30f;
     public int NumOfBibliophileGiveBooks = 2;
     public int NumOfFirefighterGiveBooks = 1;
 

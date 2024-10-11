@@ -15,8 +15,9 @@ public class FirefighterBehavior : NodeBehavior
         return base.RefreshState();
     }
 
-    private void OnRoundChange()
+    protected override void OnRoundChange()
     {
+        base.OnRoundChange();
         if (properties.state >= Properties.StateEnum.AWAKENED)
         {
             CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
@@ -30,8 +31,5 @@ public class FirefighterBehavior : NodeBehavior
         }
     }
 
-    private void OnDestroy()
-    {
-        RoundManager.Instance.OnRoundChange -= OnRoundChange;
-    }
+    
 }
