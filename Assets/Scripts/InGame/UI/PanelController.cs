@@ -20,6 +20,11 @@ public class PanelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        nodePanelControl();
+    }
+
+    void nodePanelControl() 
+    {
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -42,8 +47,11 @@ public class PanelController : MonoBehaviour
                 DisableNodeInfoPanel();
             }
         }
+        else if (Input.GetMouseButton(0) == true)
+        {
+            DisableNodeInfoPanel();
+        }
     }
-
     public void EnableNodeInfoPanel()
     {   
         if (NodeInfoPanel == null)
