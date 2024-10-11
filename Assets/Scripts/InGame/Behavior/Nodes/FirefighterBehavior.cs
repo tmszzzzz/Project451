@@ -10,7 +10,7 @@ public class FirefighterBehavior : NodeBehavior
         base.Start();
         RoundManager.Instance.OnRoundChange += OnRoundChange;
     }
-    public override Properties.StateEnum RefreshState()
+    public override StatePrediction RefreshState()
     {
         return base.RefreshState();
     }

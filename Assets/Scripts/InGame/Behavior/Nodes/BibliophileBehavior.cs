@@ -5,19 +5,19 @@ using UnityEngine;
 
 public class BibliophileBehavior : NodeBehavior
 {
-    public override Properties.StateEnum RefreshState()
+    public override StatePrediction RefreshState()
     {
-        Properties.StateEnum state = base.RefreshState();
-        if (properties.state == Properties.StateEnum.NORMAL && state >= Properties.StateEnum.AWAKENED)
+        StatePrediction statePrediction = base.RefreshState();
+        if (properties.state == Properties.StateEnum.NORMAL && statePrediction.state >= Properties.StateEnum.AWAKENED)
         {
             CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
             if (cb == null)
             {
-                return Properties.StateEnum.DEAD;
+                return new StatePrediction(Properties.StateEnum.DEAD,0);
             }
             cb.AddNodeNumOfBooks(cb.Me, GlobalVar.Instance.NumOfBibliophileGiveBooks);
             mb.AddMessage($"Bibliophile {gameObject.name} gives you {GlobalVar.Instance.NumOfBibliophileGiveBooks} books.");
         }
-        return state;
+        return statePrediction;
     }
 }

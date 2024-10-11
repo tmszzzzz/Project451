@@ -27,6 +27,7 @@ public class CanvasBehavior : MonoBehaviour
         return connectionList;
     }
     public GameObject Me;//用于指示玩家节点的对象引用，这里粗略地设定为id=0的节点，后续再改
+    public Description description;
 
     public void SavePositions()
     {
@@ -152,7 +153,8 @@ public class CanvasBehavior : MonoBehaviour
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
                         //NumOfBooks = loadedProperties.NumOfBooks != 0 ? loadedProperties.NumOfBooks : 0,
-                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0
+                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0,
+                        description = description.GetDescriptionByID(position.id)
                     };
                 }
                 nodeList.Add(node);
@@ -234,7 +236,7 @@ public class CanvasBehavior : MonoBehaviour
             if (nodeBehavior != null)
             {
                 // 收集每个节点的新状态
-                Properties.StateEnum newState = nodeBehavior.RefreshState();
+                Properties.StateEnum newState = nodeBehavior.RefreshState().state;
                 newStateMap.Add(node, newState);
             }
             else
