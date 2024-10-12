@@ -20,8 +20,8 @@ public class GlobalVar : MonoBehaviour
     }
 
     public const int maxGlobalExposureValue = 100;
-    public int exposureValueAdditionOfExposedNode = 1;
-    public int exposureValueReductionOfNoExposedNode = 1;
+    public int exposureValueAdditionOfExposedNode = 10;
+    public int exposureValueReductionOfNoExposedNode = 5;
     public int allocationLimit = 1;
     public int NumOfBibliophileGiveBooks = 2;
     public int NumOfFirefighterGiveBooks = 1;

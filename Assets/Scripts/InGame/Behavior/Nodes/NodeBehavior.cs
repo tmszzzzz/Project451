@@ -20,7 +20,7 @@ public class NodeBehavior : BaseNodeBehavior
 
         ColorMap = new Dictionary<int, Color>();
         ColorMap.Add(-1, Color.gray);
-        ColorMap.Add(0, Color.green);
+        ColorMap.Add(0, Color.gray);
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = RoundManager.Instance.messageBar;
@@ -46,7 +46,7 @@ public class NodeBehavior : BaseNodeBehavior
         //{
         //    GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfExposedNode);
         //}
-        //Õâ¸öÊµÏÖ·½·¨¿´ÆðÀ´²»ºÃ
+        //ï¿½ï¿½ï¿½Êµï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     }
 
     public override StatePrediction RefreshState()
