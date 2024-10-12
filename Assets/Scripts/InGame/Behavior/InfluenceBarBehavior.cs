@@ -7,6 +7,7 @@ public class InfluenceBarBehavior : MonoBehaviour
 {
     [SerializeField] private Slider influenceBarSlider;
     [SerializeField] private NodeBehavior nodeBehavior;
+    [SerializeField] private DisgustingRealTimeUpdateNodeBehavior disgustingRealTimeUpdateNodeBehavior;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color awakenedColor;
     [SerializeField] private Color exposedColor;
@@ -25,7 +26,7 @@ public class InfluenceBarBehavior : MonoBehaviour
 
     void updateInfluenceBar() 
     {
-        statePrediction = nodeBehavior.RefreshState();
+        statePrediction = disgustingRealTimeUpdateNodeBehavior.RealTimeRefreshState();
 
         influenceBarSlider.value = (float)statePrediction.influence / (float)exposeThreshold;
         //influenceBarSlider.value = 0.5f;

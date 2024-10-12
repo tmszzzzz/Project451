@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7932263951993768623}
   - component: {fileID: 519044433242209055}
   - component: {fileID: 2393127703368178605}
+  - component: {fileID: 5528646115430166121}
   m_Layer: 0
   m_Name: Firefighter
   m_TagString: Untagged
@@ -129,6 +130,22 @@ MonoBehaviour:
     description: 
   mb: {fileID: 0}
   selected: 0
+--- !u!114 &5528646115430166121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3138499087657434514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542dd186fe3771a4a917b8a486a84ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeBehavior: {fileID: 0}
+  roundManager: {fileID: 0}
+  canvasBehavior: {fileID: 0}
+  thisNode: {fileID: 3138499087657434514}
 --- !u!1001 &6551407851335491862
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -142,6 +159,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: InfluencBarCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3940714958417141891, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: nodeBehavior
+      value: 
+      objectReference: {fileID: 2393127703368178605}
+    - target: {fileID: 3940714958417141891, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: disgustingRealTimeUpdateNodeBehavior
+      value: 
+      objectReference: {fileID: 5528646115430166121}
     - target: {fileID: 5760778985795148593, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
