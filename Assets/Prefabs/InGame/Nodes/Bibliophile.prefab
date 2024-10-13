@@ -154,11 +154,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2985104774998975836}
     m_Modifications:
+    - target: {fileID: 475972206297379092, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 475972206297379092, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 570350608778618358, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_Name
       value: InfluencBarCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 2059751223972666454, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: thisnode
+      value: 
+      objectReference: {fileID: 2072412832155264516}
     - target: {fileID: 3940714958417141891, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: nodeBehavior
@@ -184,6 +199,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7359273398764925227, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9bd85fdec5bf0824f8db1934e7e9e8a7,
+        type: 3}
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_Pivot.x
@@ -222,7 +243,7 @@ PrefabInstance:
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0.9695
+      value: 1.4534
       objectReference: {fileID: 0}
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
@@ -282,6 +303,11 @@ PrefabInstance:
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9138049274481544854, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

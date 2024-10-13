@@ -186,7 +186,8 @@ public class CanvasBehavior : MonoBehaviour
     public void Initialization()
     {
         //这里是一些需要初始化的信息
-        Me.GetComponent<NodeBehavior>().properties.numOfBooks = 1;
+        Me.GetComponent<NodeBehavior>().properties.numOfBooks = 2;
+        Me.GetComponent<NodeBehavior>().properties.state = Properties.StateEnum.AWAKENED;
     }
 
     void Start()
@@ -204,6 +205,17 @@ public class CanvasBehavior : MonoBehaviour
         
     }
 
+    public int GetTotalBookNum()
+    {
+        int total = 0;
+        foreach (var i in nodeList)
+        {
+            NodeBehavior nb = i.GetComponent<NodeBehavior>();
+            if (nb != null) total += nb.properties.numOfBooks;
+        }
+
+        return total;
+    }
 
     public List<GameObject> GetNeighbors(GameObject node)
     {

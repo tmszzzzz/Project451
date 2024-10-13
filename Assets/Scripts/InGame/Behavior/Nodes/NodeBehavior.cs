@@ -65,13 +65,12 @@ public class NodeBehavior : BaseNodeBehavior
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks + RoundManager.Instance.bookAllocationMap[cub.gameObject] + 1 : 0;
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks + RoundManager.Instance.bookAllocationMap[cub.gameObject] : 0;
             }
         }
         //Debug.Log(2);
-        if (properties.state == Properties.StateEnum.DEAD) return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.DEAD),influence);
-        else if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
-        else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.AWAKENED), influence);
+        if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
+        else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
         else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
     }
     public override void SetState(Properties.StateEnum stateEnum)

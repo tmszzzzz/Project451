@@ -34,7 +34,7 @@ Transform:
   m_LocalScale: {x: 1.57, y: 1.57, z: 1.57}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 7869147248267858592}
+  - {fileID: 7812698492650101213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8691225964901786945
@@ -146,7 +146,7 @@ MonoBehaviour:
   roundManager: {fileID: 0}
   canvasBehavior: {fileID: 0}
   thisNode: {fileID: 8508593265475076950}
---- !u!1001 &1852612265635371952
+--- !u!1001 &1796190036625346765
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -157,57 +157,17 @@ PrefabInstance:
     - target: {fileID: 570350608778618358, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_Name
-      value: InfluencBarCanvas
+      value: NodeUICanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 800549041565003594, guid: 12a879d08bd59fe459bc8ff253086c26,
+    - target: {fileID: 2059751223972666454, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 800549041565003594, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 800549041565003594, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1966598357120148002, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3727285077585051812, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: m_Value
-      value: 0.54
-      objectReference: {fileID: 0}
-    - target: {fileID: 3940714958417141891, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: node
+      propertyPath: thisnode
       value: 
       objectReference: {fileID: 8508593265475076950}
-    - target: {fileID: 3940714958417141891, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: nodeBehavior
-      value: 
-      objectReference: {fileID: 3926578069804042716}
-    - target: {fileID: 3940714958417141891, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: disgustingRealTimeUpdateNodeBehavior
-      value: 
-      objectReference: {fileID: 3947626327597917289}
     - target: {fileID: 5760778985795148593, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6642810201817423827, guid: 12a879d08bd59fe459bc8ff253086c26,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6642810201817423827, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
@@ -319,9 +279,9 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12a879d08bd59fe459bc8ff253086c26, type: 3}
---- !u!224 &7869147248267858592 stripped
+--- !u!224 &7812698492650101213 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
     type: 3}
-  m_PrefabInstance: {fileID: 1852612265635371952}
+  m_PrefabInstance: {fileID: 1796190036625346765}
   m_PrefabAsset: {fileID: 0}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GlobalVar : MonoBehaviour
@@ -41,5 +42,18 @@ public class GlobalVar : MonoBehaviour
 
         // 选择保留这个对象，使其在场景切换时不会被销毁
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void KeepLimitEqualToHalfOfBookNum()
+    {
+        allocationLimit = RoundManager.Instance.canvas.GetTotalBookNum() / 2;
+        if (RoundManager.Instance.canvas.GetTotalBookNum() % 2 == 1) {
+            allocationLimit++;
+        }
+    }
+
+    void Update()
+    {
+        KeepLimitEqualToHalfOfBookNum();
     }
 }
