@@ -8,11 +8,10 @@ public class FirefighterBehavior : NodeBehavior
     protected override void Start()
     {
         base.Start();
-        RoundManager.Instance.OnRoundChange += OnRoundChange;
     }
-    public override StatePrediction RefreshState()
+    public override StatePrediction PredictState()
     {
-        return base.RefreshState();
+        return base.PredictState();
     }
 
     protected override void OnRoundChange()

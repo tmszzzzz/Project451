@@ -46,7 +46,7 @@ public class DisgustingRealTimeUpdateNodeBehavior : MonoBehaviour
     {
         DebugCheck();
 
-        statePrediction = nodeBehavior.RefreshState();
+        statePrediction = nodeBehavior.PredictState();
 
         int influence = statePrediction.influence;
         Properties properties = nodeBehavior.properties;

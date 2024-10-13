@@ -22,11 +22,12 @@ public class InfluenceBarBehavior : MonoBehaviour
         }
         exposeThreshold = nodeBehavior.properties.exposeThreshold;
         awakeThreshold = nodeBehavior.properties.awakeThreshold;
+        //RoundManager.Instance.BookAllocationChange += updateInfluenceBar;
     }
 
     void updateInfluenceBar() 
     {
-        statePrediction = disgustingRealTimeUpdateNodeBehavior.RealTimeRefreshState();
+        statePrediction = nodeBehavior.PredictState();
 
         influenceBarSlider.value = (float)statePrediction.influence / (float)exposeThreshold;
 
@@ -43,5 +44,10 @@ public class InfluenceBarBehavior : MonoBehaviour
     void Update()
     {
         updateInfluenceBar();
+    }
+
+    void OnDestroy()
+    {
+        //RoundManager.Instance.RoundChange -= updateInfluenceBar;
     }
 }

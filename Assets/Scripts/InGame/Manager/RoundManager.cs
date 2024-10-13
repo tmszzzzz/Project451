@@ -20,7 +20,8 @@ public class RoundManager : MonoBehaviour
     private Dictionary<GameObject, GameObject> activeTextMap = new Dictionary<GameObject, GameObject>();
 
     //以下是事件
-    public event Action OnRoundChange;
+    public event Action RoundChange;
+    public event Action BookAllocationChange;
 
     // 场景初始化时调用
     private void Awake()
@@ -79,6 +80,7 @@ public class RoundManager : MonoBehaviour
                     {
                         bookAllocationMap[hit.collider.gameObject]++;
                         held--;
+                        BookAllocationChange?.Invoke();
                     }
                 }
                 else if (nb != null && mouseButton == 1)
@@ -87,6 +89,7 @@ public class RoundManager : MonoBehaviour
                     {
                         bookAllocationMap[hit.collider.gameObject]--;
                         held++;
+                        BookAllocationChange?.Invoke();
                     }
                 }
             }
@@ -109,7 +112,8 @@ public class RoundManager : MonoBehaviour
         if (held == 0)
         {
             //这一段代码精确地控制了一些逻辑的触发顺序，可调整
-            OnRoundChange?.Invoke();
+            RoundChange?.Invoke();
+            canvas.RefreshAllNodes();
             var keys = new List<GameObject>(bookAllocationMap.Keys);
             for (int i = 0; i < keys.Count; i++)
             {
@@ -117,11 +121,11 @@ public class RoundManager : MonoBehaviour
             }
             roundNum++;
             canvas.RefreshGlobalExposureValue();
-            canvas.RefreshAllNodes();
             for (int i = 0; i < keys.Count; i++)
             {
                 bookAllocationMap[keys[i]] = 0;
             }
+            BookAllocationChange?.Invoke();
             messageBar.AddMessage("NextRound");
         }
         else

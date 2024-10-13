@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseNodeBehavior : MonoBehaviour
 {
-    public abstract StatePrediction RefreshState();
+    public abstract StatePrediction PredictState();
     public abstract void SetState(Properties.StateEnum stateEnum);
     public struct StatePrediction
     {

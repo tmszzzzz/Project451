@@ -24,7 +24,7 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = RoundManager.Instance.messageBar;
-        RoundManager.Instance.OnRoundChange += OnRoundChange;
+        RoundManager.Instance.RoundChange += OnRoundChange;
     }
     protected virtual void Update()
     {
@@ -46,10 +46,9 @@ public class NodeBehavior : BaseNodeBehavior
         //{
         //    GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfExposedNode);
         //}
-        //���ʵ�ַ�������������
     }
 
-    public override StatePrediction RefreshState()
+    public override StatePrediction PredictState()
     {
 
         CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
@@ -66,7 +65,7 @@ public class NodeBehavior : BaseNodeBehavior
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks + 1 : 0;
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks + RoundManager.Instance.bookAllocationMap[cub.gameObject] + 1 : 0;
             }
         }
         //Debug.Log(2);
@@ -82,6 +81,6 @@ public class NodeBehavior : BaseNodeBehavior
 
     protected void OnDestroy()
     {
-        RoundManager.Instance.OnRoundChange -= OnRoundChange;
+        RoundManager.Instance.RoundChange -= OnRoundChange;
     }
 }
