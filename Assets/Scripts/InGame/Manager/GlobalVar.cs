@@ -23,7 +23,7 @@ public class GlobalVar : MonoBehaviour
     public int exposureValueAdditionOfExposedNode = 10;
     public int exposureValueReductionOfNoExposedNode = 5;
     public int allocationLimit = 1;
-    public int NumOfBibliophileGiveBooks = 2;
+    public int NumOfBibliophileGiveBooks = 1;
     public int NumOfFirefighterGiveBooks = 1;
 
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。

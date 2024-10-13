@@ -29,10 +29,6 @@ public class InfluenceBarBehavior : MonoBehaviour
         statePrediction = disgustingRealTimeUpdateNodeBehavior.RealTimeRefreshState();
 
         influenceBarSlider.value = (float)statePrediction.influence / (float)exposeThreshold;
-        //influenceBarSlider.value = 0.5f;
-        if(influenceBarSlider.value != 0) {
-            Debug.Log(influenceBarSlider.value);
-        }
 
         if (statePrediction.state == Properties.StateEnum.NORMAL) {
             influenceBarSlider.fillRect.GetComponent<Image>().color = normalColor;
