@@ -15,6 +15,7 @@ public class RoundManager : MonoBehaviour
     public int allocated = 0;
     public int held = 0;
     public CanvasBehavior canvas;
+    public DetectiveBehavior detective;
     public Canvas uiCanvas; // 这是你的UI Canvas
     public Dictionary<GameObject, int> bookAllocationMap; //<node,value>
     private Dictionary<GameObject, GameObject> activeTextMap = new Dictionary<GameObject, GameObject>();
@@ -112,21 +113,24 @@ public class RoundManager : MonoBehaviour
         if (held == 0)
         {
             //这一段代码精确地控制了一些逻辑的触发顺序，可调整
-            RoundChange?.Invoke();
-            canvas.RefreshAllNodes();
+            RoundChange?.Invoke();//回合变更事件
+            canvas.RefreshAllNodes();//更新节点状态
             var keys = new List<GameObject>(bookAllocationMap.Keys);
             for (int i = 0; i < keys.Count; i++)
             {
                 canvas.AddNodeNumOfBooks(keys[i], bookAllocationMap[keys[i]]);
-            }
-            roundNum++;
-            canvas.RefreshGlobalExposureValue();
+            }//重新分配节点书数量
+            //由于更新状态时已经考虑了预分配的书，所以此时先更新后分配书
+            roundNum++;//更新回合数
+            canvas.RefreshGlobalExposureValue();//更新全局暴露值
+            detective.AddGlobalExposureValue();
+            detective.DetectiveMove();
             for (int i = 0; i < keys.Count; i++)
             {
                 bookAllocationMap[keys[i]] = 0;
-            }
-            BookAllocationChange?.Invoke();
-            messageBar.AddMessage("NextRound");
+            }//清除预分配数据
+            BookAllocationChange?.Invoke();//分配情况变更事件（暂未使用）
+            messageBar.AddMessage("NextRound");//消息提示
         }
         else
         {
