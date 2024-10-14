@@ -298,4 +298,16 @@ public class CanvasBehavior : MonoBehaviour
         }
         if(!exposed) GlobalVar.Instance.RuduceGlobalExposureValue(GlobalVar.Instance.exposureValueReductionOfNoExposedNode);
     }
+    public List<GameObject> ExposedList()
+    {
+        List<GameObject> exposed = new List<GameObject>();
+        foreach(var i in nodeList)
+        {
+            if (i.GetComponent<NodeBehavior>().properties.state == Properties.StateEnum.EXPOSED)
+            {
+                exposed.Add(i);
+            }
+        }
+        return exposed;
+    }
 }
