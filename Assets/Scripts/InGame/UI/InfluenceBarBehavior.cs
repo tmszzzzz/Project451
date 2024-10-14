@@ -7,7 +7,6 @@ public class InfluenceBarBehavior : MonoBehaviour
 {
     [SerializeField] private Slider influenceBarSlider;
     [SerializeField] private NodeBehavior nodeBehavior;
-    [SerializeField] private DisgustingRealTimeUpdateNodeBehavior disgustingRealTimeUpdateNodeBehavior;
     [SerializeField] private Color normalColor;
     [SerializeField] private Color awakenedColor;
     [SerializeField] private Color exposedColor;
