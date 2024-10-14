@@ -186,7 +186,7 @@ public class CanvasBehavior : MonoBehaviour
     public void Initialization()
     {
         //这里是一些需要初始化的信息
-        Me.GetComponent<NodeBehavior>().properties.numOfBooks = 2;
+        Me.GetComponent<NodeBehavior>().properties.numOfBooks = 1;
         Me.GetComponent<NodeBehavior>().properties.state = Properties.StateEnum.AWAKENED;
     }
 

@@ -529,7 +529,7 @@ MonoBehaviour:
   exposureValueAccelerationOfDetective: 1
   exposureValueReductionOfNoExposedNode: 1
   allocationLimit: 1
-  NumOfBibliophileGiveBooks: 2
+  NumOfBibliophileGiveBooks: 1
   NumOfFirefighterGiveBooks: 1
 --- !u!1 &407948463
 GameObject:
@@ -4592,6 +4592,11 @@ PrefabInstance:
     - target: {fileID: 9104826520867552709, guid: 813ff04d5a25bef41b2db10d8ac06c30,
         type: 3}
       propertyPath: m_Name
+      value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9104826520867552709, guid: 813ff04d5a25bef41b2db10d8ac06c30,
+        type: 3}
+      propertyPath: m_TagString
       value: Canvas
       objectReference: {fileID: 0}
     m_RemovedComponents: []

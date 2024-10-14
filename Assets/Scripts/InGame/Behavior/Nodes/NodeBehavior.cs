@@ -65,7 +65,7 @@ public class NodeBehavior : BaseNodeBehavior
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks + 1 + RoundManager.Instance.bookAllocationMap[cub.gameObject] : 0;
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.Instance.bookAllocationMap[cub.gameObject] : 0;
             }
         }
         //Debug.Log(2);
