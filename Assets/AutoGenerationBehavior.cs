@@ -18,7 +18,7 @@ public class AutoGenerationBehavior : MonoBehaviour
             neighborCount++;
         }
 
-        thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = neighborCount %2 == 0 ? neighborCount/2 : neighborCount + 1;
+        thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = neighborCount %2 == 0 ? (neighborCount/2) : (neighborCount/2) + 1;
         thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + 1;
         thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = 2;
     }

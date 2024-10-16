@@ -246,7 +246,7 @@ PrefabInstance:
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
@@ -263,6 +263,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8669639366135378575, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: thisNode
+      value: 
+      objectReference: {fileID: 8508593265475076950}
+    - target: {fileID: 8669639366135378575, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: bookSlotPrefab
+      value: 
+      objectReference: {fileID: 922762563658214117, guid: 4c7626f9a90d03443b52a9a0740395dd,
+        type: 3}
     - target: {fileID: 9138049274481544854, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_AnchorMax.y
