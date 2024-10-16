@@ -28,6 +28,7 @@ public class GlobalVar : MonoBehaviour
     public int allocationLimit = 1;
     public int NumOfBibliophileGiveBooks = 1;
     public int NumOfFirefighterGiveBooks = 1;
+    public int NumOfMaximumBookDeliverRange = 2;
 
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()

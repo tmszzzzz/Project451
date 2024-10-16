@@ -1,53 +1,60 @@
+using TMPro;
 using UnityEngine;
 
 public class BookAllocationArrow : MonoBehaviour
 {
-    public Vector3 pointA; // 第一个点
-    public Vector3 pointB; // 第二个点
-    public LineRenderer lineRenderer; // 线渲染器
-    public float height = 1.0f; // 中段凸起的高度
+    public Transform pointA;         // 起点
+    public Transform pointB;         // 终点
+    public LineRenderer lineRenderer; // LineRenderer 组件
+    public TextMeshPro text; //text
+    public int allocationNum = 0;
+    public int curveResolution = 20; // 曲线的分辨率，越高越平滑
+    public float nodeHeight = 2.0f; // 断点浮起的高度
+    public float curveHeight = 2.0f; // 中段凸起的高度
+    public float deltaYText = 2.0f;
     public float arrowHeadLength = 0.2f; // 箭头头部长度
     public float arrowHeadAngle = 20.0f; // 箭头角度
 
-    void Start()
+    private void Start()
     {
-        // 设置 LineRenderer 属性
-        lineRenderer.positionCount = 3; // 4个点，前后各一个
-        lineRenderer.useWorldSpace = true; // 使用世界坐标
-
-        
-    }
-    private void Update()
-    {
-        DrawArrow();
+        transform.position = (pointA.position + pointB.position) / 2 + Vector3.up * (curveHeight + nodeHeight + deltaYText);
     }
 
-    void DrawArrow()
+    void Update()
     {
-        // 计算中点和箭头的方向
-        Vector3 midPoint = (pointA + pointB) / 2;
-        Vector3 direction = (pointB - pointA).normalized;
+        if (pointA != null && pointB != null)
+        {
+            // 设置线条的点数，曲线的分辨率+箭头的点数
+            lineRenderer.positionCount = curveResolution;
 
-        // 计算向上的偏移
-        Vector3 upOffset = Vector3.up * height;
-
-        // 设置 LineRenderer 的位置
-        lineRenderer.SetPosition(0, pointA);
-        lineRenderer.SetPosition(1, midPoint + upOffset); // 中段向上凸起
-        lineRenderer.SetPosition(2, pointB);
-
-        // 设置箭头
-        DrawArrowHead(midPoint, direction);
+            DrawSmoothArrow();
+            transform.position = (pointA.position + pointB.position) / 2 + Vector3.up * (curveHeight + nodeHeight + deltaYText);
+            text.text = $"{allocationNum}";
+        }
     }
 
-    void DrawArrowHead(Vector3 position, Vector3 direction)
+    void DrawSmoothArrow()
     {
-        Vector3 right = Quaternion.LookRotation(direction) * Quaternion.Euler(0, arrowHeadAngle, 0) * Vector3.forward;
-        Vector3 left = Quaternion.LookRotation(direction) * Quaternion.Euler(0, -arrowHeadAngle, 0) * Vector3.forward;
+        Vector3 start = pointA.position + Vector3.up * nodeHeight;
+        Vector3 end = pointB.position + Vector3.up * nodeHeight;
+        Vector3 middle = (start + end) / 2 + Vector3.up * (curveHeight + nodeHeight);
 
-        // 计算箭头的顶端位置
-        Vector3 arrowHeadBase = position + direction * arrowHeadLength;
-        //lineRenderer.SetPosition(3, arrowHeadBase + right); // 右边的箭头
-        //lineRenderer.SetPosition(4, arrowHeadBase + left);  // 左边的箭头
+        // 生成曲线的点
+        for (int i = 0; i < curveResolution; i++)
+        {
+            float t = i / (float)curveResolution;
+            Vector3 pointOnCurve = CalculateQuadraticBezierPoint(t, start, middle, end);
+            lineRenderer.SetPosition(i, pointOnCurve);
+        }
     }
+
+    // 使用二次贝塞尔曲线计算中间的点
+    Vector3 CalculateQuadraticBezierPoint(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    {
+        float u = 1 - t;
+        float tt = t * t;
+        float uu = u * u;
+        return uu * p0 + 2 * u * t * p1 + tt * p2;
+    }
+
 }
