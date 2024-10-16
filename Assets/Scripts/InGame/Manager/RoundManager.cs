@@ -52,12 +52,12 @@ public class RoundManager : MonoBehaviour
     private void Update()
     {
         // 检测左键点击
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             BookAllocation(0);
         }
         // 检测右键点击
-        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
+        if (Input.GetMouseButtonDown(1)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
             BookAllocation(1);
         }
@@ -68,15 +68,18 @@ public class RoundManager : MonoBehaviour
         // 从鼠标位置创建射线
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-
+        //Debug.Log(1);
         // 如果射线击中了物体
         if (Physics.Raycast(ray, out hit))
         {
+            //Debug.Log(2);
             if (hit.collider != null)
             {
+                //Debug.Log(3);
                 NodeBehavior nb = hit.collider.GetComponent<NodeBehavior>();
                 if (nb != null && mouseButton == 0)
                 {
+                    //Debug.Log(4);
                     if ((int)nb.properties.state >= 1 && nb.properties.numOfBooks + bookAllocationMap[hit.collider.gameObject] < nb.properties.maximumNumOfBooks && held > 0)
                     {
                         bookAllocationMap[hit.collider.gameObject]++;
@@ -86,6 +89,7 @@ public class RoundManager : MonoBehaviour
                 }
                 else if (nb != null && mouseButton == 1)
                 {
+                    //Debug.Log(5);
                     if ((int)nb.properties.state >= 1 && nb.properties.numOfBooks + bookAllocationMap[hit.collider.gameObject] > 0 && !(GetNeedToAllocate() >= GlobalVar.Instance.allocationLimit && bookAllocationMap[hit.collider.gameObject] <= 0))
                     {
                         bookAllocationMap[hit.collider.gameObject]--;
