@@ -11,6 +11,8 @@ public class RoundManager : MonoBehaviour
     public static RoundManager Instance { get; private set; }
     private Camera mainCamera;
     public GameObject textPrefab; // 指向TextMeshProUI预制体
+    public GameObject selectedPointerPrefab;
+    private GameObject currentelectedPointer;
     public MessageBar messageBar;
     public int roundNum = 1;
     public int allocated = 0;
@@ -111,6 +113,12 @@ public class RoundManager : MonoBehaviour
         public GameObject end;
         public GameObject arrow;
     }
+    void reStartFirstSelection()
+    {
+        startNode = null;
+        Destroy(currentelectedPointer);
+    }
+
     void BookAllocation(int mouseButton)
     {
         // 从鼠标位置创建射线
@@ -134,12 +142,13 @@ public class RoundManager : MonoBehaviour
                         if ((int)nb.properties.state >= 1 && nb.properties.numOfBooks + bookAllocationMap[hit.collider.gameObject] > 0)
                         {
                             startNode = hit.collider.gameObject; // 记录起始节点
+                            currentelectedPointer = Instantiate(selectedPointerPrefab, startNode.transform.position + new Vector3(0, 5, 0), Quaternion.identity);
                         }
                         else
                         {
                             messageBar.AddMessage("This node is not permitted to be a starting point.");
                             // 起始节点无书，清除选择状态
-                            startNode = null;
+                            reStartFirstSelection();
                         }
                     }
                     else
@@ -185,7 +194,7 @@ public class RoundManager : MonoBehaviour
                                 Destroy(i.arrow); // 删除箭头对象
                             }
                             // 重置选择状态
-                            startNode = null;
+                            reStartFirstSelection();
 
                             // 触发分配变化事件
                             BookAllocationChange?.Invoke();
@@ -232,7 +241,7 @@ public class RoundManager : MonoBehaviour
 
 
                             // 重置选择状态
-                            startNode = null;
+                            reStartFirstSelection();
 
                             // 触发分配变化事件
                             BookAllocationChange?.Invoke();
@@ -241,7 +250,7 @@ public class RoundManager : MonoBehaviour
                         {
                             messageBar.AddMessage("This movement is not permitted.");
                             // 目标节点不满足条件，清除选择状态
-                            startNode = null;
+                            reStartFirstSelection();
                         }
                     }
                 }

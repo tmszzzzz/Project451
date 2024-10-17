@@ -68,11 +68,17 @@ public class NodeBehavior : BaseNodeBehavior
                 influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.Instance.bookAllocationMap[cub.gameObject] : 0;
             }
         }
+        if (properties.state == Properties.StateEnum.EXPOSED) 
+        {
+            if (influence < properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.AWAKENED, influence);
+        }
+
         //Debug.Log(2);
         if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
         else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
         else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
     }
+
     public override void SetState(Properties.StateEnum stateEnum)
     {
         properties.state = stateEnum;
