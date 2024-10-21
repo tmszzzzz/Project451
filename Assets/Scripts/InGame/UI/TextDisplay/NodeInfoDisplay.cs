@@ -49,12 +49,11 @@ Update:
                 if (properties != null)
                 {
                     // 显示属性值
-                    infoText.text = $"Name: {hoveredObject.name}\n" +
-                                    $"Identity: {properties.type}\n" +
-                                    $"Awake Threshold: {properties.awakeThreshold}\n" +
-                                    $"Expose Threshold: {properties.exposeThreshold}\n" +
-                                    $"Books: {properties.numOfBooks}/{properties.maximumNumOfBooks}"+
-                                    $"\n\n    {properties.description}";
+                    infoText.text = $"姓名: {hoveredObject.name}\n" +
+                                    $"状态: {properties.type}\n" +
+                                    $"觉醒阈值: {properties.awakeThreshold}\n" +
+                                    $"暴露阈值: {properties.exposeThreshold}\n" +
+                                    $"持有书籍: {properties.numOfBooks}/{properties.maximumNumOfBooks}";
                 }
             }
         }

@@ -8,6 +8,6 @@ public class AllocationDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = $"Allocation Limit: {RoundManager.Instance.GetNeedToAllocate()}/{GlobalVar.Instance.allocationLimit}";
+        gameObject.GetComponent<TextMeshProUGUI>().text = $"分配: {RoundManager.Instance.GetNeedToAllocate()}/{GlobalVar.Instance.allocationLimit}";
     }
 }
