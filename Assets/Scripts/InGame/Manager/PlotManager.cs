@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using UnityEngine;
 
 public class PlotManager : MonoBehaviour
@@ -8,12 +10,15 @@ public class PlotManager : MonoBehaviour
 
     public static PlotManager Instance;
 
-    public delegate void UserActionEventHandler(bool forSelect,string selectedFlag);
+    public delegate void UserActionEventHandler(bool forSelect,int selectIndex);
     public event UserActionEventHandler UserAction;
     public event Action PlotStart;
     int next;
     Dictionary<int, string> nameMap;
     Dictionary<string, int> flagMap;
+    List<string> choices;
+    List<string> selectionFlags;
+    string[] lines;
 
 
     private void Awake()
@@ -25,10 +30,12 @@ public class PlotManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        UserAction += NextStep;
+        UserAction += OnNextStep;
         PlotStart += OnStart;
         flagMap = new Dictionary<string, int>();
         nameMap = new Dictionary<int, string>();
+        choices = new List<string>();
+        selectionFlags = new List<string>();
     }
 
     public void StartPlot(string filePath)
@@ -36,7 +43,9 @@ public class PlotManager : MonoBehaviour
         next = 0;
         flagMap.Clear();
         nameMap.Clear();
-        string[] lines = System.IO.File.ReadAllLines(filePath);
+        choices.Clear();
+        selectionFlags.Clear();
+        lines = System.IO.File.ReadAllLines(filePath);
 
         for (int i = 0; i < lines.Length; i++)
         {
@@ -53,7 +62,7 @@ public class PlotManager : MonoBehaviour
             //构建nameMap用于名称代号
             if (line.StartsWith("flag "))
             {
-                string flagName = line.Substring(5).Trim('\'');
+                string flagName = line.Substring(5).Trim();
                 flagMap[flagName] = i;
             }
             //构建flagMap用于跳转行号
@@ -63,19 +72,92 @@ public class PlotManager : MonoBehaviour
 
     private void OnStart()
     {
-        NextStep(false," ");
+        OnNextStep(false,0);
+    }
+    private void OnEnd()
+    {
+        //?
     }
 
-    private void NextStep(bool forSelect, string selectedFlag)
+    private void OnNextStep(bool forSelect, int selectIndex)
     {
         if(forSelect)
         {
-            next = GetFlagLineNumber(selectedFlag) + 1;
+            next = GetFlagLineNumber(selectionFlags[selectIndex]) + 1;
+            choices.Clear();
+            selectionFlags.Clear();
         }
 
-        //TODO
         //这里解析next对应行
-        //接下来的行动可能是继续读取行，或者调用下面的三个Push组件方法
+        while(true)
+        {
+            if(next >= lines.Length)
+            {
+                PushEnd();
+                break;
+            }
+            // 获取当前行并去除空格
+            string line = lines[next].Trim();
+
+            if (line.StartsWith("say ") || line.StartsWith("Isay "))
+            {
+                bool isMe = line.StartsWith("Isay ") ? true : false;
+
+                StringBuilder commandBuilder = new StringBuilder(line);
+
+                while (commandBuilder.ToString().EndsWith("\\"))
+                {
+                    commandBuilder.Length--;
+                    next++; 
+                    commandBuilder.Append(lines[next].Trim()); 
+                }
+
+                string fullCommand = commandBuilder.ToString();
+
+                int firstSpaceIndex = fullCommand.IndexOf(' ', 4);
+                if (firstSpaceIndex != -1 && int.TryParse(fullCommand.Substring(4, firstSpaceIndex - 4), out int characterId))
+                {
+                    string dialogContent = fullCommand.Substring(firstSpaceIndex + 1).Trim('\'');
+                    dialogContent = dialogContent.Replace("\\n", "\n");
+
+                    // 推送对话
+                    if (isMe) PushSelfDialog(nameMap[characterId], dialogContent);
+                    else PushDialog(nameMap[characterId], dialogContent);
+                    break; // 中断循环，等待用户操作后再调用 NextStep
+                }
+            }
+            else if (line.StartsWith("selectItem "))
+            {
+                StringBuilder choiceStr = new StringBuilder();
+                
+                string s = line.Substring(11).Trim().Substring(1);
+                int p = 0;
+                while (s[p] != '\'')
+                {
+                    choiceStr.Append(s[p++]);
+                }
+                string choiceFlag = s.Substring(p + 1).Trim();
+                choices.Add(choiceStr.ToString());
+                selectionFlags.Add(choiceFlag);
+            }
+            else if (line.StartsWith("select"))
+            {
+                PushSelection(choices);
+                break;
+            }
+            else if (line.StartsWith("goto "))
+            {
+                string flag = line.Substring(5).Trim();
+                int i = flagMap[flag];
+                next = i;
+            }
+            else if (line.StartsWith("exit"))
+            {
+                PushEnd();
+                break;
+            }
+            next++;
+        }
 
         next++;
     }
@@ -84,6 +166,14 @@ public class PlotManager : MonoBehaviour
     {
         //TODO
         //这里向ui发去初始化剧情的信息，ui初始化完成后应当触发此类内事件PlotStart
+        Debug.Log("开始一段新剧情");
+    }
+
+    private void PushEnd()
+    {
+        //TODO
+        //这里向ui发去结束剧情的信息，ui初始化完成后应当触发此类内事件PlotEnd
+        Debug.Log("END.");
     }
 
 
@@ -92,6 +182,7 @@ public class PlotManager : MonoBehaviour
         //TODO
         //这里向ui推送一个对侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
         //置其首参数为false表示当前不需要响应select
+        Debug.Log($"{name} : \n    {content}");
     }
 
     private void PushSelfDialog(string name, string content)
@@ -99,10 +190,11 @@ public class PlotManager : MonoBehaviour
         //TODO
         //这里向ui推送一个self侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
         //置其首参数为false表示当前不需要响应select
+        Debug.Log($"{name} (Me) : \n    {content}");
     }
 
-    private void PushSelect(int num, List<string> selectItems)
-    {
+    private void PushSelection(List<string> selectItems)
+    { 
         //TODO
         //这里向ui推送一个选择，ui检测到用户进行“选择”动作后应当触发此类内事件UserAction
         //置其首参数为true表示当前需要响应select，第二个参数填入响应时跳转到的flag
