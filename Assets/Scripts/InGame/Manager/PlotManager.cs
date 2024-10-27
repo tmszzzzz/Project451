@@ -124,8 +124,8 @@ public class PlotManager : MonoBehaviour
                 while (commandBuilder.ToString().EndsWith("\\"))
                 {
                     commandBuilder.Length--;
-                    next++; 
-                    commandBuilder.Append(lines[next].Trim()); 
+                    next++;
+                    commandBuilder.Append(lines[next].Trim());
                 }
 
                 string fullCommand = commandBuilder.ToString();
@@ -166,10 +166,31 @@ public class PlotManager : MonoBehaviour
                     break; // 中断循环，等待用户操作后再调用 NextStep
                 }
             }
+            else if (line.StartsWith("narration "))
+            {
+
+                StringBuilder commandBuilder = new StringBuilder(line);
+
+                while (commandBuilder.ToString().EndsWith("\\"))
+                {
+                    commandBuilder.Length--;
+                    next++;
+                    commandBuilder.Append(lines[next].Trim());
+                }
+
+                string fullCommand = commandBuilder.ToString();
+
+                string dialogContent = fullCommand.Substring(10).Trim().Trim('\'');
+                dialogContent = dialogContent.Replace("\\n", "\n");
+
+                PushNarration(dialogContent);
+                break;
+
+            }
             else if (line.StartsWith("selectItem "))
             {
                 StringBuilder choiceStr = new StringBuilder();
-                
+
                 string s = line.Substring(11).Trim().Substring(1);
                 int p = 0;
                 while (s[p] != '\'')
@@ -231,6 +252,14 @@ public class PlotManager : MonoBehaviour
         //这里向ui推送一个self侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
         //置其首参数为false表示当前不需要响应select
         Debug.Log($"{name} (Me) : \n    {content}");
+    }
+
+    private void PushNarration(string content)
+    {
+        //TODO
+        //这里向ui推送一个self侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
+        //置其首参数为false表示当前不需要响应select
+        Debug.Log($"旁白: \n    {content}");
     }
 
     private void PushSelection(List<string> selectItems)

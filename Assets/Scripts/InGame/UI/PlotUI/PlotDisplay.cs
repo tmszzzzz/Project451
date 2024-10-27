@@ -11,6 +11,6 @@ public class PlotDisplay : MonoBehaviour
 
     public void Select()
     {
-        PlotManager.Instance.TriggerUserAction(true, 0);
+        PlotManager.Instance.TriggerUserAction(true, 1);
     }
 }
