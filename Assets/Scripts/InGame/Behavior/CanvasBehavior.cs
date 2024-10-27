@@ -310,4 +310,74 @@ public class CanvasBehavior : MonoBehaviour
         }
         return exposed;
     }
+
+    public bool CanConnectNodes(GameObject startNode, GameObject endNode, int maxDistance)
+    {
+        // 如果起点和终点相同，直接返回 true
+        if (startNode == endNode)
+        {
+            return true;
+        }
+
+        // 队列，用于BFS
+        Queue<GameObject> nodeQueue = new Queue<GameObject>();
+        // 记录访问过的节点，避免重复访问
+        HashSet<GameObject> visitedNodes = new HashSet<GameObject>();
+        // 每个节点到达的当前步数
+        Dictionary<GameObject, int> distanceMap = new Dictionary<GameObject, int>();
+
+        // 初始化，将起点加入队列
+        nodeQueue.Enqueue(startNode);
+        visitedNodes.Add(startNode);
+        distanceMap[startNode] = 0;
+
+        // 开始BFS
+        while (nodeQueue.Count > 0)
+        {
+            GameObject currentNode = nodeQueue.Dequeue();
+            int currentDistance = distanceMap[currentNode];
+
+            // 如果当前步数超过最大允许距离，结束搜索
+            if (currentDistance >= maxDistance)
+            {
+                continue;
+            }
+
+            // 遍历所有连接，找到与 currentNode 相连的节点
+            foreach (var connection in connectionList)
+            {
+                ConnectionBehavior cb = connection.GetComponent<ConnectionBehavior>();
+
+                // 确定与 currentNode 相连的另一个节点
+                GameObject adjacentNode = null;
+                if (cb.startNode == currentNode)
+                {
+                    adjacentNode = cb.endNode;
+                }
+                else if (cb.endNode == currentNode)
+                {
+                    adjacentNode = cb.startNode;
+                }
+
+                // 如果相邻节点存在且未访问过
+                if (adjacentNode != null && !visitedNodes.Contains(adjacentNode))
+                {
+                    // 检查是否已经找到终点
+                    if (adjacentNode == endNode)
+                    {
+                        return true;
+                    }
+
+                    // 标记访问并加入队列
+                    visitedNodes.Add(adjacentNode);
+                    nodeQueue.Enqueue(adjacentNode);
+                    distanceMap[adjacentNode] = currentDistance + 1;
+                }
+            }
+        }
+
+        // 如果BFS结束还未找到终点，返回 false
+        return false;
+    }
+
 }

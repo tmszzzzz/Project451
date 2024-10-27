@@ -28,6 +28,7 @@ public class GlobalVar : MonoBehaviour
     public int allocationLimit = 1;
     public int NumOfBibliophileGiveBooks = 1;
     public int NumOfFirefighterGiveBooks = 1;
+    public int NumOfMaximumBookDeliverRange = 3;
 
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()
@@ -48,10 +49,7 @@ public class GlobalVar : MonoBehaviour
 
     private void KeepLimitEqualToHalfOfBookNum()
     {
-        allocationLimit = RoundManager.Instance.canvas.GetTotalBookNum() / 2;
-        if (RoundManager.Instance.canvas.GetTotalBookNum() % 2 == 1) {
-            allocationLimit++;
-        }
+        allocationLimit = RoundManager.Instance.canvas.GetTotalBookNum();
     }
 
     void Update()
