@@ -22,6 +22,11 @@ public class PlotManager : MonoBehaviour
     {
         PlotStart?.Invoke();
     }
+    public event Action PlotEnd;
+    public void TriggerPlotEnd()
+    {
+        PlotEnd?.Invoke();
+    }
     int next;
     Dictionary<int, string> nameMap;
     Dictionary<string, int> flagMap;
@@ -42,6 +47,7 @@ public class PlotManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         UserAction += OnNextStep;
         PlotStart += OnStart;
+        PlotEnd += OnEnd;
         flagMap = new Dictionary<string, int>();
         nameMap = new Dictionary<int, string>();
         choices = new List<string>();
