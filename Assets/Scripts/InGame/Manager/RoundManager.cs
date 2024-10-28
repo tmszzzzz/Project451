@@ -23,6 +23,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject startNode = null;
     [SerializeField] private List<BookAllocationItem> allocationItems = new List<BookAllocationItem>(); // 存储分配项的列表
     public GameObject bookAllocationArrow;
+    int g = 0;
 
 
     //以下是事件
@@ -59,11 +60,13 @@ public class RoundManager : MonoBehaviour
         // 检测左键点击
         if (Input.GetMouseButtonDown(0)/* && !EventSystem.current.IsPointerOverGameObject()*/)
         {
+            
             BookAllocation(0);
         }
         // 检测右键点击
-        if (Input.GetMouseButtonDown(1)/* && !EventSystem.current.IsPointerOverGameObject()*/)
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
         {
+            Debug.Log(g++);
             BookAllocation(1);
         }
         //BookTexts();

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using UnityEngine;
 
@@ -22,13 +21,20 @@ public class PlotManager : MonoBehaviour
     {
         PlotStart?.Invoke();
     }
+    public event Action PlotEnd;
+    public void TriggerPlotEnd()
+    {
+        PlotEnd?.Invoke();
+    }
     int next;
+    [SerializeField] private PlotDisplay plotDisplay;
     Dictionary<int, string> nameMap;
     Dictionary<string, int> flagMap;
     List<string> choices;
     List<string> selectionFlags;
     string[] lines;
     bool duringPlot;
+    public bool GetDuringPlot() { return duringPlot; }
 
 
     private void Awake()
@@ -42,6 +48,7 @@ public class PlotManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         UserAction += OnNextStep;
         PlotStart += OnStart;
+        PlotEnd += OnEnd;
         flagMap = new Dictionary<string, int>();
         nameMap = new Dictionary<int, string>();
         choices = new List<string>();
@@ -227,6 +234,7 @@ public class PlotManager : MonoBehaviour
     {
         //TODO
         //这里向ui发去初始化剧情的信息，ui初始化完成后应当触发此类内事件PlotStart
+        plotDisplay.PushedStart();
         Debug.Log("开始一段新剧情");
     }
 
@@ -234,6 +242,7 @@ public class PlotManager : MonoBehaviour
     {
         //TODO
         //这里向ui发去结束剧情的信息，ui初始化完成后应当触发此类内事件PlotEnd
+        plotDisplay.PushedEnd();
         Debug.Log("END.");
     }
 
@@ -243,6 +252,7 @@ public class PlotManager : MonoBehaviour
         //TODO
         //这里向ui推送一个对侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
         //置其首参数为false表示当前不需要响应select
+        plotDisplay.ShowDialog(name, content);
         Debug.Log($"{name} : \n    {content}");
     }
 
@@ -251,6 +261,7 @@ public class PlotManager : MonoBehaviour
         //TODO
         //这里向ui推送一个self侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
         //置其首参数为false表示当前不需要响应select
+        plotDisplay.ShowSelfDialog(name, content);
         Debug.Log($"{name} (Me) : \n    {content}");
     }
 
@@ -259,6 +270,7 @@ public class PlotManager : MonoBehaviour
         //TODO
         //这里向ui推送一个self侧对话的信息，ui检测到用户进行“继续”动作后应当触发此类内事件UserAction
         //置其首参数为false表示当前不需要响应select
+        plotDisplay.ShowNarration(content);
         Debug.Log($"旁白: \n    {content}");
     }
 
@@ -267,6 +279,7 @@ public class PlotManager : MonoBehaviour
         //TODO
         //这里向ui推送一个选择，ui检测到用户进行“选择”动作后应当触发此类内事件UserAction
         //置其首参数为true表示当前需要响应select，第二个参数填入响应时跳转到的flag
+        plotDisplay.ShowSelection(selectItems);
         StringBuilder s = new StringBuilder("请做出选择：\n");
         for(int i=0;i<selectItems.Count;i++)
         {
