@@ -60,7 +60,7 @@ public class PlotDisplay : MonoBehaviour
     {
         OpenPlots();
         PlotManager.Instance.TriggerPlotStart();
-        CreateContinueBUtton();
+        //CreateContinueBUtton();
     }
 
 
@@ -87,8 +87,10 @@ public class PlotDisplay : MonoBehaviour
     {
         Debug.Log("calling from selection area");
         Button continueButton = plotSelectionArea.GetComponent<PlotSelectionArea>().NeedButtons(1)[0];
-        //Debug.Log(continueButton.gameObject.activeSelf);
         continueButton.onClick.AddListener(ContinuePlot);
+
+        TextMeshProUGUI buttonText = continueButton.GetComponentInChildren<TextMeshProUGUI>();
+        buttonText.text = "...";
     }
 
     // 显示对侧对话
@@ -116,6 +118,18 @@ public class PlotDisplay : MonoBehaviour
     // 显示选择项
     public void ShowSelection(List<string> choices)
     {
+        List<Button> choicesButtons = plotSelectionArea.GetComponent<PlotSelectionArea>().NeedButtons(choices.Count);
+
+        for (int i = 0; i < choices.Count; i++)
+        {
+            string choiceText = choices[i];
+            int choiceIndex = i;
+
+            Button choiceButton = choicesButtons[i];
+            choiceButton.GetComponentInChildren<TextMeshProUGUI>().text = choiceText;
+            choiceButton.onClick.AddListener(() => SelectChoice(choiceIndex));
+        }
+
         // selectionContainer.gameObject.SetActive(true);
 
         // // 清空之前的选择项
@@ -139,6 +153,7 @@ public class PlotDisplay : MonoBehaviour
     // 选择一个选项
     private void SelectChoice(int choiceIndex)
     {
+        PlotManager.Instance.TriggerUserAction(true, choiceIndex);
         // selectionContainer.gameObject.SetActive(false); // 隐藏选择项
         // PlotManager.Instance.TriggerUserAction(true, choiceIndex); // 通知 PlotManager 选择了某项
     }

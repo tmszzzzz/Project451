@@ -45,10 +45,7 @@ public class PlotSelectionArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        foreach(GameObject button in allButtons)
-        {
-            button.SetActive(false);
-        }
+        
     }
 
     // Update is called once per frame

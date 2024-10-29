@@ -23,8 +23,6 @@ And but thou love me, let them find me here.\n\
 My life were better ended by their hate,\n\
 Than death prorogued, wanting of thy love.'
 
-exit
-
 # Optional choices for Juliet
 selectItem 'Confess love openly' flag_confess
 selectItem 'Express hesitation' flag_hesitate
@@ -34,15 +32,13 @@ select
 goto flag_confess
 
 flag flag_confess
-Isay 2 'Romeo, I do love thee with all my heart!'
+say 2 'Romeo, I do love thee with all my heart!'
 goto end
 
 flag flag_hesitate
-Isay 2 'I fear what may come of this. We are from feuding families...'
+say 2 'I fear what may come of this. We are from feuding families...'
 goto end
 
 flag end
 
-# End scene
-narration 'The night deepens as the two lovers share a moment of intense passion and resolve to meet again.'
 exit
