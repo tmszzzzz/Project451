@@ -6,6 +6,7 @@ using UnityEngine;
 public class NodeBehavior : BaseNodeBehavior
 {
     public Properties properties;
+    public PlotAndPageHandler plotAndPageHandler;
     public MessageBar mb;
     protected Renderer objRenderer;
     protected Dictionary<int, Color> ColorMap;
@@ -81,6 +82,12 @@ public class NodeBehavior : BaseNodeBehavior
 
     public override void SetState(Properties.StateEnum stateEnum)
     {
+        if (properties.state == Properties.StateEnum.NORMAL && (stateEnum == Properties.StateEnum.AWAKENED || stateEnum == Properties.StateEnum.EXPOSED))
+        {
+            Debug.Log("Node " + gameObject.name + " is awaked.");
+            plotAndPageHandler.OnAwakeShowButtons();
+        }
+
         properties.state = stateEnum;
     }
 

@@ -23,4 +23,6 @@ public class Properties
     public int numOfBooks = 0;
     public int maximumNumOfBooks;
     public string description = "";
+    public string plotFileName = "";
+    public Sprite pageSprite;
 }

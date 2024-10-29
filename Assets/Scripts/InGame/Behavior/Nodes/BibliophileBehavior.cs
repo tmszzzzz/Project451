@@ -17,6 +17,7 @@ public class BibliophileBehavior : NodeBehavior
             cb.AddNodeNumOfBooks(cb.Me, GlobalVar.Instance.NumOfBibliophileGiveBooks);
             mb.AddMessage($"Bibliophile {gameObject.name} gives you {GlobalVar.Instance.NumOfBibliophileGiveBooks} books.");
         }
-        properties.state = stateEnum;
+        // properties.state = stateEnum;
+        base.SetState(stateEnum);
     }
 }

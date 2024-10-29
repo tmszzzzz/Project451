@@ -28,6 +28,7 @@ public class CanvasBehavior : MonoBehaviour
     }
     public GameObject Me;//用于指示玩家节点的对象引用，这里粗略地设定为id=0的节点，后续再改
     public Description description;
+    public Node2PlotAndPageData node2PlotAndPageData;
 
     public void SavePositions()
     {
@@ -154,7 +155,9 @@ public class CanvasBehavior : MonoBehaviour
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
                         //NumOfBooks = loadedProperties.NumOfBooks != 0 ? loadedProperties.NumOfBooks : 0,
                         maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0,
-                        description = description.GetDescriptionByID(position.id)
+                        description = description.GetDescriptionByID(position.id),
+                        plotFileName = node2PlotAndPageData.GetPlotFileNameByID(position.id),
+                        pageSprite = node2PlotAndPageData.GetPageSpriteByID(position.id)
                     };
                 }
                 nodeList.Add(node);

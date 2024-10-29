@@ -616,7 +616,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.000022888, y: -13.3}
+  m_AnchoredPosition: {x: -0.000022888, y: -20.6}
   m_SizeDelta: {x: 119.21, y: 35.8425}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &217901178
@@ -1752,7 +1752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -291, y: -47}
+  m_AnchoredPosition: {x: -291, y: 15}
   m_SizeDelta: {x: 151.4194, y: 191.4778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &657331548
@@ -3053,8 +3053,8 @@ RectTransform:
   - {fileID: 931728263}
   - {fileID: 616522262}
   - {fileID: 407948464}
-  - {fileID: 1713584107}
   - {fileID: 1851338465}
+  - {fileID: 2096135482}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3111,7 +3111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -72}
+  m_AnchoredPosition: {x: 0, y: -55.8}
   m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1040895694
@@ -5221,7 +5221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -37.9}
+  m_AnchoredPosition: {x: 0, y: -23.3}
   m_SizeDelta: {x: 300, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1747592314
@@ -5532,7 +5532,7 @@ GameObject:
   - component: {fileID: 1851338468}
   - component: {fileID: 1851338467}
   m_Layer: 5
-  m_Name: MessageBar (1)
+  m_Name: PlotBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5556,7 +5556,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 89.1, y: -379.9}
+  m_AnchoredPosition: {x: 0, y: -198.1}
   m_SizeDelta: {x: 235.30829, y: 19.47751}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1851338467
@@ -5643,7 +5643,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: -3.4459867, z: 0, w: 0.49232006}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -6678,6 +6678,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8584064975038144291, guid: 4c30e418753d6d246b9ca47db0427df9,
         type: 3}
+    - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
+        type: 3}
+      propertyPath: node2PlotAndPageData
+      value: 
+      objectReference: {fileID: 11400000, guid: f0ddd7b55c1ac0c40a83e8ff6d72094f,
+        type: 2}
     - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
         type: 3}
       propertyPath: nodePrefabMap.Array.size

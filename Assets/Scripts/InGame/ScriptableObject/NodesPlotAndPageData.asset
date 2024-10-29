@@ -9,13 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7727d4c1a39ddcb4c95e91eef8b421cf, type: 3}
-  m_Name: NodeDescriptions
+  m_Script: {fileID: 11500000, guid: 3fa5c6688b28e464ebdcab465fd11b85, type: 3}
+  m_Name: NodesPlotAndPageData
   m_EditorClassIdentifier: 
-  descriptions:
+  nodePlotAndPages:
   - nodeID: 0
-    description: 123456
+    plotFileNames: 11
+    pageSprites: {fileID: 0}
   - nodeID: 1
-    description: 123456
-  - nodeID: 1
-    description: 123456
+    plotFileNames: 111
+    pageSprites: {fileID: 0}
+  - nodeID: 2
+    plotFileNames: 1341341
+    pageSprites: {fileID: 0}
