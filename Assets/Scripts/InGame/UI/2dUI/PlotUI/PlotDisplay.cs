@@ -41,6 +41,8 @@ public class PlotDisplay : MonoBehaviour
         shadowImage.gameObject.SetActive(true);
         plotPanel.SetActive(true);
         isPlotting = true;
+
+        plotDisplayArea.GetComponent<PlotDisplayArea>().OpenPlots();
     }
 
 
