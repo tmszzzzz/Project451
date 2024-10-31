@@ -1,38 +1,44 @@
-# 人物定义
-define 1 'Steve'
-define 2 'Alex'
-define 3 'Me'
+# Define characters
+define 1 'Romeo'
+define 2 'Juliet'
 
-# 对话
-say 1 '这是一个很长的对话文本，可以换行。\n\
-这个文本包含了多个句子，继续描述剧情。'
-say 2 '这是另一个角色的长文本对话，\n\
-同样可以包含多行，并且可以自由描述对话内容。'
-Isay 3 '我自己的长文本对话，\n\
-继续讲述剧情细节。'
-narration '旁白\
-旁白\n旁白'
+# Romeo speaks
+Isay 1 'But, soft! What light through yonder window breaks?\n\
+It is the east, and Juliet is the sun.'
 
-# 选择项
-selectItem '选择A' flag1
-selectItem '选择B' flag2
-selectItem '选择C' flag3
-select 
+# Juliet appears on the balcony
+say 2 'O Romeo, Romeo! Wherefore art thou Romeo?'
 
-# 分支处理
-flag flag1
-Isay 3 '我选择了A，接下来发生了什么...'
+# Romeo reveals himself
+Isay 1 'I take thee at thy word.\n\
+Call me but love, and I’ll be new baptized;\n\
+Henceforth I never will be Romeo.'
+
+# Juliet expresses concern
+say 2 'If they do see thee, they will murder thee!'
+
+# Romeo reassures her
+Isay 1 'I have night's cloak to hide me from their sight;\n\
+And but thou love me, let them find me here.\n\
+My life were better ended by their hate,\n\
+Than death prorogued, wanting of thy love.'
+
+# Optional choices for Juliet
+selectItem 'Confess love openly' flag_confess
+selectItem 'Express hesitation' flag_hesitate
+select
+
+# Branch for Juliet's response
+goto flag_confess
+
+flag flag_confess
+say 2 'Romeo, I do love thee with all my heart!'
 goto end
 
-flag flag2
-Isay 3 '我选择了B，事情变得复杂了...'
-goto end
-
-flag flag3
-Isay 3 '我选择了C，结果出乎意料...'
+flag flag_hesitate
+say 2 'I fear what may come of this. We are from feuding families...'
 goto end
 
 flag end
 
-# 剧情退出
 exit
