@@ -20,7 +20,7 @@ public class GlobalVar : MonoBehaviour
         globalExposureValue = Math.Max(globalExposureValue - v, 0);
     }
 
-    public const int maxGlobalExposureValue = 100;
+    public int maxGlobalExposureValue = 100;
     public int exposureValueAdditionOfExposedNode = 10;
     public int exposureValueAdditionOfDetective = 2;
     public int exposureValueAccelerationOfDetective = 1;
@@ -29,6 +29,8 @@ public class GlobalVar : MonoBehaviour
     public int NumOfBibliophileGiveBooks = 1;
     public int NumOfFirefighterGiveBooks = 1;
     public int NumOfMaximumBookDeliverRange = 3;
+    public int NumOfDetectiveOnStart = 4;
+    public float ProbabilityOfNodesInspectingDetective = 0.1f;
 
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()

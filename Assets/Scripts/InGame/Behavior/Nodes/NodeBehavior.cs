@@ -60,7 +60,7 @@ public class NodeBehavior : BaseNodeBehavior
         }
         List<GameObject> nList = cb.GetNeighbors(gameObject);
 
-        int influence = 0;
+        int influence = properties.numOfBooks + RoundManager.Instance.bookAllocationMap[gameObject];
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();

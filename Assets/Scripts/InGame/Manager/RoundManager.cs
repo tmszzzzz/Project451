@@ -71,44 +71,7 @@ public class RoundManager : MonoBehaviour
         }
         //BookTexts();
     }
-    /*
-    void BookAllocation(int mouseButton)
-    {
-        // 从鼠标位置创建射线
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        //Debug.Log(1);
-        // 如果射线击中了物体
-        if (Physics.Raycast(ray, out hit))
-        {
-            //Debug.Log(2);
-            if (hit.collider != null)
-            {
-                //Debug.Log(3);
-                NodeBehavior nb = hit.collider.GetComponent<NodeBehavior>();
-                if (nb != null && mouseButton == 0)
-                {
-                    //Debug.Log(4);
-                    if ((int)nb.properties.state >= 1 && nb.properties.numOfBooks + bookAllocationMap[hit.collider.gameObject] < nb.properties.maximumNumOfBooks && held > 0)
-                    {
-                        bookAllocationMap[hit.collider.gameObject]++;
-                        held--;
-                        BookAllocationChange?.Invoke();
-                    }
-                }
-                else if (nb != null && mouseButton == 1)
-                {
-                    //Debug.Log(5);
-                    if ((int)nb.properties.state >= 1 && nb.properties.numOfBooks + bookAllocationMap[hit.collider.gameObject] > 0 && !(GetNeedToAllocate() >= GlobalVar.Instance.allocationLimit && bookAllocationMap[hit.collider.gameObject] <= 0))
-                    {
-                        bookAllocationMap[hit.collider.gameObject]--;
-                        held++;
-                        BookAllocationChange?.Invoke();
-                    }
-                }
-            }
-        }
-    }*/
+    
     struct BookAllocationItem
     {
         public GameObject begin;
@@ -302,6 +265,7 @@ public class RoundManager : MonoBehaviour
             //这一段代码精确地控制了一些逻辑的触发顺序，可调整
             RoundChange?.Invoke();//回合变更事件
             canvas.RefreshAllNodes();//更新节点状态
+            detective.AddGlobalExposureValue();//依据分配数据，决定侦探是否增加暴露值
             var keys = new List<GameObject>(bookAllocationMap.Keys);
             for (int i = 0; i < keys.Count; i++)
             {
@@ -310,8 +274,8 @@ public class RoundManager : MonoBehaviour
             //由于更新状态时已经考虑了预分配的书，所以此时先更新后分配书
             roundNum++;//更新回合数
             canvas.RefreshGlobalExposureValue();//更新全局暴露值
-            detective.AddGlobalExposureValue();
             detective.DetectiveMove();
+            canvas.RefreshAllConnections();
             for (int i = 0; i < keys.Count; i++)
             {
                 bookAllocationMap[keys[i]] = 0;

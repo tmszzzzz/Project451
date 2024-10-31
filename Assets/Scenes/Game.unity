@@ -1428,14 +1428,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalExposureValue: 0
+  maxGlobalExposureValue: 100
   exposureValueAdditionOfExposedNode: 10
   exposureValueAdditionOfDetective: 20
   exposureValueAccelerationOfDetective: 5
-  exposureValueReductionOfNoExposedNode: 5
+  exposureValueReductionOfNoExposedNode: 0
   allocationLimit: 2
   NumOfBibliophileGiveBooks: 1
   NumOfFirefighterGiveBooks: 1
   NumOfMaximumBookDeliverRange: 2
+  NumOfDetectiveOnStart: 4
+  ProbabilityOfNodesInspectingDetective: 0.1
 --- !u!114 &319005132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2096,7 +2099,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.974
+  m_Value: 0.41
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7456,6 +7459,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8584064975038144291, guid: 4c30e418753d6d246b9ca47db0427df9,
         type: 3}
+    - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
+        type: 3}
+      propertyPath: detectiveBehavior
+      value: 
+      objectReference: {fileID: 1279831220}
     - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
         type: 3}
       propertyPath: node2PlotAndPageData
