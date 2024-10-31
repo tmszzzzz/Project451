@@ -141,10 +141,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3461528676030006706}
     m_Modifications:
+    - target: {fileID: 253722716933934009, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 570350608778618358, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_Name
       value: NodeUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1124949140894213305, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2059751223972666454, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
