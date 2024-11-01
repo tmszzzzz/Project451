@@ -78,7 +78,7 @@ public class RoundManager : MonoBehaviour
         public GameObject end;
         public GameObject arrow;
     }
-    void reStartFirstSelection()
+    void RestartFirstSelection()
     {
         startNode = null;
         Destroy(currentelectedPointer);
@@ -113,7 +113,7 @@ public class RoundManager : MonoBehaviour
                         {
                             messageBar.AddMessage("This node is not permitted to be a starting point.");
                             // 起始节点无书，清除选择状态
-                            reStartFirstSelection();
+                            RestartFirstSelection();
                         }
                     }
                     else
@@ -132,7 +132,7 @@ public class RoundManager : MonoBehaviour
                             // 如果数量为0，则删除该反向分配线
                             if (reverseArrowScript.allocationNum <= 0)
                             {
-                                Destroy(reverseItem.Value.arrow); // 删除箭头对象
+                                reverseItem.Value.arrow.GetComponent<BookAllocationArrow>().Cancel();
                                 allocationItems.Remove(reverseItem.Value); // 从列表中移除
                             }
 
@@ -151,15 +151,16 @@ public class RoundManager : MonoBehaviour
                             foreach(var i in toBeDeleted)
                             {
                                 allocationItems.Remove(i);
-                                int val = i.arrow.GetComponent<BookAllocationArrow>().allocationNum;
+                                var bookAllocationArrow = i.arrow.GetComponent<BookAllocationArrow>();
+                                int val = bookAllocationArrow.allocationNum;
                                 bookAllocationMap[i.begin] += val;
                                 bookAllocationMap[i.end] -= val;
 
 
-                                Destroy(i.arrow); // 删除箭头对象
+                                bookAllocationArrow.Cancel();
                             }
                             // 重置选择状态
-                            reStartFirstSelection();
+                            RestartFirstSelection();
 
                             // 触发分配变化事件
                             BookAllocationChange?.Invoke();
@@ -206,7 +207,7 @@ public class RoundManager : MonoBehaviour
 
 
                             // 重置选择状态
-                            reStartFirstSelection();
+                            RestartFirstSelection();
 
                             // 触发分配变化事件
                             BookAllocationChange?.Invoke();
@@ -215,7 +216,7 @@ public class RoundManager : MonoBehaviour
                         {
                             messageBar.AddMessage("This movement is not permitted.");
                             // 目标节点不满足条件，清除选择状态
-                            reStartFirstSelection();
+                            RestartFirstSelection();
                         }
                     }
                 }
@@ -282,7 +283,7 @@ public class RoundManager : MonoBehaviour
             }//清除预分配数据
             foreach(var i in allocationItems)
             {
-                Destroy(i.arrow);
+                i.arrow.GetComponent<BookAllocationArrow>().Confirm();
             }
             allocationItems.Clear();//清除预分配链
             BookAllocationChange?.Invoke();//分配情况变更事件（暂未使用）

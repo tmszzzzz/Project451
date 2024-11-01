@@ -14,6 +14,13 @@ public class BookAllocationArrow : MonoBehaviour
     public float deltaYText = 2.0f;
     public float arrowHeadLength = 0.2f; // 箭头头部长度
     public float arrowHeadAngle = 20.0f; // 箭头角度
+    private Animator anim;
+
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+        if (anim == null) Debug.LogWarning("No Animator in arrow!");
+    }
 
     private void Start()
     {
@@ -29,7 +36,7 @@ public class BookAllocationArrow : MonoBehaviour
 
             DrawSmoothArrow();
             transform.position = (pointA.position + pointB.position) / 2 + Vector3.up * (curveHeight + nodeHeight + deltaYText);
-            text.text = $"{allocationNum}";
+            text.text = allocationNum == 0? "" : $"{allocationNum}";
         }
     }
 
@@ -56,5 +63,12 @@ public class BookAllocationArrow : MonoBehaviour
         float uu = u * u;
         return uu * p0 + 2 * u * t * p1 + tt * p2;
     }
-
+    public void Confirm()
+    {
+        anim.SetTrigger("Confirm");
+    }
+    public void Cancel()
+    {
+        anim.SetTrigger("Cancel");
+    }
 }
