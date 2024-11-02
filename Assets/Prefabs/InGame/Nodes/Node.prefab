@@ -52,7 +52,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8508593265475076950}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -106,7 +106,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3926578069804042716
 MonoBehaviour:
@@ -132,7 +132,6 @@ MonoBehaviour:
     pageSprite: {fileID: 0}
   plotAndPageHandler: {fileID: 2798616845115293210}
   mb: {fileID: 0}
-  selected: 0
 --- !u!1001 &1796190036625346765
 PrefabInstance:
   m_ObjectHideFlags: 0
