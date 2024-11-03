@@ -1431,7 +1431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalExposureValue: 0
-  maxGlobalExposureValue: 100
+  maxGlobalExposureValue: 1000
   exposureValueAdditionOfExposedNode: 10
   exposureValueAdditionOfDetective: 20
   exposureValueAccelerationOfDetective: 5
@@ -2487,7 +2487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &657331547
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7884,3 +7884,4 @@ SceneRoots:
   - {fileID: 1366762421127226663}
   - {fileID: 3564638644146057825}
   - {fileID: 706924164}
+  - {fileID: 2083013746}
