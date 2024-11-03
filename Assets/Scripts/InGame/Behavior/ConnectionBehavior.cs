@@ -6,14 +6,11 @@ public class ConnectionBehavior : MonoBehaviour
 {
     public GameObject startNode;
     public GameObject endNode;
-    private LineRenderer lineRenderer;
+    [SerializeField] LineRenderer lineRenderer;
+    [SerializeField] DetectiveBehavior detective;
 
     void Start()
     {
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.1f;  // 连接线的起始宽度
-        lineRenderer.endWidth = 0.1f;    // 连接线的结束宽度
-        lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // 使用默认材质
         lineRenderer.startColor = Color.white; // 连接线的起始颜色
         lineRenderer.endColor = Color.white;   // 连接线的结束颜色
     }

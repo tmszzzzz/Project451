@@ -1369,6 +1369,7 @@ GameObject:
   - component: {fileID: 319005129}
   - component: {fileID: 319005131}
   - component: {fileID: 319005132}
+  - component: {fileID: 319005133}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -1430,14 +1431,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalExposureValue: 0
+  maxGlobalExposureValue: 100
   exposureValueAdditionOfExposedNode: 10
   exposureValueAdditionOfDetective: 20
   exposureValueAccelerationOfDetective: 5
-  exposureValueReductionOfNoExposedNode: 5
+  exposureValueReductionOfNoExposedNode: 0
   allocationLimit: 2
   NumOfBibliophileGiveBooks: 1
   NumOfFirefighterGiveBooks: 1
   NumOfMaximumBookDeliverRange: 2
+  NumOfDetectiveOnStart: 4
+  ProbabilityOfNodesInspectingDetective: 0.1
 --- !u!114 &319005132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1451,6 +1455,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plotDisplay: {fileID: 216910384}
+--- !u!114 &319005133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319005128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a933e2393e4bb024796a29df0d8854ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelController: {fileID: 1002642323}
 --- !u!1 &407948463
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,7 +1731,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.000010014, y: -14.056885}
+  m_AnchoredPosition: {x: -0.000010014, y: -14.056915}
   m_SizeDelta: {x: 543.5364, y: -104.0473}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &434205203
@@ -2098,7 +2115,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.974
+  m_Value: 0.41
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2470,7 +2487,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &657331547
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3788,6 +3805,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NodeInfoPanel: {fileID: 1935688292}
+  infoTextGo: {fileID: 1324007288}
+  currentNode: {fileID: 0}
 --- !u!1 &1020169799
 GameObject:
   m_ObjectHideFlags: 0
@@ -4601,7 +4620,7 @@ Transform:
   m_GameObject: {fileID: 1279831219}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.891852, y: 19.84351, z: -10.973318}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4618,7 +4637,6 @@ GameObject:
   - component: {fileID: 1324007289}
   - component: {fileID: 1324007292}
   - component: {fileID: 1324007291}
-  - component: {fileID: 1324007290}
   m_Layer: 5
   m_Name: NodeInfo
   m_TagString: Untagged
@@ -4645,21 +4663,6 @@ RectTransform:
   m_AnchoredPosition: {x: 34.4, y: -5.4}
   m_SizeDelta: {x: 141.3773, y: 47.5699}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1324007290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1324007288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe384bd55cb0a964fb421fd460e0e29c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateInfoWithoutClick: 1
-  infoTextGo: {fileID: 1324007288}
-  currentNode: {fileID: 0}
 --- !u!114 &1324007291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4957,7 +4960,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 35.39
-  m_Depth: -1
+  m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -6016,7 +6019,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0.0000090599, y: 55.2}
+  m_AnchoredPosition: {x: 0.0000090599, y: 55.19995}
   m_SizeDelta: {x: 320, y: 89.679}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1714742486
@@ -7641,6 +7644,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8584064975038144291, guid: 4c30e418753d6d246b9ca47db0427df9,
         type: 3}
+    - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
+        type: 3}
+      propertyPath: detectiveBehavior
+      value: 
+      objectReference: {fileID: 1279831220}
     - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
         type: 3}
       propertyPath: node2PlotAndPageData

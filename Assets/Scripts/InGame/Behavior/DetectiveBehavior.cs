@@ -14,6 +14,16 @@ public class DetectiveBehavior : MonoBehaviour
         focusOnNodes = new List<GameObject>();
         focusPointers = new List<GameObject>();
         stayRounds = new List<int>();
+
+        List<GameObject> nodeList = canvas.GetNodeList();
+        for (int i = 0; i < Mathf.Min(GlobalVar.Instance.NumOfDetectiveOnStart,nodeList.Count);i++) { 
+            
+            int j = Random.Range(0, nodeList.Count);
+            Debug.Log(j);
+            focusOnNodes.Add(nodeList[j]);
+            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0, 10, 0), Quaternion.Euler(0, 0, 0)));
+            stayRounds.Add(0);
+        }
     }
 
     public void AddADetective()
@@ -45,12 +55,14 @@ public class DetectiveBehavior : MonoBehaviour
             {
                 if (exposedNeighbors.Count == 0) //neighbor 0
                 {
+                    //Debug.Log(i + " 00");
                     stayRounds[i] = 0;
                     focusOnNodes[i] = list[Random.Range(0, list.Count)];
                     focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
                 }
                 else //neighbor 1
                 {
+                    //Debug.Log(i + " 01");
                     stayRounds[i] = 0;
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
                     focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
@@ -59,14 +71,15 @@ public class DetectiveBehavior : MonoBehaviour
             {
                 if (exposedNeighbors.Count == 0) //neighbor 0
                 {
+                    //Debug.Log(i + " 10");
                     stayRounds[i]++;
-                    return;
                 }
                 else //neighbor 1
                 {
+                    //Debug.Log(i + " 11");
                     stayRounds[i] = 0;
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
-                    focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 3, 0);
+                    focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
                 }
             }
         } 
@@ -76,10 +89,15 @@ public class DetectiveBehavior : MonoBehaviour
     {
         foreach(var i in focusOnNodes)
         {
-            if(i.GetComponent<NodeBehavior>().properties.state == Properties.StateEnum.EXPOSED)
+            if (RoundManager.Instance.bookAllocationMap[i] != 0)
             {
-                GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfDetective + GlobalVar.Instance.exposureValueAccelerationOfDetective * stayRounds[focusOnNodes.IndexOf(i)]);
+                GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfDetective);
             }
         }
+    }
+
+    public bool IsDetected(GameObject go)
+    {
+        return focusOnNodes.Contains(go);
     }
 }

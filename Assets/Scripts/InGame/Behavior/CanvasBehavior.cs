@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -18,17 +17,18 @@ public class CanvasBehavior : MonoBehaviour
     private List<GameObject> nodeList;
     public List<GameObject> GetNodeList()
     {
-        return nodeList;
+        return new List<GameObject>(nodeList);
     }
     [SerializeField]
     private List<GameObject> connectionList;
     public List<GameObject> GetConnectionList()
     {
-        return connectionList;
+        return new List<GameObject>(connectionList);
     }
     public GameObject Me;//用于指示玩家节点的对象引用，这里粗略地设定为id=0的节点，后续再改
     public Description description;
     public Node2PlotAndPageData node2PlotAndPageData;
+    [SerializeField] DetectiveBehavior detectiveBehavior;
 
     public void SavePositions()
     {
@@ -193,7 +193,7 @@ public class CanvasBehavior : MonoBehaviour
         Me.GetComponent<NodeBehavior>().properties.state = Properties.StateEnum.AWAKENED;
     }
 
-    void Start()
+    void Awake()
     {
         cam = Camera.main;
         plane = new Plane(Vector3.up, Vector3.zero);
@@ -275,6 +275,41 @@ public class CanvasBehavior : MonoBehaviour
             }
         }
     }
+
+    public void RefreshAllConnections()
+    {
+        foreach(var i in connectionList)
+        {
+            System.Random r = new System.Random();
+            double d = r.NextDouble();
+            if(d > GlobalVar.Instance.ProbabilityOfNodesInspectingDetective)
+            {
+                i.GetComponent<LineRenderer>().startColor = Color.gray;
+                i.GetComponent<LineRenderer>().endColor = Color.gray;
+                continue;
+            }
+            int n = 0;
+            if (detectiveBehavior.IsDetected(i.GetComponent<ConnectionBehavior>().startNode)) n++;
+            if (detectiveBehavior.IsDetected(i.GetComponent<ConnectionBehavior>().endNode)) n++;
+            switch (n) {
+                case 0:
+                    i.GetComponent<LineRenderer>().startColor = Color.white;
+                    i.GetComponent<LineRenderer>().endColor = Color.white;
+                    break;
+                case 1:
+                    i.GetComponent<LineRenderer>().startColor = Color.yellow;
+                    i.GetComponent<LineRenderer>().endColor = Color.yellow;
+                    break;
+                case 2:
+                    i.GetComponent<LineRenderer>().startColor = Color.red;
+                    i.GetComponent<LineRenderer>().endColor = Color.red;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     public void SetNodeNumOfBooks(GameObject node,int v)
     {
         NodeBehavior nb = node.GetComponent<NodeBehavior>();

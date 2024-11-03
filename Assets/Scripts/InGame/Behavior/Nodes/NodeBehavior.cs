@@ -11,7 +11,7 @@ public class NodeBehavior : BaseNodeBehavior
     protected Renderer objRenderer;
     protected Dictionary<int, Color> ColorMap;
     [SerializeField]
-    protected bool selected;
+    //protected bool selected;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -29,10 +29,10 @@ public class NodeBehavior : BaseNodeBehavior
     }
     protected virtual void Update()
     {
-        objRenderer.material.color = ColorMap[(int)properties.state] + (selected?new Color(0.5f,0.5f,0.5f):new Color(0,0,0));
+        //objRenderer.material.color = ColorMap[(int)properties.state] + (selected?new Color(0.5f,0.5f,0.5f):new Color(0,0,0));
     }
 
-    protected virtual void OnMouseEnter()
+    /*protected virtual void OnMouseEnter()
     {
         selected = true;
     }
@@ -40,7 +40,7 @@ public class NodeBehavior : BaseNodeBehavior
     {
         selected = false;
     }
-
+    */
     protected virtual void OnRoundChange()
     {
         //if (properties.state == Properties.StateEnum.EXPOSED)
@@ -60,7 +60,7 @@ public class NodeBehavior : BaseNodeBehavior
         }
         List<GameObject> nList = cb.GetNeighbors(gameObject);
 
-        int influence = 0;
+        int influence = properties.numOfBooks + RoundManager.Instance.bookAllocationMap[gameObject];
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
