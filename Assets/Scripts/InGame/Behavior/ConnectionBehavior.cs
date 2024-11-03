@@ -9,11 +9,6 @@ public class ConnectionBehavior : MonoBehaviour
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] DetectiveBehavior detective;
 
-    void Start()
-    {
-        lineRenderer.startColor = Color.white; // 连接线的起始颜色
-        lineRenderer.endColor = Color.white;   // 连接线的结束颜色
-    }
 
     void Update()
     {

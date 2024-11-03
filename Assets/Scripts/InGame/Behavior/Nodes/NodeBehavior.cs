@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NodeBehavior : BaseNodeBehavior
 {
     public Properties properties;
     public PlotAndPageHandler plotAndPageHandler;
     public MessageBar mb;
-    protected Renderer objRenderer;
+    [SerializeField] protected Image objColor;
     protected Dictionary<int, Color> ColorMap;
     [SerializeField]
     //protected bool selected;
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        objRenderer = GetComponent<MeshRenderer>();
-
-        objRenderer.material = new Material(objRenderer.material);
 
         ColorMap = new Dictionary<int, Color>();
         ColorMap.Add(-1, Color.gray);
@@ -29,7 +27,7 @@ public class NodeBehavior : BaseNodeBehavior
     }
     protected virtual void Update()
     {
-        //objRenderer.material.color = ColorMap[(int)properties.state] + (selected?new Color(0.5f,0.5f,0.5f):new Color(0,0,0));
+        objColor.color = ColorMap[(int)properties.state];
     }
 
     /*protected virtual void OnMouseEnter()
