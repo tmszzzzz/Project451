@@ -101,6 +101,15 @@ public class PlotDisplay : MonoBehaviour
     }
 
     public float timeBetweenPlots = 2f;
+    private float timeForLastPlotToBeRead = 0f;
+    public float averageReadingSpeed = 300f;
+    public float CalculateReadingTime(string content)
+    {
+        int characterCount = content.Length;
+        float readingTimeMinutes = characterCount / averageReadingSpeed;
+        float readingTimeSeconds = readingTimeMinutes * 60;
+        return readingTimeSeconds;
+    }
 
     // 显示对侧对话
     public void ShowDialog(string name, string content)
@@ -114,6 +123,8 @@ public class PlotDisplay : MonoBehaviour
         newEvents.AddListener(ContinuePlot);
 
         StartCoroutine(InvokeAfterDelay(newEvents, timeBetweenPlots));
+
+        timeForLastPlotToBeRead = CalculateReadingTime(content);
     }
 
     // 显示自身对话
@@ -123,6 +134,9 @@ public class PlotDisplay : MonoBehaviour
 
         Button continueButton = CreateContinueButton(content);
         continueButton.onClick.AddListener(() => plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(true, name, content));
+
+        timeForLastPlotToBeRead = CalculateReadingTime(content);
+        Debug.Log("Time for last plot to be read: " + timeForLastPlotToBeRead);
     }
 
     // 显示旁白
