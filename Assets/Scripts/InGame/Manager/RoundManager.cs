@@ -237,38 +237,55 @@ public class RoundManager : MonoBehaviour
 
     public void NextRound()
     {
-        if (held == 0)
+        //这一段代码精确地控制了一些逻辑的触发顺序，可调整
+        RoundChange?.Invoke();
+
+
+        foreach (var i in allocationItems)
         {
-            //这一段代码精确地控制了一些逻辑的触发顺序，可调整
-            RoundChange?.Invoke();//回合变更事件
-            canvas.RefreshAllNodes();//更新节点状态
-            detective.AddGlobalExposureValue();//依据分配数据，决定侦探是否增加暴露值
-            var keys = new List<GameObject>(bookAllocationMap.Keys);
-            for (int i = 0; i < keys.Count; i++)
-            {
-                canvas.AddNodeNumOfBooks(keys[i], bookAllocationMap[keys[i]]);
-            }//重新分配节点书数量
-            //由于更新状态时已经考虑了预分配的书，所以此时先更新后分配书
-            roundNum++;//更新回合数
-            canvas.RefreshGlobalExposureValue();//更新全局暴露值
-            detective.DetectiveMove();
-            canvas.RefreshAllConnections();
-            for (int i = 0; i < keys.Count; i++)
-            {
-                bookAllocationMap[keys[i]] = 0;
-            }//清除预分配数据
-            foreach(var i in allocationItems)
-            {
-                i.arrow.GetComponent<BookAllocationArrow>().Confirm();
-            }
-            allocationItems.Clear();//清除预分配链
-            BookAllocationChange?.Invoke();//分配情况变更事件（暂未使用）
-            messageBar.AddMessage("NextRound");//消息提示
+            i.arrow.GetComponent<BookAllocationArrow>().Confirm();
         }
-        else
+        allocationItems.Clear();
+        //执行分配动画
+
+
+        detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
+
+
+        canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
+
+
+        canvas.RefreshAllNodes();//更新节点状态
+
+
+        detective.DetectiveMove();//侦探移动
+
+
+        canvas.RefreshAllConnections();//连接数据更新
+
+
+        var keys = new List<GameObject>(bookAllocationMap.Keys);
+        for (int i = 0; i < keys.Count; i++)
         {
-            messageBar.AddMessage("There are still books that have not been assigned.");
-        }
+            canvas.AddNodeNumOfBooks(keys[i], bookAllocationMap[keys[i]]);
+        }//执行分配
+         //由于更新状态时已经考虑了预分配的书，所以此时先更新后分配书。这里的分配书实际上没有逻辑上的影响。
+
+
+        roundNum++;//更新回合数
+
+
+        for (int i = 0; i < keys.Count; i++)
+        {
+            bookAllocationMap[keys[i]] = 0;
+        }//清除预分配数据
+
+
+        BookAllocationChange?.Invoke();//分配情况变更事件（暂未使用）
+
+
+        messageBar.AddMessage("NextRound");//消息提示
+
     }
     public void LimitIncreaseBy(int i)
     {

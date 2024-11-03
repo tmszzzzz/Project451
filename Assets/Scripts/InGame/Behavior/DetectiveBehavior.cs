@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,11 +20,11 @@ public class DetectiveBehavior : MonoBehaviour
         for (int i = 0; i < Mathf.Min(GlobalVar.Instance.NumOfDetectiveOnStart,nodeList.Count);i++) { 
             
             int j = Random.Range(0, nodeList.Count);
-            Debug.Log(j);
             focusOnNodes.Add(nodeList[j]);
             focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0, 10, 0), Quaternion.Euler(0, 0, 0)));
             stayRounds.Add(0);
         }
+        canvas.RefreshAllConnections();
     }
 
     public void AddADetective()
@@ -82,6 +83,7 @@ public class DetectiveBehavior : MonoBehaviour
                     focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
                 }
             }
+            //focusPointers[i].transform.DOMove(new(0, 0, 0), 1, false);
         } 
     }
 
