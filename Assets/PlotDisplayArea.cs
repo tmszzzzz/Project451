@@ -86,17 +86,17 @@ public class PlotDisplayArea : MonoBehaviour
         {
             ControleProfileActive(true, true);
             selfProfileImage.sprite = profileData.GetProfileSpriteByName(name);
-            selfName.text = name;
+            selfName.text = wrapUpNameWithRichText(name);
         }
         else
         {
             ControleProfileActive(false, true);
             otherProfileImage.sprite = profileData.GetProfileSpriteByName(name);
-            otherName.text = name;
+            otherName.text = wrapUpNameWithRichText(name);
         }
     }
 
-    string wrapUpNameWithRichText(string name, bool isSelf)
+    string wrapUpNameWithRichText(string name)
     {
         name = "<color=#" + profileData.GetColorByName(name).ToHexString() + ">" + name + "</color>";
         name = "<align=\"center\">" + name + "</align>";
@@ -105,7 +105,7 @@ public class PlotDisplayArea : MonoBehaviour
 
     public void PlotNewText(bool isSelf, string name, string context)
     {
-        string presentedName = wrapUpNameWithRichText(name, isSelf);
+        string presentedName = wrapUpNameWithRichText(name);
 
         GameObject newPlotTextGameObject = new();
         newPlotTextGameObject.transform.SetParent(gameObject.transform);

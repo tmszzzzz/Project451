@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.UI;
@@ -65,13 +66,14 @@ public class PlotDisplay : MonoBehaviour
         //CreateContinueBUtton();
     }
 
-
-
     // 结束剧情时调用
     public void PushedEnd()
     {
-        ClosePlots();
-        PlotManager.Instance.TriggerPlotEnd();
+        Button endButton = CreateContinueButton("End");
+        endButton.onClick.AddListener(ClosePlots);
+        endButton.onClick.AddListener(PlotManager.Instance.TriggerPlotEnd);
+        // ClosePlots();
+        // PlotManager.Instance.TriggerPlotEnd();
     }
 
     // 继续剧情的方法
@@ -85,28 +87,56 @@ public class PlotDisplay : MonoBehaviour
         PlotManager.Instance.TriggerUserAction(false, 0);
     }
 
-    void CreateContinueBUtton()
+    Button CreateContinueButton(string content)
     {
         Debug.Log("calling from selection area");
+
         Button continueButton = plotSelectionArea.GetComponent<PlotSelectionArea>().NeedButtons(1)[0];
         continueButton.onClick.AddListener(ContinuePlot);
 
         TextMeshProUGUI buttonText = continueButton.GetComponentInChildren<TextMeshProUGUI>();
-        buttonText.text = "...";
+        buttonText.text = content;
+
+        return continueButton;
+    }
+
+    public float timeBetweenPlots = 2f;
+    private float timeForLastPlotToBeRead = 0f;
+    public float averageReadingSpeed = 300f;
+    public float CalculateReadingTime(string content)
+    {
+        int characterCount = content.Length;
+        float readingTimeMinutes = characterCount / averageReadingSpeed;
+        float readingTimeSeconds = readingTimeMinutes * 60;
+        return readingTimeSeconds;
     }
 
     // 显示对侧对话
     public void ShowDialog(string name, string content)
     {
-        plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(false, name, content);
-        CreateContinueBUtton();
+        plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
+
+        //Pay attention here something is annoying which may causes bugs!
+        //Other dialogue shouldn't wait for continue button to be clicked. So we copy a new event and invoke it after a delay.
+        UnityEngine.Events.UnityEvent newEvents = new UnityEngine.Events.UnityEvent();
+        newEvents.AddListener(() => plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(false, name, content));
+        newEvents.AddListener(ContinuePlot);
+
+        StartCoroutine(InvokeAfterDelay(newEvents, timeBetweenPlots));
+
+        timeForLastPlotToBeRead = CalculateReadingTime(content);
     }
 
     // 显示自身对话
     public void ShowSelfDialog(string name, string content)
     {
-        plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(true, name, content);
-        CreateContinueBUtton();
+        plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
+
+        Button continueButton = CreateContinueButton(content);
+        continueButton.onClick.AddListener(() => plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(true, name, content));
+
+        timeForLastPlotToBeRead = CalculateReadingTime(content);
+        Debug.Log("Time for last plot to be read: " + timeForLastPlotToBeRead);
     }
 
     // 显示旁白
@@ -120,6 +150,8 @@ public class PlotDisplay : MonoBehaviour
     // 显示选择项
     public void ShowSelection(List<string> choices)
     {
+        plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
+
         List<Button> choicesButtons = plotSelectionArea.GetComponent<PlotSelectionArea>().NeedButtons(choices.Count);
 
         for (int i = 0; i < choices.Count; i++)
@@ -130,6 +162,7 @@ public class PlotDisplay : MonoBehaviour
             Button choiceButton = choicesButtons[i];
             choiceButton.GetComponentInChildren<TextMeshProUGUI>().text = choiceText;
             choiceButton.onClick.AddListener(() => SelectChoice(choiceIndex));
+            //choiceButton.onClick.AddListener(ContinuePlot);
         }
 
         // selectionContainer.gameObject.SetActive(true);
@@ -160,4 +193,9 @@ public class PlotDisplay : MonoBehaviour
         // PlotManager.Instance.TriggerUserAction(true, choiceIndex); // 通知 PlotManager 选择了某项
     }
 
+    private System.Collections.IEnumerator InvokeAfterDelay(UnityEngine.Events.UnityEvent action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action.Invoke();
+    }
 }

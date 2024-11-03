@@ -25,7 +25,6 @@ public class PlotSelectionArea : MonoBehaviour
         {
             //Debug.Log("set active");
             //Debug.Log(allButtons[i].activeSelf);
-            allButtons[i].GetComponent<Button>().onClick.AddListener(ClearCurrentButtons);
             //Debug.Log(allButtons[i].activeSelf);
             neededButtons.Add(allButtons[i].GetComponent<Button>());
             allButtons[i].SetActive(true);
@@ -45,7 +44,7 @@ public class PlotSelectionArea : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame

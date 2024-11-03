@@ -56,6 +56,21 @@ public class PlotManager : MonoBehaviour
         duringPlot = false;
     }
 
+    public bool isNextLineEnd()
+    {
+        return next >= lines.Length;
+    }
+
+    public bool isNextLineSelfDialog()
+    {
+        return lines[next].Trim().StartsWith("Isay");
+    }
+
+    public string getNextLineText()
+    {
+        return lines[next].Trim();
+    }
+
     public void StartPlot(string filePath)
     {
         if (duringPlot)
