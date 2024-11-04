@@ -46,7 +46,7 @@ public class PlotAndPageHandler : MonoBehaviour
         }
     }
 
-    public void OnSinkHideButtons()
+    public void OnFallHideButtons()
     {
         if (plotFilename != null)
         {

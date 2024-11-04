@@ -21,9 +21,11 @@ public class Properties
     public typeEnum type;
     public int awakeThreshold;
     public int exposeThreshold;
+    public int fallThreshold;
     public int numOfBooks = 0;
     public int maximumNumOfBooks;
     public int unlockTag;
+    public int region;
     //public string description = "";
     //public string plotFileName = "";
     //public Sprite pageSprite;

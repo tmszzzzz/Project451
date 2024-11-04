@@ -59,6 +59,7 @@ public class NodeBehavior : BaseNodeBehavior
 
         if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
         else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
+        else if (influence < properties.fallThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.NORMAL, influence);
         else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
     }
 
@@ -71,7 +72,7 @@ public class NodeBehavior : BaseNodeBehavior
         }
         if (stateEnum == Properties.StateEnum.NORMAL && (properties.state == Properties.StateEnum.AWAKENED || properties.state == Properties.StateEnum.EXPOSED))
         {
-            plotAndPageHandler.OnSinkHideButtons();
+            plotAndPageHandler.OnFallHideButtons();
         }
         properties.state = stateEnum;
     }

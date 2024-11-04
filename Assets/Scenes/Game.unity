@@ -1468,6 +1468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panelController: {fileID: 1002642323}
+  canvas: {fileID: 1260303988}
 --- !u!1 &407948463
 GameObject:
   m_ObjectHideFlags: 0
@@ -7640,6 +7641,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
+        type: 3}
+      propertyPath: mb
+      value: 
+      objectReference: {fileID: 407948465}
     - target: {fileID: 8563546212777360226, guid: 813ff04d5a25bef41b2db10d8ac06c30,
         type: 3}
       propertyPath: nodePrefab

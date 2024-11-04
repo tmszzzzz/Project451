@@ -127,12 +127,14 @@ MonoBehaviour:
     exposeThreshold: 0
     numOfBooks: 0
     maximumNumOfBooks: 0
-    description: 
-    plotFileName: 
-    pageSprite: {fileID: 0}
+    unlockTag: 0
   plotAndPageHandler: {fileID: 6322890625642688874}
   mb: {fileID: 0}
   objColor: {fileID: 5218162021008027309}
+  hadAwakenedBefore: 0
+  description: 
+  plotFileName: 
+  pageSprite: {fileID: 0}
 --- !u!1001 &6141453512575930015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -448,6 +450,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481536832881840823, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8481536832881840823, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8669639366135378575, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}

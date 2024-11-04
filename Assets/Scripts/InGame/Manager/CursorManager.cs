@@ -9,6 +9,7 @@ public class CursorManager : MonoBehaviour
     // 所有检测鼠标点击、raycast行为
     Camera mainCamera;
     [SerializeField] PanelController panelController;
+    [SerializeField] CanvasBehavior canvas;
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -54,8 +55,11 @@ public class CursorManager : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     //鼠标悬停
+                    canvas.SetRegion(hit);
                 }
             }
         }
     }
+
+
 }

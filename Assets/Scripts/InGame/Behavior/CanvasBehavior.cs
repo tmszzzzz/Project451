@@ -29,6 +29,7 @@ public class CanvasBehavior : MonoBehaviour
     public Description description;
     public Node2PlotAndPageData node2PlotAndPageData;
     [SerializeField] DetectiveBehavior detectiveBehavior;
+    public MessageBar mb;
 
     public void SavePositions()
     {
@@ -97,8 +98,10 @@ public class CanvasBehavior : MonoBehaviour
             {
                 awakeThreshold = 0, // default
                 exposeThreshold = 0, // default
+                fallThreshold = 0,
                 unlockTag = 0,
-                maximumNumOfBooks = 0 // default
+                maximumNumOfBooks = 0, // default
+                region = 0
             };
         }
 
@@ -159,9 +162,10 @@ public class CanvasBehavior : MonoBehaviour
                         type = loadedProperties.type != 0 ? loadedProperties.type : 0,
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
+                        fallThreshold = loadedProperties.fallThreshold != 0 ? loadedProperties.fallThreshold : 0,
                         unlockTag = loadedProperties.unlockTag != 0 ? loadedProperties.unlockTag : 0,
                         maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0,
-                        
+                        region = loadedProperties.region != 0 ? loadedProperties.region : 0
                     };
                     nodeBehavior.description = description.GetDescriptionByID(position.id);
                     nodeBehavior.plotFileName = node2PlotAndPageData.GetPlotFileNameByID(position.id);
@@ -416,5 +420,18 @@ public class CanvasBehavior : MonoBehaviour
         // 如果BFS结束还未找到终点，返回 false
         return false;
     }
-
+    public void SetRegion(RaycastHit hit)
+    {
+        int reg;
+        if (Input.GetKeyDown(KeyCode.J)) reg = 0;
+        else if (Input.GetKeyDown(KeyCode.K)) reg = 1;
+        else if (Input.GetKeyDown(KeyCode.L)) reg = 2;
+        else return;
+        var x = hit.transform.GetComponent<NodeBehavior>();
+        if (x != null)
+        {
+            x.properties.region = reg;
+            mb.AddMessage($"Set {hit.transform.name} to region {reg}.");
+        }
+    }
 }
