@@ -229,8 +229,8 @@ public class CanvasBehavior : MonoBehaviour
             ConnectionBehavior conB = con.GetComponent<ConnectionBehavior>();
             if (conB != null)
             {
-                if (conB.startNode == node) neighbors.Add(conB.endNode);
-                if (conB.endNode == node) neighbors.Add(conB.startNode);
+                var nb = conB.GetTheOtherNodeIfExist(node);
+                if (nb != null) neighbors.Add(nb);
             }
         }
 
@@ -280,33 +280,7 @@ public class CanvasBehavior : MonoBehaviour
     {
         foreach(var i in connectionList)
         {
-            System.Random r = new System.Random();
-            double d = r.NextDouble();
-            if(d > GlobalVar.Instance.ProbabilityOfNodesInspectingDetective)
-            {
-                i.GetComponent<LineRenderer>().startColor = Color.gray;
-                i.GetComponent<LineRenderer>().endColor = Color.gray;
-                continue;
-            }
-            int n = 0;
-            if (detectiveBehavior.IsDetected(i.GetComponent<ConnectionBehavior>().startNode)) n++;
-            if (detectiveBehavior.IsDetected(i.GetComponent<ConnectionBehavior>().endNode)) n++;
-            switch (n) {
-                case 0:
-                    i.GetComponent<LineRenderer>().startColor = Color.white;
-                    i.GetComponent<LineRenderer>().endColor = Color.white;
-                    break;
-                case 1:
-                    i.GetComponent<LineRenderer>().startColor = Color.yellow;
-                    i.GetComponent<LineRenderer>().endColor = Color.yellow;
-                    break;
-                case 2:
-                    i.GetComponent<LineRenderer>().startColor = Color.red;
-                    i.GetComponent<LineRenderer>().endColor = Color.red;
-                    break;
-                default:
-                    break;
-            }
+            i.GetComponent<ConnectionBehavior>().RefreshColor(detectiveBehavior);
         }
     }
 
