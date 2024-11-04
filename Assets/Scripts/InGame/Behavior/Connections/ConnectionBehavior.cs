@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class ConnectionBehavior : MonoBehaviour
 {
+    [SerializeField]public int Type = 0;
     public GameObject startNode;
     public GameObject endNode;
+    public int unlockTag; //only used by Unlockable
+    public int unlockDemand; //only used by Unlockable
     [SerializeField] protected LineRenderer lineRenderer;
     [SerializeField] protected DetectiveBehavior detective;
 

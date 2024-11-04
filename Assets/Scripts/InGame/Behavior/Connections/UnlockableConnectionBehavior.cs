@@ -5,8 +5,6 @@ using UnityEngine;
 public class UnlockableConnectionBehavior : ConnectionBehavior
 {
     private bool available = false;
-    private int unlockTag = 1;
-    private int unlockRequirement = 3;
     private int unlockState = 0;
 
     public override GameObject GetTheOtherNodeIfExist(GameObject node)
@@ -19,7 +17,7 @@ public class UnlockableConnectionBehavior : ConnectionBehavior
         if (inputUnlockTag == unlockTag)
         {
             unlockState++;
-            if (unlockState >= unlockRequirement) available = true;
+            if (unlockState >= unlockDemand) available = true;
         }
     }
     public override void UnlockCancel(int inputUnlockTag)
@@ -27,7 +25,7 @@ public class UnlockableConnectionBehavior : ConnectionBehavior
         if (inputUnlockTag == unlockTag)
         {
             unlockState--;
-            if (unlockState < unlockRequirement) available = false;
+            if (unlockState < unlockDemand) available = false;
         }
     }
     public override void RefreshColor(DetectiveBehavior db)

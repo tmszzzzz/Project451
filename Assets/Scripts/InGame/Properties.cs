@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Properties
@@ -15,14 +16,15 @@ public class Properties
     //public int influence;
     public enum typeEnum
     {
-        NORMAL = 0, FIREFIGHTER = 1, BIBLIOFHILE = 2
+        NORMAL = 0, FIREFIGHTER = 1, BIBLIOFHILE = 2, KEYNODE = 3
     }
     public typeEnum type;
     public int awakeThreshold;
     public int exposeThreshold;
     public int numOfBooks = 0;
     public int maximumNumOfBooks;
-    public string description = "";
-    public string plotFileName = "";
-    public Sprite pageSprite;
+    public int unlockTag;
+    //public string description = "";
+    //public string plotFileName = "";
+    //public Sprite pageSprite;
 }

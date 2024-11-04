@@ -17,8 +17,8 @@ public class PlotAndPageHandler : MonoBehaviour
     {
         plotButton.SetActive(false);
         pageButton.SetActive(false);
-        plotFilename = thisNode.GetComponent<NodeBehavior>().properties.plotFileName;
-        pageSprite = thisNode.GetComponent<NodeBehavior>().properties.pageSprite;
+        plotFilename = thisNode.GetComponent<NodeBehavior>().plotFileName;
+        pageSprite = thisNode.GetComponent<NodeBehavior>().pageSprite;
     }
     // Update is called once per frame
     void Update()

@@ -10,7 +10,7 @@ public class CanvasBehavior : MonoBehaviour
 {
     //public GameObject nodePrefab;
     public List<GameObject> nodePrefabMap;
-    public GameObject connectionPrefab;
+    public List<GameObject> connectionPrefabMap;
     private Camera cam;
     private Plane plane; // 用于定义水平面
     [SerializeField]
@@ -63,7 +63,7 @@ public class CanvasBehavior : MonoBehaviour
                 // 确保 ID 有效
                 if (startNodeId != -1 && endNodeId != -1)
                 {
-                    ConnectionData connectionData = new ConnectionData(startNodeId, endNodeId);
+                    ConnectionData connectionData = new ConnectionData(connectionScript.Type, startNodeId, endNodeId, connectionScript.unlockTag,connectionScript.unlockDemand);
                     connections.Add(connectionData);
                 }
             }
@@ -97,7 +97,7 @@ public class CanvasBehavior : MonoBehaviour
             {
                 awakeThreshold = 0, // default
                 exposeThreshold = 0, // default
-                //NumOfBooks = 0,
+                unlockTag = 0,
                 maximumNumOfBooks = 0 // default
             };
         }
@@ -112,13 +112,19 @@ public class CanvasBehavior : MonoBehaviour
     public class ConnectionData
     {
         //connection
+        public int conType;
         public int startNodeId;
         public int endNodeId;
+        public int unlockTag;
+        public int unlockDemand;
 
-        public ConnectionData(int startId, int endId)
+        public ConnectionData(int type, int startId, int endId, int tag, int demand)
         {
+            conType = type;
             startNodeId = startId;
             endNodeId = endId;
+            unlockTag = tag;
+            unlockDemand = demand;
         }
     }
 
@@ -153,12 +159,13 @@ public class CanvasBehavior : MonoBehaviour
                         type = loadedProperties.type != 0 ? loadedProperties.type : 0,
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
-                        //NumOfBooks = loadedProperties.NumOfBooks != 0 ? loadedProperties.NumOfBooks : 0,
+                        unlockTag = loadedProperties.unlockTag != 0 ? loadedProperties.unlockTag : 0,
                         maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0,
-                        description = description.GetDescriptionByID(position.id),
-                        plotFileName = node2PlotAndPageData.GetPlotFileNameByID(position.id),
-                        pageSprite = node2PlotAndPageData.GetPageSpriteByID(position.id)
+                        
                     };
+                    nodeBehavior.description = description.GetDescriptionByID(position.id);
+                    nodeBehavior.plotFileName = node2PlotAndPageData.GetPlotFileNameByID(position.id);
+                    nodeBehavior.pageSprite = node2PlotAndPageData.GetPageSpriteByID(position.id);
                 }
                 nodeList.Add(node);
             }
@@ -168,13 +175,15 @@ public class CanvasBehavior : MonoBehaviour
             {
                 if (connection.startNodeId < nodeList.Count && connection.endNodeId < nodeList.Count)
                 {
-                    GameObject connectionObj = Instantiate(connectionPrefab, transform);
+                    GameObject connectionObj = Instantiate(connectionPrefabMap[connection.conType], transform);
                     ConnectionBehavior connectionScript = connectionObj.GetComponent<ConnectionBehavior>();
 
                     if (connectionScript != null)
                     {
                         connectionScript.startNode = nodeList[connection.startNodeId];
                         connectionScript.endNode = nodeList[connection.endNodeId];
+                        connectionScript.unlockTag = connection.unlockTag;
+                        connectionScript.unlockDemand = connection.unlockDemand;
                     }
                     connectionList.Add(connectionObj);
                 }

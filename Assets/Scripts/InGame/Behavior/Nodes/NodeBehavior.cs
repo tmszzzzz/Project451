@@ -12,6 +12,10 @@ public class NodeBehavior : BaseNodeBehavior
     [SerializeField] protected Image objColor;
     protected Dictionary<int, Color> ColorMap;
     [SerializeField] protected bool hadAwakenedBefore = false;
+
+    public string description = "";
+    public string plotFileName = "";
+    public Sprite pageSprite;
     // Start is called before the first frame update
     protected virtual void Start()
     {
