@@ -7,6 +7,7 @@ public class FirefighterBehavior : NodeBehavior
 {
     protected override void Start()
     {
+        RoundManager.Instance.RoundChange += OnRoundChange;
         base.Start();
     }
     public override StatePrediction PredictState()
@@ -14,9 +15,8 @@ public class FirefighterBehavior : NodeBehavior
         return base.PredictState();
     }
 
-    protected override void OnRoundChange()
+    protected void OnRoundChange()
     {
-        base.OnRoundChange();
         if (properties.state >= Properties.StateEnum.AWAKENED)
         {
             CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();

@@ -11,13 +11,12 @@ public class BibliophileBehavior : NodeBehavior
     }
     public override void SetState(Properties.StateEnum stateEnum)
     {
-        if (properties.state == Properties.StateEnum.NORMAL && stateEnum >= Properties.StateEnum.AWAKENED)
+        if (properties.state == Properties.StateEnum.NORMAL && stateEnum >= Properties.StateEnum.AWAKENED && !hadAwakenedBefore)
         {
             CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
             cb.AddNodeNumOfBooks(cb.Me, GlobalVar.Instance.NumOfBibliophileGiveBooks);
             mb.AddMessage($"Bibliophile {gameObject.name} gives you {GlobalVar.Instance.NumOfBibliophileGiveBooks} books.");
         }
-        // properties.state = stateEnum;
         base.SetState(stateEnum);
     }
 }

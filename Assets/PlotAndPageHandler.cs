@@ -46,6 +46,21 @@ public class PlotAndPageHandler : MonoBehaviour
         }
     }
 
+    public void OnSinkHideButtons()
+    {
+        if (plotFilename != null)
+        {
+            plotButton.SetActive(false);
+            isPlotting = false;
+        }
+
+        if (pageSprite != null)
+        {
+            pageButton.SetActive(false);
+            isPaging = false;
+        }
+    }
+
     public void Plot()
     {
         Debug.Log("Node"  + " is plotting " + plotFilename);

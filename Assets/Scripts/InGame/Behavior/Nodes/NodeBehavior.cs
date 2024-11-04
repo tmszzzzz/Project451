@@ -11,8 +11,7 @@ public class NodeBehavior : BaseNodeBehavior
     public MessageBar mb;
     [SerializeField] protected Image objColor;
     protected Dictionary<int, Color> ColorMap;
-    [SerializeField]
-    //protected bool selected;
+    [SerializeField] protected bool hadAwakenedBefore = false;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -23,28 +22,10 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = RoundManager.Instance.messageBar;
-        RoundManager.Instance.RoundChange += OnRoundChange;
     }
     protected virtual void Update()
     {
         objColor.color = ColorMap[(int)properties.state];
-    }
-
-    /*protected virtual void OnMouseEnter()
-    {
-        selected = true;
-    }
-    protected virtual void OnMouseExit()
-    {
-        selected = false;
-    }
-    */
-    protected virtual void OnRoundChange()
-    {
-        //if (properties.state == Properties.StateEnum.EXPOSED)
-        //{
-        //    GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfExposedNode);
-        //}
     }
 
     public override StatePrediction PredictState()
@@ -72,7 +53,6 @@ public class NodeBehavior : BaseNodeBehavior
             if (influence < properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.AWAKENED, influence);
         }
 
-        //Debug.Log(2);
         if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
         else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
         else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
@@ -80,17 +60,16 @@ public class NodeBehavior : BaseNodeBehavior
 
     public override void SetState(Properties.StateEnum stateEnum)
     {
-        if (properties.state == Properties.StateEnum.NORMAL && (stateEnum == Properties.StateEnum.AWAKENED || stateEnum == Properties.StateEnum.EXPOSED))
+        if (properties.state == Properties.StateEnum.NORMAL && (stateEnum == Properties.StateEnum.AWAKENED || stateEnum == Properties.StateEnum.EXPOSED) && !hadAwakenedBefore)
         {
-            Debug.Log("Node " + gameObject.name + " is awaked.");
             plotAndPageHandler.OnAwakeShowButtons();
+            hadAwakenedBefore = true;
         }
-
+        if (stateEnum == Properties.StateEnum.NORMAL && (properties.state == Properties.StateEnum.AWAKENED || properties.state == Properties.StateEnum.EXPOSED))
+        {
+            plotAndPageHandler.OnSinkHideButtons();
+        }
         properties.state = stateEnum;
     }
 
-    protected void OnDestroy()
-    {
-        RoundManager.Instance.RoundChange -= OnRoundChange;
-    }
 }

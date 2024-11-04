@@ -10,8 +10,8 @@ public class PanelController : MonoBehaviour
 {
     public GameObject NodeInfoPanel;
     private Camera mainCamera;
-    public GameObject infoTextGo; // ÔÚ Inspector ÖĞÖ¸¶¨µÄ UI Text ÓÃÓÚÏÔÊ¾ĞÅÏ¢
-    public GameObject currentNode; // µ±Ç°Ñ¡ÖĞµÄÎïÌå
+    public GameObject infoTextGo; // åœ¨ Inspector ä¸­æŒ‡å®šçš„ UI Text ç”¨äºæ˜¾ç¤ºä¿¡æ¯
+    public GameObject currentNode; // å½“å‰é€‰ä¸­çš„ç‰©ä½“
     private TextMeshProUGUI infoText;
 
     // Start is called before the first frame update
@@ -40,7 +40,7 @@ public class PanelController : MonoBehaviour
 
         NodeInfoPanel.SetActive(true);
         infoText = infoTextGo.GetComponent<TextMeshProUGUI>();
-        // ³õÊ¼»¯ÎÄ±¾Îª¿Õ
+        // åˆå§‹åŒ–æ–‡æœ¬ä¸ºç©º
         infoText.text = "";
         currentNode = null;
     }
@@ -57,21 +57,21 @@ public class PanelController : MonoBehaviour
     {
         GameObject hoveredObject = hit.collider.gameObject;
 
-        // ¼ì²éÎïÌåÊÇ·ñÓĞ CubeBehavior ½Å±¾
+        // æ£€æŸ¥ç‰©ä½“æ˜¯å¦æœ‰ CubeBehavior è„šæœ¬
         NodeBehavior node = hoveredObject.GetComponent<NodeBehavior>();
         if (node != null)
         {
             currentNode = hoveredObject;
-            // »ñÈ¡ Properties Êı¾İ²¢Õ¹Ê¾
+            // è·å– Properties æ•°æ®å¹¶å±•ç¤º
             Properties properties = node.properties;
             if (properties != null && NodeInfoPanel.activeSelf)
             {
-                // ÏÔÊ¾ÊôĞÔÖµ
-                infoText.text = $"ĞÕÃû: {hoveredObject.name}\n" +
-                                $"×´Ì¬: {properties.type}\n" +
-                                $"¾õĞÑãĞÖµ: {properties.awakeThreshold}\n" +
-                                $"±©Â¶ãĞÖµ: {properties.exposeThreshold}\n" +
-                                $"³ÖÓĞÊé¼®: {properties.numOfBooks}/{properties.maximumNumOfBooks}";
+                // æ˜¾ç¤ºå±æ€§å€¼
+                infoText.text = $"å§“å: {hoveredObject.name}\n" +
+                                $"çŠ¶æ€: {properties.type}\n" +
+                                $"è§‰é†’é˜ˆå€¼: {properties.awakeThreshold}\n" +
+                                $"æš´éœ²é˜ˆå€¼: {properties.exposeThreshold}\n" +
+                                $"æŒæœ‰ä¹¦ç±: {properties.numOfBooks}/{properties.maximumNumOfBooks}";
             }
         }
 

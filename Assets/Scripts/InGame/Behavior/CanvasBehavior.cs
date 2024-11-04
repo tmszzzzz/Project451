@@ -284,6 +284,22 @@ public class CanvasBehavior : MonoBehaviour
         }
     }
 
+    public void UnlockTriggerConnectionsByTag(int tag)
+    {
+        foreach(var i in connectionList)
+        {
+            i.GetComponent<ConnectionBehavior>().UnlockTrigger(tag);
+        }
+    }
+
+    public void UnlockCancelConnectionsByTag(int tag)
+    {
+        foreach (var i in connectionList)
+        {
+            i.GetComponent<ConnectionBehavior>().UnlockCancel(tag);
+        }
+    }
+
     public void SetNodeNumOfBooks(GameObject node,int v)
     {
         NodeBehavior nb = node.GetComponent<NodeBehavior>();
