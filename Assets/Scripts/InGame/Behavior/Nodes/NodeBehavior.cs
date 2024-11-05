@@ -43,13 +43,13 @@ public class NodeBehavior : BaseNodeBehavior
         }
         List<GameObject> nList = cb.GetNeighbors(gameObject);
 
-        int influence = properties.numOfBooks + RoundManager.Instance.bookAllocationMap[gameObject];
+        int influence = properties.numOfBooks + RoundManager.Instance.BookAllocationMap[gameObject];
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.Instance.bookAllocationMap[cub.gameObject] : 0;
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.Instance.BookAllocationMap[cub.gameObject] : 0;
             }
         }
         if (properties.state == Properties.StateEnum.EXPOSED) 

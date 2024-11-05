@@ -59,10 +59,10 @@ public class CameraBehavior : MonoBehaviour
             Plane plane = new Plane(Vector3.up, Vector3.zero);
             if (plane.Raycast(ray, out float enter))
             {
-            Vector3 hitPoint = ray.GetPoint(enter);
+                Vector3 hitPoint = ray.GetPoint(enter);
 
-            // Rotate the camera around the hit point
-            transform.RotateAround(hitPoint, Vector3.up, spin * rotationSpeed * Time.deltaTime);
+                // Rotate the camera around the hit point
+                transform.RotateAround(hitPoint, Vector3.up, spin * rotationSpeed * Time.deltaTime);
 
             }
         }

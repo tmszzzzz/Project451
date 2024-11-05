@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ConnectionBehavior : MonoBehaviour
 {
-    [SerializeField]public int Type = 0;
+    [SerializeField]public int type = 0;
     public GameObject startNode;
     public GameObject endNode;
     public int unlockTag; //only used by Unlockable
@@ -49,7 +50,7 @@ public class ConnectionBehavior : MonoBehaviour
     {
         System.Random r = new System.Random();
         double d = r.NextDouble();
-        if (d > GlobalVar.Instance.ProbabilityOfNodesInspectingDetective)
+        if (d > GlobalVar.instance.probabilityOfNodesInspectingDetective)
         {
             GetComponent<LineRenderer>().startColor = Color.white;
             GetComponent<LineRenderer>().endColor = Color.white;

@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlotManager : MonoBehaviour
 {
 
-    public static PlotManager Instance;
+    public static PlotManager instance;
 
     public delegate void UserActionEventHandler(bool forSelect,int selectIndex);
     public event UserActionEventHandler UserAction;
@@ -39,12 +39,12 @@ public class PlotManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        instance = this;
         DontDestroyOnLoad(gameObject);
         UserAction += OnNextStep;
         PlotStart += OnStart;

@@ -9,12 +9,12 @@ public class AllocationRangeText : MonoBehaviour
 
     void Start()
     {
-        globalVar = GlobalVar.Instance;
+        globalVar = GlobalVar.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = $"{globalVar.NumOfMaximumBookDeliverRange}";
+        gameObject.GetComponent<TextMeshProUGUI>().text = $"{globalVar.numOfMaximumBookDeliverRange}";
     }
 }

@@ -17,7 +17,7 @@ public class DetectiveBehavior : MonoBehaviour
         stayRounds = new List<int>();
 
         List<GameObject> nodeList = canvas.GetNodeList();
-        for (int i = 0; i < Mathf.Min(GlobalVar.Instance.NumOfDetectiveOnStart,nodeList.Count);i++) { 
+        for (int i = 0; i < Mathf.Min(GlobalVar.instance.numOfDetectiveOnStart,nodeList.Count);i++) { 
             
             int j = Random.Range(0, nodeList.Count);
             focusOnNodes.Add(nodeList[j]);
@@ -59,14 +59,13 @@ public class DetectiveBehavior : MonoBehaviour
                     //Debug.Log(i + " 00");
                     stayRounds[i] = 0;
                     focusOnNodes[i] = list[Random.Range(0, list.Count)];
-                    focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
+                    
                 }
                 else //neighbor 1
                 {
                     //Debug.Log(i + " 01");
                     stayRounds[i] = 0;
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
-                    focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
                 }
             }else //self 1
             {
@@ -80,9 +79,9 @@ public class DetectiveBehavior : MonoBehaviour
                     //Debug.Log(i + " 11");
                     stayRounds[i] = 0;
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
-                    focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
                 }
             }
+            focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
             //focusPointers[i].transform.DOMove(new(0, 0, 0), 1, false);
         } 
     }
@@ -91,9 +90,9 @@ public class DetectiveBehavior : MonoBehaviour
     {
         foreach(var i in focusOnNodes)
         {
-            if (RoundManager.Instance.bookAllocationMap[i] != 0)
+            if (RoundManager.Instance.BookAllocationMap[i] != 0)
             {
-                GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfDetective);
+                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
             }
         }
     }

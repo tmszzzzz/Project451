@@ -5,17 +5,13 @@ using UnityEngine;
 
 public class BibliophileBehavior : NodeBehavior
 {
-    public override StatePrediction PredictState()
-    {
-        return base.PredictState();
-    }
     public override void SetState(Properties.StateEnum stateEnum)
     {
         if (properties.state == Properties.StateEnum.NORMAL && stateEnum >= Properties.StateEnum.AWAKENED && !hadAwakenedBefore)
         {
             CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
-            cb.AddNodeNumOfBooks(cb.Me, GlobalVar.Instance.NumOfBibliophileGiveBooks);
-            mb.AddMessage($"Bibliophile {gameObject.name} gives you {GlobalVar.Instance.NumOfBibliophileGiveBooks} books.");
+            cb.AddNodeNumOfBooks(cb.Me, GlobalVar.instance.numOfBibliophileGiveBooks);
+            mb.AddMessage($"Bibliophile {gameObject.name} gives you {GlobalVar.instance.numOfBibliophileGiveBooks} books.");
         }
         base.SetState(stateEnum);
     }

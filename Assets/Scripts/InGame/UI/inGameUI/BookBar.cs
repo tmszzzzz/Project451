@@ -20,7 +20,7 @@ public class BookBar : MonoBehaviour
     void Update()
     {
         int booknum = properties.numOfBooks;
-        booknum += RoundManager.Instance.bookAllocationMap[thisnode];
+        booknum += RoundManager.Instance.BookAllocationMap[thisnode];
         slider.value = (float)booknum / maxBookNum;
     }
 }

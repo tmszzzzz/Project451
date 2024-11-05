@@ -7,20 +7,20 @@ public class CursorManager : MonoBehaviour
 {
     // Update is called once per frame
     // 所有检测鼠标点击、raycast行为
-    Camera mainCamera;
-    [SerializeField] PanelController panelController;
-    [SerializeField] CanvasBehavior canvas;
+    private Camera _mainCamera;
+    [SerializeField] private PanelController panelController;
+    [SerializeField] private CanvasBehavior canvas;
     private void Awake()
     {
-        mainCamera = Camera.main;
+        _mainCamera = Camera.main;
     }
-    void Update()
+    private void Update()
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
@@ -36,7 +36,7 @@ public class CursorManager : MonoBehaviour
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {
@@ -50,7 +50,7 @@ public class CursorManager : MonoBehaviour
             }
             else
             {
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+                Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit))
                 {

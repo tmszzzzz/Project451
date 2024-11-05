@@ -14,8 +14,8 @@ public class GlobalExposureBarBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        globalExposureBar.maxValue = GlobalVar.Instance.maxGlobalExposureValue;
-        easeGlobalExposureBar.maxValue = GlobalVar.Instance.maxGlobalExposureValue;
+        globalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
+        easeGlobalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
 
         globalExposureBar.value = globalVar.globalExposureValue;
         easeGlobalExposureBar.value = globalVar.globalExposureValue;

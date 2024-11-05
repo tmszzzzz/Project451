@@ -13,20 +13,20 @@ public class PlotDisplay : MonoBehaviour
     [SerializeField] private Image shadowImage;
     [SerializeField] private float shadowAlpha = 0.95f; 
     [SerializeField] private List<Image> imagesTobeFaded;
-    private bool isPlotting = false;
+    private bool _isPlotting = false;
     [SerializeField] private float lerpAlphaSpeed = 10f;
     void Update()
     {
-        if(shadowImage.color.a < 0.1f && isPlotting == false)
+        if(shadowImage.color.a < 0.1f && _isPlotting == false)
         {
             shadowImage.gameObject.SetActive(false);
             plotPanel.SetActive(false);
         }
 
-        float targetShadowAlpha = isPlotting ? shadowAlpha : 0f;
+        float targetShadowAlpha = _isPlotting ? shadowAlpha : 0f;
         shadowImage.color = new Color(shadowImage.color.r, shadowImage.color.g, shadowImage.color.b, Mathf.Lerp(shadowImage.color.a, targetShadowAlpha, Time.deltaTime * lerpAlphaSpeed));
 
-        float targetAlpha = isPlotting ? 1f : 0f;
+        float targetAlpha = _isPlotting ? 1f : 0f;
         foreach (Image image in imagesTobeFaded)
         {
             image.color = new Color(image.color.r, image.color.g, image.color.b, Mathf.Lerp(image.color.a, targetAlpha, Time.deltaTime * lerpAlphaSpeed));
@@ -35,13 +35,13 @@ public class PlotDisplay : MonoBehaviour
 
     void OpenPlots()
     {
-        if (isPlotting)
+        if (_isPlotting)
         {
             Debug.Log("Plot again");
         }
         shadowImage.gameObject.SetActive(true);
         plotPanel.SetActive(true);
-        isPlotting = true;
+        _isPlotting = true;
 
         plotDisplayArea.GetComponent<PlotDisplayArea>().OpenPlots();
     }
@@ -49,11 +49,11 @@ public class PlotDisplay : MonoBehaviour
 
     void ClosePlots()
     {
-        if (!isPlotting)
+        if (!_isPlotting)
         {
             Debug.Log("Plot is not open already");
         }
-        isPlotting = false;
+        _isPlotting = false;
         plotDisplayArea.GetComponent<PlotDisplayArea>().ClosePlots();
         plotSelectionArea.GetComponent<PlotSelectionArea>().ClosePlots(); 
     }
@@ -62,7 +62,7 @@ public class PlotDisplay : MonoBehaviour
     public void PushedStart()
     {
         OpenPlots();
-        PlotManager.Instance.TriggerPlotStart();
+        PlotManager.instance.TriggerPlotStart();
         //CreateContinueBUtton();
     }
 
@@ -71,7 +71,7 @@ public class PlotDisplay : MonoBehaviour
     {
         Button endButton = CreateContinueButton("End");
         endButton.onClick.AddListener(ClosePlots);
-        endButton.onClick.AddListener(PlotManager.Instance.TriggerPlotEnd);
+        endButton.onClick.AddListener(PlotManager.instance.TriggerPlotEnd);
         // ClosePlots();
         // PlotManager.Instance.TriggerPlotEnd();
     }
@@ -79,12 +79,12 @@ public class PlotDisplay : MonoBehaviour
     // 继续剧情的方法
     public void ContinuePlot()
     {
-        if(!PlotManager.Instance.GetDuringPlot())
+        if(!PlotManager.instance.GetDuringPlot())
         {
             Debug.LogWarning("当前不在剧情中，点击此按钮无效。");
         }
 
-        PlotManager.Instance.TriggerUserAction(false, 0);
+        PlotManager.instance.TriggerUserAction(false, 0);
     }
 
     Button CreateContinueButton(string content)
@@ -188,7 +188,7 @@ public class PlotDisplay : MonoBehaviour
     // 选择一个选项
     private void SelectChoice(int choiceIndex)
     {
-        PlotManager.Instance.TriggerUserAction(true, choiceIndex);
+        PlotManager.instance.TriggerUserAction(true, choiceIndex);
         // selectionContainer.gameObject.SetActive(false); // 隐藏选择项
         // PlotManager.Instance.TriggerUserAction(true, choiceIndex); // 通知 PlotManager 选择了某项
     }

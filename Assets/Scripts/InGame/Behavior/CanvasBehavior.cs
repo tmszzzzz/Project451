@@ -64,7 +64,7 @@ public class CanvasBehavior : MonoBehaviour
                 // 确保 ID 有效
                 if (startNodeId != -1 && endNodeId != -1)
                 {
-                    ConnectionData connectionData = new ConnectionData(connectionScript.Type, startNodeId, endNodeId, connectionScript.unlockTag,connectionScript.unlockDemand);
+                    ConnectionData connectionData = new ConnectionData(connectionScript.type, startNodeId, endNodeId, connectionScript.unlockTag,connectionScript.unlockDemand);
                     connections.Add(connectionData);
                 }
             }
@@ -216,11 +216,6 @@ public class CanvasBehavior : MonoBehaviour
         Initialization();
     }
 
-    void Update()
-    {
-        
-    }
-
     public int GetTotalBookNum()
     {
         int total = 0;
@@ -297,19 +292,19 @@ public class CanvasBehavior : MonoBehaviour
         }
     }
 
-    public void UnlockTriggerConnectionsByTag(int tag)
+    public void UnlockTriggerConnectionsByTag(int unlockTag)
     {
         foreach(var i in connectionList)
         {
-            i.GetComponent<ConnectionBehavior>().UnlockTrigger(tag);
+            i.GetComponent<ConnectionBehavior>().UnlockTrigger(unlockTag);
         }
     }
 
-    public void UnlockCancelConnectionsByTag(int tag)
+    public void UnlockCancelConnectionsByTag(int unlockTag)
     {
         foreach (var i in connectionList)
         {
-            i.GetComponent<ConnectionBehavior>().UnlockCancel(tag);
+            i.GetComponent<ConnectionBehavior>().UnlockCancel(unlockTag);
         }
     }
 
@@ -334,10 +329,10 @@ public class CanvasBehavior : MonoBehaviour
             if((nb = i.GetComponent<NodeBehavior>()) != null && nb.properties.state == Properties.StateEnum.EXPOSED)
             {
                 exposed = true;
-                GlobalVar.Instance.AddGlobalExposureValue(GlobalVar.Instance.exposureValueAdditionOfExposedNode);
+                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfExposedNode);
             }
         }
-        if(!exposed) GlobalVar.Instance.RuduceGlobalExposureValue(GlobalVar.Instance.exposureValueReductionOfNoExposedNode);
+        if(!exposed) GlobalVar.instance.RuduceGlobalExposureValue(GlobalVar.instance.exposureValueReductionOfNoExposedNode);
     }
     public List<GameObject> ExposedList()
     {

@@ -10,10 +10,6 @@ public class FirefighterBehavior : NodeBehavior
         RoundManager.Instance.RoundChange += OnRoundChange;
         base.Start();
     }
-    public override StatePrediction PredictState()
-    {
-        return base.PredictState();
-    }
 
     protected void OnRoundChange()
     {
@@ -25,8 +21,8 @@ public class FirefighterBehavior : NodeBehavior
                 Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
                 return;
             }
-            cb.AddNodeNumOfBooks(cb.Me, GlobalVar.Instance.NumOfFirefighterGiveBooks);
-            mb.AddMessage($"Firefighter {gameObject.name} gives you {GlobalVar.Instance.NumOfFirefighterGiveBooks} books in this round.");
+            cb.AddNodeNumOfBooks(cb.Me, GlobalVar.instance.numOfFirefighterGiveBooks);
+            mb.AddMessage($"Firefighter {gameObject.name} gives you {GlobalVar.instance.numOfFirefighterGiveBooks} books in this round.");
         }
     }
 
