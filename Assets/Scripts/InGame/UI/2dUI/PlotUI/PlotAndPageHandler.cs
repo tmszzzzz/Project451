@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlotAndPageHandler : MonoBehaviour
 {
     bool isPlotting = false;
+    
     bool isPaging = false;
     [SerializeField] private GameObject plotButton;
     [SerializeField] private GameObject pageButton;
