@@ -12,8 +12,6 @@ public class BookAllocationArrow : MonoBehaviour
     public float nodeHeight = 2.0f; // 断点浮起的高度
     public float curveHeight = 2.0f; // 中段凸起的高度
     public float deltaYText = 2.0f;
-    public float arrowHeadLength = 0.2f; // 箭头头部长度
-    public float arrowHeadAngle = 20.0f; // 箭头角度
     private Animator anim;
 
     private void Awake()

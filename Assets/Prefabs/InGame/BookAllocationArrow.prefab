@@ -193,9 +193,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6926367292010219147}
-  - component: {fileID: 6944160625021543375}
   - component: {fileID: 7935173865515148992}
   - component: {fileID: 554551434355100990}
+  - component: {fileID: 8178060088569002231}
   m_Layer: 0
   m_Name: BookAllocationArrow
   m_TagString: Untagged
@@ -219,29 +219,6 @@ Transform:
   - {fileID: 2877169612511410399}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6944160625021543375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8145652003727669263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9458fa586107384192fd15407b32c57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  lineRenderer: {fileID: 7935173865515148992}
-  text: {fileID: 5930762749336968026}
-  allocationNum: 0
-  curveResolution: 20
-  nodeHeight: 4.22
-  curveHeight: 3.37
-  deltaYText: 2
-  arrowHeadLength: 0.2
-  arrowHeadAngle: 20
 --- !u!120 &7935173865515148992
 LineRenderer:
   serializedVersion: 2
@@ -367,3 +344,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8178060088569002231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145652003727669263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9458fa586107384192fd15407b32c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointA: {fileID: 0}
+  pointB: {fileID: 0}
+  lineRenderer: {fileID: 7935173865515148992}
+  text: {fileID: 5930762749336968026}
+  allocationNum: 0
+  curveResolution: 20
+  nodeHeight: 2
+  curveHeight: 2
+  deltaYText: 5
