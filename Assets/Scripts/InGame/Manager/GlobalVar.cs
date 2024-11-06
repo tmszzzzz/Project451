@@ -32,6 +32,8 @@ public class GlobalVar : MonoBehaviour
     public int numOfMaximumBookDeliverRange = 2;
     public int numOfDetectiveOnStart = 4;
     public float probabilityOfNodesInspectingDetective = 0.1f;
+    
+    public Dictionary<string, float> increasementOfSkillsPerTime = new Dictionary<string, float>();
 
     public int resourcePoint = 0;
     public void AddResourcePoint(int value)
@@ -116,13 +118,16 @@ public class GlobalVar : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
+
     private void KeepLimitEqualToHalfOfBookNum()
     {
         allocationLimit = RoundManager.instance.canvas.GetTotalBookNum();
     }
 
+
+
     void Update()
     {
-        KeepLimitEqualToHalfOfBookNum();
     }
 }
