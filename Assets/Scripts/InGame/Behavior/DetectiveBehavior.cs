@@ -1,6 +1,7 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class DetectiveBehavior : MonoBehaviour
@@ -10,6 +11,8 @@ public class DetectiveBehavior : MonoBehaviour
     public GameObject pointerPrefab;
     public CanvasBehavior canvas;
     [SerializeField] private List<int> stayRounds;
+    public TaskCompletionSource<bool> Tcs1;
+    public TaskCompletionSource<bool> Tcs2;
     private void Start()
     {
         focusOnNodes = new List<GameObject>();
@@ -21,7 +24,7 @@ public class DetectiveBehavior : MonoBehaviour
             
             int j = Random.Range(0, nodeList.Count);
             focusOnNodes.Add(nodeList[j]);
-            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0, 5, 0), Quaternion.Euler(0, 0, 0)));
+            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position, Quaternion.Euler(0, 0, 0)));
             stayRounds.Add(0);
         }
         canvas.RefreshAllConnections();
@@ -33,7 +36,7 @@ public class DetectiveBehavior : MonoBehaviour
         if (exposedList.Count > 0)
         {
             focusOnNodes.Add(exposedList[Random.Range(0, exposedList.Count)]);
-            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0,5,0),Quaternion.Euler(0,0,0)));
+            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position,Quaternion.Euler(0,0,0)));
             stayRounds.Add(0);
         }
         else
@@ -81,13 +84,16 @@ public class DetectiveBehavior : MonoBehaviour
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
                 }
             }
-            focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 5, 0);
+            focusPointers[i].transform.position = focusOnNodes[i].transform.position;
             //focusPointers[i].transform.DOMove(new(0, 0, 0), 1, false);
         } 
     }
 
-    public void AddGlobalExposureValue()
+    public async Task AddGlobalExposureValue()
     {
+        await DetectedVis();
+        await AllVis();
+        await AllInvis();
         foreach(var i in focusOnNodes)
         {
             if (RoundManager.instance.BookAllocationMap[i] != 0)
@@ -100,5 +106,50 @@ public class DetectiveBehavior : MonoBehaviour
     public bool IsDetected(GameObject go)
     {
         return focusOnNodes.Contains(go);
+    }
+
+    public async Task DetectedVis()
+    {
+        Tcs1 = new TaskCompletionSource<bool>();
+        bool skip = true;
+        int l = focusPointers.Count;
+        for(int i =0;i<l;i++)
+        {
+            if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] != 0)
+            {
+                skip = false;
+                focusPointers[i].GetComponent<Animator>().SetTrigger("Detected");
+            }
+        }
+
+        if(!skip) await Tcs1.Task;
+    }
+
+    public async Task AllVis()
+    {
+        int l = focusPointers.Count;
+        for(int i =0;i<l;i++)
+        {
+            if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] == 0)
+            {
+                focusPointers[i].GetComponent<Animator>().SetTrigger("Vis");
+            }
+        }
+
+        await Task.Delay(4000);
+    }
+
+    public async Task AllInvis()
+    {
+        Tcs2 = new TaskCompletionSource<bool>();
+        int l = focusPointers.Count;
+        bool skip = true;
+        for(int i =0;i<l;i++)
+        {
+            skip = false;
+            focusPointers[i].GetComponent<Animator>().SetTrigger("Invis");
+        }
+        
+        if(!skip) await Tcs2.Task;
     }
 }

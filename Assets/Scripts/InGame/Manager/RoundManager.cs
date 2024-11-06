@@ -231,7 +231,7 @@ public class RoundManager : MonoBehaviour
         return v;
     }
 
-    public void NextRound()
+    public async void NextRound()
     {
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
@@ -245,7 +245,7 @@ public class RoundManager : MonoBehaviour
         //执行分配动画
 
 
-        detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
+        await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
 
 
         canvas.RefreshAllNodes();//更新节点状态
