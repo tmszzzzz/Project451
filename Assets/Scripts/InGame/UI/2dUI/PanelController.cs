@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using DG.Tweening.Plugins;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class PanelController : MonoBehaviour
 {
     public GameObject NodeInfoPanel;
     private Camera mainCamera;
-    public GameObject infoTextGo; // 在 Inspector 中指定的 UI Text 用于显示信息
     public GameObject currentNode; // 当前选中的物体
-    private TextMeshProUGUI infoText;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI stateText;
+    [SerializeField] private TextMeshProUGUI identityText;
+    [SerializeField] private TextMeshProUGUI awakeThresholdText;
+    [SerializeField] private TextMeshProUGUI exposeThresholdText;
+    [SerializeField] private TextMeshProUGUI numOfBooksText;
+    [SerializeField] private TextMeshProUGUI influenceText;
+    [SerializeField] private Slider BookSlider;
+    [SerializeField] private Slider InfluenceSlider;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,9 +48,6 @@ public class PanelController : MonoBehaviour
         }
 
         NodeInfoPanel.SetActive(true);
-        infoText = infoTextGo.GetComponent<TextMeshProUGUI>();
-        // 初始化文本为空
-        infoText.text = "";
         currentNode = null;
     }
     public void DisableNodeInfoPanel()
@@ -66,12 +72,16 @@ public class PanelController : MonoBehaviour
             Properties properties = node.properties;
             if (properties != null && NodeInfoPanel.activeSelf)
             {
-                // 显示属性值
-                infoText.text = $"姓名: {hoveredObject.name}\n" +
-                                $"状态: {properties.type}\n" +
-                                $"觉醒阈值: {properties.awakeThreshold}\n" +
-                                $"暴露阈值: {properties.exposeThreshold}\n" +
-                                $"持有书籍: {properties.numOfBooks}/{properties.maximumNumOfBooks}";
+                nameText.text = hoveredObject.name;
+                stateText.text = properties.stateNameToCNString(properties.state);
+                identityText.text = properties.typeNameToCNString(properties.type);
+                awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
+                exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
+                numOfBooksText.text = "持有书籍: " + properties.numOfBooks + "/" + properties.maximumNumOfBooks;
+                influenceText.text = "当前受影响: " + node.PredictState().influence;
+
+                BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
+                InfluenceSlider.value = node.PredictState().influence / properties.exposeThreshold;
             }
         }
 
