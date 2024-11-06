@@ -4419,6 +4419,7 @@ GameObject:
   - component: {fileID: 319005131}
   - component: {fileID: 319005132}
   - component: {fileID: 319005133}
+  - component: {fileID: 319005134}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -4518,6 +4519,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelController: {fileID: 1002642323}
   canvas: {fileID: 1260303988}
+--- !u!114 &319005134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319005128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce3af4b26c249f442bbba731158b5ac5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectiveBehavior: {fileID: 1279831220}
 --- !u!4 &322798905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7861350953103440092, guid: efe06c0608269fb45a852b9c1aff7526,
@@ -17842,7 +17856,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   focusOnNodes: []
   focusPointers: []
-  pointerPrefab: {fileID: 7850311867614625865, guid: 01d10be72eb017541a01f301078f079b,
+  pointerPrefab: {fileID: 2858458691815473013, guid: 4fc02ecabc5d82c43a6a314992feb00e,
     type: 3}
   canvas: {fileID: 1260303988}
   stayRounds: 
@@ -22229,7 +22243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1537718248
 Transform:
   m_ObjectHideFlags: 0
