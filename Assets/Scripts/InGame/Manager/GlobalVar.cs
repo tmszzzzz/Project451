@@ -32,6 +32,8 @@ public class GlobalVar : MonoBehaviour
     public int numOfMaximumBookDeliverRange = 2;
     public int numOfDetectiveOnStart = 4;
     public float probabilityOfNodesInspectingDetective = 0.1f;
+    
+    public Dictionary<string, float> increasementOfSkillsPerTime = new Dictionary<string, float>();
 
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()
@@ -50,13 +52,16 @@ public class GlobalVar : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+
+
     private void KeepLimitEqualToHalfOfBookNum()
     {
         allocationLimit = RoundManager.instance.canvas.GetTotalBookNum();
     }
 
+
+
     void Update()
     {
-        KeepLimitEqualToHalfOfBookNum();
     }
 }
