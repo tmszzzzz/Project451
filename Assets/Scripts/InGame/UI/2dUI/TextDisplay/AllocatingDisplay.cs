@@ -7,6 +7,6 @@ public class AllocatingDisplay : MonoBehaviour
 {
     void Update()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = $"Allocating: {RoundManager.Instance.held}/{RoundManager.Instance.GetNeedToAllocate()}";
+        gameObject.GetComponent<TextMeshProUGUI>().text = $"Allocating: {RoundManager.instance.held}/{RoundManager.instance.GetNeedToAllocate()}";
     }
 }

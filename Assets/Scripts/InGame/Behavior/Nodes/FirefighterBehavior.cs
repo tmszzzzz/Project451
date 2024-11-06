@@ -7,7 +7,7 @@ public class FirefighterBehavior : NodeBehavior
 {
     protected override void Start()
     {
-        RoundManager.Instance.RoundChange += OnRoundChange;
+        RoundManager.instance.RoundChange += OnRoundChange;
         base.Start();
     }
 

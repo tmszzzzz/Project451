@@ -125,9 +125,11 @@ MonoBehaviour:
     type: 0
     awakeThreshold: 0
     exposeThreshold: 0
+    fallThreshold: 0
     numOfBooks: 0
     maximumNumOfBooks: 0
     unlockTag: 0
+    region: 0
   plotAndPageHandler: {fileID: 2798616845115293210}
   mb: {fileID: 0}
   objColor: {fileID: 7774122826693232804}
@@ -152,6 +154,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NodeUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 570350608778618358, guid: 12a879d08bd59fe459bc8ff253086c26,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1124949140894213305, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
@@ -476,6 +483,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: NodeBottomUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4117129886660544526, guid: 7bce6c52f9d2aa84d881f9092f08f48c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6207636774234639904, guid: 7bce6c52f9d2aa84d881f9092f08f48c,
         type: 3}

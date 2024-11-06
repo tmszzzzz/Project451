@@ -21,7 +21,7 @@ public class DetectiveBehavior : MonoBehaviour
             
             int j = Random.Range(0, nodeList.Count);
             focusOnNodes.Add(nodeList[j]);
-            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0, 10, 0), Quaternion.Euler(0, 0, 0)));
+            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0, 5, 0), Quaternion.Euler(0, 0, 0)));
             stayRounds.Add(0);
         }
         canvas.RefreshAllConnections();
@@ -33,7 +33,7 @@ public class DetectiveBehavior : MonoBehaviour
         if (exposedList.Count > 0)
         {
             focusOnNodes.Add(exposedList[Random.Range(0, exposedList.Count)]);
-            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0,10,0),Quaternion.Euler(0,0,0)));
+            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position + new Vector3(0,5,0),Quaternion.Euler(0,0,0)));
             stayRounds.Add(0);
         }
         else
@@ -81,7 +81,7 @@ public class DetectiveBehavior : MonoBehaviour
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
                 }
             }
-            focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 10, 0);
+            focusPointers[i].transform.position = focusOnNodes[i].transform.position + new Vector3(0, 5, 0);
             //focusPointers[i].transform.DOMove(new(0, 0, 0), 1, false);
         } 
     }
@@ -90,7 +90,7 @@ public class DetectiveBehavior : MonoBehaviour
     {
         foreach(var i in focusOnNodes)
         {
-            if (RoundManager.Instance.BookAllocationMap[i] != 0)
+            if (RoundManager.instance.BookAllocationMap[i] != 0)
             {
                 GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
             }
