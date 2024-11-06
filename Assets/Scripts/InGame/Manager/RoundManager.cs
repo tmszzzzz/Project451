@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class RoundManager : MonoBehaviour
 {
     // 单例实例
-    public static RoundManager Instance { get; private set; }
+    public static RoundManager instance;
     public GameObject textPrefab; // 指向TextMeshProUI预制体
     public GameObject selectedPointerPrefab;
     private GameObject _currentSelectedPointer;
@@ -32,20 +32,17 @@ public class RoundManager : MonoBehaviour
     private void Awake()
     {
         // 如果已有实例且不是当前实例，销毁当前实例，确保单例唯一性
-        if (Instance != null && Instance != this)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
             return;
         }
 
         // 将当前实例设为单例实例
-        Instance = this;
+        instance = this;
 
         // 选择保留这个对象，使其在场景切换时不会被销毁
         DontDestroyOnLoad(gameObject);
-    }
-    private void Start()
-    {
         BookAllocationMap = new Dictionary<GameObject, int>();
         foreach (var i in canvas.GetNodeList())
         {
@@ -234,7 +231,7 @@ public class RoundManager : MonoBehaviour
         return v;
     }
 
-    public void NextRound()
+    public async void NextRound()
     {
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
@@ -248,13 +245,13 @@ public class RoundManager : MonoBehaviour
         //执行分配动画
 
 
-        detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
-
-
-        canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
+        await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
 
 
         canvas.RefreshAllNodes();//更新节点状态
+
+
+        canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
 
 
         detective.DetectiveMove();//侦探移动

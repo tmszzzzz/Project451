@@ -25,7 +25,7 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(0, Color.gray);
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
-        mb = RoundManager.Instance.messageBar;
+        mb = RoundManager.instance.messageBar;
     }
     protected virtual void Update()
     {
@@ -43,13 +43,13 @@ public class NodeBehavior : BaseNodeBehavior
         }
         List<GameObject> nList = cb.GetNeighbors(gameObject);
 
-        int influence = properties.numOfBooks + RoundManager.Instance.BookAllocationMap[gameObject];
+        int influence = properties.numOfBooks + RoundManager.instance.BookAllocationMap[gameObject];
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.Instance.BookAllocationMap[cub.gameObject] : 0;
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.instance.BookAllocationMap[cub.gameObject] : 0;
             }
         }
         if (properties.state == Properties.StateEnum.EXPOSED) 
