@@ -64,13 +64,20 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void Plot()
     {
-        Debug.Log("Node"  + " is plotting " + plotFilename);
-        isPlotting = false;
+        if (isPlotting)
+        {
+            Debug.Log("Node" + " is plotting " + plotFilename);
+            isPlotting = false;
+        }
     }
 
     public void Page()
     {
-        Debug.Log("Node" + " is paging " + pageSprite.name);
-        isPaging = false;
+        if (isPaging)
+        {
+            Debug.Log("Node" + " is paging " + pageSprite.name);
+            GlobalVar.instance.AddResourcePoint(1);
+            isPaging = false;
+        }
     }
 }

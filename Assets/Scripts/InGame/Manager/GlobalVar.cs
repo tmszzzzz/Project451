@@ -33,6 +33,72 @@ public class GlobalVar : MonoBehaviour
     public int numOfDetectiveOnStart = 4;
     public float probabilityOfNodesInspectingDetective = 0.1f;
 
+    public int resourcePoint = 0;
+    public void AddResourcePoint(int value)
+    {
+        resourcePoint += value;
+    }
+    
+    public int resourcePointPerInfoIncrement = 3;
+    public float infoIncreaseBy = 0.01f;
+    [SerializeField] private int infoResourcePoint = 0;
+    public void InfoResourcePointIncrement(int v)
+    {
+        if (resourcePoint <= 0)
+        {
+            Debug.Log("no resource point");
+            return;
+        }
+
+        resourcePoint--;
+        infoResourcePoint += v;
+        while (infoResourcePoint >= resourcePointPerInfoIncrement)
+        {
+            infoResourcePoint -= resourcePointPerInfoIncrement;
+            probabilityOfNodesInspectingDetective+=infoIncreaseBy;
+        }
+    }
+    
+    public int resourcePointPerDistanceIncrement = 3;
+    public int distanceIncreaseBy = 1;
+    [SerializeField] private int distanceResourcePoint = 0;
+    public void DistanceResourcePointIncrement(int v)
+    {
+        if (resourcePoint <= 0)
+        {
+            Debug.Log("no resource point");
+            return;
+        }
+
+        resourcePoint--;
+        distanceResourcePoint += v;
+        while (distanceResourcePoint >= resourcePointPerDistanceIncrement)
+        {
+            distanceResourcePoint -= resourcePointPerDistanceIncrement;
+            numOfMaximumBookDeliverRange+=distanceIncreaseBy;
+        }
+    }
+    public int resourcePointPerAllocationLimitIncrement = 3;
+    public int allocationLimitIncreaseBy = 1;
+    [SerializeField] private int allocationLimitResourcePoint = 0;
+
+    public void AllocationLimitResourcePointIncrement(int v)
+    {
+        if (resourcePoint <= 0)
+        {
+            Debug.Log("no resource point");
+            return;
+        }
+
+        resourcePoint--;
+        allocationLimitResourcePoint += v;
+        while (allocationLimitResourcePoint >= resourcePointPerAllocationLimitIncrement)
+        {
+            allocationLimitResourcePoint -= resourcePointPerAllocationLimitIncrement;
+            allocationLimit += allocationLimitIncreaseBy;
+        }
+    }
+
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()
     {
