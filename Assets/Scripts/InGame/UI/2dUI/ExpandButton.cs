@@ -25,11 +25,11 @@ public class ExpandButton : MonoBehaviour
     {
         if (isExpanded)
         {
-            arrowImage.transform.rotation = Quaternion.Lerp(arrowImage.transform.rotation, Quaternion.Euler(0, 0, 90), Time.deltaTime * 5f);
+            arrowImage.transform.rotation = Quaternion.Lerp(arrowImage.transform.rotation, Quaternion.Euler(0, 0, 180), Time.deltaTime * 5f);
         }
         else 
         {
-            arrowImage.transform.rotation = Quaternion.Lerp(arrowImage.transform.rotation, Quaternion.Euler(0, 0, -90), Time.deltaTime * 5f);
+            arrowImage.transform.rotation = Quaternion.Lerp(arrowImage.transform.rotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * 5f);
         }
     }
 
