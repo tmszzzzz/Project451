@@ -11,10 +11,11 @@ public class BookSlotBehavior : MonoBehaviour
     [SerializeField] private GameObject bookSlotPrefab;
     [SerializeField] private List<GameObject> bookSlots;
     // Start is called before the first frame update
+
     void Start()
     {
-        maxBook = thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks;
         currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;
+        maxBook = thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks;
 
         bookSlots = new List<GameObject>();
         initializeBookSlots();
@@ -51,6 +52,8 @@ public class BookSlotBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //maxBook = thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks;
+
         transform.rotation = transform.parent.rotation;
         //caculate the current book and update the book slots
         currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;

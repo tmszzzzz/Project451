@@ -10,10 +10,11 @@ public class AutoGenerationBehavior : MonoBehaviour
     public float neighborToAwakeThresholdRatio = 0.5f;
     public bool isRoundUp = true;
     public int maximumNumOfBooks = 2;
+    public int fallThreshold = 0;
 
     public int increasementFromAwakeToExpose = 1;
     // Start is called before the first frame update
-    void Start()
+    void Update()
     {
         thisNode = this.gameObject;
         canvasBehavior = GameObject.Find("Canvas").GetComponent<CanvasBehavior>();
@@ -29,6 +30,7 @@ public class AutoGenerationBehavior : MonoBehaviour
         thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = isRoundUp ? (int)(neighborCount * neighborToAwakeThresholdRatio + 1) : (int)(neighborCount * neighborToAwakeThresholdRatio);
         thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + increasementFromAwakeToExpose;
         thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = maximumNumOfBooks;
+        thisNode.GetComponent<NodeBehavior>().properties.fallThreshold = fallThreshold;
         // thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = neighborCount %2 == 0 ? (neighborCount/2) : (neighborCount/2) + 1;
         // thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + 1;
         // thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = 2;
@@ -42,6 +44,8 @@ public class AutoGenerationBehavior : MonoBehaviour
             isRoundUp = true;
             maximumNumOfBooks = 2;
             increasementFromAwakeToExpose = 1;
+            fallThreshold = 0;
+
         }
         else if (thisNode.GetComponent<NodeBehavior>().properties.region == 1)
         {
@@ -49,6 +53,7 @@ public class AutoGenerationBehavior : MonoBehaviour
             isRoundUp = true;
             maximumNumOfBooks = 3;
             increasementFromAwakeToExpose = 2;
+            fallThreshold = 1;
         }
         else if (thisNode.GetComponent<NodeBehavior>().properties.region == 2)
         {
@@ -56,6 +61,7 @@ public class AutoGenerationBehavior : MonoBehaviour
             isRoundUp = true;
             maximumNumOfBooks = 4;
             increasementFromAwakeToExpose = 3;
+            fallThreshold = 2;
         }
     }
 }
