@@ -183,9 +183,6 @@ public class RoundManager : MonoBehaviour
 
                         // 重置选择状态
                         RestartFirstSelection();
-
-                        // 触发分配变化事件
-                        BookAllocationChange?.Invoke();
                     }
                     else
                     {
@@ -251,6 +248,9 @@ public class RoundManager : MonoBehaviour
         canvas.RefreshAllNodes();//更新节点状态
 
 
+        BookAllocationChange?.Invoke();//分配情况变更事件
+
+
         await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
 
 
@@ -278,9 +278,6 @@ public class RoundManager : MonoBehaviour
         {
             BookAllocationMap[keys[i]] = 0;
         }//清除预分配数据
-
-
-        BookAllocationChange?.Invoke();//分配情况变更事件（暂未使用）
 
 
         messageBar.AddMessage("NextRound");//消息提示

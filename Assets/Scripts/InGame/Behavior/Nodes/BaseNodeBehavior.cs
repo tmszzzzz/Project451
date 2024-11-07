@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class BaseNodeBehavior : MonoBehaviour
 {
     public abstract StatePrediction PredictState();
+    public abstract StatePrediction NowState();
     public abstract void SetState(Properties.StateEnum stateEnum);
     public struct StatePrediction
     {

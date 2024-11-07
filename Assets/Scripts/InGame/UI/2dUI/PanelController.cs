@@ -28,6 +28,12 @@ public class PanelController : MonoBehaviour
     {
         NodeInfoPanel.SetActive(false);
         mainCamera = Camera.main;
+        
+    }
+
+    void Start()
+    {
+        RoundManager.instance.BookAllocationChange += OnBookAllocationChange;
     }
 
     public void NodePanelControl(RaycastHit hit)
@@ -78,12 +84,37 @@ public class PanelController : MonoBehaviour
                 awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
                 exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
                 numOfBooksText.text = "持有书籍: " + properties.numOfBooks + "/" + properties.maximumNumOfBooks;
-                influenceText.text = "当前受影响: " + node.PredictState().influence;
+                influenceText.text = "当前受影响: " + node.NowState().influence;
 
                 BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
-                InfluenceSlider.value = node.PredictState().influence / properties.exposeThreshold;
+                InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
+                Debug.Log(InfluenceSlider.value);
             }
         }
 
+    }
+
+    private void OnBookAllocationChange()
+    {
+        Debug.Log(1);
+        if (currentNode != null)
+        {
+            Debug.Log(2);
+            var node = currentNode.GetComponent<NodeBehavior>();
+            Properties properties = node.properties;
+            if (properties != null && NodeInfoPanel.activeSelf)
+            {
+                nameText.text = currentNode.name;
+                stateText.text = properties.stateNameToCNString(properties.state);
+                identityText.text = properties.typeNameToCNString(properties.type);
+                awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
+                exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
+                numOfBooksText.text = "持有书籍: " + (properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode]) + "/" + properties.maximumNumOfBooks;
+                influenceText.text = "当前受影响: " + node.PredictState().influence;
+
+                BookSlider.value = (properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode])/(float)properties.maximumNumOfBooks;
+                InfluenceSlider.value = node.PredictState().influence / (float)properties.exposeThreshold;
+            }
+        }
     }
 }

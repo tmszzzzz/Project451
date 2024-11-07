@@ -32,9 +32,40 @@ public class NodeBehavior : BaseNodeBehavior
         objColor.color = ColorMap[(int)properties.state];
     }
 
+    public override StatePrediction NowState()
+    {
+        //修改此方法的判断逻辑时，请记得一并修改PredictState
+        CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
+        if (cb == null)
+        {
+            Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
+            return new StatePrediction(Properties.StateEnum.DEAD,0);
+        }
+        List<GameObject> nList = cb.GetNeighbors(gameObject);
+
+        int influence = properties.numOfBooks;
+        foreach (GameObject go in nList)
+        {
+            NodeBehavior cub = go.GetComponent<NodeBehavior>();
+            if (cub != null)
+            {
+                influence += cub.properties.state > 0 ? cub.properties.numOfBooks : 0;
+            }
+        }
+        if (properties.state == Properties.StateEnum.EXPOSED) 
+        {
+            if (influence < properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.AWAKENED, influence);
+        }
+
+        if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
+        else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
+        else if (influence < properties.fallThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.NORMAL, influence);
+        else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
+    }
+
     public override StatePrediction PredictState()
     {
-
+        //修改此方法的判断逻辑时，请记得一并修改NowState
         CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
         if (cb == null)
         {
