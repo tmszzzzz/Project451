@@ -1,0 +1,117 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VFX_M_Disto_Ring_New
+  m_Shader: {fileID: 4800000, guid: 2af8e1b26ce26174a86f26a90b1d3693, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _CutoutTexture:
+        m_Texture: {fileID: 2800000, guid: 1cd34bca585904248997dfa06b61a3be, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DissolveMask:
+        m_Texture: {fileID: 2800000, guid: 68a5026cfe144e54a874fd5eaecb063c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortionDist:
+        m_Texture: {fileID: 2800000, guid: 0b5dfa661a91adf4683f6d112b1c0a2d, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortionNoise:
+        m_Texture: {fileID: 2800000, guid: 68a5026cfe144e54a874fd5eaecb063c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DistortionNoiseTexture:
+        m_Texture: {fileID: 2800000, guid: 0edc0e2061fe1194db0a041d7ca9391a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ExtraNoiseTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 2800000, guid: 68a5026cfe144e54a874fd5eaecb063c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _AlphaCutoff: 0.5
+    - _CameraDirPush: -40
+    - _CoreIntensity: 0
+    - _CorePower: 1
+    - _Cull: 2
+    - _CustomPanSwitch: 0
+    - _Debug: 0
+    - _DissolveMaskInvert: 0
+    - _DissolveMaskRotation: 0
+    - _DistortionDistLerp: 0.1
+    - _DistortionLerp: 0.03
+    - _DistortionStrength: 0.07
+    - _Dst: 10
+    - _ExtraNoiseLerp: 1
+    - _Float0: 1
+    - _GlowIntensity: 1
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _ReceiveShadows: 1
+    - _Src: 5
+    - _StrDisto: 0.2
+    - _TextureRotation: 0
+    - _ZTest: 2
+    - _ZWrite: 0
+    - __dirty: 0
+    m_Colors:
+    - _CutoutMaskSelector: {r: 0, g: 1, b: 0, a: 0}
+    - _DissolveMaskChannel: {r: 0, g: 1, b: 0, a: 0}
+    - _DissolveMaskPanSpeed: {r: 0, g: 0, b: 0, a: 0}
+    - _DistDistUVP: {r: 0.03, g: -0.1, b: 0, a: 0}
+    - _DistDistUVS: {r: 3, g: 3, b: 0, a: 0}
+    - _DistUVP: {r: 0, g: 0, b: 0, a: 0}
+    - _DistUVS: {r: 1, g: 1, b: 0, a: 0}
+    - _DistortionDistSelector: {r: 1, g: 0, b: 0, a: 0}
+    - _DistortionNoiseSelector: {r: 0, g: 1, b: 0, a: 0}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TextureChannel: {r: 0, g: 1, b: 0, a: 0}
+  m_BuildTextureStacks: []

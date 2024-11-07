@@ -22,6 +22,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject startNode = null;
     private readonly List<BookAllocationItem> _bookAllocationItems = new List<BookAllocationItem>(); // 存储分配项的列表
     public GameObject bookAllocationArrow;
+    public GameObject DownFx;
+    public GameObject ActiveFx;
+    public GameObject ExposeFx;
 
 
     //以下是事件
@@ -245,10 +248,10 @@ public class RoundManager : MonoBehaviour
         //执行分配动画
 
 
-        await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
-
-
         canvas.RefreshAllNodes();//更新节点状态
+
+
+        await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
 
 
         canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
