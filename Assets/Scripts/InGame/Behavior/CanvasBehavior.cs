@@ -317,7 +317,11 @@ public class CanvasBehavior : MonoBehaviour
     public void AddNodeNumOfBooks(GameObject node, int v)
     {
         NodeBehavior nb = node.GetComponent<NodeBehavior>();
-        if (nb != null) nb.properties.numOfBooks += v;
+        if (nb != null)
+        {
+            nb.properties.numOfBooks += v;
+            nb.properties.numOfBooks = Mathf.Min(nb.properties.numOfBooks, nb.properties.maximumNumOfBooks);
+        }
         else Debug.LogWarning("NodeBehavior script is null.");
     }
     public void RefreshGlobalExposureValue()
