@@ -25,6 +25,7 @@ public class RoundManager : MonoBehaviour
     public GameObject DownFx;
     public GameObject ActiveFx;
     public GameObject ExposeFx;
+    [SerializeField] private GameObject forbidden; 
 
 
     //以下是事件
@@ -233,6 +234,7 @@ public class RoundManager : MonoBehaviour
 
     public async void NextRound()
     {
+        forbidden.SetActive(true);
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
 
@@ -281,7 +283,7 @@ public class RoundManager : MonoBehaviour
 
 
         messageBar.AddMessage("NextRound");//消息提示
-
+        forbidden.SetActive(false);
     }
     public void LimitIncreaseBy(int i)
     {
