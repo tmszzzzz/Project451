@@ -44,18 +44,108 @@ public class DetectiveBehavior : MonoBehaviour
             Debug.Log("There is no EXPOSED node in canvas. A detective will firstly appear in an EXPOSED node only.");
         }
     }
+    public void AddDetectivesInRegion(int num, int region) 
+    {
+        List<GameObject> regionList = canvas.GetRegionNodes(region);
+        var toRemove = new List<GameObject>();
+        foreach (GameObject regionNode in regionList)
+        {
+            if (focusOnNodes.Contains(regionNode))
+            {
+                toRemove.Add(regionNode);
+            }
+        }
+        foreach (GameObject regionNode in toRemove)
+        {
+            regionList.Remove(regionNode);
+        }
+        var targets = new List<GameObject>();
+        for (int i = 0; i < Mathf.Min(num,regionList.Count); i++)
+        {
+            var tar = regionList[Random.Range(0, regionList.Count)];
+            targets.Add(tar);
+            regionList.Remove(tar);
+        }
+        foreach (var target in targets)
+        {
+            focusOnNodes.Add(target);
+            focusPointers.Add(Instantiate(pointerPrefab, target.transform.position,Quaternion.Euler(0,0,0)));
+            stayRounds.Add(0);
+        }
+    }
+
+    public void a()
+    {
+        AddDetectivesInRegion(4,2);
+    }
+    
+    public void CheckForDuplicates()
+    {
+        Dictionary<GameObject, int> nodeIndexMap = new Dictionary<GameObject, int>();
+        List<int> duplicateIndices = new List<int>();
+
+        for (int i = 0; i < focusOnNodes.Count; i++)
+        {
+            GameObject node = focusOnNodes[i];
+            
+            if (nodeIndexMap.ContainsKey(node))
+            {
+                // 记录第一个重复元素的下标
+                if (!duplicateIndices.Contains(nodeIndexMap[node]))
+                {
+                    duplicateIndices.Add(nodeIndexMap[node]);
+                }
+                // 记录当前重复元素的下标
+                duplicateIndices.Add(i);
+            }
+            else
+            {
+                nodeIndexMap[node] = i;
+            }
+        }
+
+        if (duplicateIndices.Count > 0)
+        {
+            Debug.Log("Duplicate indices found:");
+            foreach (int index in duplicateIndices)
+            {
+                Debug.Log($"Duplicate at index: {index}");
+            }
+        }
+        else
+        {
+            Debug.Log("No duplicates found.");
+        }
+    }
 
     public void DetectiveMove()
     {
         for(int i=0;i<focusOnNodes.Count;i++)
         {
             var list = canvas.GetNeighbors(focusOnNodes[i]);
+            var toRemove = new List<GameObject>();
+            foreach (GameObject neighbor in list)
+            {
+                if (focusOnNodes.Contains(neighbor))
+                {
+                    toRemove.Add(neighbor);
+                }
+            }
+
+            foreach (GameObject neighbor in toRemove)
+            {
+                list.Remove(neighbor);
+            }
             var exposedNeighbors = new List<GameObject>();
             foreach(var j in list)
             {
                 if (j.GetComponent<NodeBehavior>().properties.state == Properties.StateEnum.EXPOSED) exposedNeighbors.Add(j);
             }
-            if(focusOnNodes[i].GetComponent<NodeBehavior>().properties.state != Properties.StateEnum.EXPOSED) //self 0
+
+            if (list.Count <= 0)
+            {
+                stayRounds[i]++;
+            }else if(focusOnNodes[i].GetComponent<NodeBehavior>().properties.state != Properties.StateEnum.EXPOSED) //self 0
             {
                 if (exposedNeighbors.Count == 0) //neighbor 0
                 {

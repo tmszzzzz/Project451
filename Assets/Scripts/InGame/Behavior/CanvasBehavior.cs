@@ -429,4 +429,17 @@ public class CanvasBehavior : MonoBehaviour
             mb.AddMessage($"Set {hit.transform.name} to region {reg}.");
         }
     }
+
+    public List<GameObject> GetRegionNodes(int region)
+    {
+        List<GameObject> nodes = new List<GameObject>();
+        foreach (var i in nodeList)
+        {
+            if (i.GetComponent<NodeBehavior>().properties.region == region)
+            {
+                nodes.Add(i);
+            }
+        }
+        return nodes;
+    }
 }
