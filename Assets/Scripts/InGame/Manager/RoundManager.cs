@@ -22,6 +22,9 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private GameObject startNode = null;
     private readonly List<BookAllocationItem> _bookAllocationItems = new List<BookAllocationItem>(); // 存储分配项的列表
     public GameObject bookAllocationArrow;
+    public GameObject DownFx;
+    public GameObject ActiveFx;
+    public GameObject ExposeFx;
 
 
     //以下是事件

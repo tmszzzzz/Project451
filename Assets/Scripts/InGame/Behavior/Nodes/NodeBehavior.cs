@@ -74,6 +74,26 @@ public class NodeBehavior : BaseNodeBehavior
         {
             plotAndPageHandler.OnFallHideButtons();
         }
+        if(properties.state != stateEnum)
+        {
+            GameObject fx;
+            switch(stateEnum)
+            {
+                case Properties.StateEnum.NORMAL:
+                    fx = RoundManager.instance.DownFx;
+                    break;
+                case Properties.StateEnum.AWAKENED:
+                    fx = RoundManager.instance.ActiveFx;
+                    break;
+                case Properties.StateEnum.EXPOSED:
+                    fx = RoundManager.instance.ExposeFx;
+                    break;
+                default:
+                    fx = RoundManager.instance.DownFx;
+                    break;
+            }
+            Instantiate(fx, transform);
+        }
         properties.state = stateEnum;
     }
 
