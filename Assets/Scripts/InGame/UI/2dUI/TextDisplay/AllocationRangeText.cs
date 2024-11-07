@@ -16,5 +16,6 @@ public class AllocationRangeText : MonoBehaviour
     void Update()
     {
         gameObject.GetComponent<TextMeshProUGUI>().text = $"{globalVar.numOfMaximumBookDeliverRange}";
+        //Debug.Log(globalVar.numOfMaximumBookDeliverRange);
     }
 }

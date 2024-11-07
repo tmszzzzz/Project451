@@ -196,7 +196,7 @@ public class RoundManager : MonoBehaviour
 
     }
 
-    private int BookAllocationNum()
+    public int BookAllocationNum()
     {
         int sum = 0;
         foreach(var i in _bookAllocationItems)

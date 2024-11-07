@@ -10,7 +10,7 @@ public class BibliophileBehavior : NodeBehavior
         if (properties.state == Properties.StateEnum.NORMAL && stateEnum >= Properties.StateEnum.AWAKENED && !hadAwakenedBefore)
         {
             CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
-            cb.AddNodeNumOfBooks(cb.Me, GlobalVar.instance.numOfBibliophileGiveBooks);
+            cb.AddNodeNumOfBooks(this.gameObject, GlobalVar.instance.numOfBibliophileGiveBooks);
             mb.AddMessage($"Bibliophile {gameObject.name} gives you {GlobalVar.instance.numOfBibliophileGiveBooks} books.");
         }
         base.SetState(stateEnum);
