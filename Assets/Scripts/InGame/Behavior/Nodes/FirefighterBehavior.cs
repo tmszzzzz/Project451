@@ -21,7 +21,7 @@ public class FirefighterBehavior : NodeBehavior
                 Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
                 return;
             }
-            cb.AddNodeNumOfBooks(cb.Me, GlobalVar.instance.numOfFirefighterGiveBooks);
+            cb.AddNodeNumOfBooks(this.gameObject, GlobalVar.instance.numOfFirefighterGiveBooks);
             mb.AddMessage($"Firefighter {gameObject.name} gives you {GlobalVar.instance.numOfFirefighterGiveBooks} books in this round.");
         }
     }
