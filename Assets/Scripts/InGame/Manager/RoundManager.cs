@@ -248,10 +248,10 @@ public class RoundManager : MonoBehaviour
         //执行分配动画
 
 
-        await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
-
-
         canvas.RefreshAllNodes();//更新节点状态
+
+
+        await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
 
 
         canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
