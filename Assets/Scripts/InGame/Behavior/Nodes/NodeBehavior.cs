@@ -74,11 +74,28 @@ public class NodeBehavior : BaseNodeBehavior
                 influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.instance.BookAllocationMap[cub.gameObject] : 0;
             }
         }
-        
-        if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
-        else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
-        else if (influence < properties.fallThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.NORMAL, influence);
-        else return new StatePrediction((Properties.StateEnum)Mathf.Max((int)properties.state, (int)Properties.StateEnum.NORMAL), influence);
+
+        StatePrediction prediction = new StatePrediction(Properties.StateEnum.DEAD, influence);
+        switch (properties.state)
+        {
+            case Properties.StateEnum.NORMAL:
+                prediction.state = Properties.StateEnum.NORMAL;
+                if(influence >= properties.awakeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
+                if(influence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
+                break;
+            case Properties.StateEnum.AWAKENED:
+                prediction.state = Properties.StateEnum.AWAKENED;
+                if(influence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
+                if(influence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
+                break;
+            case Properties.StateEnum.EXPOSED:
+                prediction.state = Properties.StateEnum.EXPOSED;
+                if(influence < properties.exposeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
+                if(influence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
+                break;
+        }
+
+        return prediction;
     }
 
     public override void SetState(Properties.StateEnum stateEnum)
