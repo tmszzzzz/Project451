@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,10 @@ public class InfluenceBarBehavior : MonoBehaviour
     [SerializeField] private Color normalColor;
     [SerializeField] private Color awakenedColor;
     [SerializeField] private Color exposedColor;
+    private float targetValue;
     private int exposeThreshold;
     private int awakeThreshold;
+    [SerializeField] private float minValue = 0.05f;
     private BaseNodeBehavior.StatePrediction statePrediction;
     // Start is called before the first frame update
     void Start()
@@ -28,7 +31,7 @@ public class InfluenceBarBehavior : MonoBehaviour
     {
         statePrediction = nodeBehavior.PredictState();
 
-        influenceBarSlider.value = (float)statePrediction.influence / (float)exposeThreshold;
+        targetValue = Math.Max((float)statePrediction.influence / (float)exposeThreshold, minValue);
 
         if (statePrediction.state == Properties.StateEnum.NORMAL) {
             influenceBarSlider.fillRect.GetComponent<Image>().color = normalColor;
@@ -43,6 +46,8 @@ public class InfluenceBarBehavior : MonoBehaviour
     void Update()
     {
         updateInfluenceBar();
+
+        influenceBarSlider.value = Mathf.Lerp(influenceBarSlider.value, targetValue, 0.05f);
     }
 
     void OnDestroy()
