@@ -438,7 +438,7 @@ public class CanvasBehavior : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.L)) reg = 2;
         else return;
         var x = hit.transform.GetComponent<NodeBehavior>();
-        if (x != null)
+        if (editorMode&&x != null)
         {
             x.properties.region = reg;
             mb.AddMessage($"Set {hit.transform.name} to region {reg}.");
@@ -460,7 +460,7 @@ public class CanvasBehavior : MonoBehaviour
 
     public void AddConnection(RaycastHit hit)
     {
-        if (Input.GetKeyDown(KeyCode.F)&&hit.collider.GetComponent<NodeBehavior>() != null)
+        if (editorMode&&Input.GetKeyDown(KeyCode.F)&&hit.collider.GetComponent<NodeBehavior>() != null)
         {
             connectionCreating.Add(hit.collider.gameObject);
             if (connectionCreating.Count > 1)

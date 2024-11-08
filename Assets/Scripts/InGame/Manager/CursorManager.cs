@@ -55,7 +55,7 @@ public class CursorManager : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     //鼠标悬停
-                    //canvas.SetRegion(hit);
+                    canvas.SetRegion(hit);
                     panelController.UpdateInfo(hit);
                     canvas.AddConnection(hit);
                     CursorSelected(hit);
