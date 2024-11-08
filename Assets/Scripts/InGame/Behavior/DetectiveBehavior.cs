@@ -46,7 +46,7 @@ public class DetectiveBehavior : MonoBehaviour
             Debug.Log("There is no EXPOSED node in canvas. A detective will firstly appear in an EXPOSED node only.");
         }
     }
-    public void AddDetectivesInRegion(int num, int region) 
+    public void AddDetectivesInRegion(int region, int num) 
     {
         List<GameObject> regionList = canvas.GetRegionNodes(region);
         var toRemove = new List<GameObject>();
@@ -79,45 +79,6 @@ public class DetectiveBehavior : MonoBehaviour
     public void a()
     {
         AddDetectivesInRegion(4,2);
-    }
-    
-    public void CheckForDuplicates()
-    {
-        Dictionary<GameObject, int> nodeIndexMap = new Dictionary<GameObject, int>();
-        List<int> duplicateIndices = new List<int>();
-
-        for (int i = 0; i < focusOnNodes.Count; i++)
-        {
-            GameObject node = focusOnNodes[i];
-            
-            if (nodeIndexMap.ContainsKey(node))
-            {
-                // 记录第一个重复元素的下标
-                if (!duplicateIndices.Contains(nodeIndexMap[node]))
-                {
-                    duplicateIndices.Add(nodeIndexMap[node]);
-                }
-                // 记录当前重复元素的下标
-                duplicateIndices.Add(i);
-            }
-            else
-            {
-                nodeIndexMap[node] = i;
-            }
-        }
-
-        if (duplicateIndices.Count > 0)
-        {
-            Debug.Log("Duplicate indices found:");
-            foreach (int index in duplicateIndices)
-            {
-                Debug.Log($"Duplicate at index: {index}");
-            }
-        }
-        else
-        {
-            Debug.Log("No duplicates found.");
-        }
     }
 
     public void DetectiveMove()
