@@ -31,7 +31,7 @@ public class CanvasBehavior : MonoBehaviour
     [SerializeField] DetectiveBehavior detectiveBehavior;
     public MessageBar mb;
 
-    public void SavePositions()
+    public void SavePositions(bool asMap = false)
     {
         List<NodeData> positions = new List<NodeData>();
         List<ConnectionData> connections = new List<ConnectionData>();
@@ -81,6 +81,12 @@ public class CanvasBehavior : MonoBehaviour
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
         string saveFilePath = $"Assets/Resources/positions_{timestamp}.json"; // 添加时间戳到文件名
         System.IO.File.WriteAllText(saveFilePath, json);
+
+        if (asMap)
+        {
+            string mapFilePath = "Assets/Maps/map.json";
+            System.IO.File.WriteAllText(mapFilePath, json);
+        }
     }
 
     [System.Serializable]

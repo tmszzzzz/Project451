@@ -13,6 +13,7 @@ public class GameProcessManager : MonoBehaviour
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
     [SerializeField] float initialProbabilityOfInfo = 0.4f;
+    [SerializeField] GameObject probabilityOfInfoPanel;
     private bool everReachedPoliceStation = false;
     private bool everReachedFirehouse = false;
     private bool everLearnedAboutDetectiveAndInfo = false;
@@ -37,6 +38,9 @@ public class GameProcessManager : MonoBehaviour
 
         // 选择保留这个对象，使其在场景切换时不会被销毁
         DontDestroyOnLoad(gameObject);
+
+        //设置成false稍后再打开
+        probabilityOfInfoPanel.SetActive(false);
     }
 
     public void NewRoundIsEntered()
@@ -52,6 +56,16 @@ public class GameProcessManager : MonoBehaviour
     void FirstReachPoliceStation()
     {
         globalVar.numOfBibliophileGiveBooks = 2;
+    }
+
+    void PresentDetectiveAndInofSystem()
+    {
+        probabilityOfInfoPanel.SetActive(true);
+        detectiveBehavior.AddDetectivesInRegion(0, 5);
+        detectiveBehavior.AddDetectivesInRegion(1, 9);
+        detectiveBehavior.AddDetectivesInRegion(2, 13);
+        globalVar.probabilityOfNodesInspectingDetective = initialProbabilityOfInfo;
+        everLearnedAboutDetectiveAndInfo = true;
     }
 
     public void NodeAwakend(GameObject thisnode)
@@ -76,11 +90,7 @@ public class GameProcessManager : MonoBehaviour
 
         if (nodesAwakendOnce.Count >= 12  && !everLearnedAboutDetectiveAndInfo)
         {
-            detectiveBehavior.AddDetectivesInRegion(0, 5);
-            detectiveBehavior.AddDetectivesInRegion(1, 9);
-            detectiveBehavior.AddDetectivesInRegion(2, 13);
-            globalVar.probabilityOfNodesInspectingDetective = initialProbabilityOfInfo;
-            everLearnedAboutDetectiveAndInfo = true;
+            PresentDetectiveAndInofSystem();
         }
         
 

@@ -22,6 +22,7 @@ public class PanelController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI influenceText;
     [SerializeField] private Slider BookSlider;
     [SerializeField] private Slider InfluenceSlider;
+    [SerializeField] private TextMeshProUGUI fallThresholdText;
 
     // Start is called before the first frame update
     void Awake()
@@ -85,6 +86,7 @@ public class PanelController : MonoBehaviour
                 exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
                 numOfBooksText.text = "持有书籍: " + properties.numOfBooks + "/" + properties.maximumNumOfBooks;
                 influenceText.text = "当前受影响: " + node.NowState().influence;
+                fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
 
                 BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
                 InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
@@ -111,6 +113,7 @@ public class PanelController : MonoBehaviour
                 exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
                 numOfBooksText.text = "持有书籍: " + (properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode]) + "/" + properties.maximumNumOfBooks;
                 influenceText.text = "当前受影响: " + node.PredictState().influence;
+                fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
 
                 BookSlider.value = (properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode])/(float)properties.maximumNumOfBooks;
                 InfluenceSlider.value = node.PredictState().influence / (float)properties.exposeThreshold;

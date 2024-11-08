@@ -74,6 +74,7 @@ public class NodeBehavior : BaseNodeBehavior
                 influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.instance.BookAllocationMap[cub.gameObject] : 0;
             }
         }
+        
         if (influence >= properties.exposeThreshold) return new StatePrediction(Properties.StateEnum.EXPOSED, influence);
         else if (influence >= properties.awakeThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.AWAKENED, influence);
         else if (influence < properties.fallThreshold) return new StatePrediction((Properties.StateEnum)(int)Properties.StateEnum.NORMAL, influence);
