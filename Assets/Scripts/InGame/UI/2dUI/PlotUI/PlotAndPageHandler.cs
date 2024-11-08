@@ -68,6 +68,9 @@ public class PlotAndPageHandler : MonoBehaviour
         {
             Debug.Log("Node" + " is plotting " + plotFilename);
             isPlotting = false;
+
+            //clear plotFilename
+            plotFilename = null;
         }
     }
 
@@ -78,6 +81,9 @@ public class PlotAndPageHandler : MonoBehaviour
             Debug.Log("Node" + " is paging " + pageSprite.name);
             GlobalVar.instance.AddResourcePoint(1);
             isPaging = false;
+
+            //clear pageSprite  
+            pageSprite = null;
         }
     }
 }

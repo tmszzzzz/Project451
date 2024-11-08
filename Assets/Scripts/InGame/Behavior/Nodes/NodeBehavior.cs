@@ -97,6 +97,9 @@ public class NodeBehavior : BaseNodeBehavior
     {
         if (properties.state == Properties.StateEnum.NORMAL && (stateEnum == Properties.StateEnum.AWAKENED || stateEnum == Properties.StateEnum.EXPOSED) && !hadAwakenedBefore)
         {
+            GameProcessManager GMinstance = GameProcessManager.instance;
+            GMinstance.NodeAwakend(this.gameObject);
+            
             plotAndPageHandler.OnAwakeShowButtons();
             hadAwakenedBefore = true;
         }
