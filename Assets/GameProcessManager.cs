@@ -88,7 +88,7 @@ public class GameProcessManager : MonoBehaviour
             FirstReachPoliceStation();
         }
 
-        if (nodesAwakendOnce.Count >= 12  && !everLearnedAboutDetectiveAndInfo)
+        if (nodesAwakendOnce.Count >= 17  && !everLearnedAboutDetectiveAndInfo)
         {
             PresentDetectiveAndInofSystem();
         }
