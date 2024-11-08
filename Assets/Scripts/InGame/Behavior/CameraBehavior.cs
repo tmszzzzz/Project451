@@ -5,7 +5,8 @@ public class CameraBehavior : MonoBehaviour
 {
     public float zoomSpeed = 5000f;  
     public float minZoom = 2f;     
-    public float maxZoom = 1000f;    
+    public float maxZoom = 1000f;
+    public float overviewZoom = 90f;
 
     private Camera cam;
     public float rotationSpeed = 50f; 
@@ -19,17 +20,32 @@ public class CameraBehavior : MonoBehaviour
 
         if (circleCenter != null)
         {
-            Vector3 toCenter = circleCenter.transform.position - transform.position;
-            toCenter.y = 0;
-            float distance = toCenter.magnitude;
-            if (distance > cameraCircleRadius)
+            // 创建一个指向 y=0 平面的射线
+            Ray ray = cam.ScreenPointToRay(new(Screen.width/2, (Screen.height/2),0));
+            Plane plane = new Plane(Vector3.up, Vector3.zero);
+
+            // 计算摄像机到 y=0 平面的交点
+            if (plane.Raycast(ray, out float enter))
             {
-                Vector3 toCenterDirection = toCenter.normalized;
-                Vector3 moveDirection = move.normalized;
-                float angle = Vector3.SignedAngle(toCenterDirection, moveDirection, Vector3.up);
-                if (angle > 90 || angle < -90)
+                Vector3 cameraGroundPosition = ray.GetPoint(enter);
+
+                // 计算从交点到中心的距离
+                Vector3 toCenter = circleCenter.transform.position - cameraGroundPosition;
+                toCenter.y = 0; // 确保水平距离
+                float distance = toCenter.magnitude;
+
+                // 如果交点超出半径范围
+                if (distance > cameraCircleRadius)
                 {
-                    move = Quaternion.AngleAxis(-angle, Vector3.up) * move;
+                    Vector3 toCenterDirection = toCenter.normalized;
+                    Vector3 moveDirection = move.normalized;
+                    float angle = Vector3.SignedAngle(toCenterDirection, moveDirection, Vector3.up);
+
+                    // 修正角度，使其保持在边界内
+                    if (angle > 90 || angle < -90)
+                    {
+                        move = Quaternion.AngleAxis(-angle, Vector3.up) * move;
+                    }
                 }
             }
         }
@@ -39,14 +55,41 @@ public class CameraBehavior : MonoBehaviour
 
     void HandleMovement()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        Ray ray = cam.ScreenPointToRay(new(Screen.width/2, (Screen.height/2),0));
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
 
-        Vector3 f = new(transform.forward.x, 0, transform.forward.z);
-        Vector3 r = new(transform.right.x, 0, transform.right.z);
+        // 计算摄像机到 y=0 平面的交点
+        if (plane.Raycast(ray, out float enter))
+        {
+            Vector3 cameraGroundPosition = ray.GetPoint(enter);
 
-        Vector3 move = (vertical * f.normalized + horizontal * r.normalized) * moveSpeed * Time.deltaTime;
-        transform.position += move;
+            // 计算从交点到中心的距离
+            Vector3 toCenter = circleCenter.transform.position - cameraGroundPosition;
+            toCenter.y = 0; // 确保水平距离
+            float distance = toCenter.magnitude;
+
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+            Vector3 f = new(transform.forward.x, 0, transform.forward.z);
+            Vector3 r = new(transform.right.x, 0, transform.right.z);
+
+            Vector3 move = moveSpeed * Time.deltaTime * (vertical * f.normalized + horizontal * r.normalized);
+            Vector3 direction = transform.position - circleCenter.transform.position;
+            direction.y = 0;
+            direction = direction.normalized;
+            if (distance > cameraCircleRadius&&Vector3.Angle(direction, move) < 90) move -= (Vector3.Dot(move, direction)) * direction;
+            transform.position += move;
+            cameraGroundPosition += move;
+            Vector3 newDist = cameraGroundPosition - circleCenter.transform.position;
+            newDist.y = 0;
+            if (newDist.magnitude > cameraCircleRadius)
+            {
+                var delta = cameraCircleRadius * newDist.normalized - cameraGroundPosition;
+                transform.position += delta;
+            }
+        }
+        
     }
 
     void HandleRotation()
@@ -77,10 +120,10 @@ public class CameraBehavior : MonoBehaviour
     {
         if (!RoundManager.instance.operationForbidden)
         {
-            Vector3 oldPosition = transform.position;
+            //Vector3 oldPosition = transform.position;
             HandleMovement();
             HandleRotation();
-            transform.position = HandleOutBound(transform.position, oldPosition);
+            //transform.position = HandleOutBound(transform.position, oldPosition);
 
             HandleZoom();
         }
