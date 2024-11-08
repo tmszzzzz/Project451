@@ -45,6 +45,10 @@ public class PanelController : MonoBehaviour
         {
             EnableNodeInfoPanel();
         }
+        else
+        {
+            DisableNodeInfoPanel();
+        }
     }
     public void EnableNodeInfoPanel()
     {   

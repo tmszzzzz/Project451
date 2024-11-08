@@ -27,7 +27,6 @@ public class CursorManager : MonoBehaviour
                 {
                     //左键点击判定箱
                     panelController.NodePanelControl(hit);
-                    panelController.UpdateInfo(hit);
                 }
                 else
                 {
@@ -57,6 +56,7 @@ public class CursorManager : MonoBehaviour
                 {
                     //鼠标悬停
                     //canvas.SetRegion(hit);
+                    panelController.UpdateInfo(hit);
                     CursorSelected(hit);
                 }
                 else
