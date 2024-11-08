@@ -8,32 +8,37 @@ public class GlobalExposureBarBehavior : MonoBehaviour
     public Slider globalExposureBar;
     public Slider easeGlobalExposureBar;
     public GlobalVar globalVar;
-    private float newValue;
-    [SerializeField] private float lerpSpeed = 0.005f;
+    private float targetValue;
+    [SerializeField] private float lerpSpeed = 0.5f;
 
     // Start is called before the first frame update
     void Start()
     {
         globalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
         easeGlobalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
-
-        globalExposureBar.value = globalVar.globalExposureValue;
-        easeGlobalExposureBar.value = globalVar.globalExposureValue;
     }
 
     void HandleGlobalExposureBar() 
     {
-        newValue = globalVar.globalExposureValue;
-        globalExposureBar.value = newValue;
+        targetValue = globalVar.globalExposureValue;
+        // globalExposureBar.value = newValue;
     }
+
+    void LerpingGlobalExposureBar()
+    {
+        if (globalExposureBar.value == targetValue) 
+            return;
+        globalExposureBar.value = Mathf.Lerp(globalExposureBar.value, targetValue, lerpSpeed);
+    }
+
     void IncrementGlobalExposureBar() 
     {
-        globalExposureBar.value = newValue;
+       // globalExposureBar.value = newValue;
     }
 
     void DecreaseGloabExposureBar()
     {
-        globalExposureBar.value = newValue;
+        //globalExposureBar.value = newValue;
     }   
     void HandleGlobalEaseExposureBarChange()
     {
@@ -46,6 +51,7 @@ public class GlobalExposureBarBehavior : MonoBehaviour
     void Update()
     {
         HandleGlobalExposureBar();
-        HandleGlobalEaseExposureBarChange();
+        LerpingGlobalExposureBar();
+        //HandleGlobalEaseExposureBarChange();
     }
 }

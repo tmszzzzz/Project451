@@ -101,6 +101,20 @@ public class GlobalVar : MonoBehaviour
         }
     }
 
+    public int exposureValuePerResource = 30;
+
+    public void DecreaseExposureValueByResource()
+    {
+        if (resourcePoint <= 0)
+        {
+            Debug.Log("no resource point");
+            return;
+        }
+
+        resourcePoint--;
+        globalExposureValue = Math.Max(globalExposureValue - exposureValuePerResource, 0);
+    }
+
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()
     {
