@@ -10,6 +10,7 @@ public class CursorManager : MonoBehaviour
     private Camera _mainCamera;
     [SerializeField] private PanelController panelController;
     [SerializeField] private CanvasBehavior canvas;
+    [SerializeField] private GameObject cursorSelected;
     private void Awake()
     {
         _mainCamera = Camera.main;
@@ -18,7 +19,7 @@ public class CursorManager : MonoBehaviour
     {
         if (!EventSystem.current.IsPointerOverGameObject())
         {
-            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonDown(0))
             {
                 Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -55,11 +56,31 @@ public class CursorManager : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     //鼠标悬停
-                    canvas.SetRegion(hit);
+                    //canvas.SetRegion(hit);
+                    CursorSelected(hit);
+                }
+                else
+                {
+                    ResetCursorSelected();
                 }
             }
         }
     }
 
-
+    private void CursorSelected(RaycastHit hit)
+    {
+        if (hit.collider.gameObject.GetComponent<NodeBehavior>() != null)
+        {
+            cursorSelected.transform.position = hit.transform.position;
+            cursorSelected.transform.rotation = _mainCamera.transform.rotation;
+        }
+        else
+        {
+            ResetCursorSelected();
+        }
+    }
+    private void ResetCursorSelected()
+    {
+        cursorSelected.transform.position = new(0,1000,0);
+    }
 }
