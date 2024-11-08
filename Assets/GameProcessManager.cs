@@ -61,9 +61,9 @@ public class GameProcessManager : MonoBehaviour
     void PresentDetectiveAndInofSystem()
     {
         probabilityOfInfoPanel.SetActive(true);
-        detectiveBehavior.AddDetectivesInRegion(0, 5);
-        detectiveBehavior.AddDetectivesInRegion(1, 9);
-        detectiveBehavior.AddDetectivesInRegion(2, 13);
+        detectiveBehavior.AddDetectivesInRegion(0, 3);
+        detectiveBehavior.AddDetectivesInRegion(1, 7);
+        detectiveBehavior.AddDetectivesInRegion(2, 11);
         globalVar.probabilityOfNodesInspectingDetective = initialProbabilityOfInfo;
         everLearnedAboutDetectiveAndInfo = true;
     }
