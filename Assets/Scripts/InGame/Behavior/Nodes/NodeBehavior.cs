@@ -122,7 +122,7 @@ public class NodeBehavior : BaseNodeBehavior
                     fx = RoundManager.instance.DownFx;
                     break;
             }
-            Instantiate(fx, transform);
+            Instantiate(fx, transform.position,Quaternion.identity);
         }
         properties.state = stateEnum;
     }

@@ -13,6 +13,7 @@ public class DetectiveBehavior : MonoBehaviour
     [SerializeField] private List<int> stayRounds;
     public TaskCompletionSource<bool> Tcs1;
     public TaskCompletionSource<bool> Tcs2;
+    [SerializeField] private GameObject DetectedFx;
     private void Start()
     {
         focusOnNodes = new List<GameObject>();
@@ -183,7 +184,7 @@ public class DetectiveBehavior : MonoBehaviour
     {
         await DetectedVis();
         await AllVis();
-        await AllInvis();
+        AllInvis();
         foreach(var i in focusOnNodes)
         {
             if (RoundManager.instance.BookAllocationMap[i] != 0)
@@ -200,7 +201,6 @@ public class DetectiveBehavior : MonoBehaviour
 
     public async Task DetectedVis()
     {
-        Tcs1 = new TaskCompletionSource<bool>();
         bool skip = true;
         int l = focusPointers.Count;
         for(int i =0;i<l;i++)
@@ -208,11 +208,11 @@ public class DetectiveBehavior : MonoBehaviour
             if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] != 0)
             {
                 skip = false;
-                focusPointers[i].GetComponent<Animator>().SetTrigger("Detected");
+                Instantiate(DetectedFx,focusOnNodes[i].transform.position,Quaternion.Euler(0,0,0));
             }
         }
 
-        if(!skip) await Tcs1.Task;
+        if (!skip) await Task.Delay(1000);
     }
 
     public async Task AllVis()

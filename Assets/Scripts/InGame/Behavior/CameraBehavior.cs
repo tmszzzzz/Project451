@@ -75,13 +75,15 @@ public class CameraBehavior : MonoBehaviour
 
     void Update()
     {
-        Vector3 oldPosition = transform.position;
-        HandleMovement();
-        HandleRotation();
-        transform.position = HandleOutBound(transform.position, oldPosition);
-        
-        HandleZoom();
+        if (!RoundManager.instance.operationForbidden)
+        {
+            Vector3 oldPosition = transform.position;
+            HandleMovement();
+            HandleRotation();
+            transform.position = HandleOutBound(transform.position, oldPosition);
 
+            HandleZoom();
+        }
     }
 
     

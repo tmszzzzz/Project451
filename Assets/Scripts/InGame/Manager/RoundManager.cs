@@ -25,7 +25,8 @@ public class RoundManager : MonoBehaviour
     public GameObject DownFx;
     public GameObject ActiveFx;
     public GameObject ExposeFx;
-    [SerializeField] private GameObject forbidden; 
+    [SerializeField] private GameObject forbidden;
+    public bool operationForbidden = false;
 
 
     //以下是事件
@@ -234,7 +235,7 @@ public class RoundManager : MonoBehaviour
 
     public async void NextRound()
     {
-        forbidden.SetActive(true);
+        OperationForbidden();//屏蔽所有操作
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
 
@@ -270,7 +271,7 @@ public class RoundManager : MonoBehaviour
         {
             canvas.AddNodeNumOfBooks(keys[i], BookAllocationMap[keys[i]]);
         }//执行分配
-         //由于更新状态时已经考虑了预分配的书，所以此时先更新后分配书。这里的分配书实际上没有逻辑上的影响。
+         //由于更新状态时已经考虑了预分配的书，所以这里先更新后分配书。这里的分配书实际上没有逻辑上的影响。
 
 
         roundNum++;//更新回合数
@@ -283,8 +284,23 @@ public class RoundManager : MonoBehaviour
 
 
         messageBar.AddMessage("NextRound");//消息提示
+        
+        OperationRelease();//释放操作屏蔽
+    }
+
+    private void OperationForbidden()
+    {
+        operationForbidden = true;
+        forbidden.SetActive(true);
+    }
+    
+    private void OperationRelease()
+    {
+        operationForbidden = false;
         forbidden.SetActive(false);
     }
+    
+    
     public void LimitIncreaseBy(int i)
     {
         GlobalVar.instance.allocationLimit += i;
