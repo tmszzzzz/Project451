@@ -8,8 +8,8 @@ public class GameProcessManager : MonoBehaviour
     public static GameProcessManager instance;  // 单例实例
 
     public List<GameObject> nodesAwakendOnce = new List<GameObject>();
-    public RoundManager roundManager;
-    public GlobalVar globalVar;
+    private RoundManager roundManager;
+    private GlobalVar globalVar;
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
     [SerializeField] float initialProbabilityOfInfo = 0.4f;
@@ -51,7 +51,7 @@ public class GameProcessManager : MonoBehaviour
 
     void FirstReachPoliceStation()
     {
-        globalVar.numOfMaximumBookDeliverRange = 2;
+        globalVar.numOfBibliophileGiveBooks = 2;
     }
 
     public void NodeAwakend(GameObject thisnode)
