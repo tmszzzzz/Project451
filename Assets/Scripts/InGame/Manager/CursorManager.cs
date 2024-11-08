@@ -57,6 +57,7 @@ public class CursorManager : MonoBehaviour
                     //鼠标悬停
                     //canvas.SetRegion(hit);
                     panelController.UpdateInfo(hit);
+                    canvas.AddConnection(hit);
                     CursorSelected(hit);
                 }
                 else

@@ -10,6 +10,7 @@ public class CanvasBehavior : MonoBehaviour
 {
     //public GameObject nodePrefab;
     public List<GameObject> nodePrefabMap;
+    public List<GameObject> editorNodePrefabMap;
     public List<GameObject> connectionPrefabMap;
     private Camera cam;
     private Plane plane; // 用于定义水平面
@@ -30,6 +31,8 @@ public class CanvasBehavior : MonoBehaviour
     public Node2PlotAndPageData node2PlotAndPageData;
     [SerializeField] DetectiveBehavior detectiveBehavior;
     public MessageBar mb;
+    public bool editorMode = false;
+    private List<GameObject> connectionCreating;
 
     public void SavePositions(bool asMap = false)
     {
@@ -155,7 +158,8 @@ public class CanvasBehavior : MonoBehaviour
             // 实例化节点
             foreach (NodeData position in configData.positions)
             {
-                GameObject node = Instantiate(nodePrefabMap[(int)position.properties.type], position.GetVector3Position(), Quaternion.identity, transform);
+                List<GameObject> prefabs = editorMode ? editorNodePrefabMap : nodePrefabMap;
+                GameObject node = Instantiate(prefabs[(int)position.properties.type], position.GetVector3Position(), Quaternion.identity, transform);
                 node.name = $"Node_{position.id}"; // 为节点命名
                 NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
                 if (nodeBehavior != null)
@@ -218,6 +222,7 @@ public class CanvasBehavior : MonoBehaviour
         plane = new Plane(Vector3.up, Vector3.zero);
         nodeList = new List<GameObject>();
         connectionList = new List<GameObject>();
+        connectionCreating = new List<GameObject>();
         LoadConfiguration("Assets/Maps/map.json");
         Initialization();
     }
@@ -451,5 +456,41 @@ public class CanvasBehavior : MonoBehaviour
             }
         }
         return nodes;
+    }
+
+    public void AddConnection(RaycastHit hit)
+    {
+        if (Input.GetKeyDown(KeyCode.F)&&hit.collider.GetComponent<NodeBehavior>() != null)
+        {
+            connectionCreating.Add(hit.collider.gameObject);
+            if (connectionCreating.Count > 1)
+            {
+                if (connectionCreating[0] != connectionCreating[1] &&
+                    ConnectionExist(connectionCreating[0], connectionCreating[1]) == null)
+                {
+                    GameObject connection = Instantiate(connectionPrefabMap[0], Vector3.zero, Quaternion.Euler(Vector3.zero),
+                        gameObject.transform);
+                    connection.GetComponent<ConnectionBehavior>().startNode = connectionCreating[0];
+                    connection.GetComponent<ConnectionBehavior>().endNode = connectionCreating[1];
+                    connectionList.Add(connection);
+                    Debug.Log("Created connection.");
+                }
+
+                connectionCreating.Clear();
+            }
+        }
+
+    }
+    public GameObject ConnectionExist(GameObject g1,GameObject g2)
+    {
+        foreach(GameObject go in connectionList)
+        {
+            ConnectionBehavior script = go.GetComponent<ConnectionBehavior>();
+            if ((script.startNode == g1 && script.endNode == g2) || (script.startNode == g2 && script.endNode == g1))
+            {
+                return go;
+            }
+        }
+        return null;
     }
 }
