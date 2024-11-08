@@ -119,8 +119,8 @@ public class PanelController : MonoBehaviour
                 influenceText.text = "当前受影响: " + node.PredictState().influence;
                 fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
 
-                BookSlider.value = (properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode])/(float)properties.maximumNumOfBooks;
-                InfluenceSlider.value = node.PredictState().influence / (float)properties.exposeThreshold;
+                BookSlider.value = (float)(properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode])/(float)properties.maximumNumOfBooks;
+                InfluenceSlider.value = (float) node.PredictState().influence / (float)properties.exposeThreshold;
             }
         }
     }
