@@ -7,6 +7,11 @@ public class UnlockableConnectionBehavior : ConnectionBehavior
     private bool available = false;
     private int unlockState = 0;
 
+    void Awake()
+    {
+        type = 1;
+    }
+
     public override GameObject GetTheOtherNodeIfExist(GameObject node)
     {
         if (!available) return null;
