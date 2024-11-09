@@ -4812,6 +4812,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1245a1558d2e4642bbcb5b899ee44b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCamera: {fileID: 1352306813}
   textPrefab: {fileID: 6891963115089332863, guid: 907e28edfd3cdf54a92e532351cf5248,
     type: 3}
   selectedPointerPrefab: {fileID: 7850311867614625865, guid: fc7c4fe0f88842748888a7be115a6f4a,
@@ -20495,7 +20496,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 40
   orthographic: 0
   orthographic size: 35.39
   m_Depth: 1
@@ -20585,14 +20586,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b3880a2eb1a77b4394787b4f55414f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 2
-  minZoom: 2
+  zoomSpeed: 5
+  minZoom: 10
   maxZoom: 50
-  overviewZoom: 90
+  overviewFieldOfView: 30
+  overviewDistanceAddition: 180
   rotationSpeed: 50
   moveSpeed: 50
   circleCenter: {fileID: 938937195}
   cameraCircleRadius: 50
+  lerpSpeed: 0.4
+  decrementLerpSpeed: 0.25
 --- !u!114 &1352306814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31605,10 +31609,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2085403316}
   - component: {fileID: 2085403315}
-  - component: {fileID: 2085403314}
   - component: {fileID: 2085403313}
-  - component: {fileID: 2085403312}
-  - component: {fileID: 2085403311}
+  - component: {fileID: 2085403317}
   m_Layer: 0
   m_Name: Second Camera
   m_TagString: MainCamera
@@ -31616,38 +31618,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2085403311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085403310}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b904eb27e6e48346837f567c35f7747, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2085403312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085403310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b3880a2eb1a77b4394787b4f55414f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoomSpeed: 2
-  minZoom: 2
-  maxZoom: 50
-  overviewZoom: 90
-  rotationSpeed: 50
-  moveSpeed: 50
-  circleCenter: {fileID: 938937195}
-  cameraCircleRadius: 50
 --- !u!114 &2085403313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31692,14 +31662,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &2085403314
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085403310}
-  m_Enabled: 0
 --- !u!20 &2085403315
 Camera:
   m_ObjectHideFlags: 0
@@ -31733,7 +31695,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 40
   orthographic: 0
   orthographic size: 35.39
   m_Depth: 1
@@ -31766,6 +31728,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 56.575, y: 0, z: 0}
+--- !u!114 &2085403317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085403310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcae3b8654473f441812f623b5e27c0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 1352306810}
+  thisCamera: {fileID: 2085403315}
 --- !u!4 &2089769360 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 136047d96754b724496169d4a7f149e3,
