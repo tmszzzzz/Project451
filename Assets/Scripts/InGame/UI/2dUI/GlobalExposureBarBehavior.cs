@@ -8,8 +8,9 @@ public class GlobalExposureBarBehavior : MonoBehaviour
     public Slider globalExposureBar;
     public Slider easeGlobalExposureBar;
     public GlobalVar globalVar;
+    [SerializeField] private Image easeImage; 
     private float targetValue;
-    [SerializeField] private float lerpSpeed = 0.5f;
+    [SerializeField] private float lerpSpeed = 0.001f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,9 +27,25 @@ public class GlobalExposureBarBehavior : MonoBehaviour
 
     void LerpingGlobalExposureBar()
     {
-        if (globalExposureBar.value == targetValue) 
-            return;
-        globalExposureBar.value = Mathf.Lerp(globalExposureBar.value, targetValue, lerpSpeed);
+        if (globalExposureBar.value > targetValue)
+        {
+            globalExposureBar.value = targetValue;
+        }
+        else if (globalExposureBar.value < targetValue)
+        {
+            globalExposureBar.value = Mathf.Min(globalExposureBar.value + lerpSpeed, targetValue);
+            easeImage.color = new Color(1,0.85f,0.63f,1);
+        }
+
+        if (easeGlobalExposureBar.value < targetValue)
+        {
+            easeGlobalExposureBar.value = targetValue;
+        }
+        else if (easeGlobalExposureBar.value > targetValue)
+        {
+            easeGlobalExposureBar.value = Mathf.Max(easeGlobalExposureBar.value - lerpSpeed, targetValue);
+            easeImage.color = new Color(0.63f,1,0.68f,1);
+        }
     }
 
     void IncrementGlobalExposureBar() 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,6 +9,7 @@ public class RoundManager : MonoBehaviour
 {
     // 单例实例
     public static RoundManager instance;
+    public CameraBehavior mainCamera;
     public GameObject textPrefab; // 指向TextMeshProUI预制体
     public GameObject selectedPointerPrefab;
     private GameObject _currentSelectedPointer;
@@ -239,6 +241,8 @@ public class RoundManager : MonoBehaviour
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
 
+        await mainCamera.OverviewEnter();
+
 
         foreach (var i in _bookAllocationItems)
         {
@@ -284,6 +288,11 @@ public class RoundManager : MonoBehaviour
 
 
         messageBar.AddMessage("NextRound");//消息提示
+
+
+        await Task.Delay(1000);
+        
+        await mainCamera.OverviewExit();
         
         OperationRelease();//释放操作屏蔽
     }
