@@ -64,9 +64,7 @@ public class CameraBehavior : MonoBehaviour
             Vector3 cameraGroundPosition = ray.GetPoint(enter);
 
             // 计算从交点到中心的距离
-            Vector3 toCenter = circleCenter.transform.position - cameraGroundPosition;
-            toCenter.y = 0; // 确保水平距离
-            float distance = toCenter.magnitude;
+            
 
             float horizontal = Input.GetAxis("Horizontal");
             float vertical = Input.GetAxis("Vertical");
@@ -78,16 +76,40 @@ public class CameraBehavior : MonoBehaviour
             Vector3 direction = transform.position - circleCenter.transform.position;
             direction.y = 0;
             direction = direction.normalized;
-            if (distance > cameraCircleRadius&&Vector3.Angle(direction, move) < 90) move -= (Vector3.Dot(move, direction)) * direction;
+            Vector3 originalMove = move;
             transform.position += move;
             cameraGroundPosition += move;
-            Vector3 newDist = cameraGroundPosition - circleCenter.transform.position;
-            newDist.y = 0;
-            if (newDist.magnitude > cameraCircleRadius)
+
+            Vector3 toCenter = circleCenter.transform.position - cameraGroundPosition;
+            toCenter.y = 0; // 确保水平距离
+            float distance = toCenter.magnitude;
+            
+            if (distance > cameraCircleRadius)
             {
-                var delta = cameraCircleRadius * newDist.normalized - cameraGroundPosition;
-                transform.position += delta;
+                transform.position += (distance - cameraCircleRadius) * 0.1f * toCenter.normalized;
             }
+            
+            //if (distance > cameraCircleRadius&&Vector3.Angle(direction, move) < 90) move -= (Vector3.Dot(move, direction)) * direction;
+            //transform.position += move;
+            //cameraGroundPosition += move;
+            //Vector3 newDist = cameraGroundPosition - circleCenter.transform.position; //目标点位置向量
+            //newDist.y = 0;
+            //if (newDist.magnitude > cameraCircleRadius)
+            //{
+            //    var delta = cameraCircleRadius * newDist.normalized - cameraGroundPosition;
+            //    cameraGroundPosition += delta;
+            //    transform.position += delta;
+            //    //出最大范围修正
+            //    if (Vector3.Cross(originalMove, direction).normalized + Vector3.Cross(originalMove, newDist).normalized == Vector3.zero)
+            //    {
+            //        var delta2 = cameraCircleRadius * originalMove.normalized - cameraGroundPosition;
+            //        cameraGroundPosition += delta2;
+            //        transform.position += delta2;
+            //        //超出死点修正
+            //    }
+            //}
+
+            
         }
         
     }
