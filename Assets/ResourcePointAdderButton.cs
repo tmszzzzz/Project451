@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+public enum ResourcePointUsedType
+{
+    Info,
+    Range,
+    Limit,
+    DecreaseExposure,
+}
 
 public class ResourcePointAdderButton : MonoBehaviour
 {
     private GlobalVar globalVar;
+    [SerializeField] private ResourcePointUsedType resourcePointUsedType;
     [SerializeField] private TextMeshProUGUI textMesh;
     [SerializeField] private GameObject button;
     private float targetScale;
