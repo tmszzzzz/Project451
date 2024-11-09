@@ -13684,6 +13684,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1410478894217116159, guid: 3350c62a220eda14e948e9f4754a765e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 5951258104521337467, guid: 4414049941625a94cb51881ba6535826,
+        type: 3}
+    - target: {fileID: 7092144938590499939, guid: 3350c62a220eda14e948e9f4754a765e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 5951258104521337467, guid: 4414049941625a94cb51881ba6535826,
+        type: 3}
     - target: {fileID: 8086803668810350184, guid: 3350c62a220eda14e948e9f4754a765e,
         type: 3}
       propertyPath: m_Name
@@ -20484,6 +20496,7 @@ MonoBehaviour:
   zoomSpeed: 2
   minZoom: 2
   maxZoom: 50
+  overviewZoom: 90
   rotationSpeed: 50
   moveSpeed: 50
   circleCenter: {fileID: 938937195}
@@ -31702,6 +31715,7 @@ MonoBehaviour:
   zoomSpeed: 2
   minZoom: 2
   maxZoom: 50
+  overviewZoom: 90
   rotationSpeed: 50
   moveSpeed: 50
   circleCenter: {fileID: 938937195}
