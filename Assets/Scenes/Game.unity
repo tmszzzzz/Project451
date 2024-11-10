@@ -4806,6 +4806,7 @@ GameObject:
   - component: {fileID: 319005133}
   - component: {fileID: 319005134}
   - component: {fileID: 319005135}
+  - component: {fileID: 319005136}
   m_Layer: 0
   m_Name: GlobalManager
   m_TagString: Untagged
@@ -4955,6 +4956,18 @@ MonoBehaviour:
   detectiveBehavior: {fileID: 1279831220}
   initialProbabilityOfInfo: 0.4
   probabilityOfInfoPanel: {fileID: 372595776}
+--- !u!114 &319005136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319005128}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 548384ab5f7c771468f3db4798e4268c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &322798905 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7861350953103440092, guid: efe06c0608269fb45a852b9c1aff7526,
