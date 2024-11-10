@@ -13,6 +13,7 @@ public class CameraBehavior : MonoBehaviour
     private bool overviewing = false;
     private Vector3 savedPos;
     private float savedZoom;
+    private Quaternion savedRotaion;
 
     private Camera cam;
     [SerializeField] private float rotationSpeed = 50f; 
@@ -141,6 +142,7 @@ public class CameraBehavior : MonoBehaviour
     {
         savedPos = realPosition;
         savedZoom = realFieldOfView;
+        savedRotaion = realRotation;
         overviewing = true;
         lerpSpeed -= decrementLerpSpeed;
 
@@ -162,6 +164,7 @@ public class CameraBehavior : MonoBehaviour
     {
         realPosition = savedPos;
         realFieldOfView = savedZoom;
+        realRotation = savedRotaion;
         overviewing = false;
         
         await Task.Delay(1000);
