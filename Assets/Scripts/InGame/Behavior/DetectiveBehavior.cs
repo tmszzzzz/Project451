@@ -174,7 +174,7 @@ public class DetectiveBehavior : MonoBehaviour
             {
                 skip = false;
                 Instantiate(DetectedFx,focusOnNodes[i].transform.position,Quaternion.Euler(0,0,0));
-                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
+                
             }
         }
         if (!skip) await Task.Delay(1000);
@@ -189,6 +189,7 @@ public class DetectiveBehavior : MonoBehaviour
                 Vector3 pos = LightconeCenter.position + 1.5f * horizontalDirection;
                 Vector3 facing = target.transform.position - pos;
                 Lightcones.Add(Instantiate(LightconePrefab,pos,Quaternion.LookRotation(facing)));
+                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
                 await Task.Delay(250);
             }
         }
