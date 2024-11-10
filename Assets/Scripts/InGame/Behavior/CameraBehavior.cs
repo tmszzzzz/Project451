@@ -157,7 +157,7 @@ public class CameraBehavior : MonoBehaviour
             realPosition += delta;
             realPosition += overviewDistanceAddition * (realPosition - Vector3.zero).normalized;
             float angle = Mathf.Atan2(hitPoint.x, hitPoint.z) * Mathf.Rad2Deg;
-            int degDelta = (int)((Math.Floor(angle / 120f) * 120 + 10) -
+            int degDelta = (int)((Math.Floor(realRotation.eulerAngles.y / 120f) * 120 + 10) -
                                  savedRotation.eulerAngles.y);
             Quaternion rotationDelta = Quaternion.AngleAxis(degDelta, new(0,1,0));
             realRotation = rotationDelta * realRotation;
