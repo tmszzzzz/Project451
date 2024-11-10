@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -256,7 +257,7 @@ public class CanvasBehavior : MonoBehaviour
         return neighbors;
     }
 
-    public void RefreshAllNodes()
+    public async Task RefreshAllNodes()
     {
         //Debug.Log(1);
         // 第一步：收集所有节点的即将改变为的状态
@@ -293,6 +294,8 @@ public class CanvasBehavior : MonoBehaviour
                 nodeBehavior.SetState(newState);
             }
         }
+
+        if (newStateMap.Count != 0) await Task.Delay(750);
     }
 
     public void RefreshAllConnections()

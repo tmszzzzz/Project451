@@ -13,7 +13,7 @@ public class CameraBehavior : MonoBehaviour
     private bool overviewing = false;
     private Vector3 savedPos;
     private float savedZoom;
-    private Quaternion savedRotaion;
+    private Quaternion savedRotation;
 
     private Camera cam;
     [SerializeField] private float rotationSpeed = 50f; 
@@ -114,7 +114,7 @@ public class CameraBehavior : MonoBehaviour
 
         //transform.position = HandleOutBound(transform.position, oldPosition);
         transform.position = Vector3.Lerp(transform.position, realPosition, lerpSpeed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, realRotation, lerpSpeed);
+        transform.rotation = Quaternion.Lerp(transform.rotation, realRotation, lerpSpeed*1.5f);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, realFieldOfView, lerpSpeed);
 
 
@@ -142,7 +142,7 @@ public class CameraBehavior : MonoBehaviour
     {
         savedPos = realPosition;
         savedZoom = realFieldOfView;
-        savedRotaion = realRotation;
+        savedRotation = realRotation;
         overviewing = true;
         lerpSpeed -= decrementLerpSpeed;
 
@@ -156,18 +156,26 @@ public class CameraBehavior : MonoBehaviour
             delta.y = 0;
             realPosition += delta;
             realPosition += overviewDistanceAddition * (realPosition - Vector3.zero).normalized;
+            float angle = Mathf.Atan2(hitPoint.x, hitPoint.z) * Mathf.Rad2Deg;
+            int degDelta = (int)((Math.Floor(realRotation.eulerAngles.y / 120f) * 120 + 10) -
+                                 savedRotation.eulerAngles.y);
+            Quaternion rotationDelta = Quaternion.AngleAxis(degDelta, new(0,1,0));
+            realRotation = rotationDelta * realRotation;
+            realPosition = rotationDelta * realPosition;
+
+
         }
-        await Task.Delay(1000);
+        await Task.Delay(1500);
     }
 
     public async Task OverviewExit()
     {
         realPosition = savedPos;
         realFieldOfView = savedZoom;
-        realRotation = savedRotaion;
+        realRotation = savedRotation;
         overviewing = false;
         
-        await Task.Delay(1000);
+        await Task.Delay(1500);
         lerpSpeed += decrementLerpSpeed;
     }
 }

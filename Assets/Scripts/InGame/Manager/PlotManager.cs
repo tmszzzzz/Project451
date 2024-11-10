@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlotManager : MonoBehaviour
@@ -238,6 +239,12 @@ public class PlotManager : MonoBehaviour
             {
                 PushEnd();
                 break;
+            }
+            else if (line.StartsWith("func "))
+            {
+                string func = line.Substring(5).Trim();
+                var method = PlotFuncManager.instance.GetType().GetMethod(func);
+                method?.Invoke(PlotFuncManager.instance,null);
             }
             next++;
         }

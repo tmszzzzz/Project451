@@ -252,7 +252,7 @@ public class RoundManager : MonoBehaviour
         //执行分配动画
 
 
-        canvas.RefreshAllNodes();//更新节点状态
+        await canvas.RefreshAllNodes();//更新节点状态
 
 
         BookAllocationChange?.Invoke();//分配情况变更事件
