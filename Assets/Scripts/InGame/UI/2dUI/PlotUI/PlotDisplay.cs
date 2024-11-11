@@ -53,6 +53,8 @@ public class PlotDisplay : MonoBehaviour
         {
             Debug.Log("Plot is not open already");
         }
+
+        Debug.Log("Plot is not open already");
         _isPlotting = false;
         plotDisplayArea.GetComponent<PlotDisplayArea>().ClosePlots();
         plotSelectionArea.GetComponent<PlotSelectionArea>().ClosePlots(); 
@@ -69,6 +71,8 @@ public class PlotDisplay : MonoBehaviour
     // 结束剧情时调用
     public void PushedEnd()
     {
+        plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
+
         Button endButton = CreateContinueButton("End");
         endButton.onClick.AddListener(ClosePlots);
         endButton.onClick.AddListener(PlotManager.instance.TriggerPlotEnd);
