@@ -125,9 +125,11 @@ MonoBehaviour:
     type: 3
     awakeThreshold: 0
     exposeThreshold: 0
+    fallThreshold: 0
     numOfBooks: 0
     maximumNumOfBooks: 0
     unlockTag: 0
+    region: 0
   plotAndPageHandler: {fileID: 1758091407058741713}
   mb: {fileID: 0}
   objColor: {fileID: 402966726250135302}
@@ -434,7 +436,7 @@ PrefabInstance:
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8395024925643360528, guid: 12a879d08bd59fe459bc8ff253086c26,
         type: 3}
