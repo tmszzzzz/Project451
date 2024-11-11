@@ -34,8 +34,9 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void OnAwakeShowButtons()
     {
-        if (plotFilename != null)
+        if (plotFilename != "null")
         {
+            Debug.Log("Node" + " is plotting " + plotFilename);
             plotButton.SetActive(true);
             isPlotting = true;
         }

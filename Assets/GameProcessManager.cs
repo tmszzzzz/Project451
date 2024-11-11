@@ -60,6 +60,7 @@ public class GameProcessManager : MonoBehaviour
 
     void PresentDetectiveAndInofSystem()
     {
+        roundManager.skipCameraOverview = false;   // 重新开启摄像机视角
         probabilityOfInfoPanel.SetActive(true);
         detectiveBehavior.AddDetectivesInRegion(0, 4);
         detectiveBehavior.AddDetectivesInRegion(1, 7);
