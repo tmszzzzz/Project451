@@ -18,6 +18,7 @@ public class PlotDisplayArea : MonoBehaviour
     [SerializeField] private float maxWidth;
     [SerializeField] private float textFontSize;
     [SerializeField] private ProfileData profileData;
+    [SerializeField] private TMP_FontAsset fontAsset;
 
     void Awake()
     {
@@ -25,6 +26,8 @@ public class PlotDisplayArea : MonoBehaviour
         otherProfileImage = otherProfile.GetComponent<Image>();
         selfName = selfProfile.GetComponentInChildren<TextMeshProUGUI>();
         otherName = otherProfile.GetComponentInChildren<TextMeshProUGUI>();
+        selfName.font = fontAsset;
+        otherName.font = fontAsset;
     }
 
     public void OpenPlots()
@@ -120,6 +123,7 @@ public class PlotDisplayArea : MonoBehaviour
         newPlotText.text = presentedName + "\n" + context;
         newPlotText.alignment = TextAlignmentOptions.Left;
         newPlotText.fontSize = textFontSize;
+        newPlotText.font = fontAsset;
 
         RectTransform rectTransform = newPlotTextGameObject.GetComponent<RectTransform>();
         rectTransform.sizeDelta = new Vector2(maxWidth, 25f);
