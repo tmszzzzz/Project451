@@ -19,7 +19,8 @@ public class NodeBehavior : BaseNodeBehavior
     // Start is called before the first frame update
     protected virtual void Start()
     {
-
+        plotFileName = "null";
+        
         ColorMap = new Dictionary<int, Color>();
         ColorMap.Add(-1, Color.gray);
         ColorMap.Add(0, Color.gray);

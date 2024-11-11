@@ -235,13 +235,16 @@ public class RoundManager : MonoBehaviour
         return v;
     }
 
+    public bool skipCameraOverview = true;
+
     public async void NextRound()
     {
         OperationForbidden();//屏蔽所有操作
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
 
-        await mainCamera.OverviewEnter();
+        if (!skipCameraOverview)
+            await mainCamera.OverviewEnter();
 
 
         foreach (var i in _bookAllocationItems)
@@ -292,7 +295,8 @@ public class RoundManager : MonoBehaviour
 
         await Task.Delay(1000);
         
-        await mainCamera.OverviewExit();
+        if (!skipCameraOverview)
+            await mainCamera.OverviewExit();
         
         OperationRelease();//释放操作屏蔽
     }
