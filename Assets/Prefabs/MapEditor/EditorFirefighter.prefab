@@ -751,6 +751,7 @@ MonoBehaviour:
   normalColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
   awakenedColor: {r: 1, g: 0.48118353, b: 0, a: 1}
   exposedColor: {r: 1, g: 0.060802314, b: 0, a: 1}
+  minValue: 0.05
 --- !u!1 &7749195504344584476
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,7 +1313,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9068062133062399424}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

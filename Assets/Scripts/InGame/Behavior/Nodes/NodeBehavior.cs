@@ -31,6 +31,10 @@ public class NodeBehavior : BaseNodeBehavior
     protected virtual void Update()
     {
         objColor.color = ColorMap[(int)properties.state];
+        if (transform.parent.GetComponent<CanvasBehavior>().editorMode)
+        {
+            GetComponent<MeshRenderer>().material.color = ColorMap[properties.region];
+        }
     }
 
     public override StatePrediction NowState()
