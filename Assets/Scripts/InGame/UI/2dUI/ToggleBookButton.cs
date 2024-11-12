@@ -14,6 +14,14 @@ public class ToggleBookButton : MonoBehaviour
     public void ToggleBook()
     {
         isBookOpen = !isBookOpen;
+        if (isBookOpen)
+        {
+            RoundManager.instance.OperationForbidden();
+        }
+        else
+        {
+            RoundManager.instance.OperationRelease();
+        }
     } 
 
     // Update is called once per frame
@@ -24,7 +32,6 @@ public class ToggleBookButton : MonoBehaviour
             book.transform.position = Vector3.Lerp(book.transform.position, bookActivatedPosition.position, Time.deltaTime * 3f);
             Color shadowColor = shadowBackground.color;
             shadowBackground.gameObject.SetActive(true);
-            RoundManager.instance.operationForbidden = true;
             shadowColor.a = Mathf.Lerp(shadowColor.a, shadowBackgroundAlpha, Time.deltaTime * 3f);
             shadowBackground.color = shadowColor;
         }
@@ -33,7 +40,6 @@ public class ToggleBookButton : MonoBehaviour
             book.transform.position = Vector3.Lerp(book.transform.position, bookDeactivatedPosition.position, Time.deltaTime * 3f);
             Color shadowColor = shadowBackground.color;
             shadowColor.a = Mathf.Lerp(shadowColor.a, 0, Time.deltaTime * 3f);
-            RoundManager.instance.operationForbidden = false;
             if(shadowColor.a <= 0.01f) shadowBackground.gameObject.SetActive(false);
             shadowBackground.color = shadowColor;
         }

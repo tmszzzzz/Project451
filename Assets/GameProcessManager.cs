@@ -60,7 +60,7 @@ public class GameProcessManager : MonoBehaviour
 
     void PresentDetectiveAndInofSystem()
     {
-        roundManager.skipCameraOverview = false;   // 重新开启摄像机视角
+        RoundManager.instance.skipCameraOverview = false;   // 重新开启摄像机视角
         probabilityOfInfoPanel.SetActive(true);
         detectiveBehavior.AddDetectivesInRegion(0, 4);
         detectiveBehavior.AddDetectivesInRegion(1, 7);
@@ -89,7 +89,7 @@ public class GameProcessManager : MonoBehaviour
             FirstReachPoliceStation();
         }
 
-        if (nodesAwakendOnce.Count >= 17  && !everLearnedAboutDetectiveAndInfo)
+        if (nodesAwakendOnce.Count >= 7  && !everLearnedAboutDetectiveAndInfo)
         {
             PresentDetectiveAndInofSystem();
         }

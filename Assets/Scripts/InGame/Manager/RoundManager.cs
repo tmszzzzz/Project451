@@ -29,6 +29,7 @@ public class RoundManager : MonoBehaviour
     public GameObject ExposeFx;
     [SerializeField] private GameObject forbidden;
     public bool operationForbidden = false;
+    private int forbidTag = 0;
 
 
     //以下是事件
@@ -242,8 +243,8 @@ public class RoundManager : MonoBehaviour
         OperationForbidden();//屏蔽所有操作
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
-
-        if (!skipCameraOverview)
+        bool skipCameraOverviewTemp = skipCameraOverview;
+        if (!skipCameraOverviewTemp)
             await mainCamera.OverviewEnter();
 
 
@@ -295,22 +296,28 @@ public class RoundManager : MonoBehaviour
 
         await Task.Delay(1000);
         
-        if (!skipCameraOverview)
+        if (!skipCameraOverviewTemp)
             await mainCamera.OverviewExit();
         
         OperationRelease();//释放操作屏蔽
     }
 
-    private void OperationForbidden()
+    public void OperationForbidden()
     {
-        operationForbidden = true;
-        forbidden.SetActive(true);
+        forbidTag++;
+        if (forbidTag > 0)
+        {
+            operationForbidden = true;
+        }
     }
     
-    private void OperationRelease()
+    public void OperationRelease()
     {
-        operationForbidden = false;
-        forbidden.SetActive(false);
+        forbidTag--;
+        if (forbidTag <= 0)
+        {
+            operationForbidden = false;
+        }
     }
     
     
