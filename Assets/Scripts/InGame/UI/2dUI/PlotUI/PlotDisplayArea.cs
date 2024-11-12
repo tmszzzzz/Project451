@@ -133,11 +133,15 @@ public class PlotDisplayArea : MonoBehaviour
         rectTransform.localScale = new Vector3(1, 1, 1);
 
         rectTransform.anchoredPosition = new Vector2(isSelf ? 10 : -10, 0);
-
-        //别删除，需要这段强制更新一次layout使得contentSizeFitter生效
+        
+        // //别删除，需要这段强制更新一次layout使得contentSizeFitter生效
+        Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
 
         MovePlotsUp(rectTransform.rect.height);
+
+        Debug.Log("New plot text height: " + rectTransform.rect.height);
+
         plots.Add(newPlotTextGameObject);
         plotDisplayArea.anchoredPosition = new Vector2(plotDisplayArea.anchoredPosition.x, plotDisplayArea.anchoredPosition.y - rectTransform.rect.height);
 

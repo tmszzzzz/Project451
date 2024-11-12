@@ -1,8 +1,10 @@
-define 1 'Narration'
+define 1 '旁白'
 define 2 '艾米'
 define 3 '诺瓦'
 define 4 '菲尼克斯'
 define 5 '德斯普'
+
+29
 
 say 1 '在一段时间后，例行会议除了讨论组织的运转之外，也时常会有人提出一些新的想法。这些想法中好坏都有，同时读书会松散的组织也给予了每个人畅所欲言的权力。'
 
@@ -36,10 +38,7 @@ select
 
 flag flag1
 func gainTwoNewMembers
-goto end
 
 flag flag2
-goto end
-flag end
 exit
 
