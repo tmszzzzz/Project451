@@ -112,10 +112,12 @@ public class PlotManager : MonoBehaviour
 
     private void OnStart()
     {
+        RoundManager.instance.OperationForbidden();
         OnNextStep(false,0);
     }
     private void OnEnd()
     {
+        RoundManager.instance.OperationRelease();
         duringPlot = false;
     }
 

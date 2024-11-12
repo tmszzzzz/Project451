@@ -22,13 +22,14 @@ public class RoundManager : MonoBehaviour
     public Canvas uiCanvas; // 这是你的UI Canvas
     public Dictionary<GameObject, int> BookAllocationMap; //<node,value>
     [SerializeField] private GameObject startNode = null;
-    private readonly List<BookAllocationItem> _bookAllocationItems = new List<BookAllocationItem>(); // 存储分配项的列表
+    public List<BookAllocationItem> BookAllocationItems = new List<BookAllocationItem>(); // 存储分配项的列表
     public GameObject bookAllocationArrow;
     public GameObject DownFx;
     public GameObject ActiveFx;
     public GameObject ExposeFx;
     [SerializeField] private GameObject forbidden;
     public bool operationForbidden = false;
+    private int forbidTag = 0;
 
 
     //以下是事件
@@ -57,7 +58,7 @@ public class RoundManager : MonoBehaviour
         }
     }
     
-    struct BookAllocationItem
+    public struct BookAllocationItem
     {
         public GameObject Begin;
         public GameObject End;
@@ -112,12 +113,12 @@ public class RoundManager : MonoBehaviour
                         if (reverseArrowScript.allocationNum <= 0)
                         {
                             reverseItem.Value.Arrow.GetComponent<BookAllocationArrow>().Cancel();
-                            _bookAllocationItems.Remove(reverseItem.Value); // 从列表中移除
+                            BookAllocationItems.Remove(reverseItem.Value); // 从列表中移除
                         }
 
                         List<BookAllocationItem> toBeDeleted = new List<BookAllocationItem>();
                         //在此操作后，检查所有分配线是否合法
-                        foreach (var i in _bookAllocationItems)
+                        foreach (var i in BookAllocationItems)
                         {
                             NodeBehavior bnb = i.Begin.GetComponent<NodeBehavior>();
                             NodeBehavior enb = i.End.GetComponent<NodeBehavior>();
@@ -129,7 +130,7 @@ public class RoundManager : MonoBehaviour
                         }
                         foreach (var i in toBeDeleted)
                         {
-                            _bookAllocationItems.Remove(i);
+                            BookAllocationItems.Remove(i);
                             var allocationArrow = i.Arrow.GetComponent<BookAllocationArrow>();
                             int val = allocationArrow.allocationNum;
                             BookAllocationMap[i.Begin] += val;
@@ -170,7 +171,7 @@ public class RoundManager : MonoBehaviour
                             arrowScript.allocationNum = 1;  // 初始分配书数量
 
                             // 添加到allocationItems列表
-                            _bookAllocationItems.Add(new BookAllocationItem
+                            BookAllocationItems.Add(new BookAllocationItem
                             {
                                 Begin = startNode,
                                 End = targetNode,
@@ -203,7 +204,7 @@ public class RoundManager : MonoBehaviour
     public int BookAllocationNum()
     {
         int sum = 0;
-        foreach(var i in _bookAllocationItems)
+        foreach(var i in BookAllocationItems)
         {
             sum += i.Arrow.GetComponent<BookAllocationArrow>().allocationNum;
         }
@@ -213,7 +214,7 @@ public class RoundManager : MonoBehaviour
     private BookAllocationItem? FindAllocationItem(GameObject begin, GameObject end)
     {
         // 遍历allocationItems列表，查找是否存在对应的分配箭头
-        foreach (var item in _bookAllocationItems)
+        foreach (var item in BookAllocationItems)
         {
             if (item.Begin == begin && item.End == end)
             {
@@ -240,18 +241,21 @@ public class RoundManager : MonoBehaviour
     public async void NextRound()
     {
         OperationForbidden();//屏蔽所有操作
+        forbidden.SetActive(true);
+        
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
-
-        if (!skipCameraOverview)
+        bool skipCameraOverviewTemp = skipCameraOverview;
+        if (!skipCameraOverviewTemp)
             await mainCamera.OverviewEnter();
 
 
-        foreach (var i in _bookAllocationItems)
+        foreach (var i in BookAllocationItems)
         {
-            i.Arrow.GetComponent<BookAllocationArrow>().Confirm();
+            var arrow = i.Arrow.GetComponent<BookAllocationArrow>();
+            arrow.Confirm();
+            arrow.displayNum = false;
         }
-        _bookAllocationItems.Clear();
         //执行分配动画
 
 
@@ -287,7 +291,12 @@ public class RoundManager : MonoBehaviour
         for (int i = 0; i < keys.Count; i++)
         {
             BookAllocationMap[keys[i]] = 0;
-        }//清除预分配数据
+        }
+        foreach (var i in BookAllocationItems)
+        {
+            Destroy(i.Arrow.gameObject);
+        }
+        BookAllocationItems.Clear();//清除预分配数据
 
 
         messageBar.AddMessage("NextRound");//消息提示
@@ -295,22 +304,29 @@ public class RoundManager : MonoBehaviour
 
         await Task.Delay(1000);
         
-        if (!skipCameraOverview)
+        if (!skipCameraOverviewTemp)
             await mainCamera.OverviewExit();
         
         OperationRelease();//释放操作屏蔽
+        forbidden.SetActive(false);
     }
 
-    private void OperationForbidden()
+    public void OperationForbidden()
     {
-        operationForbidden = true;
-        forbidden.SetActive(true);
+        forbidTag++;
+        if (forbidTag > 0)
+        {
+            operationForbidden = true;
+        }
     }
     
-    private void OperationRelease()
+    public void OperationRelease()
     {
-        operationForbidden = false;
-        forbidden.SetActive(false);
+        forbidTag--;
+        if (forbidTag <= 0)
+        {
+            operationForbidden = false;
+        }
     }
     
     

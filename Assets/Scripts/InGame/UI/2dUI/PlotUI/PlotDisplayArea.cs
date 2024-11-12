@@ -145,7 +145,7 @@ public class PlotDisplayArea : MonoBehaviour
         plots.Add(newPlotTextGameObject);
         plotDisplayArea.anchoredPosition = new Vector2(plotDisplayArea.anchoredPosition.x, plotDisplayArea.anchoredPosition.y - rectTransform.rect.height);
 
-        DestroyOverScreenPlots();
+        //DestroyOverScreenPlots();
 
         UpdateProfile(isSelf, name);
     }

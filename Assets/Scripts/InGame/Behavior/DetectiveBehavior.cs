@@ -65,7 +65,8 @@ public class DetectiveBehavior : MonoBehaviour
             regionList.Remove(regionNode);
         }
         var targets = new List<GameObject>();
-        for (int i = 0; i < Mathf.Min(num,regionList.Count); i++)
+        int l = regionList.Count;
+        for (int i = 0; i < Mathf.Min(num,l); i++)
         {
             var tar = regionList[Random.Range(0, regionList.Count)];
             targets.Add(tar);
@@ -168,30 +169,40 @@ public class DetectiveBehavior : MonoBehaviour
     {
         bool skip = true;
         int l = focusPointers.Count;
+        List<GameObject> founds = new List<GameObject>();
         for(int i =0;i<l;i++)
         {
-            if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] != 0)
+            var list = RoundManager.instance.BookAllocationItems;
+            bool found = false;
+            foreach (var bookAllocationItem in list)
+            {
+                if (focusOnNodes[i] == bookAllocationItem.Begin || focusOnNodes[i] == bookAllocationItem.End)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (found)
             {
                 skip = false;
+                founds.Add(focusOnNodes[i]);
                 Instantiate(DetectedFx,focusOnNodes[i].transform.position,Quaternion.Euler(0,0,0));
                 
             }
         }
         if (!skip) await Task.Delay(1000);
-        for(int i =0;i<l;i++)
+        foreach (var i in founds)
         {
-            if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] != 0)
-            {
-                GameObject target = focusOnNodes[i];
-                Vector3 horizontalDirection = target.transform.position - LightconeCenter.transform.position;
-                horizontalDirection.y = 0;
-                horizontalDirection = horizontalDirection.normalized;
-                Vector3 pos = LightconeCenter.position + 1.5f * horizontalDirection;
-                Vector3 facing = target.transform.position - pos;
-                Lightcones.Add(Instantiate(LightconePrefab,pos,Quaternion.LookRotation(facing)));
-                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
-                await Task.Delay(250);
-            }
+            GameObject target = i;
+            Vector3 horizontalDirection = target.transform.position - LightconeCenter.transform.position;
+            horizontalDirection.y = 0;
+            horizontalDirection = horizontalDirection.normalized;
+            Vector3 pos = LightconeCenter.position + 1.5f * horizontalDirection;
+            Vector3 facing = target.transform.position - pos;
+            Lightcones.Add(Instantiate(LightconePrefab, pos, Quaternion.LookRotation(facing)));
+            GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
+            await Task.Delay(250);
+
         }
 
         if (!skip) await Task.Delay(1000);
@@ -201,9 +212,20 @@ public class DetectiveBehavior : MonoBehaviour
     {
         bool skip = true;
         int l = focusPointers.Count;
+        
         for(int i =0;i<l;i++)
         {
-            if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] == 0)
+            var list = RoundManager.instance.BookAllocationItems;
+            bool found = false;
+            foreach (var bookAllocationItem in list)
+            {
+                if (focusOnNodes[i] == bookAllocationItem.Begin || focusOnNodes[i] == bookAllocationItem.End)
+                {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found)
             {
                 skip = false;
                 Instantiate(PointFx,focusOnNodes[i].transform.position,Quaternion.Euler(0,0,0));

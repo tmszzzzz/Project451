@@ -13,6 +13,7 @@ public class BookAllocationArrow : MonoBehaviour
     public float curveHeight = 2.0f; // 中段凸起的高度
     public float deltaYText = 2.0f;
     private Animator anim;
+    public bool displayNum = true;
 
     private void Awake()
     {
@@ -34,7 +35,7 @@ public class BookAllocationArrow : MonoBehaviour
 
             DrawSmoothArrow();
             transform.position = (pointA.position + pointB.position) / 2 + Vector3.up * (curveHeight + nodeHeight + deltaYText);
-            text.text = allocationNum == 0? "" : $"{allocationNum}";
+            text.text = (!displayNum || allocationNum == 0)? "" : $"{allocationNum}";
         }
     }
 
