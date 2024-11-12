@@ -241,6 +241,8 @@ public class RoundManager : MonoBehaviour
     public async void NextRound()
     {
         OperationForbidden();//屏蔽所有操作
+        forbidden.SetActive(true);
+        
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
         bool skipCameraOverviewTemp = skipCameraOverview;
@@ -300,6 +302,7 @@ public class RoundManager : MonoBehaviour
             await mainCamera.OverviewExit();
         
         OperationRelease();//释放操作屏蔽
+        forbidden.SetActive(false);
     }
 
     public void OperationForbidden()
