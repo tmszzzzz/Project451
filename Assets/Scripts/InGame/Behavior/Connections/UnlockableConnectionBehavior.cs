@@ -38,8 +38,8 @@ public class UnlockableConnectionBehavior : ConnectionBehavior
         if (available) base.RefreshColor(db);
         else
         {
-            GetComponent<LineRenderer>().startColor = Color.gray;
-            GetComponent<LineRenderer>().endColor = Color.gray;
+            GetComponent<LineRenderer>().startColor = Color.black;
+            GetComponent<LineRenderer>().endColor = Color.black;
         }
     }
 }
