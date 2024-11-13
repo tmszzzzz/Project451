@@ -7,6 +7,21 @@ using UnityEngine.UI;
 
 public class PlotDisplay : MonoBehaviour
 {
+    private static PlotDisplay instance;
+    
+    public static PlotDisplay Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<PlotDisplay>();
+            }
+
+            return instance;
+        }
+    }
+    
     [SerializeField] private GameObject plotPanel;
     [SerializeField] private GameObject plotDisplayArea;
     [SerializeField] private GameObject plotSelectionArea;
@@ -110,18 +125,14 @@ public class PlotDisplay : MonoBehaviour
     public float wordPerSecond = 10f;
     public float CalculateReadingTime(string content)
     {
-        Debug.Log("Content length: " + content.Length);
-        Debug.Log("Word per second: " + wordPerSecond);
-        return content.Length/wordPerSecond;
+        return content.Length/wordPerSecond + 1.5f;
     }
 
     // 显示对侧对话
     public void ShowDialog(string name, string content)
     {
         plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
-
-        //Pay attention here something is annoying which may causes bugs!
-        //Other dialogue shouldn't wait for continue button to be clicked. So we copy a new event and invoke it after a delay.
+        
         UnityEngine.Events.UnityEvent newEvents = new UnityEngine.Events.UnityEvent();
         newEvents.AddListener(() => plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(false, name, content));
         newEvents.AddListener(ContinuePlot);
@@ -132,14 +143,22 @@ public class PlotDisplay : MonoBehaviour
         Debug.Log("Time for last plot to be read: " + timeForLastPlotToBeRead);
     }
 
+    private void CreateContinueButtonForSelfDialog(bool isSelf, string characterName, string content)
+    {
+        Button continueButton = CreateContinueButton(content);
+        continueButton.onClick.AddListener(() => plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(true, characterName, content));
+
+    }
+
     // 显示自身对话
-    public void ShowSelfDialog(string name, string content)
+    public void ShowSelfDialog(string characterName, string content)
     {
         plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
 
-        Button continueButton = CreateContinueButton(content);
-        continueButton.onClick.AddListener(() => plotDisplayArea.GetComponent<PlotDisplayArea>().PlotNewText(true, name, content));
-
+        UnityEngine.Events.UnityEvent newEvents = new UnityEngine.Events.UnityEvent();
+        newEvents.AddListener(() => CreateContinueButtonForSelfDialog(true, characterName, content));
+        StartCoroutine(InvokeAfterDelay(newEvents, timeForLastPlotToBeRead)); 
+        
         timeForLastPlotToBeRead = CalculateReadingTime(content);
         Debug.Log("Time for last plot to be read: " + timeForLastPlotToBeRead);
     }
@@ -152,11 +171,8 @@ public class PlotDisplay : MonoBehaviour
         // continueButton.SetActive(true);
     }
 
-    // 显示选择项
-    public void ShowSelection(List<string> choices)
+    private void MakeSelections(List<string> choices)
     {
-        plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
-
         List<Button> choicesButtons = plotSelectionArea.GetComponent<PlotSelectionArea>().NeedButtons(choices.Count);
 
         for (int i = 0; i < choices.Count; i++)
@@ -169,6 +185,16 @@ public class PlotDisplay : MonoBehaviour
             choiceButton.onClick.AddListener(() => SelectChoice(choiceIndex));
             //choiceButton.onClick.AddListener(ContinuePlot);
         }
+    }
+    
+    // 显示选择项
+    public void ShowSelection(List<string> choices)
+    {
+        plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
+        
+        UnityEngine.Events.UnityEvent newEvents = new UnityEngine.Events.UnityEvent();
+        newEvents.AddListener(() => MakeSelections(choices));
+        StartCoroutine(InvokeAfterDelay(newEvents, timeForLastPlotToBeRead));
 
         // selectionContainer.gameObject.SetActive(true);
 

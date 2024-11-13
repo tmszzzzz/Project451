@@ -13,7 +13,7 @@ public class PlotDisplayArea : MonoBehaviour
     private Image otherProfileImage;
     private TextMeshProUGUI selfName;
     private TextMeshProUGUI otherName;
-    private List<GameObject> plots = new List<GameObject>();
+    private List<GameObject> adreadyFinishedPlots = new List<GameObject>();
     [SerializeField] private RectTransform plotDisplayArea;
     [SerializeField] private float maxWidth;
     [SerializeField] private float textFontSize;
@@ -50,26 +50,11 @@ public class PlotDisplayArea : MonoBehaviour
 
     public void ClosePlots()
     {
-        foreach (GameObject plot in plots)
+        foreach (GameObject plot in adreadyFinishedPlots)
         {
             Destroy(plot);
         }
-        plots.Clear();
-    }
-
-    void DestroyOverScreenPlots()
-    {
-
-        //destroy plots that are out of screen, which have a y position that are higher than half of the screen height
-        foreach (GameObject plot in plots)
-        {
-            if (plot.GetComponent<RectTransform>().anchoredPosition.y > Screen.height)
-            {
-                Debug.Log("Destroy plot");
-                plots.Remove(plot);
-                Destroy(plot);
-            }
-        }
+        adreadyFinishedPlots.Clear();
     }
 
     void MovePlotsUp(float distance)
@@ -77,7 +62,7 @@ public class PlotDisplayArea : MonoBehaviour
 
        plotDisplayArea.sizeDelta = new Vector2(plotDisplayArea.sizeDelta.x, plotDisplayArea.sizeDelta.y + distance);
 
-        foreach (GameObject plot in plots)
+        foreach (GameObject plot in adreadyFinishedPlots)
         {
                 plot.GetComponent<RectTransform>().anchoredPosition += new Vector2(0, distance);
         }
@@ -89,28 +74,29 @@ public class PlotDisplayArea : MonoBehaviour
         {
             ControleProfileActive(true, true);
             selfProfileImage.sprite = profileData.GetProfileSpriteByName(name);
-            selfName.text = wrapUpNameWithRichText(name);
+            selfName.text = WrapUpNameWithRichText(name);
         }
         else
         {
             ControleProfileActive(false, true);
             otherProfileImage.sprite = profileData.GetProfileSpriteByName(name);
-            otherName.text = wrapUpNameWithRichText(name);
+            otherName.text = WrapUpNameWithRichText(name);
         }
     }
 
-    string wrapUpNameWithRichText(string name)
+    string WrapUpNameWithRichText(string name)
     {
         name = "<color=#" + profileData.GetColorByName(name).ToHexString() + ">" + name + "</color>";
         name = "<align=\"center\">" + name + "</align>";
         return name;
     }
 
-    private GameObject currentPlottingPlot;
+    private GameObject currentPlottingPlot = null;
+    private float currentPlottingHeight = 0;
 
     public void PlotNewText(bool isSelf, string name, string context)
     {
-        string presentedName = wrapUpNameWithRichText(name);
+        string presentedName = WrapUpNameWithRichText(name);
 
         GameObject newPlotTextGameObject = new();
         newPlotTextGameObject.transform.SetParent(gameObject.transform);
@@ -142,30 +128,40 @@ public class PlotDisplayArea : MonoBehaviour
 
         TextAppearOneByOne textAppearOneByOne = newPlotTextGameObject.AddComponent<TextAppearOneByOne>();
         textAppearOneByOne.fullText = context;
-        textAppearOneByOne.typingSpeed = 0.1f;
-
-        //MovePlotsUp(rectTransform.rect.height);
-
-        //tDebug.Log("New plot text height: " + rectTransform.rect.height);
-
-        //plots.Add(newPlotTextGameObject);
-        MovePlotsUp(rectTransform.rect.height);
-        //plotDisplayArea.anchoredPosition = new Vector2(plotDisplayArea.anchoredPosition.x, plotDisplayArea.anchoredPosition.y - rectTransform.rect.height);
-
-        //DestroyOverScreenPlots();
+        textAppearOneByOne.typingSpeed = 1f / PlotDisplay.Instance.wordPerSecond;
+        textAppearOneByOne.onTypingFinished.AddListener(() => CurrentPlottingPlotFinished());
+        
+        MovePlotsUp(rectTransform.sizeDelta.y);
+        currentPlottingHeight = rectTransform.sizeDelta.y;
+        currentPlottingPlot = newPlotTextGameObject;
 
         UpdateProfile(isSelf, name);
 
     }
 
+    void UpdateHeightOfAlreadyFinishedPlots()
+    {
+        if (currentPlottingPlot == null) return;
+        
+        if (currentPlottingHeight != currentPlottingPlot.GetComponent<RectTransform>().sizeDelta.y)
+        {
+            MovePlotsUp(currentPlottingPlot.GetComponent<RectTransform>().sizeDelta.y - currentPlottingHeight);
+            currentPlottingHeight = currentPlottingPlot.GetComponent<RectTransform>().sizeDelta.y;
+        }
+    }
+
+    public void CurrentPlottingPlotFinished()
+    {
+        adreadyFinishedPlots.Add(currentPlottingPlot);
+        currentPlottingPlot = null;
+    }
+
     public float startYPositionOfDisplayedPlots = 10f;
     public float lerpScreenSpeed;
-
-
+    
     void Update()
     {
-        // Vector2 targetPosition = new Vector2(plotDisplayArea.anchoredPosition.x, startYPositionOfDisplayedPlots);
-        // plotDisplayArea.anchoredPosition = Vector2.Lerp(plotDisplayArea.anchoredPosition, targetPosition, Time.deltaTime * lerpScreenSpeed);
+        UpdateHeightOfAlreadyFinishedPlots();
     }
 
     // Update is called once per frame
