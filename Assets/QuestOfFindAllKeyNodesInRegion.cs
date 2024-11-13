@@ -6,10 +6,10 @@ public class QuestOfFindAllKeyNodesInRegion : QuestUnit
 {
     [SerializeField] private int targetRegion;
     private string regionName;
-    private List<NodeBehavior> keyNodesInThisRegion;
+    private List<NodeBehavior> keyNodesInThisRegion = new List<NodeBehavior>();
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (targetRegion == 0)
         {
