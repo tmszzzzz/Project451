@@ -307,6 +307,8 @@ public class RoundManager : MonoBehaviour
         if (!skipCameraOverviewTemp)
             await mainCamera.OverviewExit();
         
+        await PlotManager.instance.ReadPlotQueue();
+        
         OperationRelease();//释放操作屏蔽
         forbidden.SetActive(false);
     }
