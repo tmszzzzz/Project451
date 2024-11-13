@@ -169,7 +169,7 @@ MonoBehaviour:
   plotButton: {fileID: 8068148208343374158}
   pageButton: {fileID: 1180488968679763961}
   thisNode: {fileID: 0}
-  targetScale: 1.5
+  targetScale: 2.3
 --- !u!1 &1180488968679763961
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 30993321568463056}
   - component: {fileID: 1124949140894213305}
   - component: {fileID: 9051669354786927577}
+  - component: {fileID: 1573962947185313587}
   m_Layer: 5
   m_Name: PageButton
   m_TagString: Untagged
@@ -302,6 +303,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1573962947185313587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180488968679763961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7729bb8234a47c2408904ef02eb9e82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minScaleF: 2
+  maxScaleF: 2.6
+  breathingSpeed: 2
 --- !u!1 &6717303144712701012
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,6 +422,7 @@ GameObject:
   - component: {fileID: 6392933536966879710}
   - component: {fileID: 253722716933934009}
   - component: {fileID: 7237520366538279524}
+  - component: {fileID: 4545265857890243060}
   m_Layer: 5
   m_Name: PlotButton
   m_TagString: Untagged
@@ -526,3 +543,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4545265857890243060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8068148208343374158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7729bb8234a47c2408904ef02eb9e82f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minScaleF: 2
+  maxScaleF: 2.6
+  breathingSpeed: 2

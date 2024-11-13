@@ -72,6 +72,8 @@ public class PlotAndPageHandler : MonoBehaviour
 
             //clear plotFilename
             plotFilename = null;
+
+            plotButton.GetComponent<BreathingEffect>().enabled = false; 
         }
     }
 
@@ -85,6 +87,8 @@ public class PlotAndPageHandler : MonoBehaviour
 
             //clear pageSprite  
             pageSprite = null;
+
+            pageButton.GetComponent<BreathingEffect>().enabled = false;
         }
     }
 }

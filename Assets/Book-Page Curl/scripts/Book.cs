@@ -67,6 +67,17 @@ public class Book : MonoBehaviour {
     //current flip mode
     FlipMode mode;
 
+    public void addOnePageToEndOfBook(Sprite newPage)
+    {
+        Sprite[] newBookPages = new Sprite[bookPages.Length + 1];
+        for (int i = 0; i < bookPages.Length; i++)
+        {
+            newBookPages[i] = bookPages[i];
+        }
+        newBookPages[bookPages.Length] = newPage;
+        bookPages = newBookPages;
+    }
+
     void Start()
     {
         if (!canvas) canvas=GetComponentInParent<Canvas>();
@@ -276,7 +287,7 @@ public class Book : MonoBehaviour {
     }
     public void DragRightPageToPoint(Vector3 point)
     {
-        if (currentPage >= bookPages.Length) return;
+        if (currentPage + 2 > bookPages.Length) return;
         pageDragging = true;
         mode = FlipMode.RightToLeft;
         f = point;

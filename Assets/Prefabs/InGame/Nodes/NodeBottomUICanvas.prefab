@@ -315,7 +315,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &6093423863460495256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +591,7 @@ MonoBehaviour:
   normalColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
   awakenedColor: {r: 1, g: 0.48118353, b: 0, a: 1}
   exposedColor: {r: 1, g: 0.060802314, b: 0, a: 1}
+  minValue: 0.05
 --- !u!1 &9054268081216589577
 GameObject:
   m_ObjectHideFlags: 0
