@@ -299,7 +299,7 @@ public class RoundManager : MonoBehaviour
         BookAllocationItems.Clear();//清除预分配数据
 
 
-        messageBar.AddMessage("NextRound");//消息提示
+        messageBar.AddMessage($"第{roundNum-1}天过去了.");//消息提示
 
 
         await Task.Delay(1000);

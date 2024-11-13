@@ -27,7 +27,7 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(0, Color.gray);
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
-        mb = RoundManager.instance.messageBar;
+        mb = MessageBar.instance;
     }
     protected virtual void Update()
     {

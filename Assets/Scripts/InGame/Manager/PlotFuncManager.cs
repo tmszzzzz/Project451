@@ -20,4 +20,6 @@ public class PlotFuncManager : MonoBehaviour
     {
         Debug.Log("Function test called.");
     }
+    
+    
 }
