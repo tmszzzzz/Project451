@@ -67,6 +67,11 @@ public class Book : MonoBehaviour {
     //current flip mode
     FlipMode mode;
 
+    public void SubstitutueAPageInTheMiddle(Sprite newPage, int num)
+    {
+                
+    }
+
     public void addOnePageToEndOfBook(Sprite newPage)
     {
         Sprite[] newBookPages = new Sprite[bookPages.Length + 1];

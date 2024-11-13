@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
@@ -25,6 +26,7 @@ public class TutorialsController : MonoBehaviour
     [SerializeField] private AnimationClip tutorialsPanelDisappear;
     [SerializeField] private GameObject tutorialsImage;
     
+    public bool canShowTutorial4 = false;
     
     void Update()
     {
@@ -54,7 +56,8 @@ public class TutorialsController : MonoBehaviour
         }
         if (book.currentPage == page4 || book.currentPage == page4 + 1)
         {
-            button4.SetActive(true);
+            if(canShowTutorial4)
+                button4.SetActive(true);
         }
         else
         {

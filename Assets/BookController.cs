@@ -14,6 +14,12 @@ public class BookController : MonoBehaviour
         newContentBookAlertImage.SetActive(true);
     }
 
+    public void subsititute(Sprite pageSprite, int num)
+    {
+        book.SubstitutueAPageInTheMiddle(pageSprite, num);
+        newContentBookAlertImage.SetActive(true);
+    }
+
     public void Alarm()
     {
         newContentBookAlertImage.SetActive(true);

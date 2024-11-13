@@ -20,11 +20,13 @@ public class GameProcessManager : MonoBehaviour
     private bool everLearnedAboutDetectiveAndInfo = false;
     private bool everLearnedAboutKeepNodesDontFall = false;
     private bool everAwakeAllNodes = false;
+
+    [SerializeField] private TutorialsController _tutorialsController;
     // Start is called before the first frame update
 
     private void Start()
     {
-        PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
+        //PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
     }
 
     private void Awake()
@@ -64,10 +66,19 @@ public class GameProcessManager : MonoBehaviour
         globalVar.numOfBibliophileGiveBooks = 2;
     }
 
+    [SerializeField] private Sprite page1;
+    [SerializeField] private Sprite page2;
+    [SerializeField] private BookController _bookController;
     void PresentDetectiveAndInofSystem()
     {
         RoundManager.instance.skipCameraOverview = false;   // 重新开启摄像机视角
+        
+        _tutorialsController.canShowTutorial4 = true;
+        _bookController.subsititute(page1, 11);
+        _bookController.subsititute(page2, 12);
+        
         probabilityOfInfoPanel.SetActive(true);
+        
         detectiveBehavior.AddDetectivesInRegion(0, 4);
         detectiveBehavior.AddDetectivesInRegion(1, 7);
         detectiveBehavior.AddDetectivesInRegion(2, 11);
