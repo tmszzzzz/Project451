@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,19 @@ using TMPro;
 
 public class MessageBar : MonoBehaviour
 {
+    public static MessageBar instance;
     public TextMeshProUGUI messageText; // 用于显示消息
     private Queue<string> messageQueue = new Queue<string>(); // 消息队列
+
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
 
     private void Start()
     {

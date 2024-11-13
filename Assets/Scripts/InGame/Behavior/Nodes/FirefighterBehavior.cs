@@ -21,8 +21,15 @@ public class FirefighterBehavior : NodeBehavior
                 Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
                 return;
             }
+
+            int org = properties.numOfBooks;
             cb.AddNodeNumOfBooks(this.gameObject, GlobalVar.instance.numOfFirefighterGiveBooks);
-            mb.AddMessage($"Firefighter {gameObject.name} gives you {GlobalVar.instance.numOfFirefighterGiveBooks} books in this round.");
+            int gained = properties.numOfBooks - org;
+            if(gained != 0)mb.AddMessage($"消防员{gameObject.name}今日获得了{GlobalVar.instance.numOfFirefighterGiveBooks}本书.");
+            else
+            {
+                mb.AddMessage($"消防员{gameObject.name}今日持有书达上限，未获取任何书.");
+            }
         }
     }
 

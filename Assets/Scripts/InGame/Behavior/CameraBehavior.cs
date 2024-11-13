@@ -9,8 +9,9 @@ public class CameraBehavior : MonoBehaviour
     [SerializeField] private float minZoom = 2f;     
     [SerializeField] private float maxZoom = 1000f;
     [SerializeField] private float overviewFieldOfView = 30f;
+    [SerializeField] private float focusFieldOfView = 30f;
+    [SerializeField] private float focusAngle = 30f;
     [SerializeField] private float overviewDistanceAddition = 10f;
-    private bool overviewing = false;
     private Vector3 savedPos;
     private float savedZoom;
     private Quaternion savedRotation;
@@ -105,7 +106,7 @@ public class CameraBehavior : MonoBehaviour
 
     void Update()
     {
-        if (!overviewing && !RoundManager.instance.operationForbidden)
+        if (!RoundManager.instance.operationForbidden)
         {
             HandleMovement();
             HandleRotation();
@@ -143,7 +144,6 @@ public class CameraBehavior : MonoBehaviour
         savedPos = realPosition;
         savedZoom = realFieldOfView;
         savedRotation = realRotation;
-        overviewing = true;
         lerpSpeed -= decrementLerpSpeed;
 
         realFieldOfView = overviewFieldOfView;
@@ -173,7 +173,45 @@ public class CameraBehavior : MonoBehaviour
         realPosition = savedPos;
         realFieldOfView = savedZoom;
         realRotation = savedRotation;
-        overviewing = false;
+        
+        await Task.Delay(1500);
+        lerpSpeed += decrementLerpSpeed;
+    }
+
+    public async Task PlotFocusEnter(GameObject target)
+    {
+        savedPos = realPosition;
+        savedZoom = realFieldOfView;
+        savedRotation = realRotation;
+        lerpSpeed -= decrementLerpSpeed;
+
+        realFieldOfView = focusFieldOfView;
+        Vector3 centerToTarget = target.transform.position - circleCenter.transform.position;
+        centerToTarget.y = 0;
+        Vector3 newHorizonVector3 = Quaternion.AngleAxis(focusAngle, Vector3.up) * centerToTarget;
+        newHorizonVector3.y = 0;
+        float angleX = realRotation.eulerAngles.x;
+        Vector3 newDir = Quaternion.AngleAxis(-angleX, Vector3.Cross(newHorizonVector3,Vector3.up)) * newHorizonVector3;
+        realRotation = Quaternion.LookRotation(newDir);
+        Ray ray = new Ray(realPosition, (realRotation * Vector3.forward));
+        Plane plane = new Plane(Vector3.up, Vector3.zero);
+        if (plane.Raycast(ray, out float enter))
+        {
+            Vector3 hitPoint = ray.GetPoint(enter);
+            Vector3 delta = target.transform.position - hitPoint;
+            delta.y = 0;
+            realPosition += delta;
+        }
+        
+        
+        await Task.Delay(1500);
+    }
+    
+    public async Task PlotFocusExit()
+    {
+        realPosition = savedPos;
+        realFieldOfView = savedZoom;
+        realRotation = savedRotation;
         
         await Task.Delay(1500);
         lerpSpeed += decrementLerpSpeed;

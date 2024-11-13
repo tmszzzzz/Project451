@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -19,14 +20,14 @@ public class NodeBehavior : BaseNodeBehavior
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        plotFileName = "null";
+        if(String.IsNullOrEmpty(plotFileName))plotFileName = "null";
         
         ColorMap = new Dictionary<int, Color>();
         ColorMap.Add(-1, Color.gray);
         ColorMap.Add(0, Color.gray);
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
-        mb = RoundManager.instance.messageBar;
+        mb = MessageBar.instance;
     }
     protected virtual void Update()
     {
@@ -115,6 +116,19 @@ public class NodeBehavior : BaseNodeBehavior
 
             plotAndPageHandler.OnAwakeShowButtons();
             hadAwakenedBefore = true;
+            if(plotFileName != "null")
+            {
+                if (this is KeyNodeBehavior)
+                {
+                    PlotManager.instance.AddPlotQueue(plotFileName, gameObject);
+                    Debug.Log($"{gameObject.name} 增加了一段focus剧情，聚焦于{gameObject.name}");
+                }
+                else
+                {
+                    PlotManager.instance.AddPlotQueue(plotFileName, null);
+                    Debug.Log($"{gameObject.name} 增加了一段普通剧情");
+                }
+            }
         }
 
         if (stateEnum == Properties.StateEnum.NORMAL && (properties.state == Properties.StateEnum.AWAKENED ||

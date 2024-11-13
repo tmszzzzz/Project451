@@ -10,6 +10,6 @@ public class DisplayBookIsInWhichPage : MonoBehaviour
     public TextMeshProUGUI txt;
     void Update()
     {
-        txt.text = $"{book.currentPage}";
+        txt.text = $"{PlotManager.instance.PlotQueue.Count}";
     }
 }

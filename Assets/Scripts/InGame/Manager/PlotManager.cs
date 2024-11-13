@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -36,6 +38,20 @@ public class PlotManager : MonoBehaviour
     string[] lines;
     bool duringPlot;
     public bool GetDuringPlot() { return duringPlot; }
+    public class PlotQueueItem
+    {
+        public string PlotFile;
+        public GameObject FocusNode;
+
+        public PlotQueueItem(string plotFile, GameObject focusNode)
+        {
+            PlotFile = plotFile;
+            FocusNode = focusNode;
+        }
+    }
+
+    public Queue<PlotQueueItem> PlotQueue;
+    [SerializeField] private CameraBehavior camB;
 
 
     private void Awake()
@@ -55,6 +71,7 @@ public class PlotManager : MonoBehaviour
         choices = new List<string>();
         selectionFlags = new List<string>();
         duringPlot = false;
+        PlotQueue = new Queue<PlotQueueItem>();
     }
 
     public bool isNextLineEnd()
@@ -321,4 +338,45 @@ public class PlotManager : MonoBehaviour
         return -1;
     }
 
+    public async Task ReadPlotQueue()
+    {
+        while (PlotQueue.Count > 0)
+        {
+            var item = PlotQueue.Dequeue();
+            if (item.FocusNode != null)
+            {
+                await camB.PlotFocusEnter(item.FocusNode);
+            }
+            StartPlot(item.PlotFile);
+            var tcs = new TaskCompletionSource<bool>();
+
+            // 订阅事件，并在事件触发时设置 TaskCompletionSource 完成
+            Action handler = null;
+            handler = () =>
+            {
+                // 设置完成，并取消订阅事件
+                tcs.SetResult(true);
+                PlotEnd -= handler;
+            };
+
+            PlotEnd += handler;
+            await tcs.Task;
+            if (item.FocusNode != null)
+            {
+                await camB.PlotFocusExit();
+            }
+
+            await Task.Delay(1000);
+        }
+    }
+
+    public void AddPlotQueue(string filename, GameObject target)
+    {
+        var item = new PlotQueueItem(filename, target);
+        PlotQueue.Enqueue(item);
+    }
+
+    public void Apq(string f){
+        AddPlotQueue(f,RoundManager.instance.canvas.GetNodeList()[31]);
+    }
 }
