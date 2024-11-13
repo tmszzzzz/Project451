@@ -28,6 +28,7 @@ public class CameraBehavior : MonoBehaviour
     private float realFieldOfView;
     [SerializeField] private float lerpSpeed = 1f;
     [SerializeField] private float decrementLerpSpeed = 0.6f;
+    [SerializeField] private GameObject PlotPtrPrefab;
 
     void HandleMovement()
     {
@@ -202,6 +203,8 @@ public class CameraBehavior : MonoBehaviour
             delta.y = 0;
             realPosition += delta;
         }
+
+        Instantiate(PlotPtrPrefab, target.transform.position, realRotation);
         
         
         await Task.Delay(1500);
