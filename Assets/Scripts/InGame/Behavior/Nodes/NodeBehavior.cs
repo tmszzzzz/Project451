@@ -101,38 +101,36 @@ public class NodeBehavior : BaseNodeBehavior
 
     public override void SetState(Properties.StateEnum stateEnum)
     {
-        if (properties.state == Properties.StateEnum.NORMAL && (stateEnum == Properties.StateEnum.AWAKENED || stateEnum == Properties.StateEnum.EXPOSED) && !hadAwakenedBefore)
+        if (properties.state == Properties.StateEnum.NORMAL &&
+            (stateEnum == Properties.StateEnum.AWAKENED || stateEnum == Properties.StateEnum.EXPOSED) &&
+            !hadAwakenedBefore)
         {
             GameProcessManager GMinstance = GameProcessManager.instance;
             GMinstance.NodeAwakend(this.gameObject);
-            
+
             plotAndPageHandler.OnAwakeShowButtons();
             hadAwakenedBefore = true;
         }
-        if (stateEnum == Properties.StateEnum.NORMAL && (properties.state == Properties.StateEnum.AWAKENED || properties.state == Properties.StateEnum.EXPOSED))
+
+        if (stateEnum == Properties.StateEnum.NORMAL && (properties.state == Properties.StateEnum.AWAKENED ||
+                                                         properties.state == Properties.StateEnum.EXPOSED))
         {
             plotAndPageHandler.OnFallHideButtons();
         }
-        if(properties.state != stateEnum)
+
+        switch (stateEnum)
         {
-            GameObject fx;
-            switch(stateEnum)
-            {
-                case Properties.StateEnum.NORMAL:
-                    fx = RoundManager.instance.DownFx;
-                    break;
-                case Properties.StateEnum.AWAKENED:
-                    fx = RoundManager.instance.ActiveFx;
-                    break;
-                case Properties.StateEnum.EXPOSED:
-                    fx = RoundManager.instance.ExposeFx;
-                    break;
-                default:
-                    fx = RoundManager.instance.DownFx;
-                    break;
-            }
-            Instantiate(fx, transform.position,Quaternion.identity);
+            case Properties.StateEnum.NORMAL:
+                if(properties.state != stateEnum) Instantiate(RoundManager.instance.DownFx,transform.position,Quaternion.identity);
+                break;
+            case Properties.StateEnum.AWAKENED:
+                if(properties.state != stateEnum) Instantiate(RoundManager.instance.ActiveFx,transform.position,Quaternion.identity);
+                break;
+            case Properties.StateEnum.EXPOSED:
+                Instantiate(RoundManager.instance.ExposeFx,transform.position,Quaternion.identity);
+                break;
         }
+
         properties.state = stateEnum;
     }
 

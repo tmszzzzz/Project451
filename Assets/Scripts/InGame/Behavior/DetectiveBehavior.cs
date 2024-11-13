@@ -15,6 +15,9 @@ public class DetectiveBehavior : MonoBehaviour
     public TaskCompletionSource<bool> Tcs2;
     [SerializeField] private GameObject DetectedFx;
     [SerializeField] private GameObject PointFx;
+    [SerializeField] private Transform LightconeCenter;
+    [SerializeField] private GameObject LightconePrefab;
+    [SerializeField] private List<GameObject> Lightcones;
     private void Start()
     {
         focusOnNodes = new List<GameObject>();
@@ -145,15 +148,15 @@ public class DetectiveBehavior : MonoBehaviour
     public async Task AddGlobalExposureValue()
     {
         await DetectedVis();
+        LightconeInvis();
         await AllVis();
-        //AllInvis();
-        foreach(var i in focusOnNodes)
-        {
-            if (RoundManager.instance.BookAllocationMap[i] != 0)
-            {
-                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
-            }
-        }
+        //foreach(var i in focusOnNodes)
+        //{
+        //    if (RoundManager.instance.BookAllocationMap[i] != 0)
+        //    {
+        //        GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
+        //    }
+        //}
     }
 
     public bool IsDetected(GameObject go)
@@ -171,6 +174,23 @@ public class DetectiveBehavior : MonoBehaviour
             {
                 skip = false;
                 Instantiate(DetectedFx,focusOnNodes[i].transform.position,Quaternion.Euler(0,0,0));
+                
+            }
+        }
+        if (!skip) await Task.Delay(1000);
+        for(int i =0;i<l;i++)
+        {
+            if (RoundManager.instance.BookAllocationMap[focusOnNodes[i]] != 0)
+            {
+                GameObject target = focusOnNodes[i];
+                Vector3 horizontalDirection = target.transform.position - LightconeCenter.transform.position;
+                horizontalDirection.y = 0;
+                horizontalDirection = horizontalDirection.normalized;
+                Vector3 pos = LightconeCenter.position + 1.5f * horizontalDirection;
+                Vector3 facing = target.transform.position - pos;
+                Lightcones.Add(Instantiate(LightconePrefab,pos,Quaternion.LookRotation(facing)));
+                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
+                await Task.Delay(250);
             }
         }
 
@@ -193,17 +213,14 @@ public class DetectiveBehavior : MonoBehaviour
         if (!skip) await Task.Delay(4000);
     }
 
-    public async Task AllInvis()
+    public async Task LightconeInvis()
     {
-        Tcs2 = new TaskCompletionSource<bool>();
-        int l = focusPointers.Count;
-        bool skip = true;
-        for(int i =0;i<l;i++)
+        await Task.Delay(2000);
+        foreach (var lightcone in Lightcones)
         {
-            skip = false;
-            focusPointers[i].GetComponent<Animator>().SetTrigger("Invis");
+            Destroy(lightcone);
+            await Task.Delay(250);
         }
-        
-        if(!skip) await Tcs2.Task;
+        Lightcones.Clear();
     }
 }

@@ -94,7 +94,7 @@ public class PanelController : MonoBehaviour
 
                 BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
                 InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
-                Debug.Log(InfluenceSlider.value);
+                //Debug.Log(InfluenceSlider.value);
             }
         }
 
@@ -102,10 +102,10 @@ public class PanelController : MonoBehaviour
 
     private void OnBookAllocationChange()
     {
-        Debug.Log(1);
+        //Debug.Log(1);
         if (currentNode != null)
         {
-            Debug.Log(2);
+            //Debug.Log(2);
             var node = currentNode.GetComponent<NodeBehavior>();
             Properties properties = node.properties;
             if (properties != null && NodeInfoPanel.activeSelf)

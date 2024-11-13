@@ -22,7 +22,7 @@ public class ConnectionBehavior : MonoBehaviour
         }
     }
 
-    protected virtual void UpdateLine()
+    public virtual void UpdateLine()
     {
         lineRenderer.positionCount = 2; // 连接线有两个点
         lineRenderer.SetPosition(0, startNode.transform.position); // 设置起始点
