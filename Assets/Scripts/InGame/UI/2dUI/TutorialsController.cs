@@ -24,6 +24,8 @@ public class TutorialsController : MonoBehaviour
     [SerializeField] private AnimationClip tutorialsPanelAppear;
     [SerializeField] private AnimationClip tutorialsPanelDisappear;
     [SerializeField] private GameObject tutorialsImage;
+    
+    
     void Update()
     {
         if (book.currentPage == page1 || book.currentPage == page1 + 1)

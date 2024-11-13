@@ -6,6 +6,7 @@ using Random = System.Random;
 
 public class PlotFuncManager : MonoBehaviour
 {
+    public ToggleBookButton Button;
     public static PlotFuncManager instance;
     private void Awake()
     {
@@ -45,6 +46,32 @@ public class PlotFuncManager : MonoBehaviour
     {
         GlobalVar.instance.AddGlobalExposureValue(50);
         MessageBar.instance.AddMessage($"你的暴露值大幅增长.");
+    }
+
+    public void openTaskFromDario()
+    {
+        QuestPanel.instance.AddQuest("Deal");
+    }
+
+    public void openSceneOfOffice()
+    {
+        QuestPanel.instance.AddQuest("Office");
+    }
+
+    public void openSceneOfPoliceStation()
+    {
+        QuestPanel.instance.AddQuest("Police");
+    }
+
+    public void openSceneOfFirehouse()
+    {
+        QuestPanel.instance.AddQuest("FireHouse");
+    }
+
+    public void openQuest0()
+    {
+        QuestPanel.instance.AddQuest("Zero");
+        Button.ToggleBook();   
     }
 
     public void gainTwoNewMembers()

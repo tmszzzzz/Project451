@@ -131,9 +131,10 @@ public class PlotDisplay : MonoBehaviour
 
     private float timeForLastPlotToBeRead = 0f;
     public float wordPerSecond = 10f;
+    public float additionalTimeForEachPara = 4f;
     public float CalculateReadingTime(string content)
     {
-        return content.Length/wordPerSecond + 1.5f;
+        return content.Length/wordPerSecond + additionalTimeForEachPara;
     }
 
     // 显示对侧对话
