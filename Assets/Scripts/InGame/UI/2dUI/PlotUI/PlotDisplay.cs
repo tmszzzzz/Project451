@@ -107,13 +107,12 @@ public class PlotDisplay : MonoBehaviour
     }
 
     private float timeForLastPlotToBeRead = 0f;
-    public float averageReadingSpeed = 600f;
+    public float wordPerSecond = 10f;
     public float CalculateReadingTime(string content)
     {
-        int characterCount = content.Length;
-        float readingTimeMinutes = characterCount / averageReadingSpeed;
-        float readingTimeSeconds = readingTimeMinutes * 60;
-        return readingTimeSeconds;
+        Debug.Log("Content length: " + content.Length);
+        Debug.Log("Word per second: " + wordPerSecond);
+        return content.Length/wordPerSecond;
     }
 
     // 显示对侧对话

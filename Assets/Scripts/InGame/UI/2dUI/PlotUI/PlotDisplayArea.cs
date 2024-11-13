@@ -106,6 +106,8 @@ public class PlotDisplayArea : MonoBehaviour
         return name;
     }
 
+    private GameObject currentPlottingPlot;
+
     public void PlotNewText(bool isSelf, string name, string context)
     {
         string presentedName = wrapUpNameWithRichText(name);
@@ -120,7 +122,7 @@ public class PlotDisplayArea : MonoBehaviour
         newPlotText.enableWordWrapping = true;
         newPlotText.overflowMode = TextOverflowModes.Overflow;
         newPlotText.alignment = TextAlignmentOptions.TopLeft;
-        newPlotText.text = presentedName + "\n" + context;
+        newPlotText.text = presentedName + "\n";
         newPlotText.alignment = TextAlignmentOptions.Left;
         newPlotText.fontSize = textFontSize;
         newPlotText.font = fontAsset;
@@ -138,12 +140,17 @@ public class PlotDisplayArea : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
 
-        MovePlotsUp(rectTransform.rect.height);
+        TextAppearOneByOne textAppearOneByOne = newPlotTextGameObject.AddComponent<TextAppearOneByOne>();
+        textAppearOneByOne.fullText = context;
+        textAppearOneByOne.typingSpeed = 0.1f;
 
-        Debug.Log("New plot text height: " + rectTransform.rect.height);
+        //MovePlotsUp(rectTransform.rect.height);
+
+        //tDebug.Log("New plot text height: " + rectTransform.rect.height);
 
         plots.Add(newPlotTextGameObject);
-        plotDisplayArea.anchoredPosition = new Vector2(plotDisplayArea.anchoredPosition.x, plotDisplayArea.anchoredPosition.y - rectTransform.rect.height);
+        MovePlotsUp(rectTransform.rect.height);
+        //plotDisplayArea.anchoredPosition = new Vector2(plotDisplayArea.anchoredPosition.x, plotDisplayArea.anchoredPosition.y - rectTransform.rect.height);
 
         //DestroyOverScreenPlots();
 
@@ -152,6 +159,9 @@ public class PlotDisplayArea : MonoBehaviour
 
     public float startYPositionOfDisplayedPlots = 10f;
     public float lerpScreenSpeed;
+
+
+
     void Update()
     {
         Vector2 targetPosition = new Vector2(plotDisplayArea.anchoredPosition.x, startYPositionOfDisplayedPlots);
