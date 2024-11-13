@@ -148,24 +148,24 @@ public class PlotDisplayArea : MonoBehaviour
 
         //tDebug.Log("New plot text height: " + rectTransform.rect.height);
 
-        plots.Add(newPlotTextGameObject);
+        //plots.Add(newPlotTextGameObject);
         MovePlotsUp(rectTransform.rect.height);
         //plotDisplayArea.anchoredPosition = new Vector2(plotDisplayArea.anchoredPosition.x, plotDisplayArea.anchoredPosition.y - rectTransform.rect.height);
 
         //DestroyOverScreenPlots();
 
         UpdateProfile(isSelf, name);
+
     }
 
     public float startYPositionOfDisplayedPlots = 10f;
     public float lerpScreenSpeed;
 
 
-
     void Update()
     {
-        Vector2 targetPosition = new Vector2(plotDisplayArea.anchoredPosition.x, startYPositionOfDisplayedPlots);
-        plotDisplayArea.anchoredPosition = Vector2.Lerp(plotDisplayArea.anchoredPosition, targetPosition, Time.deltaTime * lerpScreenSpeed);
+        // Vector2 targetPosition = new Vector2(plotDisplayArea.anchoredPosition.x, startYPositionOfDisplayedPlots);
+        // plotDisplayArea.anchoredPosition = Vector2.Lerp(plotDisplayArea.anchoredPosition, targetPosition, Time.deltaTime * lerpScreenSpeed);
     }
 
     // Update is called once per frame
