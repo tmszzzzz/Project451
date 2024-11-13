@@ -26,6 +26,6 @@ public class QuestOfDeal : QuestUnit
 
     public override bool CheckIfQuestIsFinished()
     {
-        
+        return false;
     }
 }
