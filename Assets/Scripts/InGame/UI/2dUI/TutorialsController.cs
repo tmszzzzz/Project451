@@ -54,10 +54,9 @@ public class TutorialsController : MonoBehaviour
         {
             button3.SetActive(false);
         }
-        if (book.currentPage == page4 || book.currentPage == page4 + 1)
+        if (canShowTutorial4 && (book.currentPage == page4 || book.currentPage == page4 + 1))
         {
-            if(canShowTutorial4)
-                button4.SetActive(true);
+            button4.SetActive(true);
         }
         else
         {

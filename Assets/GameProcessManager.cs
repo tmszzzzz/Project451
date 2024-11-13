@@ -23,10 +23,11 @@ public class GameProcessManager : MonoBehaviour
 
     [SerializeField] private TutorialsController _tutorialsController;
     // Start is called before the first frame update
+    [SerializeField] private bool noStartingPlot = false;
 
     private void Start()
     {
-        //PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
+        if(!noStartingPlot)PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
     }
 
     private void Awake()
