@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,11 @@ public class GameProcessManager : MonoBehaviour
     private bool everLearnedAboutKeepNodesDontFall = false;
     private bool everAwakeAllNodes = false;
     // Start is called before the first frame update
+
+    private void Start()
+    {
+        PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
+    }
 
     private void Awake()
     {
