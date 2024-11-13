@@ -25,9 +25,14 @@ public class QuestUnit : MonoBehaviour
     }
     
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         questDescriptionText.text = UpdateDescription();
         questTitleText.text = questTitle;
+        
+        if (CheckIfQuestIsFinished())
+        {
+            isQuestCompleted = true;
+        }
     }
 }
