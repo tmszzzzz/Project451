@@ -35,7 +35,7 @@ public class PlotFuncManager : MonoBehaviour
         System.Random random = new System.Random();
         if (l.Count != 0)
         {
-            int randomIndex = random.Next(l.Count);
+            int randomIndex = random.Next(bookL.Count);
             RoundManager.instance.canvas.AddNodeNumOfBooks(bookL[randomIndex],-1);
             MessageBar.instance.AddMessage($"{bookL[randomIndex].gameObject.name}损失了一本书.");
         }

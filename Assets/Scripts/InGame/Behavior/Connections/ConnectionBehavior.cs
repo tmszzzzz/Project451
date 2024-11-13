@@ -25,8 +25,8 @@ public class ConnectionBehavior : MonoBehaviour
     public virtual void UpdateLine()
     {
         lineRenderer.positionCount = 2; // 连接线有两个点
-        lineRenderer.SetPosition(0, startNode.transform.position); // 设置起始点
-        lineRenderer.SetPosition(1, endNode.transform.position);   // 设置结束点
+        lineRenderer.SetPosition(0, startNode.transform.position + new Vector3(0,0.5f,0)); // 设置起始点
+        lineRenderer.SetPosition(1, endNode.transform.position+new Vector3(0,0.5f,0));   // 设置结束点
     }
 
     public virtual GameObject GetTheOtherNodeIfExist(GameObject node)
