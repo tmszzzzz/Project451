@@ -85,15 +85,23 @@ public class PlotDisplay : MonoBehaviour
         //CreateContinueBUtton();
     }
 
+    void CreateEndButton()
+    {
+        Button endButton = CreateContinueButton("End");
+        endButton.onClick.AddListener(ClosePlots);
+        endButton.onClick.AddListener(PlotManager.instance.TriggerPlotEnd);
+    }
+    
     // 结束剧情时调用
     public void PushedEnd()
     {
         plotSelectionArea.GetComponent<PlotSelectionArea>().ClearCurrentButtons();
+        
+        UnityEngine.Events.UnityEvent newEvents = new UnityEngine.Events.UnityEvent();
+        newEvents.AddListener(CreateEndButton);
+        StartCoroutine(InvokeAfterDelay(newEvents, timeForLastPlotToBeRead));
 
-        Button endButton = CreateContinueButton("End");
-        endButton.onClick.AddListener(ClosePlots);
-        endButton.onClick.AddListener(PlotManager.instance.TriggerPlotEnd);
-        // ClosePlots();
+        //ClosePlots();
         // PlotManager.Instance.TriggerPlotEnd();
     }
 

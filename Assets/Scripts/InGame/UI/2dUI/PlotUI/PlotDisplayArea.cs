@@ -94,6 +94,15 @@ public class PlotDisplayArea : MonoBehaviour
     private GameObject currentPlottingPlot = null;
     private float currentPlottingHeight = 0;
 
+    private RectTransform ChangeThePositionOfNarratorToMiddle(RectTransform originalRect)
+    {
+        originalRect.anchorMin = new Vector2(0.5f, 0);
+        originalRect.anchorMax = new Vector2(0.5f, 0);
+        originalRect.pivot = new Vector2(0.5f, 0);
+        originalRect.anchoredPosition = new Vector2(0, 0);
+        return originalRect;
+    }
+    
     public void PlotNewText(bool isSelf, string name, string context)
     {
         string presentedName = WrapUpNameWithRichText(name);
@@ -119,8 +128,12 @@ public class PlotDisplayArea : MonoBehaviour
         rectTransform.anchorMin = isSelf ? new Vector2(0, 0) : new Vector2(1, 0f);
         rectTransform.anchorMax = isSelf ? new Vector2(0, 0f) : new Vector2(1, 0f);
         rectTransform.localScale = new Vector3(1, 1, 1);
-
         rectTransform.anchoredPosition = new Vector2(isSelf ? 10 : -10, 0);
+
+        if (name == "旁白")
+        {
+            rectTransform = ChangeThePositionOfNarratorToMiddle(rectTransform);
+        }
         
         // //别删除，需要这段强制更新一次layout使得contentSizeFitter生效
         Canvas.ForceUpdateCanvases();
