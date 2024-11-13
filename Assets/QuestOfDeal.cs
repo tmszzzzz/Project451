@@ -56,7 +56,7 @@ public class QuestOfDeal : QuestUnit
 
     public string winDealPlotPath;
     public string loseDealPlotPath;
-    void Update()
+    public override void Update()
     {
         base.Update();
 

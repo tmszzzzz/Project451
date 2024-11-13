@@ -25,7 +25,7 @@ public class QuestUnit : MonoBehaviour
     }
     
     // Update is called once per frame
-    public void Update()
+    public virtual void Update()
     {
         questDescriptionText.text = UpdateDescription();
         questTitleText.text = questTitle;
