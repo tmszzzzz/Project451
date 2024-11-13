@@ -14,13 +14,18 @@ public class BookController : MonoBehaviour
         newContentBookAlertImage.SetActive(true);
     }
 
-    public void disableAlarm()
+    public void Alarm()
+    {
+        newContentBookAlertImage.SetActive(true);
+    }
+
+    public void DisableAlarm()
     {
         newContentBookAlertImage.SetActive(false);
     }
 
     void Start()
     {
-        disableAlarm();
+        DisableAlarm();
     }
 }
