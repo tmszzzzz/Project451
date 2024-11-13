@@ -40,7 +40,7 @@ public class QuestOfFindAllKeyNodesInRegion : QuestUnit
     {
         foreach (NodeBehavior node in keyNodesInThisRegion)
         {
-            if (node.properties.state < Properties.StateEnum.NORMAL)
+            if (node.properties.state < Properties.StateEnum.AWAKENED)
             {
                 return false;
             }
@@ -54,7 +54,7 @@ public class QuestOfFindAllKeyNodesInRegion : QuestUnit
         int finished = 0;
         foreach (NodeBehavior node in keyNodesInThisRegion)
         {
-            if (node.properties.state >= Properties.StateEnum.NORMAL)
+            if (node.properties.state >= Properties.StateEnum.AWAKENED)
             {
                 finished++;
             }
