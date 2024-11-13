@@ -66,6 +66,10 @@ public class CursorManager : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            ResetCursorSelected();
+        }
     }
 
     private void CursorSelected(RaycastHit hit)
