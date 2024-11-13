@@ -69,7 +69,7 @@ public class Book : MonoBehaviour {
 
     public void SubstitutueAPageInTheMiddle(Sprite newPage, int num)
     {
-        bookPages[num] = newPage;
+        bookPages[num-1] = newPage;
     }
 
     public void addOnePageToEndOfBook(Sprite newPage)
