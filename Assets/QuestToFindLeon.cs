@@ -14,11 +14,11 @@ public class QuestToFindLeon : QuestUnit
 
     public override bool CheckIfQuestIsFinished()
     {
-        return LNode.properties.state >= Properties.StateEnum.NORMAL ? true : false;
+        return LNode.properties.state >= Properties.StateEnum.AWAKENED ? true : false;
     }
 
     public override string UpdateDescription()
     {
-        return "找到（"+ (LNode.properties.state >= Properties.StateEnum.NORMAL ? 1 : 0) +"/1）名关键人物";
+        return "找到（"+ (LNode.properties.state >= Properties.StateEnum.AWAKENED ? 1 : 0) +"/1）名关键人物";
     }
 }

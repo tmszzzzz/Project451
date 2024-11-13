@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestOfDeal : QuestUnit
 {
-    private List<NodeBehavior> keyNodesInPoliceStation;
+    private List<NodeBehavior> keyNodesInPoliceStation = new List<NodeBehavior>();
 
     private int startTurn;
     [SerializeField] private int turnsForCompletion = 30;
