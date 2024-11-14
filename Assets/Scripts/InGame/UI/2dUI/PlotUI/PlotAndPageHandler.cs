@@ -28,7 +28,7 @@ public class PlotAndPageHandler : MonoBehaviour
         float targetPageScale = isPaging ? targetScale : 0f;
         float lerpSpeed = 5f;
 
-        plotButton.transform.localScale = Vector3.Lerp(plotButton.transform.localScale, new Vector3(targetPlotScale, targetPlotScale, targetPlotScale), Time.deltaTime * lerpSpeed);
+        //plotButton.transform.localScale = Vector3.Lerp(plotButton.transform.localScale, new Vector3(targetPlotScale, targetPlotScale, targetPlotScale), Time.deltaTime * lerpSpeed);
         pageButton.transform.localScale = Vector3.Lerp(pageButton.transform.localScale, new Vector3(targetPageScale, targetPageScale, targetPageScale), Time.deltaTime * lerpSpeed);
     }
 

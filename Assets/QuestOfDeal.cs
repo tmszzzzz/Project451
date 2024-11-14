@@ -40,7 +40,7 @@ public class QuestOfDeal : QuestUnit
     {
         foreach (NodeBehavior node in keyNodesInPoliceStation)
         {
-            if (node.properties.state < Properties.StateEnum.NORMAL)
+            if (node.properties.state < Properties.StateEnum.AWAKENED)
             {
                 return false;
             }
