@@ -12,7 +12,7 @@ public class NodeBehavior : BaseNodeBehavior
     public MessageBar mb;
     [SerializeField] protected Image objColor;
     protected Dictionary<int, Color> ColorMap;
-    [SerializeField] protected bool hadAwakenedBefore = false;
+    public bool hadAwakenedBefore = false;
 
     public string description = "";
     public string plotFileName = "";

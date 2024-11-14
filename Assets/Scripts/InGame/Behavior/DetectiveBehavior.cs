@@ -6,8 +6,8 @@ using UnityEngine;
 
 public class DetectiveBehavior : MonoBehaviour
 {
-    [SerializeField] List<GameObject> focusOnNodes;
-    [SerializeField] List<GameObject> focusPointers;
+    [SerializeField]public List<GameObject> focusOnNodes;
+    [SerializeField]public List<GameObject> focusPointers;
     public GameObject pointerPrefab;
     public CanvasBehavior canvas;
     [SerializeField] private List<int> stayRounds;
@@ -24,14 +24,14 @@ public class DetectiveBehavior : MonoBehaviour
         focusPointers = new List<GameObject>();
         stayRounds = new List<int>();
 
-        List<GameObject> nodeList = canvas.GetNodeList();
-        for (int i = 0; i < Mathf.Min(GlobalVar.instance.numOfDetectiveOnStart,nodeList.Count);i++) { 
-            
-            int j = Random.Range(0, nodeList.Count);
-            focusOnNodes.Add(nodeList[j]);
-            focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position, Quaternion.Euler(0, 0, 0)));
-            stayRounds.Add(0);
-        }
+        //List<GameObject> nodeList = canvas.GetNodeList();
+        //for (int i = 0; i < Mathf.Min(GlobalVar.instance.numOfDetectiveOnStart,nodeList.Count);i++) { 
+        //    
+        //    int j = Random.Range(0, nodeList.Count);
+        //    focusOnNodes.Add(nodeList[j]);
+        //    focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position, Quaternion.Euler(0, 0, 0)));
+        //    stayRounds.Add(0);
+        //}
         canvas.RefreshAllConnections();
     }
 

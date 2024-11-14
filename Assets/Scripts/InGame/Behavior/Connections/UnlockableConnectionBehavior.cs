@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class UnlockableConnectionBehavior : ConnectionBehavior
 {
-    private bool available = false;
-    private int unlockState = 0;
+    public bool available = false;
+    public int unlockState = 0;
 
     void Awake()
     {
