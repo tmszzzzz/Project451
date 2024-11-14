@@ -10,7 +10,7 @@ public class GlobalVar : MonoBehaviour
     public static GlobalVar instance;
     //此处存放各类全局需要用到的常量或变量，视游戏进程可以做一定的修改。
     //请注意为了简便，此处的值由成员变量初始化得到，这将导致在此脚本内修改这些参数无效，需要在inspector内修改。
-    public int globalExposureValue = 0;
+    
 
     public void AddGlobalExposureValue(int v)
     {
@@ -20,7 +20,9 @@ public class GlobalVar : MonoBehaviour
     {
         globalExposureValue = Math.Max(globalExposureValue - v, 0);
     }
-
+    
+    public int globalExposureValue = 0;
+    public int roundNum = 1;
     public int maxGlobalExposureValue = 100;
     public int exposureValueAdditionOfExposedNode = 10;
     public int exposureValueAdditionOfDetective = 2;
@@ -32,17 +34,27 @@ public class GlobalVar : MonoBehaviour
     public int numOfMaximumBookDeliverRange = 2;
     public int numOfDetectiveOnStart = 4;
     public float probabilityOfNodesInspectingDetective = 0.1f;
-    
-    public Dictionary<string, float> increasementOfSkillsPerTime = new Dictionary<string, float>();
-
     public int resourcePoint = 0;
+    public int resourcePointPerInfoIncrement = 3;
+    public float infoIncreaseBy = 0.01f;
+    public int resourcePointPerDistanceIncrement = 3;
+    public int distanceIncreaseBy = 1;
+    public int resourcePointPerAllocationLimitIncrement = 3;
+    public int allocationLimitIncreaseBy = 1;
+    public int exposureValuePerResource = 30;
+    public bool everReachedPoliceStation = false;
+    public bool everReachedFirehouse = false;
+    public bool everLearnedAboutDetectiveAndInfo = false;
+    public bool everLearnedAboutKeepNodesDontFall = false;
+    public bool everAwakeAllNodes = false;
+    public bool noStartingPlot = false;
+    public List<int> nodesAwakendOnce = new List<int>();
+    public bool skipCameraOverview = true;
+    
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;
     }
-    
-    public int resourcePointPerInfoIncrement = 3;
-    public float infoIncreaseBy = 0.01f;
     [SerializeField] private int infoResourcePoint = 0;
     public void InfoResourcePointIncrement(int v)
     {
@@ -61,8 +73,6 @@ public class GlobalVar : MonoBehaviour
         }
     }
     
-    public int resourcePointPerDistanceIncrement = 3;
-    public int distanceIncreaseBy = 1;
     [SerializeField] private int distanceResourcePoint = 0;
     public void DistanceResourcePointIncrement(int v)
     {
@@ -80,8 +90,6 @@ public class GlobalVar : MonoBehaviour
             numOfMaximumBookDeliverRange+=distanceIncreaseBy;
         }
     }
-    public int resourcePointPerAllocationLimitIncrement = 3;
-    public int allocationLimitIncreaseBy = 1;
     [SerializeField] private int allocationLimitResourcePoint = 0;
 
     public void AllocationLimitResourcePointIncrement(int v)
@@ -100,8 +108,6 @@ public class GlobalVar : MonoBehaviour
             allocationLimit += allocationLimitIncreaseBy;
         }
     }
-
-    public int exposureValuePerResource = 30;
 
     public void DecreaseExposureValueByResource()
     {

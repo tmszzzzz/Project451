@@ -8,6 +8,6 @@ public class RoundTextDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = $"第{RoundManager.instance.roundNum}天";
+        gameObject.GetComponent<TextMeshProUGUI>().text = $"第{GlobalVar.instance.roundNum}天";
     }
 }
