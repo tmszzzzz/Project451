@@ -137,6 +137,45 @@ public class SavesLoadManager : MonoBehaviour
             focusOnNodes = nodes;
         }
     }
+    
+    public class SerializableQuests
+    {
+        public bool q1;
+        public bool q2;
+        public bool q3;
+        public bool q4;
+        public bool q5;
+
+        public SerializableQuests(QuestPanel questPanel)
+        {
+            q1 = false;
+            q2 = false;
+            q3 = false;
+            q4 = false;
+            q5 = false;
+            foreach (int i in questPanel.questIds)
+            {
+                switch (i)
+                {
+                    case 0:
+                        q1 = true;
+                        break;
+                    case 1:
+                        q2 = true;
+                        break;
+                    case 2:
+                        q3 = true;
+                        break;
+                    case 3:
+                        q4 = true;
+                        break;
+                    case 4:
+                        q5 = true;
+                        break;
+                }
+            }
+        }
+    }
 
 
     [System.Serializable]
@@ -146,8 +185,9 @@ public class SavesLoadManager : MonoBehaviour
         public List<SerializableNodeBehavior> nodeBehaviors;
         public List<SerializableConnectionBehavior> connectionBehaviors;
         public SerializableDetectiveBehavior detectiveBehavior;
+        public SerializableQuests quests;
 
-        public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective)
+        public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective,QuestPanel quest)
         {
             this.globalVar = new SerializableGlobalVar(globalVar);
             var sNodeL = new List<SerializableNodeBehavior>();
@@ -167,13 +207,14 @@ public class SavesLoadManager : MonoBehaviour
 
             connectionBehaviors = sConL;
             detectiveBehavior = new SerializableDetectiveBehavior(detective);
+            quests = new SerializableQuests(quest);
         }
     }
 
     public void SerializeAll()
     {
         // 使用包装类创建一个可序列化的对象
-        SerializableAll serializableData = new SerializableAll(GlobalVar.instance, canvas, detective);
+        SerializableAll serializableData = new SerializableAll(GlobalVar.instance, canvas, detective,QuestPanel.instance);
 
         // 使用 JsonUtility 序列化为 JSON 字符串
         string json = JsonUtility.ToJson(serializableData);
@@ -272,6 +313,14 @@ public class SavesLoadManager : MonoBehaviour
                 detective.focusPointers.Add(Instantiate(detective.pointerPrefab, nodeL[i].transform.position,
                     Quaternion.Euler(0, 0, 0)));
             }
+
+            SerializableQuests serializableQuests = deserializedData.quests;
+            string[] strs = new[] { "Zero", "Office","PoliceStation","FireHouse","Deal" };
+            if(serializableQuests.q1) QuestPanel.instance.AddQuest(strs[0]);
+            if(serializableQuests.q2) QuestPanel.instance.AddQuest(strs[1]);
+            if(serializableQuests.q3) QuestPanel.instance.AddQuest(strs[2]);
+            if(serializableQuests.q4) QuestPanel.instance.AddQuest(strs[3]);
+            if(serializableQuests.q5) QuestPanel.instance.AddQuest(strs[4]);
         }
     }
 

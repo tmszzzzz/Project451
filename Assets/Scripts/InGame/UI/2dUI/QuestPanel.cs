@@ -6,6 +6,7 @@ using UnityEngine;
 public class QuestPanel : MonoBehaviour
 {
     public List<GameObject> questsList = new List<GameObject>();
+    public List<int> questIds = new List<int>();
     
     [SerializeField] private GameObject quest0Prefab;
     [SerializeField] private GameObject questOfficePrefab;
@@ -20,6 +21,7 @@ public class QuestPanel : MonoBehaviour
     [SerializeField] private RectTransform initTransform;
 
     public static QuestPanel instance;
+
     
     private void Awake()
     {
@@ -37,28 +39,36 @@ public class QuestPanel : MonoBehaviour
     public void AddQuest(string questType)
     {
         GameObject newQuest = null;
+        int i = 0;
         switch (questType)
         {
             case "Zero":
                 newQuest = Instantiate(quest0Prefab, initTransform);
+                i = 0;
                 break;
             case "Office":
                 newQuest = Instantiate(questOfficePrefab, initTransform);
+                i = 1;
                 break;
             case "PoliceStation":
                 newQuest = Instantiate(questPoliceStationPrefab, initTransform);
+                i = 2;
                 break;
             case "FireHouse":
                 newQuest = Instantiate(questFireHousePrefab, initTransform);
+                i = 3;
                 break;
             case "Deal":
                 newQuest = Instantiate(questDealPrefab, initTransform);
+                i = 4;
                 break;
             default:
                 newQuest = Instantiate(quest0Prefab, initTransform);
+                i = 0;
                 break;
         }
         questsList.Add(newQuest);
+        questIds.Add(i);
     }
 
     void RemoveAQuest(GameObject quest)
