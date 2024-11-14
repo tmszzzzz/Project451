@@ -10,7 +10,6 @@ public class GameProcessManager : MonoBehaviour
 
     //public List<int> nodesAwakendOnce = new List<int>();
     private RoundManager roundManager;
-    private GlobalVar globalVar;
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
     [SerializeField] float initialProbabilityOfInfo = 0.4f;
@@ -47,7 +46,6 @@ public class GameProcessManager : MonoBehaviour
         instance = this;
 
         roundManager = RoundManager.instance;
-        globalVar = GlobalVar.instance;
 
         // 选择保留这个对象，使其在场景切换时不会被销毁
         DontDestroyOnLoad(gameObject);
@@ -63,12 +61,12 @@ public class GameProcessManager : MonoBehaviour
 
     void FirstReachFireHouse()
     {
-        globalVar.numOfBibliophileGiveBooks = 4;
+        GlobalVar.instance.numOfBibliophileGiveBooks = 4;
     }
 
     void FirstReachPoliceStation()
     {
-        globalVar.numOfBibliophileGiveBooks = 2;
+        GlobalVar.instance.numOfBibliophileGiveBooks = 2;
     }
 
     [SerializeField] private Sprite page1;
@@ -87,45 +85,45 @@ public class GameProcessManager : MonoBehaviour
         detectiveBehavior.AddDetectivesInRegion(0, 4);
         detectiveBehavior.AddDetectivesInRegion(1, 7);
         detectiveBehavior.AddDetectivesInRegion(2, 11);
-        globalVar.probabilityOfNodesInspectingDetective = initialProbabilityOfInfo;
-        globalVar.everLearnedAboutDetectiveAndInfo = true;
+        GlobalVar.instance.probabilityOfNodesInspectingDetective = initialProbabilityOfInfo;
+        GlobalVar.instance.everLearnedAboutDetectiveAndInfo = true;
     }
 
     public void NodeAwakend(GameObject thisnode)
     {
         int id = int.Parse(thisnode.name.Substring(5));
-        if (!globalVar.nodesAwakendOnce.Contains(id))
+        if (!GlobalVar.instance.nodesAwakendOnce.Contains(id))
         {
-            globalVar.nodesAwakendOnce.Add(id);
+            GlobalVar.instance.nodesAwakendOnce.Add(id);
         }
         else return;
 
-        if (!globalVar.everReachedFirehouse && thisnode.GetComponent<NodeBehavior>().properties.region == 2)
+        if (!GlobalVar.instance.everReachedFirehouse && thisnode.GetComponent<NodeBehavior>().properties.region == 2)
         {
-            globalVar.everReachedFirehouse = true;
+            GlobalVar.instance.everReachedFirehouse = true;
             FirstReachFireHouse();
         }
 
-        if (!globalVar.everReachedPoliceStation && thisnode.GetComponent<NodeBehavior>().properties.region == 1)
+        if (!GlobalVar.instance.everReachedPoliceStation && thisnode.GetComponent<NodeBehavior>().properties.region == 1)
         {
-            globalVar.everReachedPoliceStation = true;
+            GlobalVar.instance.everReachedPoliceStation = true;
             FirstReachPoliceStation();
         }
 
-        if (globalVar.nodesAwakendOnce.Count >= 12  && !globalVar.everLearnedAboutDetectiveAndInfo)
+        if (GlobalVar.instance.nodesAwakendOnce.Count >= 12  && !GlobalVar.instance.everLearnedAboutDetectiveAndInfo)
         {
             PresentDetectiveAndInofSystem();
         }
         
 
-        if (!globalVar.everLearnedAboutKeepNodesDontFall && thisnode.GetComponent<NodeBehavior>().properties.fallThreshold != 0)
+        if (!GlobalVar.instance.everLearnedAboutKeepNodesDontFall && thisnode.GetComponent<NodeBehavior>().properties.fallThreshold != 0)
         {
-            globalVar.everLearnedAboutKeepNodesDontFall = true;
+            GlobalVar.instance.everLearnedAboutKeepNodesDontFall = true;
         }
 
-        if (!globalVar.everAwakeAllNodes && globalVar.nodesAwakendOnce.Count == canvasBehavior.GetNodeList().Count)
+        if (!GlobalVar.instance.everAwakeAllNodes && GlobalVar.instance.nodesAwakendOnce.Count == canvasBehavior.GetNodeList().Count)
         {
-            globalVar.everAwakeAllNodes = true;
+            GlobalVar.instance.everAwakeAllNodes = true;
         }
     }
 }

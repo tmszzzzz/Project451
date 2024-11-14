@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlotAndPageHandler : MonoBehaviour
 {
-    bool isPaging = false;
+    public bool isPaging = false;
     [SerializeField] private GameObject pageButton;
     [SerializeField] private GameObject thisNode;
     [SerializeField] private float targetScale = 1.5f;
@@ -20,7 +20,8 @@ public class PlotAndPageHandler : MonoBehaviour
     {
         float targetPageScale = isPaging ? targetScale : 0f;
         float lerpSpeed = 5f;
-        
+
+        //plotButton.transform.localScale = Vector3.Lerp(plotButton.transform.localScale, new Vector3(targetPlotScale, targetPlotScale, targetPlotScale), Time.deltaTime * lerpSpeed);
         pageButton.transform.localScale = Vector3.Lerp(pageButton.transform.localScale, new Vector3(targetPageScale, targetPageScale, targetPageScale), Time.deltaTime * lerpSpeed);
     }
 
@@ -35,6 +36,7 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void OnFallHideButtons()
     {
+
         if (pageSprite != null)
         {
             pageButton.SetActive(false);
@@ -44,7 +46,7 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void Plot()
     {
-        Debug.Log("Don't call this function");
+        
     }
 
     public void Page()
