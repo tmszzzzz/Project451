@@ -9,12 +9,10 @@ public class PlotAndPageHandler : MonoBehaviour
     [SerializeField] private GameObject pageButton;
     [SerializeField] private GameObject thisNode;
     [SerializeField] private float targetScale = 1.5f;
-    private string plotFilename;
     private Sprite pageSprite;
     void Start()
     {
         pageButton.SetActive(false);
-        plotFilename = thisNode.GetComponent<NodeBehavior>().plotFileName;
         pageSprite = thisNode.GetComponent<NodeBehavior>().pageSprite;
     }
     // Update is called once per frame
