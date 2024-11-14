@@ -155,16 +155,21 @@ public class PlotDisplayArea : MonoBehaviour
     void UpdateHeightOfAlreadyFinishedPlots()
     {
         if (currentPlottingPlot == null) return;
+
+        RectTransform rectTransform = currentPlottingPlot.GetComponent<RectTransform>();
         
-        if (currentPlottingHeight != currentPlottingPlot.GetComponent<RectTransform>().sizeDelta.y)
+        if (currentPlottingHeight != rectTransform.sizeDelta.y)
         {
-            MovePlotsUp(currentPlottingPlot.GetComponent<RectTransform>().sizeDelta.y - currentPlottingHeight);
-            currentPlottingHeight = currentPlottingPlot.GetComponent<RectTransform>().sizeDelta.y;
+            MovePlotsUp(rectTransform.sizeDelta.y - currentPlottingHeight);
+            currentPlottingHeight = rectTransform.sizeDelta.y;
         }
     }
 
     public void CurrentPlottingPlotFinished()
     {
+        RectTransform rectTransform = currentPlottingPlot.GetComponent<RectTransform>();
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        UpdateHeightOfAlreadyFinishedPlots();
         adreadyFinishedPlots.Add(currentPlottingPlot);
         currentPlottingPlot = null;
     }

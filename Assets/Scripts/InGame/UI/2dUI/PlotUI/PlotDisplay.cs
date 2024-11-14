@@ -129,7 +129,7 @@ public class PlotDisplay : MonoBehaviour
         return continueButton;
     }
 
-    private float timeForLastPlotToBeRead = 0f;
+    private float timeForLastPlotToBeRead = 1f;
     public float wordPerSecond = 10f;
     public float additionalTimeForEachPara = 4f;
     public float CalculateReadingTime(string content)
@@ -231,11 +231,39 @@ public class PlotDisplay : MonoBehaviour
         PlotManager.instance.TriggerUserAction(true, choiceIndex);
         // selectionContainer.gameObject.SetActive(false); // 隐藏选择项
         // PlotManager.Instance.TriggerUserAction(true, choiceIndex); // 通知 PlotManager 选择了某项
+        
     }
 
+    public float minWaitTimeAfterEnterIsKeyed = 1f;
+
+    public bool isSkipping = false;
+    
+    private bool IsSkippingThis()
+    {
+        return Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0);
+    }
+    
     private System.Collections.IEnumerator InvokeAfterDelay(UnityEngine.Events.UnityEvent action, float delay)
     {
-        yield return new WaitForSeconds(delay);
+        // Debug.Log(delay);
+        // yield return new WaitForSeconds(delay);
+        isSkipping = false;
+        float countDownTime = delay + 0.5f;
+        
+        while (countDownTime > 0)
+        {
+            isSkipping |= IsSkippingThis();
+            
+            if ((isSkipping)&& (countDownTime > minWaitTimeAfterEnterIsKeyed))
+            {
+                countDownTime = minWaitTimeAfterEnterIsKeyed;
+            }
+            countDownTime -= Time.deltaTime;
+            yield return null;
+        }
+        
         action.Invoke();
+
+        yield break;
     }
 }
