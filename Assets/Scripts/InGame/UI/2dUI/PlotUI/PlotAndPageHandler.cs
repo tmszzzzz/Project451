@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PlotAndPageHandler : MonoBehaviour
 {
     public bool isPaging = false;
-    [SerializeField] private GameObject plotButton;
     [SerializeField] private GameObject pageButton;
     [SerializeField] private GameObject thisNode;
     [SerializeField] private float targetScale = 1.5f;
@@ -14,7 +13,6 @@ public class PlotAndPageHandler : MonoBehaviour
     private Sprite pageSprite;
     void Start()
     {
-        plotButton.SetActive(false);
         pageButton.SetActive(false);
         plotFilename = thisNode.GetComponent<NodeBehavior>().plotFileName;
         pageSprite = thisNode.GetComponent<NodeBehavior>().pageSprite;
@@ -31,12 +29,6 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void OnAwakeShowButtons()
     {
-        if (plotFilename != "null")
-        {
-            Debug.Log("Node" + " is plotting " + plotFilename);
-            plotButton.SetActive(true);
-        }
-
         if (pageSprite != null)
         {
             pageButton.SetActive(true);
