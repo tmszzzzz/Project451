@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 public class PanelController : MonoBehaviour
 {
+    public static PanelController instance;
     public GameObject NodeInfoPanel;
     private Camera mainCamera;
     public GameObject currentNode; // 当前选中的物体
@@ -29,7 +30,12 @@ public class PanelController : MonoBehaviour
     {
         NodeInfoPanel.SetActive(false);
         mainCamera = Camera.main;
-        
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
     }
 
     void Start()

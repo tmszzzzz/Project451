@@ -240,6 +240,7 @@ public class RoundManager : MonoBehaviour
 
     public async void NextRound()
     {
+        PanelController.instance.DisableNodeInfoPanel();
         OperationForbidden();//屏蔽所有操作
         forbidden.SetActive(true);
         
