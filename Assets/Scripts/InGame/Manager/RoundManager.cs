@@ -14,7 +14,6 @@ public class RoundManager : MonoBehaviour
     public GameObject selectedPointerPrefab;
     private GameObject _currentSelectedPointer;
     public MessageBar messageBar;
-    public int roundNum = 1;
     public int allocated = 0;
     public int held = 0;
     public CanvasBehavior canvas;
@@ -236,7 +235,7 @@ public class RoundManager : MonoBehaviour
         return v;
     }
 
-    public bool skipCameraOverview = true;
+    //public bool skipCameraOverview = true;
 
     public async void NextRound()
     {
@@ -246,7 +245,7 @@ public class RoundManager : MonoBehaviour
         
         //这一段代码精确地控制了一些逻辑的触发顺序，可调整
         RoundChange?.Invoke();
-        bool skipCameraOverviewTemp = skipCameraOverview;
+        bool skipCameraOverviewTemp = GlobalVar.instance.skipCameraOverview;
         if (!skipCameraOverviewTemp)
             await mainCamera.OverviewEnter();
 
@@ -286,7 +285,7 @@ public class RoundManager : MonoBehaviour
          //由于更新状态时已经考虑了预分配的书，所以这里先更新后分配书。这里的分配书实际上没有逻辑上的影响。
 
 
-        roundNum++;//更新回合数
+        GlobalVar.instance.roundNum++;//更新回合数
 
 
         for (int i = 0; i < keys.Count; i++)
@@ -300,7 +299,7 @@ public class RoundManager : MonoBehaviour
         BookAllocationItems.Clear();//清除预分配数据
 
 
-        messageBar.AddMessage($"第{roundNum-1}天过去了.");//消息提示
+        messageBar.AddMessage($"第{GlobalVar.instance.roundNum-1}天过去了.");//消息提示
 
 
         await Task.Delay(1000);

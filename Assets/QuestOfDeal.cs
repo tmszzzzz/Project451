@@ -20,13 +20,13 @@ public class QuestOfDeal : QuestUnit
             }
         }
 
-        startTurn = RoundManager.instance.roundNum;
+        startTurn = GlobalVar.instance.roundNum;
     }
 
 
     public override bool CheckIfQuestIsFinished()
     {
-        if (RoundManager.instance.roundNum - startTurn <= turnsForCompletion)
+        if (GlobalVar.instance.roundNum - startTurn <= turnsForCompletion)
         {
             return false;
         }
@@ -51,7 +51,7 @@ public class QuestOfDeal : QuestUnit
 
     public override string UpdateDescription()
     {
-        return "赌约还剩" + (turnsForCompletion - RoundManager.instance.roundNum + startTurn) + "天";
+        return "赌约还剩" + (turnsForCompletion - GlobalVar.instance.roundNum + startTurn) + "天";
     }
 
     public string winDealPlotPath;

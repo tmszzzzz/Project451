@@ -8,26 +8,30 @@ public class GameProcessManager : MonoBehaviour
 {
     public static GameProcessManager instance;  // 单例实例
 
-    public List<GameObject> nodesAwakendOnce = new List<GameObject>();
+    //public List<int> nodesAwakendOnce = new List<int>();
     private RoundManager roundManager;
     private GlobalVar globalVar;
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
     [SerializeField] float initialProbabilityOfInfo = 0.4f;
     [SerializeField] GameObject probabilityOfInfoPanel;
-    private bool everReachedPoliceStation = false;
-    private bool everReachedFirehouse = false;
-    private bool everLearnedAboutDetectiveAndInfo = false;
-    private bool everLearnedAboutKeepNodesDontFall = false;
-    private bool everAwakeAllNodes = false;
+    //private bool everReachedPoliceStation = false;
+    //private bool everReachedFirehouse = false;
+    //private bool everLearnedAboutDetectiveAndInfo = false;
+    //private bool everLearnedAboutKeepNodesDontFall = false;
+    //private bool everAwakeAllNodes = false;
 
     [SerializeField] private TutorialsController _tutorialsController;
     // Start is called before the first frame update
-    [SerializeField] private bool noStartingPlot = false;
+    
 
     private void Start()
     {
-        if(!noStartingPlot)PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
+        if (!GlobalVar.instance.noStartingPlot)
+        {
+            PlotManager.instance.StartPlot("Assets/Resources/Plots/scene0.txt");
+            GlobalVar.instance.noStartingPlot = true;
+        }
     }
 
     private void Awake()
@@ -72,7 +76,7 @@ public class GameProcessManager : MonoBehaviour
     [SerializeField] private BookController _bookController;
     void PresentDetectiveAndInofSystem()
     {
-        RoundManager.instance.skipCameraOverview = false;   // 重新开启摄像机视角
+        GlobalVar.instance.skipCameraOverview = false;   // 重新开启摄像机视角
         
         _tutorialsController.canShowTutorial4 = true;
         _bookController.subsititute(page1, 11);
@@ -84,43 +88,44 @@ public class GameProcessManager : MonoBehaviour
         detectiveBehavior.AddDetectivesInRegion(1, 7);
         detectiveBehavior.AddDetectivesInRegion(2, 11);
         globalVar.probabilityOfNodesInspectingDetective = initialProbabilityOfInfo;
-        everLearnedAboutDetectiveAndInfo = true;
+        globalVar.everLearnedAboutDetectiveAndInfo = true;
     }
 
     public void NodeAwakend(GameObject thisnode)
     {
-        if (!nodesAwakendOnce.Contains(thisnode))
+        int id = int.Parse(thisnode.name.Substring(5));
+        if (!globalVar.nodesAwakendOnce.Contains(id))
         {
-            nodesAwakendOnce.Add(thisnode);
+            globalVar.nodesAwakendOnce.Add(id);
         }
         else return;
 
-        if (!everReachedFirehouse && thisnode.GetComponent<NodeBehavior>().properties.region == 2)
+        if (!globalVar.everReachedFirehouse && thisnode.GetComponent<NodeBehavior>().properties.region == 2)
         {
-            everReachedFirehouse = true;
+            globalVar.everReachedFirehouse = true;
             FirstReachFireHouse();
         }
 
-        if (!everReachedPoliceStation && thisnode.GetComponent<NodeBehavior>().properties.region == 1)
+        if (!globalVar.everReachedPoliceStation && thisnode.GetComponent<NodeBehavior>().properties.region == 1)
         {
-            everReachedPoliceStation = true;
+            globalVar.everReachedPoliceStation = true;
             FirstReachPoliceStation();
         }
 
-        if (nodesAwakendOnce.Count >= 12  && !everLearnedAboutDetectiveAndInfo)
+        if (globalVar.nodesAwakendOnce.Count >= 12  && !globalVar.everLearnedAboutDetectiveAndInfo)
         {
             PresentDetectiveAndInofSystem();
         }
         
 
-        if (!everLearnedAboutKeepNodesDontFall && thisnode.GetComponent<NodeBehavior>().properties.fallThreshold != 0)
+        if (!globalVar.everLearnedAboutKeepNodesDontFall && thisnode.GetComponent<NodeBehavior>().properties.fallThreshold != 0)
         {
-            everLearnedAboutKeepNodesDontFall = true;
+            globalVar.everLearnedAboutKeepNodesDontFall = true;
         }
 
-        if (!everAwakeAllNodes && nodesAwakendOnce.Count == canvasBehavior.GetNodeList().Count)
+        if (!globalVar.everAwakeAllNodes && globalVar.nodesAwakendOnce.Count == canvasBehavior.GetNodeList().Count)
         {
-            everAwakeAllNodes = true;
+            globalVar.everAwakeAllNodes = true;
         }
     }
 }
