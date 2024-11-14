@@ -49,14 +49,14 @@ public class PanelController : MonoBehaviour
         NodeBehavior node = hoveredObject.GetComponent<NodeBehavior>();
         if (node != null)
         {
-            EnableNodeInfoPanel();
+            EnableNodeInfoPanel(node);
         }
         else
         {
             DisableNodeInfoPanel();
         }
     }
-    public void EnableNodeInfoPanel()
+    public void EnableNodeInfoPanel(NodeBehavior node)
     {   
         if (NodeInfoPanel == null)
         {
@@ -65,7 +65,23 @@ public class PanelController : MonoBehaviour
         }
 
         NodeInfoPanel.SetActive(true);
-        currentNode = null;
+        currentNode = node.gameObject;
+        Properties properties = node.properties;
+        if (properties != null && NodeInfoPanel.activeSelf)
+        {
+            nameText.text = currentNode.name;
+            stateText.text = properties.stateNameToCNString(properties.state);
+            identityText.text = properties.typeNameToCNString(properties.type);
+            awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
+            exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
+            numOfBooksText.text = "持有书籍: " + properties.numOfBooks + "/" + properties.maximumNumOfBooks;
+            influenceText.text = "当前受影响: " + node.NowState().influence;
+            fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
+
+            BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
+            InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
+            //Debug.Log(InfluenceSlider.value);
+        }
     }
     public void DisableNodeInfoPanel()
     {
