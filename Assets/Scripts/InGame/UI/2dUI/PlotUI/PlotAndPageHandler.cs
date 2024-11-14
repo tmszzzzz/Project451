@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class PlotAndPageHandler : MonoBehaviour
 {
-    bool isPlotting = false;
-    
     public bool isPaging = false;
     [SerializeField] private GameObject plotButton;
     [SerializeField] private GameObject pageButton;
@@ -24,7 +22,6 @@ public class PlotAndPageHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float targetPlotScale = isPlotting ? targetScale : 0f;
         float targetPageScale = isPaging ? targetScale : 0f;
         float lerpSpeed = 5f;
 
@@ -38,7 +35,6 @@ public class PlotAndPageHandler : MonoBehaviour
         {
             Debug.Log("Node" + " is plotting " + plotFilename);
             plotButton.SetActive(true);
-            isPlotting = true;
         }
 
         if (pageSprite != null)
@@ -50,11 +46,6 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void OnFallHideButtons()
     {
-        if (plotFilename != null)
-        {
-            plotButton.SetActive(false);
-            isPlotting = false;
-        }
 
         if (pageSprite != null)
         {
@@ -65,16 +56,7 @@ public class PlotAndPageHandler : MonoBehaviour
 
     public void Plot()
     {
-        if (isPlotting)
-        {
-            Debug.Log("Node" + " is plotting " + plotFilename);
-            isPlotting = false;
-
-            //clear plotFilename
-            plotFilename = null;
-
-            plotButton.GetComponent<BreathingEffect>().enabled = false; 
-        }
+        
     }
 
     public void Page()
