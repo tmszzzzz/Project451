@@ -330,5 +330,6 @@ public class SavesLoadManager : MonoBehaviour
     {
         canvas = RoundManager.instance.canvas;
         detective = RoundManager.instance.detective;
+        DeserializeAll("Assets/Resources/saves_20241115_001743.json");
     }
 }
