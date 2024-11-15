@@ -6,11 +6,10 @@ using UnityEngine;
 
 public class DetectiveBehavior : MonoBehaviour
 {
-    [SerializeField]public List<GameObject> focusOnNodes;
-    [SerializeField]public List<GameObject> focusPointers;
+    [SerializeField]public List<GameObject> focusOnNodes = new List<GameObject>();
+    [SerializeField]public List<GameObject> focusPointers = new List<GameObject>();
     public GameObject pointerPrefab;
     public CanvasBehavior canvas;
-    [SerializeField] private List<int> stayRounds;
     public TaskCompletionSource<bool> Tcs1;
     public TaskCompletionSource<bool> Tcs2;
     [SerializeField] private GameObject DetectedFx;
@@ -20,19 +19,10 @@ public class DetectiveBehavior : MonoBehaviour
     [SerializeField] private List<GameObject> Lightcones;
     private void Start()
     {
-        focusOnNodes = new List<GameObject>();
-        focusPointers = new List<GameObject>();
-        stayRounds = new List<int>();
-
-        //List<GameObject> nodeList = canvas.GetNodeList();
-        //for (int i = 0; i < Mathf.Min(GlobalVar.instance.numOfDetectiveOnStart,nodeList.Count);i++) { 
-        //    
-        //    int j = Random.Range(0, nodeList.Count);
-        //    focusOnNodes.Add(nodeList[j]);
-        //    focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position, Quaternion.Euler(0, 0, 0)));
-        //    stayRounds.Add(0);
-        //}
-        canvas.RefreshAllConnections();
+        if (GameLoader.instance != null && !GameLoader.instance.loadingAnExistingGame)
+        {
+            canvas.RefreshAllConnections();
+        }
     }
 
     public void AddADetective()
@@ -42,7 +32,6 @@ public class DetectiveBehavior : MonoBehaviour
         {
             focusOnNodes.Add(exposedList[Random.Range(0, exposedList.Count)]);
             focusPointers.Add(Instantiate(pointerPrefab, focusOnNodes[focusOnNodes.Count - 1].transform.position,Quaternion.Euler(0,0,0)));
-            stayRounds.Add(0);
         }
         else
         {
@@ -76,7 +65,6 @@ public class DetectiveBehavior : MonoBehaviour
         {
             focusOnNodes.Add(target);
             focusPointers.Add(Instantiate(pointerPrefab, target.transform.position,Quaternion.Euler(0,0,0)));
-            stayRounds.Add(0);
         }
     }
 
@@ -111,20 +99,17 @@ public class DetectiveBehavior : MonoBehaviour
 
             if (list.Count <= 0)
             {
-                stayRounds[i]++;
             }else if(focusOnNodes[i].GetComponent<NodeBehavior>().properties.state != Properties.StateEnum.EXPOSED) //self 0
             {
                 if (exposedNeighbors.Count == 0) //neighbor 0
                 {
                     //Debug.Log(i + " 00");
-                    stayRounds[i] = 0;
                     focusOnNodes[i] = list[Random.Range(0, list.Count)];
                     
                 }
                 else //neighbor 1
                 {
                     //Debug.Log(i + " 01");
-                    stayRounds[i] = 0;
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
                 }
             }else //self 1
@@ -132,12 +117,10 @@ public class DetectiveBehavior : MonoBehaviour
                 if (exposedNeighbors.Count == 0) //neighbor 0
                 {
                     //Debug.Log(i + " 10");
-                    stayRounds[i]++;
                 }
                 else //neighbor 1
                 {
                     //Debug.Log(i + " 11");
-                    stayRounds[i] = 0;
                     focusOnNodes[i] = exposedNeighbors[Random.Range(0, exposedNeighbors.Count)];
                 }
             }

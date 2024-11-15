@@ -12,6 +12,7 @@ public class ConnectionBehavior : MonoBehaviour
     public int unlockDemand; //only used by Unlockable
     [SerializeField] protected LineRenderer lineRenderer;
     [SerializeField] protected DetectiveBehavior detective;
+    public bool isDisplayingInfo = false;
 
 
     protected virtual void Update()
@@ -52,10 +53,22 @@ public class ConnectionBehavior : MonoBehaviour
         double d = r.NextDouble();
         if (d > GlobalVar.instance.probabilityOfNodesInspectingDetective)
         {
-            GetComponent<LineRenderer>().startColor = Color.white;
-            GetComponent<LineRenderer>().endColor = Color.white;
+            NonInfoColor();
             return;
         }
+        InfoColor(db);
+    }
+
+    public virtual void NonInfoColor()
+    {
+        GetComponent<LineRenderer>().startColor = Color.white;
+        GetComponent<LineRenderer>().endColor = Color.white;
+        isDisplayingInfo = false;
+    }
+
+    public virtual void InfoColor(DetectiveBehavior db)
+    {
+        isDisplayingInfo = true;
         int n = 0;
         if (db.IsDetected(GetComponent<ConnectionBehavior>().startNode)) n++;
         if (db.IsDetected(GetComponent<ConnectionBehavior>().endNode)) n++;
