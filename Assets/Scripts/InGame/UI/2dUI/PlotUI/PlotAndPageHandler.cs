@@ -34,10 +34,6 @@ public class PlotAndPageHandler : MonoBehaviour
             pageButton.SetActive(true);
             isPaging = true;
         }
-        else
-        {
-            Debug.LogWarning("no pageSprite!");
-        }
     }
 
     public void OnLoadShowButtons()
