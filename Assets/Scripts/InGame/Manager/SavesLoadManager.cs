@@ -333,7 +333,6 @@ public class SavesLoadManager : MonoBehaviour
                 if (serializableConnectionBehaviors[i].isDisplayingInfo)
                 {
                     cb.InfoColor(detective);
-                    Debug.LogWarning("1");
                 }
                 else
                 {
