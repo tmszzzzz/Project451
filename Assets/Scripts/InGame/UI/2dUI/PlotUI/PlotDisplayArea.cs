@@ -55,6 +55,9 @@ public class PlotDisplayArea : MonoBehaviour
             Destroy(plot);
         }
         adreadyFinishedPlots.Clear();
+        
+        RectTransform rect = this.gameObject.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(rect.sizeDelta.x, 0);
     }
 
     void MovePlotsUp(float distance)
