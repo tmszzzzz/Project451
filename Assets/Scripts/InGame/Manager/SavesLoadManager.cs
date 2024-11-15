@@ -8,6 +8,8 @@ public class SavesLoadManager : MonoBehaviour
 {
     private CanvasBehavior canvas;
     private DetectiveBehavior detective;
+    [SerializeField] private Book book;
+    [SerializeField] private List<Sprite> SpriteList;
 
 
     [System.Serializable]
@@ -138,6 +140,7 @@ public class SavesLoadManager : MonoBehaviour
         }
     }
     
+    [System.Serializable]
     public class SerializableQuests
     {
         public bool q1;
@@ -177,6 +180,22 @@ public class SavesLoadManager : MonoBehaviour
         }
     }
 
+    [System.Serializable]
+    public class SerializableBookPages
+    {
+        public List<int> PageIds;
+
+        public SerializableBookPages(Book book,List<Sprite> sprites)
+        {
+            PageIds = new List<int>();
+            foreach (var page in book.bookPages)
+            {
+                int p = sprites.IndexOf(page);
+                if (p != -1)PageIds.Add(p);
+            }
+        }
+    }
+
 
     [System.Serializable]
     public class SerializableAll
@@ -186,8 +205,9 @@ public class SavesLoadManager : MonoBehaviour
         public List<SerializableConnectionBehavior> connectionBehaviors;
         public SerializableDetectiveBehavior detectiveBehavior;
         public SerializableQuests quests;
+        public SerializableBookPages bookPages;
 
-        public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective,QuestPanel quest)
+        public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective,QuestPanel quest,Book book,List<Sprite> sprites)
         {
             this.globalVar = new SerializableGlobalVar(globalVar);
             var sNodeL = new List<SerializableNodeBehavior>();
@@ -208,13 +228,14 @@ public class SavesLoadManager : MonoBehaviour
             connectionBehaviors = sConL;
             detectiveBehavior = new SerializableDetectiveBehavior(detective);
             quests = new SerializableQuests(quest);
+            bookPages = new SerializableBookPages(book, sprites);
         }
     }
 
     public void SerializeAll()
     {
         // 使用包装类创建一个可序列化的对象
-        SerializableAll serializableData = new SerializableAll(GlobalVar.instance, canvas, detective,QuestPanel.instance);
+        SerializableAll serializableData = new SerializableAll(GlobalVar.instance, canvas, detective,QuestPanel.instance,book,SpriteList);
 
         // 使用 JsonUtility 序列化为 JSON 字符串
         string json = JsonUtility.ToJson(serializableData);
@@ -281,7 +302,7 @@ public class SavesLoadManager : MonoBehaviour
                 nb.properties.state = serializableNodeBehaviors[i].state;
                 nb.properties.numOfBooks = serializableNodeBehaviors[i].numOfBooks;
                 nb.hadAwakenedBefore = serializableNodeBehaviors[i].hadAwakenedBefore;
-                if(serializableNodeBehaviors[i].isPaging) nb.plotAndPageHandler.OnAwakeShowButtons();
+                if(serializableNodeBehaviors[i].isPaging) nb.plotAndPageHandler.OnLoadShowButtons();
             }
 
             List<SerializableConnectionBehavior> serializableConnectionBehaviors = deserializedData.connectionBehaviors;
@@ -321,6 +342,13 @@ public class SavesLoadManager : MonoBehaviour
             if(serializableQuests.q3) QuestPanel.instance.AddQuest(strs[2]);
             if(serializableQuests.q4) QuestPanel.instance.AddQuest(strs[3]);
             if(serializableQuests.q5) QuestPanel.instance.AddQuest(strs[4]);
+
+            SerializableBookPages serializableBookPages = deserializedData.bookPages;
+            book.bookPages = new Sprite[serializableBookPages.PageIds.Count];
+            for (int i = 0; i < book.bookPages.Length; i++)
+            {
+                book.bookPages[i] = SpriteList[serializableBookPages.PageIds[i]];
+            }
         }
     }
 
@@ -330,5 +358,9 @@ public class SavesLoadManager : MonoBehaviour
     {
         canvas = RoundManager.instance.canvas;
         detective = RoundManager.instance.detective;
+        if (GameLoader.instance.loadingAnExistingGame)
+        {
+            DeserializeAll(GameLoader.instance.loadFilePath);
+        }
     }
 }

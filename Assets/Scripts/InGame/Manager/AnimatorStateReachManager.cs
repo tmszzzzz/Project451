@@ -19,8 +19,6 @@ public class AnimatorStateReachManager : MonoBehaviour
         // 将当前实例设为单例实例
         instance = this;
 
-        // 选择保留这个对象，使其在场景切换时不会被销毁
-        DontDestroyOnLoad(gameObject);
     }
 
     public void NotifyDetective1()

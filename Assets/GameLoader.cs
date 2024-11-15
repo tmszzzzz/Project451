@@ -1,35 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameLoader : MonoBehaviour
 {
-    private static GameLoader instance;
+    public static GameLoader instance;
     
-    public static  GameLoader Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType< GameLoader >();
-            }
 
-            return instance;
-        }
-        
-    }
-
-    private bool loadingAnExistingGame = false;
+    public bool loadingAnExistingGame = false;
+    public string loadFilePath = "";
     
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
         DontDestroyOnLoad(gameObject);
+    }
+
+    public void newGame()
+    {
+        loadingAnExistingGame = false;
+        SceneManager.LoadScene(1,LoadSceneMode.Single);
     }
 
     public void openAGame()
     {
-        
+        loadingAnExistingGame = true;
+        SceneManager.LoadScene(1,LoadSceneMode.Single);
     }
 }

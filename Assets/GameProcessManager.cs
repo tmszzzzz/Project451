@@ -47,9 +47,6 @@ public class GameProcessManager : MonoBehaviour
 
         roundManager = RoundManager.instance;
 
-        // 选择保留这个对象，使其在场景切换时不会被销毁
-        DontDestroyOnLoad(gameObject);
-
         //设置成false稍后再打开
         probabilityOfInfoPanel.SetActive(false);
     }

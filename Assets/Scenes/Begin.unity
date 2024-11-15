@@ -498,6 +498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f814c6970dd4a4ea93fc95d778b19c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingAnExistingGame: 0
+  loadFilePath: Assets/Resources/saves_20241115_104956.json
 --- !u!1 &491103435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1038,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1483633150}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 410944218}
+        m_TargetAssemblyTypeName: GameLoader, Assembly-CSharp
+        m_MethodName: newGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1483633150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1232,7 +1246,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2114670549}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 410944218}
+        m_TargetAssemblyTypeName: GameLoader, Assembly-CSharp
+        m_MethodName: openAGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2114670549
 MonoBehaviour:
   m_ObjectHideFlags: 0

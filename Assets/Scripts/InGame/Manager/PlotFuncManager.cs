@@ -16,7 +16,6 @@ public class PlotFuncManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public void test()
