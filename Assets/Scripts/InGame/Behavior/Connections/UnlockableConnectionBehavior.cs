@@ -42,4 +42,23 @@ public class UnlockableConnectionBehavior : ConnectionBehavior
             GetComponent<LineRenderer>().endColor = Color.black;
         }
     }
+
+    public override void NonInfoColor()
+    {
+        if (available) base.NonInfoColor();
+        else
+        {
+            GetComponent<LineRenderer>().startColor = Color.black;
+            GetComponent<LineRenderer>().endColor = Color.black;
+        }
+    }
+    public override void InfoColor(DetectiveBehavior db)
+    {
+        if (available) base.InfoColor(db);
+        else
+        {
+            GetComponent<LineRenderer>().startColor = Color.black;
+            GetComponent<LineRenderer>().endColor = Color.black;
+        }
+    }
 }

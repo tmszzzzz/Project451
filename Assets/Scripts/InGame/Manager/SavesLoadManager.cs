@@ -105,10 +105,12 @@ public class SavesLoadManager : MonoBehaviour
         public int unlockTag;
         public bool available;
         public int unlockState;
+        public bool isDisplayingInfo;
 
         public SerializableConnectionBehavior(ConnectionBehavior connectionBehavior)
         {
             unlockTag = connectionBehavior.unlockTag;
+            isDisplayingInfo = connectionBehavior.isDisplayingInfo;
             if (connectionBehavior is UnlockableConnectionBehavior unlockableConnectionBehavior)
             {
                 available = unlockableConnectionBehavior.available;
@@ -304,21 +306,7 @@ public class SavesLoadManager : MonoBehaviour
                 nb.hadAwakenedBefore = serializableNodeBehaviors[i].hadAwakenedBefore;
                 if(serializableNodeBehaviors[i].isPaging) nb.plotAndPageHandler.OnLoadShowButtons();
             }
-
-            List<SerializableConnectionBehavior> serializableConnectionBehaviors = deserializedData.connectionBehaviors;
-            var conL = canvas.GetConnectionList();
-            int cl = conL.Count;
-            for (int i = 0; i < cl; i++)
-            {
-                var cb = conL[i].GetComponent<ConnectionBehavior>();
-                cb.unlockTag = serializableConnectionBehaviors[i].unlockTag;
-                if (cb is UnlockableConnectionBehavior ucb)
-                {
-                    ucb.available = serializableConnectionBehaviors[i].available;
-                    ucb.unlockState = serializableConnectionBehaviors[i].unlockState;
-                }
-            }
-
+            
             SerializableDetectiveBehavior serializableDetectiveBehavior = deserializedData.detectiveBehavior;
             var detIntL = serializableDetectiveBehavior.focusOnNodes;
             detective.focusOnNodes.Clear();
@@ -334,6 +322,31 @@ public class SavesLoadManager : MonoBehaviour
                 detective.focusPointers.Add(Instantiate(detective.pointerPrefab, nodeL[i].transform.position,
                     Quaternion.Euler(0, 0, 0)));
             }
+
+            List<SerializableConnectionBehavior> serializableConnectionBehaviors = deserializedData.connectionBehaviors;
+            var conL = canvas.GetConnectionList();
+            int cl = conL.Count;
+            for (int i = 0; i < cl; i++)
+            {
+                var cb = conL[i].GetComponent<ConnectionBehavior>();
+                cb.unlockTag = serializableConnectionBehaviors[i].unlockTag;
+                if (serializableConnectionBehaviors[i].isDisplayingInfo)
+                {
+                    cb.InfoColor(detective);
+                    Debug.LogWarning("1");
+                }
+                else
+                {
+                    cb.NonInfoColor();
+                }
+                if (cb is UnlockableConnectionBehavior ucb)
+                {
+                    ucb.available = serializableConnectionBehaviors[i].available;
+                    ucb.unlockState = serializableConnectionBehaviors[i].unlockState;
+                }
+            }
+
+            
 
             SerializableQuests serializableQuests = deserializedData.quests;
             string[] strs = new[] { "Zero", "Office","PoliceStation","FireHouse","Deal" };
@@ -358,7 +371,11 @@ public class SavesLoadManager : MonoBehaviour
     {
         canvas = RoundManager.instance.canvas;
         detective = RoundManager.instance.detective;
-        if (GameLoader.instance.loadingAnExistingGame)
+        if (GameLoader.instance == null)
+        {
+            DeserializeAll("Assets/Resources/saves_20241115_140510.json");
+        }
+        if (GameLoader.instance != null && GameLoader.instance.loadingAnExistingGame)
         {
             DeserializeAll(GameLoader.instance.loadFilePath);
         }
