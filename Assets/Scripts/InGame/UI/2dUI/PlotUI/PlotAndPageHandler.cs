@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,10 +10,11 @@ public class PlotAndPageHandler : MonoBehaviour
     [SerializeField] private GameObject pageButton;
     [SerializeField] private GameObject thisNode;
     [SerializeField] private float targetScale = 1.5f;
-    private Sprite pageSprite;
+    [SerializeField] private Sprite pageSprite;
+    private bool onLoad = false;
     void Start()
     {
-        pageButton.SetActive(false);
+        if(!onLoad) pageButton.SetActive(false);
         pageSprite = thisNode.GetComponent<NodeBehavior>().pageSprite;
     }
     // Update is called once per frame
@@ -32,6 +34,17 @@ public class PlotAndPageHandler : MonoBehaviour
             pageButton.SetActive(true);
             isPaging = true;
         }
+        else
+        {
+            Debug.LogWarning("no pageSprite!");
+        }
+    }
+
+    public void OnLoadShowButtons()
+    {
+        pageButton.SetActive(true);
+        isPaging = true;
+        onLoad = true;
     }
 
     public void OnFallHideButtons()

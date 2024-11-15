@@ -62,7 +62,6 @@ public class PlotManager : MonoBehaviour
             return;
         }
         instance = this;
-        DontDestroyOnLoad(gameObject);
         UserAction += OnNextStep;
         PlotStart += OnStart;
         PlotEnd += OnEnd;

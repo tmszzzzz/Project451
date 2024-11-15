@@ -49,7 +49,6 @@ public class RoundManager : MonoBehaviour
         instance = this;
 
         // 选择保留这个对象，使其在场景切换时不会被销毁
-        DontDestroyOnLoad(gameObject);
         BookAllocationMap = new Dictionary<GameObject, int>();
         foreach (var i in canvas.GetNodeList())
         {

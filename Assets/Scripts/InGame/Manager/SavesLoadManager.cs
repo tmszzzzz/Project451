@@ -138,6 +138,7 @@ public class SavesLoadManager : MonoBehaviour
         }
     }
     
+    [System.Serializable]
     public class SerializableQuests
     {
         public bool q1;
@@ -281,7 +282,7 @@ public class SavesLoadManager : MonoBehaviour
                 nb.properties.state = serializableNodeBehaviors[i].state;
                 nb.properties.numOfBooks = serializableNodeBehaviors[i].numOfBooks;
                 nb.hadAwakenedBefore = serializableNodeBehaviors[i].hadAwakenedBefore;
-                if(serializableNodeBehaviors[i].isPaging) nb.plotAndPageHandler.OnAwakeShowButtons();
+                if(serializableNodeBehaviors[i].isPaging) nb.plotAndPageHandler.OnLoadShowButtons();
             }
 
             List<SerializableConnectionBehavior> serializableConnectionBehaviors = deserializedData.connectionBehaviors;
@@ -330,6 +331,6 @@ public class SavesLoadManager : MonoBehaviour
     {
         canvas = RoundManager.instance.canvas;
         detective = RoundManager.instance.detective;
-        DeserializeAll("Assets/Resources/saves_20241115_001743.json");
+        DeserializeAll("Assets/Resources/saves_20241115_101023.json");
     }
 }
