@@ -50,7 +50,7 @@ public class QuestPanel : MonoBehaviour
                 newQuest = Instantiate(questOfficePrefab, initTransform);
                 i = 1;
                 break;
-            case "PoliceStation":
+            case "Police":
                 newQuest = Instantiate(questPoliceStationPrefab, initTransform);
                 i = 2;
                 break;

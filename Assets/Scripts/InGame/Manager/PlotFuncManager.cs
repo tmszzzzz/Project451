@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using Random = System.Random;
 
 public class PlotFuncManager : MonoBehaviour
@@ -21,6 +22,21 @@ public class PlotFuncManager : MonoBehaviour
     public void test()
     {
         Debug.Log("Function test called.");
+    }
+
+    public void loseTheGame()
+    {
+        SceneManager.LoadScene("LoseScene");
+    }
+
+    public void winTheGame()
+    {
+        SceneManager.LoadScene("WinScene");
+    }
+
+    public void emergencyOperation()
+    {
+        GlobalVar.instance.globalExposureValue = GlobalVar.instance.maxGlobalExposureValue / 2;
     }
 
     public void lostABook()

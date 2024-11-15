@@ -48,6 +48,7 @@ public class GlobalVar : MonoBehaviour
     public bool everLearnedAboutKeepNodesDontFall = false;
     public bool everAwakeAllNodes = false;
     public bool noStartingPlot = false;
+    public bool everReachingMaxExposureValue = false;
     public List<int> nodesAwakendOnce = new List<int>();
     public bool skipCameraOverview = true;
     

@@ -9,21 +9,29 @@ public class GameProcessManager : MonoBehaviour
     public static GameProcessManager instance;  // 单例实例
 
     //public List<int> nodesAwakendOnce = new List<int>();
-    private RoundManager roundManager;
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
     [SerializeField] float initialProbabilityOfInfo = 0.4f;
     [SerializeField] GameObject probabilityOfInfoPanel;
-    //private bool everReachedPoliceStation = false;
-    //private bool everReachedFirehouse = false;
-    //private bool everLearnedAboutDetectiveAndInfo = false;
-    //private bool everLearnedAboutKeepNodesDontFall = false;
-    //private bool everAwakeAllNodes = false;
-
     [SerializeField] private TutorialsController _tutorialsController;
-    // Start is called before the first frame update
-    
 
+    public void ProcessManagerCheckingForMaxExposureValue()
+    {
+        if (GlobalVar.instance.globalExposureValue < GlobalVar.instance.maxGlobalExposureValue)
+        {
+            return;
+        }
+        
+        if (!GlobalVar.instance.everReachingMaxExposureValue)
+        {
+            PlotManager.instance.StartPlot("Assets/Resources/Plots/emergencyScene.txt");
+            GlobalVar.instance.everReachingMaxExposureValue = true;
+            return;
+        }
+        
+        PlotManager.instance.StartPlot("Assets/Resources/Plots/loseGameScene.txt");
+    }
+    
     private void Start()
     {
         if (!GlobalVar.instance.noStartingPlot)
@@ -45,15 +53,8 @@ public class GameProcessManager : MonoBehaviour
         // 将当前实例设为单例实例
         instance = this;
 
-        roundManager = RoundManager.instance;
-
         //设置成false稍后再打开
         probabilityOfInfoPanel.SetActive(false);
-    }
-
-    public void NewRoundIsEntered()
-    {
-
     }
 
     void FirstReachFireHouse()
