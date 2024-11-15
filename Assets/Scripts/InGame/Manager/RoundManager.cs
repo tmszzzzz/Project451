@@ -26,9 +26,11 @@ public class RoundManager : MonoBehaviour
     public GameObject DownFx;
     public GameObject ActiveFx;
     public GameObject ExposeFx;
+    public BookController bookC;
     [SerializeField] private GameObject forbidden;
     public bool operationForbidden = false;
     private int forbidTag = 0;
+    public bool isDetectiveComing = false;
 
 
     //以下是事件
@@ -89,7 +91,7 @@ public class RoundManager : MonoBehaviour
                     }
                     else
                     {
-                        messageBar.AddMessage("This node is not permitted to be a starting point.");
+                        messageBar.AddMessage("此节点不能成为分配起始.");
                         // 起始节点无书，清除选择状态
                         RestartFirstSelection();
                     }
@@ -189,7 +191,7 @@ public class RoundManager : MonoBehaviour
                     }
                     else
                     {
-                        messageBar.AddMessage("This movement is not permitted.");
+                        messageBar.AddMessage("此次移动是不合法的.");
                         // 目标节点不满足条件，清除选择状态
                         RestartFirstSelection();
                     }
@@ -310,6 +312,13 @@ public class RoundManager : MonoBehaviour
         
         OperationRelease();//释放操作屏蔽
         forbidden.SetActive(false);
+        if (isDetectiveComing)
+        {
+            bookC.TurnPageTo(11);
+            bookC.book.UpdateSprites();
+            ToggleBookButton.Instance.isBookOpen = true;
+            isDetectiveComing = false;
+        }
     }
 
     public void OperationForbidden()
