@@ -75,10 +75,9 @@ public class GameProcessManager : MonoBehaviour
         GlobalVar.instance.skipCameraOverview = false;   // 重新开启摄像机视角
         
         _tutorialsController.canShowTutorial4 = true;
-        _bookController.subsititute(page1, 11);
-        _bookController.subsititute(page2, 12);
-        _bookController.TurnPageTo(11);
-        ToggleBookButton.Instance.isBookOpen = true;
+        _bookController.subsititute(page1, 13);
+        _bookController.subsititute(page2, 14);
+        RoundManager.instance.isDetectiveComing = true;
         
         probabilityOfInfoPanel.SetActive(true);
         

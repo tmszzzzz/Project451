@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class SavesLoadManager : MonoBehaviour
 {
+    public static SavesLoadManager instance;
     private CanvasBehavior canvas;
     private DetectiveBehavior detective;
     [SerializeField] private Book book;
@@ -237,13 +238,23 @@ public class SavesLoadManager : MonoBehaviour
     public void SerializeAll()
     {
         // 使用包装类创建一个可序列化的对象
-        SerializableAll serializableData = new SerializableAll(GlobalVar.instance, canvas, detective,QuestPanel.instance,book,SpriteList);
+        SerializableAll serializableData =
+            new SerializableAll(GlobalVar.instance, canvas, detective, QuestPanel.instance, book, SpriteList);
 
         // 使用 JsonUtility 序列化为 JSON 字符串
         string json = JsonUtility.ToJson(serializableData);
 
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string saveFilePath = $"Assets/Saves/save.json"; // 添加时间戳到文件名
+        string saveFilePath;
+        if (GameLoader.instance == null)
+        {
+            saveFilePath = "Assets/Saves/save.json";
+        }
+        else
+        {
+            saveFilePath = $"{GameLoader.instance.loadFilePath}"; // 添加时间戳到文件名
+        }
+
         System.IO.File.WriteAllText(saveFilePath, json);
     }
 
@@ -368,11 +379,20 @@ public class SavesLoadManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+        
+        
         canvas = RoundManager.instance.canvas;
         detective = RoundManager.instance.detective;
         if (GameLoader.instance == null)
         {
-            DeserializeAll("Assets/Resources/saves_20241115_140510.json");
+            DeserializeAll("Assets/Saves/save.json");
         }
         if (GameLoader.instance != null && GameLoader.instance.loadingAnExistingGame)
         {
