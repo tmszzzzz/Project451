@@ -4,13 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ToggleBookButton : MonoBehaviour
 {
-    private bool isBookOpen = false;
+    public bool isBookOpen = false;
     public Transform bookActivatedPosition;
     public Transform bookDeactivatedPosition;
     public GameObject book;
     public Image shadowBackground;
     public float shadowBackgroundAlpha = 233f;
 
+    private static ToggleBookButton _instance;
+    
+    public static  ToggleBookButton Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType< ToggleBookButton>();
+            }
+
+            return _instance;
+        }
+    }
     public void ToggleBook()
     {
         isBookOpen = !isBookOpen;

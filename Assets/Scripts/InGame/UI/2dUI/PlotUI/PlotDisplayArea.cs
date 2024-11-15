@@ -128,7 +128,7 @@ public class PlotDisplayArea : MonoBehaviour
         rectTransform.anchorMin = isSelf ? new Vector2(0, 0) : new Vector2(1, 0f);
         rectTransform.anchorMax = isSelf ? new Vector2(0, 0f) : new Vector2(1, 0f);
         rectTransform.localScale = new Vector3(1, 1, 1);
-        rectTransform.anchoredPosition = new Vector2(isSelf ? 10 : -10, 0);
+        rectTransform.anchoredPosition = new Vector2(isSelf ? 10 : -20, 0);
 
         if (name == "旁白")
         {
@@ -173,9 +173,7 @@ public class PlotDisplayArea : MonoBehaviour
         adreadyFinishedPlots.Add(currentPlottingPlot);
         currentPlottingPlot = null;
     }
-
-    public float startYPositionOfDisplayedPlots = 10f;
-    public float lerpScreenSpeed;
+    
     
     void Update()
     {

@@ -8,10 +8,15 @@ public class BookController : MonoBehaviour
     public Book book;
     public GameObject newContentBookAlertImage;
 
-    public void addOnePageToBook(Sprite pageSpirite)
+    public void AddOnePageToBook(Sprite pageSpirite)
     {
         book.addOnePageToEndOfBook(pageSpirite);
         newContentBookAlertImage.SetActive(true);
+    }
+
+    public void TurnPageTo(int num)
+    {
+        book.currentPage = num % 2 == 0? num + 1 : num;
     }
 
     public void subsititute(Sprite pageSprite, int num)

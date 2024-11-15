@@ -82,7 +82,6 @@ public class PlotDisplay : MonoBehaviour
 
         OpenPlots();
         PlotManager.instance.TriggerPlotStart();
-        //CreateContinueBUtton();
     }
 
     void CreateEndButton()
