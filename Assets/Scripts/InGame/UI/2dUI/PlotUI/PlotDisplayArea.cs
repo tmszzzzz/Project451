@@ -173,9 +173,7 @@ public class PlotDisplayArea : MonoBehaviour
         adreadyFinishedPlots.Add(currentPlottingPlot);
         currentPlottingPlot = null;
     }
-
-    public float startYPositionOfDisplayedPlots = 10f;
-    public float lerpScreenSpeed;
+    
     
     void Update()
     {

@@ -76,6 +76,8 @@ public class GameProcessManager : MonoBehaviour
         _tutorialsController.canShowTutorial4 = true;
         _bookController.subsititute(page1, 11);
         _bookController.subsititute(page2, 12);
+        _bookController.TurnPageTo(11);
+        ToggleBookButton.Instance.isBookOpen = true;
         
         probabilityOfInfoPanel.SetActive(true);
         
