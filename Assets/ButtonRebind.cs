@@ -9,6 +9,8 @@ public class ButtonRebind : MonoBehaviour
     public Button b1;
     public Button b2;
     public TextMeshProUGUI b2text;
+    public GameObject loading;
+    public GameObject bg;
     void Start()
     {
         b1.onClick.AddListener(GameLoader.instance.newGame);
@@ -18,5 +20,13 @@ public class ButtonRebind : MonoBehaviour
             b2.enabled = false;
             b2text.text = "暂无存档";
         }
+
+        GameLoader.instance.loading = loading.GetComponent<Animator>();
+        GameLoader.instance.bg = bg.GetComponent<Animator>();
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
     }
 }
