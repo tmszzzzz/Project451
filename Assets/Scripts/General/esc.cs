@@ -8,8 +8,9 @@ public class esc : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if(Input.GetKeyDown(KeyCode.Escape)&&!RoundManager.instance.operationForbidden)
         {
+            
             Application.Quit();
         }
     }

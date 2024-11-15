@@ -243,7 +243,7 @@ public class SavesLoadManager : MonoBehaviour
         string json = JsonUtility.ToJson(serializableData);
 
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string saveFilePath = $"Assets/Resources/saves_{timestamp}.json"; // 添加时间戳到文件名
+        string saveFilePath = $"Assets/Saves/save.json"; // 添加时间戳到文件名
         System.IO.File.WriteAllText(saveFilePath, json);
     }
 
