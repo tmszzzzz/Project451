@@ -141,16 +141,16 @@ public class PlotDisplayArea : MonoBehaviour
         // //别删除，需要这段强制更新一次layout使得contentSizeFitter生效
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
-
+        
+        MovePlotsUp(rectTransform.sizeDelta.y);
+        currentPlottingHeight = rectTransform.sizeDelta.y;
+        currentPlottingPlot = newPlotTextGameObject;
+        
         TextAppearOneByOne textAppearOneByOne = newPlotTextGameObject.AddComponent<TextAppearOneByOne>();
         textAppearOneByOne.fullText = context;
         textAppearOneByOne.typingSpeed = 1f / PlotDisplay.Instance.wordPerSecond;
         textAppearOneByOne.onTypingFinished.AddListener(() => CurrentPlottingPlotFinished());
         
-        MovePlotsUp(rectTransform.sizeDelta.y);
-        currentPlottingHeight = rectTransform.sizeDelta.y;
-        currentPlottingPlot = newPlotTextGameObject;
-
         UpdateProfile(isSelf, name);
 
     }

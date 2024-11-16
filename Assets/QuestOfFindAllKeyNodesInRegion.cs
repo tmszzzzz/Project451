@@ -60,6 +60,6 @@ public class QuestOfFindAllKeyNodesInRegion : QuestUnit
             }
         }
 
-        return "找到"+ regionName +"内（"+ finished +"/"+ keyNodesInThisRegion.Count + "）名关键人物";
+        return "吸纳"+ regionName +"内（"+ finished +"/"+ keyNodesInThisRegion.Count + "）名关键人物";
     }
 }

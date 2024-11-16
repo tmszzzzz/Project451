@@ -8,6 +8,7 @@ public class QuestOfDeal : QuestUnit
 
     private int startTurn;
     [SerializeField] private int turnsForCompletion = 30;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -60,16 +61,14 @@ public class QuestOfDeal : QuestUnit
     {
         base.Update();
 
+        if (AllKeyNodesInRegionTransformed())
+        {
+            PlotManager.instance.AddPlotQueue(winDealPlotPath, RoundManager.instance.canvas.Me);
+        }
+        
         if (isQuestCompleted)
         {
-            if (AllKeyNodesInRegionTransformed())
-            {
-                PlotManager.instance.AddPlotQueue(winDealPlotPath, RoundManager.instance.canvas.Me);
-            }
-            else
-            {
-                PlotManager.instance.AddPlotQueue(loseDealPlotPath, RoundManager.instance.canvas.Me);
-            }
+            PlotManager.instance.AddPlotQueue(loseDealPlotPath, RoundManager.instance.canvas.Me);
         }
     }
 }

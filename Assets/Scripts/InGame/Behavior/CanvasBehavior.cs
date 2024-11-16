@@ -182,6 +182,8 @@ public class CanvasBehavior : MonoBehaviour
                     nodeBehavior.plotFileName = node2PlotAndPageData.GetPlotFileNameByID(position.id);
                     nodeBehavior.pageSprite = node2PlotAndPageData.GetPageSpriteByID(position.id);
                 }
+
+                //node.gameObject.AddComponent<AutoGenerationBehavior>();
                 nodeList.Add(node);
             }
             Me = nodeList[0];

@@ -13,11 +13,14 @@ public class AutoGenerationBehavior : MonoBehaviour
     public int fallThreshold = 0;
 
     public int increasementFromAwakeToExpose = 1;
+
+    private bool _everChanged = false;
     // Start is called before the first frame update
     void Update()
     {
         thisNode = this.gameObject;
         canvasBehavior = GameObject.Find("Canvas").GetComponent<CanvasBehavior>();
+        NodeBehavior nodeBehavior = thisNode.GetComponent<NodeBehavior>();
 
         int neighborCount = 0;
         foreach (var nNode in canvasBehavior.GetNeighbors(thisNode)) 
@@ -25,15 +28,31 @@ public class AutoGenerationBehavior : MonoBehaviour
             neighborCount++;
         }
 
-        RegionAdjustValues();
+        if (_everChanged)
+        {
+            return;
+        }
 
-        thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = isRoundUp ? (int)(neighborCount * neighborToAwakeThresholdRatio + 1) : (int)(neighborCount * neighborToAwakeThresholdRatio);
-        thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + increasementFromAwakeToExpose;
-        thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = maximumNumOfBooks;
-        thisNode.GetComponent<NodeBehavior>().properties.fallThreshold = fallThreshold;
-        // thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = neighborCount %2 == 0 ? (neighborCount/2) : (neighborCount/2) + 1;
-        // thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + 1;
-        // thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = 2;
+        if (nodeBehavior.properties.region == 1)
+        {
+            nodeBehavior.properties.exposeThreshold += 1;
+        }
+        else if (nodeBehavior.properties.region == 2)
+        {
+            nodeBehavior.properties.exposeThreshold += 2;
+        }
+
+        _everChanged = true;
+
+        // RegionAdjustValues();
+        //
+        // thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = isRoundUp ? (int)(neighborCount * neighborToAwakeThresholdRatio + 1) : (int)(neighborCount * neighborToAwakeThresholdRatio);
+        // thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + increasementFromAwakeToExpose;
+        // thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = maximumNumOfBooks;
+        // thisNode.GetComponent<NodeBehavior>().properties.fallThreshold = fallThreshold;
+        // // thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold = neighborCount %2 == 0 ? (neighborCount/2) : (neighborCount/2) + 1;
+        // // thisNode.GetComponent<NodeBehavior>().properties.exposeThreshold = thisNode.GetComponent<NodeBehavior>().properties.awakeThreshold + 1;
+        // // thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks = 2;
     }
 
     void RegionAdjustValues()
