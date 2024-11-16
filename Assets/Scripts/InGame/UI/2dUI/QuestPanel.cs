@@ -73,14 +73,15 @@ public class QuestPanel : MonoBehaviour
 
     void RemoveAQuest(GameObject quest)
     {
+        int index = questsList.IndexOf(quest);
         questsList.Remove(quest);
+        questIds.Remove(questIds[index]);
         Destroy(quest.gameObject);
     }
     
     private IEnumerator DelayedAction(GameObject quest, float delay)
     {
-        questsList.Remove(quest);
-        Destroy(quest);
+        RemoveAQuest(quest);
         yield return new WaitForSeconds(delay);
     }
     

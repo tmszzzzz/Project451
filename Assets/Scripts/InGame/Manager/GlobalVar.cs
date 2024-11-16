@@ -51,6 +51,7 @@ public class GlobalVar : MonoBehaviour
     public bool everReachingMaxExposureValue = false;
     public List<int> nodesAwakendOnce = new List<int>();
     public bool skipCameraOverview = true;
+    public int dealStartRound = 0;
     
     public void AddResourcePoint(int value)
     {

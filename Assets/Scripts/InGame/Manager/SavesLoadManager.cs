@@ -43,8 +43,10 @@ public class SavesLoadManager : MonoBehaviour
         public bool everLearnedAboutKeepNodesDontFall;
         public bool everAwakeAllNodes;
         public bool noStartingPlot;
+        public bool everReachingMaxExposureValue;
         public List<int> nodesAwakendOnce;
         public bool skipCameraOverview;
+        public int dealStartRound;
 
         // 构造函数，用于从 GlobalVar 初始化
         public SerializableGlobalVar(GlobalVar globalVar)
@@ -76,8 +78,10 @@ public class SavesLoadManager : MonoBehaviour
             this.everLearnedAboutKeepNodesDontFall = globalVar.everLearnedAboutKeepNodesDontFall;
             this.everAwakeAllNodes = globalVar.everAwakeAllNodes;
             this.noStartingPlot = globalVar.noStartingPlot;
+            this.everReachingMaxExposureValue = globalVar.everReachingMaxExposureValue;
             this.nodesAwakendOnce = new List<int>(globalVar.nodesAwakendOnce);
             this.skipCameraOverview = globalVar.skipCameraOverview;
+            this.dealStartRound = globalVar.dealStartRound;
         }
     }
 
@@ -299,12 +303,19 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.everReachedFirehouse = serializableGlobalVar.everReachedFirehouse;
             GlobalVar.instance.everLearnedAboutDetectiveAndInfo =
                 serializableGlobalVar.everLearnedAboutDetectiveAndInfo;
+            if (GlobalVar.instance.everLearnedAboutDetectiveAndInfo)
+            {
+                GameProcessManager.instance.probabilityOfInfoPanel.SetActive(true);
+            }
             GlobalVar.instance.everLearnedAboutKeepNodesDontFall =
                 serializableGlobalVar.everLearnedAboutKeepNodesDontFall;
             GlobalVar.instance.everAwakeAllNodes = serializableGlobalVar.everAwakeAllNodes;
             GlobalVar.instance.noStartingPlot = serializableGlobalVar.noStartingPlot;
+            GlobalVar.instance.everReachingMaxExposureValue = serializableGlobalVar.everReachingMaxExposureValue;
             GlobalVar.instance.nodesAwakendOnce = new List<int>(serializableGlobalVar.nodesAwakendOnce);
             GlobalVar.instance.skipCameraOverview = serializableGlobalVar.skipCameraOverview;
+            GlobalVar.instance.dealStartRound = serializableGlobalVar.dealStartRound;
+            
 
             List<SerializableNodeBehavior> serializableNodeBehaviors = deserializedData.nodeBehaviors;
             var nodeL = canvas.GetNodeList();
@@ -341,6 +352,11 @@ public class SavesLoadManager : MonoBehaviour
             {
                 var cb = conL[i].GetComponent<ConnectionBehavior>();
                 cb.unlockTag = serializableConnectionBehaviors[i].unlockTag;
+                if (cb is UnlockableConnectionBehavior ucb)
+                {
+                    ucb.available = serializableConnectionBehaviors[i].available;
+                    ucb.unlockState = serializableConnectionBehaviors[i].unlockState;
+                }
                 if (serializableConnectionBehaviors[i].isDisplayingInfo)
                 {
                     cb.InfoColor(detective);
@@ -349,11 +365,7 @@ public class SavesLoadManager : MonoBehaviour
                 {
                     cb.NonInfoColor();
                 }
-                if (cb is UnlockableConnectionBehavior ucb)
-                {
-                    ucb.available = serializableConnectionBehaviors[i].available;
-                    ucb.unlockState = serializableConnectionBehaviors[i].unlockState;
-                }
+                
             }
 
             
