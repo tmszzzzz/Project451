@@ -8,28 +8,24 @@ public class SlidableInfoPanel : MonoBehaviour
 {
     public List<GameObject> panelUnits;
     public Slider slider;
-    private List<float> panelUnitActivatedSliderValues;
+    private List<float> _panelUnitActivatedSliderValues;
 
     void FillPanelUnitActivatedSliderValues()
     {
         float fullWidth = transform.GetComponent<RectTransform>().rect.width;
-        panelUnitActivatedSliderValues = new List<float>();
+        _panelUnitActivatedSliderValues = new List<float>();
         foreach (GameObject panel in panelUnits)
         {
             Transform panelTransform = panel.GetComponent<Transform>();
             float x = panelTransform.GetComponent<RectTransform>().localPosition.x;
-            Debug.Log(x);
-            Debug.Log(fullWidth);
             float sliderValue = (x + fullWidth / 2) / fullWidth;
-            panelUnitActivatedSliderValues.Add(sliderValue);
-
-            Debug.Log(sliderValue);
+            _panelUnitActivatedSliderValues.Add(sliderValue);
         }
 
-        Debug.Log(panelUnitActivatedSliderValues);
+        //Debug.Log(_panelUnitActivatedSliderValues);
     }
-
-    // Start is called before the first frame update
+    
+    
     void Start()
     {
         FillPanelUnitActivatedSliderValues();
@@ -48,17 +44,17 @@ public class SlidableInfoPanel : MonoBehaviour
         slider.value = Mathf.Lerp(slider.value, targetValue, Time.deltaTime * 5f);
     }
 
-    bool isExpanding = true;
+    private bool _isExpanding = true;
     public void Expand()
     {
         //LerpSliderValueToTargetValue(1);
-        isExpanding = true;
+        _isExpanding = true;
     }
 
     public void Shrink()
     {
         //LerpSliderValueToTargetValue(0);
-        isExpanding = false;
+        _isExpanding = false;
     }
 
     // Update is called once per frame
@@ -66,7 +62,7 @@ public class SlidableInfoPanel : MonoBehaviour
     {
         foreach (GameObject pUnit in panelUnits)
         {
-            if (slider.value > panelUnitActivatedSliderValues[panelUnits.IndexOf(pUnit)])
+            if (slider.value > _panelUnitActivatedSliderValues[panelUnits.IndexOf(pUnit)])
             {
                 LerpPanelUnitActivatedSliderValues(1, panelUnits.IndexOf(pUnit));
             }
@@ -76,7 +72,7 @@ public class SlidableInfoPanel : MonoBehaviour
             }
         }
 
-        if (isExpanding)
+        if (_isExpanding)
         {
             LerpSliderValueToTargetValue(1);
         }
