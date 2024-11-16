@@ -315,7 +315,7 @@ public class RoundManager : MonoBehaviour
         forbidden.SetActive(false);
         if (isDetectiveComing)
         {
-            bookC.TurnPageTo(11);
+            bookC.TurnPageTo(13);
             bookC.book.UpdateSprites();
             ToggleBookButton.Instance.isBookOpen = true;
             isDetectiveComing = false;
