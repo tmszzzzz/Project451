@@ -20,7 +20,7 @@ public class QuestOfDeal : QuestUnit
             }
         }
 
-        GlobalVar.instance.dealStartRound = GlobalVar.instance.roundNum;
+        if(GlobalVar.instance.dealStartRound != 0) GlobalVar.instance.dealStartRound = GlobalVar.instance.roundNum;
     }
 
 
