@@ -36,7 +36,7 @@ public class PlotFuncManager : MonoBehaviour
         SceneManager.LoadScene(2);
     }
 
-    public void emergencyOperation()
+    public void emergencyCode()
     {
         GlobalVar.instance.globalExposureValue = GlobalVar.instance.maxGlobalExposureValue / 2;
     }
