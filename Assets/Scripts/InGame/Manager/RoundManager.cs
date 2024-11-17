@@ -263,13 +263,13 @@ public class RoundManager : MonoBehaviour
         await canvas.RefreshAllNodes();//更新节点状态
 
 
+        canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
+
+
         BookAllocationChange?.Invoke();//分配情况变更事件
 
 
         await detective.AddGlobalExposureValue();//侦探依据预分配数据判定增加暴露值
-
-
-        canvas.RefreshGlobalExposureValue();//依据当前节点状态更新全局暴露值
 
 
         detective.DetectiveMove();//侦探移动

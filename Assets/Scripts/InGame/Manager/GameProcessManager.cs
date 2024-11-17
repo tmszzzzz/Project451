@@ -24,12 +24,12 @@ public class GameProcessManager : MonoBehaviour
         
         if (!GlobalVar.instance.everReachingMaxExposureValue)
         {
-            PlotManager.instance.StartPlot("Assets/Resources/Plots/emergencyScene.txt");
+            PlotManager.instance.AddPlotQueue("Assets/Resources/Plots/emergencyScene.txt",RoundManager.instance.canvas.Me);
             GlobalVar.instance.everReachingMaxExposureValue = true;
             return;
         }
         
-        PlotManager.instance.StartPlot("Assets/Resources/Plots/loseGameScene.txt");
+        PlotManager.instance.AddPlotQueue("Assets/Resources/Plots/loseGameScene.txt",RoundManager.instance.canvas.Me);
     }
     
     private void Start()
