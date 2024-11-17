@@ -57,12 +57,6 @@ public class GameLoader : MonoBehaviour
         }
     }
     
-    public void BackToMainMenu()
-    {
-        SceneManager.LoadScene(0);
-    }
-    
-    
     // Start is called before the first frame update
     void Awake()
     {
