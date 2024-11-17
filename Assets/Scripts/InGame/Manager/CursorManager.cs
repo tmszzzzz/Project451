@@ -11,6 +11,13 @@ public class CursorManager : MonoBehaviour
     [SerializeField] private PanelController panelController;
     [SerializeField] private CanvasBehavior canvas;
     [SerializeField] private GameObject cursorSelected;
+
+    [SerializeField]
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip tap;
+
+    private bool ifTapSound = true;
     private void Awake()
     {
         _mainCamera = Camera.main;
@@ -76,11 +83,17 @@ public class CursorManager : MonoBehaviour
     {
         if (hit.collider.gameObject.GetComponent<NodeBehavior>() != null)
         {
+            if (ifTapSound)
+            {
+                //audioSource.PlayOneShot(tap);
+                ifTapSound = false;
+            }
             cursorSelected.transform.position = hit.transform.position;
             cursorSelected.transform.rotation = _mainCamera.transform.rotation;
         }
         else
         {
+            ifTapSound = true;
             ResetCursorSelected();
         }
     }

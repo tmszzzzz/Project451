@@ -19,13 +19,12 @@ public class WarningVignette : MonoBehaviour
         int v = GlobalVar.instance.globalExposureValue;
         int half = GlobalVar.instance.maxGlobalExposureValue / 2;
         int _3quarter = half / 2 + half;
-        realA = Mathf.Lerp(realA, (float)(v - half) / (float)half, Time.deltaTime);
+        realA = Mathf.Lerp(realA, (float)(v - half) / (float)half, 5*Time.deltaTime);
         image.color=new Color(0.5f + (r - 0.5f)* Mathf.Clamp(v-_3quarter,0,_3quarter / 3)/ (GlobalVar.instance.maxGlobalExposureValue - _3quarter),image.color.g,image.color.b,realA) ;
     }
 
     public void PlayHeartbeatSound()
     {
-        Debug.Log("1");
         int v = GlobalVar.instance.globalExposureValue;
         int half = GlobalVar.instance.maxGlobalExposureValue / 2;
         int _3quarter = half / 2 + half;
