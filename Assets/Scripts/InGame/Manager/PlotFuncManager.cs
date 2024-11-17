@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -27,13 +28,13 @@ public class PlotFuncManager : MonoBehaviour
     public void loseTheGame()
     {
         GameLoader.instance.SaveDataForEndScene(false);
-        SceneManager.LoadScene(2);
+        StartCoroutine(Camera.main.GetComponent<esc>().LoadSceneCoroutine(2));
     }
 
     public void winTheGame()
     {
         GameLoader.instance.SaveDataForEndScene(true);
-        SceneManager.LoadScene(2);
+        StartCoroutine(Camera.main.GetComponent<esc>().LoadSceneCoroutine(2));
     }
 
     public void emergencyCode()

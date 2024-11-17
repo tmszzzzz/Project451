@@ -53,7 +53,7 @@ public class esc : MonoBehaviour
         StartCoroutine(LoadSceneCoroutine(0));
     }
     
-    private IEnumerator LoadSceneCoroutine(int sceneName)
+    public IEnumerator LoadSceneCoroutine(int sceneName)
     {
         bg.gameObject.SetActive(true);
         
