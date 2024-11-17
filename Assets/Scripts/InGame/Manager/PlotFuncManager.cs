@@ -39,6 +39,7 @@ public class PlotFuncManager : MonoBehaviour
     public void emergencyCode()
     {
         GlobalVar.instance.globalExposureValue = GlobalVar.instance.maxGlobalExposureValue / 2;
+        MessageBar.instance.AddMessage("他们的牺牲使你获得了第二次机会。");
     }
 
     public void lostABook()
@@ -61,7 +62,9 @@ public class PlotFuncManager : MonoBehaviour
 
     public void gainHugeAmountOfExposureValue()
     {
-        GlobalVar.instance.AddGlobalExposureValue(50);
+        int origin = GlobalVar.instance.globalExposureValue;
+        GlobalVar.instance.AddGlobalExposureValue(30);
+        if (GlobalVar.instance.globalExposureValue > 80) GlobalVar.instance.globalExposureValue = Mathf.Max(origin, 80);
         MessageBar.instance.AddMessage($"你的暴露值大幅增长.");
     }
 
