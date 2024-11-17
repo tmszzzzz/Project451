@@ -13,6 +13,56 @@ public class GameLoader : MonoBehaviour
     public bool loadingAnExistingGame = false;
     public string loadFilePath = "Assets/Saves/save.json";
     
+    //Used For end scene
+    public int usedDays = 0;
+    public int transformedNodes = 0;
+    public int transformedBib = 0;
+    public int transformedFire = 0;
+    public int transformedKey = 0;
+    public bool winGame = false;
+    public int gainBooks = 0;
+
+    public void SaveDataForEndScene(bool win)
+    {
+        usedDays = GlobalVar.instance.roundNum;
+        winGame = win;
+        gainBooks = 0;
+        transformedBib = 0;
+        transformedFire = 0;
+        transformedKey = 0;
+        transformedNodes = 0;
+        
+        foreach(GameObject node in RoundManager.instance.canvas.GetNodeList())
+        {
+            NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
+
+            gainBooks += nodeBehavior.properties.numOfBooks;
+            
+            if (nodeBehavior.properties.state >= Properties.StateEnum.AWAKENED)
+            {
+                transformedNodes++;
+                if (nodeBehavior.properties.type == Properties.typeEnum.BIBLIOFHILE)
+                {
+                    transformedBib++;
+                }
+                else if (nodeBehavior.properties.type == Properties.typeEnum.FIREFIGHTER)
+                {
+                    transformedFire++;
+                }
+                else if (nodeBehavior.properties.type == Properties.typeEnum.KEYNODE)
+                {
+                    transformedKey++;
+                }
+            }
+        }
+    }
+    
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    
+    
     // Start is called before the first frame update
     void Awake()
     {

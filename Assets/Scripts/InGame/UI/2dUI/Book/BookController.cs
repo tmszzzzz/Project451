@@ -11,7 +11,8 @@ public class BookController : MonoBehaviour
     public void AddOnePageToBook(Sprite pageSpirite)
     {
         book.addOnePageToEndOfBook(pageSpirite);
-        newContentBookAlertImage.SetActive(true);
+        TurnPageTo(book.bookPages.Length);
+        Alarm();
     }
 
     public void TurnPageTo(int num)
@@ -22,7 +23,8 @@ public class BookController : MonoBehaviour
     public void subsititute(Sprite pageSprite, int num)
     {
         book.SubstitutueAPageInTheMiddle(pageSprite, num);
-        newContentBookAlertImage.SetActive(true);
+        TurnPageTo(num);
+        Alarm();   
     }
 
     public void Alarm()

@@ -60,6 +60,18 @@ public class QuestOfFindAllKeyNodesInRegion : QuestUnit
             }
         }
 
-        return "吸纳并维持"+ regionName +"内（"+ finished +"/"+ keyNodesInThisRegion.Count + "）名关键人物";
+        return "招募并维持"+ regionName +"内（"+ finished +"/"+ keyNodesInThisRegion.Count + "）名关键人物";
+    }
+    
+    public override void ActionsWhenQuestIsCompleted()
+    {
+            if (targetRegion == 0)
+            {
+                PlotManager.instance.AddPlotQueue("Assets/Resources/Plots/midScene1.txt", RoundManager.instance.canvas.Me);
+            }
+            else if (targetRegion == 1)
+            {
+                PlotManager.instance.AddPlotQueue("Assets/Resources/Plots/midScene2.txt", RoundManager.instance.canvas.Me);
+            }
     }
 }

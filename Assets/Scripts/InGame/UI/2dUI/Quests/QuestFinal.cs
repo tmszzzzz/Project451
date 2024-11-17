@@ -46,14 +46,10 @@ public class QuestFinal : QuestUnit
     }
     
     [SerializeField] private string winGamePlotPath = "Assets/Resources/Plots/winGameScene.txt";
-    
-    public override void Update()
-    {
-        base.Update();
 
-        if (isQuestCompleted)
-        {
-            PlotManager.instance.AddPlotQueue(winGamePlotPath, RoundManager.instance.canvas.Me);
-        }
+    public override void ActionsWhenQuestIsCompleted()
+    {
+        PlotManager.instance.AddPlotQueue(winGamePlotPath, RoundManager.instance.canvas.Me);
     }
+    
 }

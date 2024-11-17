@@ -95,12 +95,14 @@ public class QuestPanel : MonoBehaviour
         for (int i = 0; i < questsList.Count; i++)
         {
             GameObject quest = questsList[i];
+            var questUnit = quest.GetComponent<QuestUnit>();
             float targetY = startHeight + i * heightBetweenQuests;
             Vector2 targetPosition = new Vector2(fixPositionX, -targetY);
             quest.GetComponent<RectTransform>().anchoredPosition = Vector2.Lerp(quest.GetComponent<RectTransform>().anchoredPosition, targetPosition, Time.deltaTime * 5);
             
-            if (quest.GetComponent<QuestUnit>().isQuestCompleted)
+            if (questUnit.isQuestCompleted)
             {
+                questUnit.ActionsWhenQuestIsCompleted();
                 StartCoroutine(DelayedRemoveAction(quest, 5f));
             }
         }

@@ -34,4 +34,9 @@ public class QuestUnit : MonoBehaviour
             isQuestCompleted = true;
         }
     }
+    
+    public virtual void ActionsWhenQuestIsCompleted()
+    {
+        Debug.Log("Quest Completed");
+    }
 }

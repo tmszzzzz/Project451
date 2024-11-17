@@ -26,6 +26,9 @@ public class QuestOfDeal : QuestUnit
 
     public override bool CheckIfQuestIsFinished()
     {
+        if (AllKeyNodesInRegionTransformed())
+            return true;
+        
         if (GlobalVar.instance.roundNum - GlobalVar.instance.dealStartRound <= turnsForCompletion)
         {
             return false;
@@ -56,16 +59,14 @@ public class QuestOfDeal : QuestUnit
 
     public string winDealPlotPath;
     public string loseDealPlotPath;
-    public override void Update()
-    {
-        base.Update();
 
+    public override void ActionsWhenQuestIsCompleted()
+    {
         if (AllKeyNodesInRegionTransformed())
         {
             PlotManager.instance.AddPlotQueue(winDealPlotPath, RoundManager.instance.canvas.Me);
         }
-        
-        if (isQuestCompleted)
+        else
         {
             PlotManager.instance.AddPlotQueue(loseDealPlotPath, RoundManager.instance.canvas.Me);
         }

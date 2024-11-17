@@ -26,12 +26,14 @@ public class PlotFuncManager : MonoBehaviour
 
     public void loseTheGame()
     {
-        SceneManager.LoadScene("LoseScene");
+        GameLoader.instance.SaveDataForEndScene(false);
+        SceneManager.LoadScene(2);
     }
 
     public void winTheGame()
     {
-        SceneManager.LoadScene("WinScene");
+        GameLoader.instance.SaveDataForEndScene(true);
+        SceneManager.LoadScene(2);
     }
 
     public void emergencyOperation()
