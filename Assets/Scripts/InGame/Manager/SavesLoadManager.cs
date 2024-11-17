@@ -348,7 +348,7 @@ public class SavesLoadManager : MonoBehaviour
             List<SerializableConnectionBehavior> serializableConnectionBehaviors = deserializedData.connectionBehaviors;
             var conL = canvas.GetConnectionList();
             int cl = conL.Count;
-            for (int i = 0; i < cl; i++)
+            for (int i = 0; i < Mathf.Min(cl,serializableConnectionBehaviors.Count); i++)
             {
                 var cb = conL[i].GetComponent<ConnectionBehavior>();
                 cb.unlockTag = serializableConnectionBehaviors[i].unlockTag;
