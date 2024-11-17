@@ -19,6 +19,6 @@ public class QuestToFindLeon : QuestUnit
 
     public override string UpdateDescription()
     {
-        return "找到（"+ (LNode.properties.state >= Properties.StateEnum.AWAKENED ? 1 : 0) +"/1）名关键人物";
+        return "吸纳（"+ (LNode.properties.state >= Properties.StateEnum.AWAKENED ? 1 : 0) +"/1）名关键人物";
     }
 }

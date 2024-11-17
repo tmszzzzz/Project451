@@ -13,6 +13,7 @@ public class QuestPanel : MonoBehaviour
     [SerializeField] private GameObject questPoliceStationPrefab;
     [SerializeField] private GameObject questFireHousePrefab;
     [SerializeField] private GameObject questDealPrefab;
+    [SerializeField] private GameObject questFinalPrefab;
 
     [SerializeField] private float heightBetweenQuests = 20;
     [SerializeField] private float startHeight = 0f;
@@ -62,6 +63,10 @@ public class QuestPanel : MonoBehaviour
                 newQuest = Instantiate(questDealPrefab, initTransform);
                 i = 4;
                 break;
+            case "Final":
+                newQuest = Instantiate(questFinalPrefab, initTransform);
+                i = 5;
+                break;
             default:
                 newQuest = Instantiate(quest0Prefab, initTransform);
                 i = 0;
@@ -79,7 +84,7 @@ public class QuestPanel : MonoBehaviour
         Destroy(quest.gameObject);
     }
     
-    private IEnumerator DelayedAction(GameObject quest, float delay)
+    private IEnumerator DelayedRemoveAction(GameObject quest, float delay)
     {
         RemoveAQuest(quest);
         yield return new WaitForSeconds(delay);
@@ -96,7 +101,7 @@ public class QuestPanel : MonoBehaviour
             
             if (quest.GetComponent<QuestUnit>().isQuestCompleted)
             {
-                StartCoroutine(DelayedAction(quest, 5f));
+                StartCoroutine(DelayedRemoveAction(quest, 5f));
             }
         }
     }

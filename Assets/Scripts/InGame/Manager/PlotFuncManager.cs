@@ -153,5 +153,8 @@ public class PlotFuncManager : MonoBehaviour
         MessageBar.instance.AddMessage("消防员提供的书数量翻倍.");
     }
 
-
+    public void OpenFinalQuest()
+    {
+        QuestPanel.instance.AddQuest("Final");
+    }
 }
