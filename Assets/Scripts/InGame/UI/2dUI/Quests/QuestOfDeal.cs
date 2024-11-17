@@ -6,7 +6,6 @@ public class QuestOfDeal : QuestUnit
 {
     private List<NodeBehavior> keyNodesInPoliceStation = new List<NodeBehavior>();
 
-    private int startTurn;
     [SerializeField] private int turnsForCompletion = 30;
     
     // Start is called before the first frame update
@@ -21,13 +20,13 @@ public class QuestOfDeal : QuestUnit
             }
         }
 
-        startTurn = GlobalVar.instance.roundNum;
+        GlobalVar.instance.dealStartRound = GlobalVar.instance.roundNum;
     }
 
 
     public override bool CheckIfQuestIsFinished()
     {
-        if (GlobalVar.instance.roundNum - startTurn <= turnsForCompletion)
+        if (GlobalVar.instance.roundNum - GlobalVar.instance.dealStartRound <= turnsForCompletion)
         {
             return false;
         }
@@ -52,7 +51,7 @@ public class QuestOfDeal : QuestUnit
 
     public override string UpdateDescription()
     {
-        return "赌约还剩" + (turnsForCompletion - GlobalVar.instance.roundNum + startTurn) + "天";
+        return "赌约还剩" + (turnsForCompletion - GlobalVar.instance.roundNum + GlobalVar.instance.dealStartRound) + "天";
     }
 
     public string winDealPlotPath;

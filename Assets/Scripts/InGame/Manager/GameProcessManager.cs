@@ -12,8 +12,8 @@ public class GameProcessManager : MonoBehaviour
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
     [SerializeField] float initialProbabilityOfInfo = 0.4f;
-    [SerializeField] GameObject probabilityOfInfoPanel;
-    [SerializeField] private TutorialsController _tutorialsController;
+    [SerializeField] public GameObject probabilityOfInfoPanel;
+    [SerializeField] public TutorialsController _tutorialsController;
 
     public void ProcessManagerCheckingForMaxExposureValue()
     {
