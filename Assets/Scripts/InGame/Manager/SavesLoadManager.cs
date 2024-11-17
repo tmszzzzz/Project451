@@ -155,6 +155,7 @@ public class SavesLoadManager : MonoBehaviour
         public bool q3;
         public bool q4;
         public bool q5;
+        public bool q6;
 
         public SerializableQuests(QuestPanel questPanel)
         {
@@ -163,6 +164,7 @@ public class SavesLoadManager : MonoBehaviour
             q3 = false;
             q4 = false;
             q5 = false;
+            q6 = false;
             foreach (int i in questPanel.questIds)
             {
                 switch (i)
@@ -181,6 +183,9 @@ public class SavesLoadManager : MonoBehaviour
                         break;
                     case 4:
                         q5 = true;
+                        break;
+                    case 5:
+                        q6 = true;
                         break;
                 }
             }
@@ -371,12 +376,12 @@ public class SavesLoadManager : MonoBehaviour
             
 
             SerializableQuests serializableQuests = deserializedData.quests;
-            string[] strs = new[] { "Zero", "Office","PoliceStation","FireHouse","Deal" };
-            if(serializableQuests.q1) QuestPanel.instance.AddQuest(strs[0]);
-            if(serializableQuests.q2) QuestPanel.instance.AddQuest(strs[1]);
-            if(serializableQuests.q3) QuestPanel.instance.AddQuest(strs[2]);
-            if(serializableQuests.q4) QuestPanel.instance.AddQuest(strs[3]);
-            if(serializableQuests.q5) QuestPanel.instance.AddQuest(strs[4]);
+            if(serializableQuests.q1) QuestPanel.instance.AddQuest("Zero");
+            if(serializableQuests.q2) QuestPanel.instance.AddQuest("Office");
+            if(serializableQuests.q3) QuestPanel.instance.AddQuest("PoliceStation");
+            if(serializableQuests.q4) QuestPanel.instance.AddQuest("FireHouse");
+            if(serializableQuests.q5) QuestPanel.instance.AddQuest("Deal");
+            if(serializableQuests.q6) QuestPanel.instance.AddQuest("Final");
 
             SerializableBookPages serializableBookPages = deserializedData.bookPages;
             book.bookPages = new Sprite[serializableBookPages.PageIds.Count];
