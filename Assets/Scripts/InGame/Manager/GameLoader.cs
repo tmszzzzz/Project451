@@ -69,16 +69,33 @@ public class GameLoader : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    private IEnumerator Fade(float fadeDuration)
+    {
+        AudioSource aus = Camera.main.GetComponent<AudioSource>();
+        if (aus.isPlaying)
+        {
+            float startVolume = aus.volume;
+            while (aus.volume > 0)
+            {
+                aus.volume -= startVolume * Time.deltaTime / fadeDuration;
+                yield return null;
+            }
+            aus.Stop();
+            aus.volume = startVolume; // 重置音量
+        }
+    }
 
     public void newGame()
     {
         loadingAnExistingGame = false;
+        StartCoroutine(Fade(1));
         LoadSceneAsync(1);
     }
 
     public void openAGame()
     {
         loadingAnExistingGame = true;
+        StartCoroutine(Fade(1));
         LoadSceneAsync(1);
     }
     
