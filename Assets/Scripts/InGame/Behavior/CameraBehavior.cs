@@ -220,6 +220,7 @@ public class CameraBehavior : MonoBehaviour
         realFieldOfView = 50;
         realPosition = new Vector3(2.35759401f,58.9099998f,-0.711277723f);
         realRotation = Quaternion.Euler(new Vector3(56.5750008f, 60f, 0f));
+        await Task.Delay(1500);
     }
 
     public async Task SwitchTo2Enter()
@@ -232,6 +233,7 @@ public class CameraBehavior : MonoBehaviour
         realFieldOfView = 50;
         realPosition = new Vector3(-3.94880056f, 58.9099998f, -5.07163668f);
         realRotation = Quaternion.Euler(new Vector3(56.5750008f, 300f, 0f));
+        await Task.Delay(1500);
     }
     
     public async Task SwitchTo3Enter()
@@ -244,5 +246,6 @@ public class CameraBehavior : MonoBehaviour
         realFieldOfView = 50;
         realPosition = new Vector3(1.45255613f,58.9099998f,-6.43465853f);
         realRotation = Quaternion.Euler(new Vector3(56.5750008f, 180f, 0f));
+        await Task.Delay(1500);
     }
 }
