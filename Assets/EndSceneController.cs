@@ -15,7 +15,19 @@ public class EndSceneController : MonoBehaviour
     [SerializeField] private string loseText = "你输了";
     public Animator loading;
     public Animator bg;
-    
+    public AudioClip win;
+    public AudioClip fail;
+
+    private void Awake()
+    {
+        Camera.main.GetComponent<AudioSource>().clip = GameLoader.instance.winGame ? win : fail;
+    }
+
+    private void Start()
+    {
+        Camera.main.GetComponent<AudioSource>().Play();
+    }
+
     private void Update()
     {
         if (GameLoader.instance.winGame)
@@ -45,6 +57,7 @@ public class EndSceneController : MonoBehaviour
 
     public void ExitToMain()
     {
+        StartCoroutine(Fade(1));
         StartCoroutine(LoadSceneCoroutine(0));
     }
     
@@ -87,5 +100,21 @@ public class EndSceneController : MonoBehaviour
         }
 
         Debug.Log("Scene loaded!");
+    }
+    
+    private IEnumerator Fade(float fadeDuration)
+    {
+        AudioSource aus = Camera.main.GetComponent<AudioSource>();
+        if (aus.isPlaying)
+        {
+            float startVolume = aus.volume;
+            while (aus.volume > 0)
+            {
+                aus.volume -= startVolume * Time.deltaTime / fadeDuration;
+                yield return null;
+            }
+            aus.Stop();
+            aus.volume = startVolume; // 重置音量
+        }
     }
 }

@@ -55,6 +55,7 @@ public class esc : MonoBehaviour
     
     public IEnumerator LoadSceneCoroutine(int sceneName)
     {
+        BackgroundMusicManager.instance.switchTo(-1);
         bg.gameObject.SetActive(true);
         
         bg.Play("begin");

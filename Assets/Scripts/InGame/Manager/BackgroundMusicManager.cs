@@ -67,7 +67,6 @@ public class BackgroundMusicManager : MonoBehaviour
     
     private IEnumerator FadeAndSwitchBGM(int nextIndex, float fadeDuration)
     {
-        Debug.Log(1);
         if (audioSource.isPlaying)
         {
             float startVolume = audioSource.volume;
