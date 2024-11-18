@@ -431,6 +431,13 @@ MonoBehaviour:
   bg: {fileID: 1692016081}
   loadingAnExistingGame: 1
   loadFilePath: Assets/Saves/save.json
+  usedDays: 0
+  transformedNodes: 0
+  transformedBib: 0
+  transformedFire: 0
+  transformedKey: 0
+  winGame: 0
+  gainBooks: 0
 --- !u!1 &491103435
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,10 +810,10 @@ RectTransform:
   - {fileID: 1297142669}
   m_Father: {fileID: 1054297050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -820, y: -359}
-  m_SizeDelta: {x: 270, y: 90}
+  m_SizeDelta: {x: -2290, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &828284263
 MonoBehaviour:
@@ -936,10 +943,10 @@ RectTransform:
   - {fileID: 758734682}
   m_Father: {fileID: 1054297050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -820.0002, y: -190}
-  m_SizeDelta: {x: 270, y: 90}
+  m_SizeDelta: {x: -2290, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &852482837
 MonoBehaviour:
@@ -1595,10 +1602,10 @@ RectTransform:
   - {fileID: 766798401}
   m_Father: {fileID: 1054297050}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -820, y: -30}
-  m_SizeDelta: {x: 270, y: 90}
+  m_SizeDelta: {x: -2290, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1817828446
 MonoBehaviour:
