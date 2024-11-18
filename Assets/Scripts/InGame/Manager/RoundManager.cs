@@ -31,6 +31,15 @@ public class RoundManager : MonoBehaviour
     public bool operationForbidden = false;
     private int forbidTag = 0;
     public bool isDetectiveComing = false;
+    public bool switching1 = false;
+    public bool switching2 = false;
+    public bool switching3 = false;
+    public GameObject switchingPanel1;
+    public GameObject switchingPanel2;
+    public GameObject switchingPanel3;
+    public AudioClip s1;
+    public AudioClip s2;
+    public AudioClip s3;
 
 
     //以下是事件
@@ -306,12 +315,16 @@ public class RoundManager : MonoBehaviour
         await Task.Delay(1000);
         
         if (!skipCameraOverviewTemp)
-            await mainCamera.OverviewExit();
+            await mainCamera.FocusExit();
         
         await PlotManager.instance.ReadPlotQueue();
+
+        
         
         OperationRelease();//释放操作屏蔽
+        
         forbidden.SetActive(false);
+        
         if (isDetectiveComing)
         {
             bookC.TurnPageTo(13);

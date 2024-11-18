@@ -76,16 +76,19 @@ public class PlotFuncManager : MonoBehaviour
 
     public void openSceneOfOffice()
     {
+        RoundManager.instance.switching1 = true;
         QuestPanel.instance.AddQuest("Office");
     }
 
     public void openSceneOfPoliceStation()
     {
+        RoundManager.instance.switching2 = true;
         QuestPanel.instance.AddQuest("Police");
     }
 
     public void openSceneOfFirehouse()
     {
+        RoundManager.instance.switching3 = true;
         QuestPanel.instance.AddQuest("FireHouse");
     }
 
@@ -162,5 +165,10 @@ public class PlotFuncManager : MonoBehaviour
     public void OpenFinalQuest()
     {
         QuestPanel.instance.AddQuest("Final");
+    }
+
+    public void bgmOff()
+    {
+        BackgroundMusicManager.instance.switchTo(-1);
     }
 }

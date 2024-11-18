@@ -1,13 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BackgroundMusicManager : MonoBehaviour
 {
+    public static BackgroundMusicManager instance;
+    
     public AudioSource audioSource; // 负责播放背景音乐的音频源
     public List<AudioClip> bgms; // 背景音乐列表
     public int nowPlaying = -1; // 当前播放的背景音乐索引
-    private IEnumerator fadeInCoroutine; // 用于控制淡入的协程
+    private IEnumerator fadeCoroutine; 
+
+
+    private void Awake()
+    {
+        // 如果已有实例且不是当前实例，销毁当前实例，确保单例唯一性
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        // 将当前实例设为单例实例
+        instance = this;
+    }
 
     // Update is called once per frame
     void Update()
@@ -25,7 +42,7 @@ public class BackgroundMusicManager : MonoBehaviour
         int v = GlobalVar.instance.globalExposureValue;
         int half = GlobalVar.instance.maxGlobalExposureValue / 2;
         int _3quarter = half / 2 + half;
-        audioSource.volume = Mathf.Lerp(audioSource.volume, Mathf.Clamp(1 - (float)(v+5 - _3quarter) / ((float)_3quarter / 3),0,1), 5*Time.deltaTime);
+        if(fadeCoroutine == null)audioSource.volume = Mathf.Lerp(audioSource.volume, Mathf.Clamp(1 - (float)(v+5 - _3quarter) / ((float)_3quarter / 3),0,1), 5*Time.deltaTime);
     }
 
     private void PlayCurrentBGM()
@@ -38,7 +55,14 @@ public class BackgroundMusicManager : MonoBehaviour
     }
     public void func()
     {
-        StartCoroutine(FadeAndSwitchBGM((nowPlaying + 2)%4-1, 1f));
+        fadeCoroutine = FadeAndSwitchBGM((nowPlaying + 2) % 4 - 1, 1f);
+        StartCoroutine(fadeCoroutine);
+    }
+    
+    public void switchTo(int n)
+    {
+        fadeCoroutine = FadeAndSwitchBGM(n, 1f);
+        StartCoroutine(fadeCoroutine);
     }
     
     
@@ -60,6 +84,7 @@ public class BackgroundMusicManager : MonoBehaviour
         // 切换并播放新的音频
         nowPlaying = nextIndex;
         PlayCurrentBGM();
+        fadeCoroutine = null;
     }
 
 }

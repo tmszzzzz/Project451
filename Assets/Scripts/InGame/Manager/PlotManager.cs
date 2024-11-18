@@ -362,10 +362,37 @@ public class PlotManager : MonoBehaviour
             await tcs.Task;
             if (item.FocusNode != null)
             {
-                await camB.PlotFocusExit();
+                await camB.FocusExit();
             }
 
             await Task.Delay(1000);
+            if (RoundManager.instance.switching1)
+            {
+                RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s1);
+                await RoundManager.instance.mainCamera.SwitchTo1Enter();
+                RoundManager.instance.switchingPanel1.SetActive(true);
+                await Task.Delay(5000);
+                await RoundManager.instance.mainCamera.FocusExit();
+                BackgroundMusicManager.instance.switchTo(0);
+            }
+            if (RoundManager.instance.switching2)
+            {
+                RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s2);
+                await RoundManager.instance.mainCamera.SwitchTo2Enter();
+                RoundManager.instance.switchingPanel2.SetActive(true);
+                await Task.Delay(5000);
+                await RoundManager.instance.mainCamera.FocusExit();
+                BackgroundMusicManager.instance.switchTo(1);
+            }
+            if (RoundManager.instance.switching3)
+            {
+                RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s3);
+                await RoundManager.instance.mainCamera.SwitchTo3Enter();
+                RoundManager.instance.switchingPanel3.SetActive(true);
+                await Task.Delay(5000);
+                await RoundManager.instance.mainCamera.FocusExit();
+                BackgroundMusicManager.instance.switchTo(2);
+            }
         }
     }
 
