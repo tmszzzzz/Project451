@@ -70,6 +70,7 @@ public class PlotAndPageHandler : MonoBehaviour
             //clear pageSprite  
             pageSprite = null;
             pageButton.GetComponent<BreathingEffect>().enabled = false;
+            CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(CameraBehavior.instance.pop);
         }
     }
 }

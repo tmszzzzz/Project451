@@ -9,6 +9,7 @@ public class MessageBar : MonoBehaviour
     public static MessageBar instance;
     public TextMeshProUGUI messageText; // 用于显示消息
     private Queue<string> messageQueue = new Queue<string>(); // 消息队列
+    public AudioClip msg;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class MessageBar : MonoBehaviour
     public void AddMessage(string message)
     {
         messageQueue.Enqueue(message); // 添加消息到队列
+        CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(msg);
         StartCoroutine(RemoveMessageAfterDelay(5f)); // 启动协程，5秒后移除消息
     }
 

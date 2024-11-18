@@ -36,6 +36,7 @@ public class TextAppearOneByOne : MonoBehaviour
             }
             
             uiText.text += letter; // Add one character at a time
+            CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(CameraBehavior.instance.tap);
             //Debug.Log(audioSource.isPlaying);
             // Check if the current character is a space
             if (letter == ' ')
