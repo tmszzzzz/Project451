@@ -7,11 +7,24 @@ public class BookController : MonoBehaviour
 {
     public Book book;
     public GameObject newContentBookAlertImage;
+    public static BookController instance;
+    
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        instance = this;
+    }
 
     public void AddOnePageToBook(Sprite pageSpirite)
     {
         book.addOnePageToEndOfBook(pageSpirite);
         TurnPageTo(book.bookPages.Length);
+        Canvas.ForceUpdateCanvases();
         Alarm();
     }
 
@@ -24,6 +37,7 @@ public class BookController : MonoBehaviour
     {
         book.SubstitutueAPageInTheMiddle(pageSprite, num);
         TurnPageTo(num);
+        Canvas.ForceUpdateCanvases();
         Alarm();   
     }
 

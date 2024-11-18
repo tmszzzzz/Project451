@@ -62,13 +62,13 @@ public class PlotAndPageHandler : MonoBehaviour
     {
         if (isPaging)
         {
-            Debug.Log("Node" + " is paging " + pageSprite.name);
+            //Debug.Log("Node" + " is paging " + pageSprite.name);
             GlobalVar.instance.AddResourcePoint(1);
+            BookController.instance.AddOnePageToBook(pageSprite);
+            
             isPaging = false;
-
             //clear pageSprite  
             pageSprite = null;
-
             pageButton.GetComponent<BreathingEffect>().enabled = false;
         }
     }
