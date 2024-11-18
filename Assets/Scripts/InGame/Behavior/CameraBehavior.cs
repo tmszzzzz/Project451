@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class CameraBehavior : MonoBehaviour
 {
+    public static CameraBehavior instance;
     [SerializeField] private float zoomSpeed = 5000f;  
     [SerializeField] private float minZoom = 2f;     
     [SerializeField] private float maxZoom = 1000f;
@@ -103,6 +104,7 @@ public class CameraBehavior : MonoBehaviour
         realPosition = transform.position;
         realRotation = transform.rotation;
         realFieldOfView = cam.fieldOfView;
+        instance = this;
     }
 
     void Update()

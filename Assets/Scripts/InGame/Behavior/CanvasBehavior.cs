@@ -34,6 +34,9 @@ public class CanvasBehavior : MonoBehaviour
     public MessageBar mb;
     public bool editorMode = false;
     private List<GameObject> connectionCreating;
+    public AudioClip exposed;
+    public AudioClip active;
+    public AudioClip left;
 
     public void SavePositions(bool asMap = false)
     {
@@ -261,6 +264,9 @@ public class CanvasBehavior : MonoBehaviour
 
     public async Task RefreshAllNodes()
     {
+        bool haveExposed = false;
+        bool haveLeft = false;
+        bool haveActive = false;
         //Debug.Log(1);
         // 第一步：收集所有节点的即将改变为的状态
         Dictionary<GameObject, Properties.StateEnum> newStateMap = new Dictionary<GameObject, Properties.StateEnum>();
@@ -274,6 +280,9 @@ public class CanvasBehavior : MonoBehaviour
             {
                 // 收集每个节点的新状态
                 Properties.StateEnum newState = nodeBehavior.PredictState().state;
+                if (newState == Properties.StateEnum.EXPOSED) haveExposed = true;
+                if (newState == Properties.StateEnum.AWAKENED && nodeBehavior.properties.state != Properties.StateEnum.AWAKENED) haveActive = true;
+                if (newState == Properties.StateEnum.NORMAL && nodeBehavior.properties.state != Properties.StateEnum.NORMAL) haveLeft = true;
                 newStateMap.Add(node, newState);
             }
             else
@@ -296,6 +305,10 @@ public class CanvasBehavior : MonoBehaviour
                 nodeBehavior.SetState(newState);
             }
         }
+        
+        if(haveExposed) cam.GetComponent<AudioSource>().PlayOneShot(exposed);
+        else if(haveLeft) cam.GetComponent<AudioSource>().PlayOneShot(left);
+        else if(haveActive) cam.GetComponent<AudioSource>().PlayOneShot(active);
 
         if (newStateMap.Count != 0) await Task.Delay(750);
     }
