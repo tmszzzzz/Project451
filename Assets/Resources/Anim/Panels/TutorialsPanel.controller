@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1102 &-8456559404254638580
+--- !u!1102 &-5839363380287316192
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
@@ -36,14 +36,14 @@ AnimatorStateMachine:
   m_Name: Base Layer
   m_ChildStates:
   - serializedVersion: 1
-    m_State: {fileID: -8456559404254638580}
-    m_Position: {x: 250, y: 220, z: 0}
-  - serializedVersion: 1
     m_State: {fileID: 6964012254565044698}
     m_Position: {x: 446.07062, y: 133.27058, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7293676633384800552}
-    m_Position: {x: 481.07062, y: 198.27058, z: 0}
+    m_Position: {x: 480, y: 200, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -5839363380287316192}
+    m_Position: {x: 624.43726, y: 9.7439575, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
