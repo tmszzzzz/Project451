@@ -32,6 +32,8 @@ public class CameraBehavior : MonoBehaviour
     [SerializeField] private float decrementLerpSpeed = 0.6f;
     [SerializeField] private GameObject PlotPtrPrefab;
     public AudioClip pageSound;
+    public AudioClip pop;
+    public AudioClip tap;
 
     void HandleMovement()
     {
