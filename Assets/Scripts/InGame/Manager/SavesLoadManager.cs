@@ -47,6 +47,7 @@ public class SavesLoadManager : MonoBehaviour
         public List<int> nodesAwakendOnce;
         public bool skipCameraOverview;
         public int dealStartRound;
+        public int nowPlaying;
 
         // 构造函数，用于从 GlobalVar 初始化
         public SerializableGlobalVar(GlobalVar globalVar)
@@ -82,6 +83,7 @@ public class SavesLoadManager : MonoBehaviour
             this.nodesAwakendOnce = new List<int>(globalVar.nodesAwakendOnce);
             this.skipCameraOverview = globalVar.skipCameraOverview;
             this.dealStartRound = globalVar.dealStartRound;
+            this.nowPlaying = globalVar.nowPlaying;
         }
     }
 
@@ -320,6 +322,7 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.nodesAwakendOnce = new List<int>(serializableGlobalVar.nodesAwakendOnce);
             GlobalVar.instance.skipCameraOverview = serializableGlobalVar.skipCameraOverview;
             GlobalVar.instance.dealStartRound = serializableGlobalVar.dealStartRound;
+            GlobalVar.instance.nowPlaying = serializableGlobalVar.nowPlaying;
             
 
             List<SerializableNodeBehavior> serializableNodeBehaviors = deserializedData.nodeBehaviors;

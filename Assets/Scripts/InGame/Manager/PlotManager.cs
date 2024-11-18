@@ -369,8 +369,9 @@ public class PlotManager : MonoBehaviour
             if (RoundManager.instance.switching1)
             {
                 RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s1);
-                await RoundManager.instance.mainCamera.SwitchTo1Enter();
                 RoundManager.instance.switchingPanel1.SetActive(true);
+                await RoundManager.instance.mainCamera.SwitchTo1Enter();
+                
                 await Task.Delay(5000);
                 await RoundManager.instance.mainCamera.FocusExit();
                 BackgroundMusicManager.instance.switchTo(0);
@@ -378,8 +379,9 @@ public class PlotManager : MonoBehaviour
             if (RoundManager.instance.switching2)
             {
                 RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s2);
-                await RoundManager.instance.mainCamera.SwitchTo2Enter();
                 RoundManager.instance.switchingPanel2.SetActive(true);
+                await RoundManager.instance.mainCamera.SwitchTo2Enter();
+                
                 await Task.Delay(5000);
                 await RoundManager.instance.mainCamera.FocusExit();
                 BackgroundMusicManager.instance.switchTo(1);
@@ -387,8 +389,9 @@ public class PlotManager : MonoBehaviour
             if (RoundManager.instance.switching3)
             {
                 RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s3);
-                await RoundManager.instance.mainCamera.SwitchTo3Enter();
                 RoundManager.instance.switchingPanel3.SetActive(true);
+                await RoundManager.instance.mainCamera.SwitchTo3Enter();
+                
                 await Task.Delay(5000);
                 await RoundManager.instance.mainCamera.FocusExit();
                 BackgroundMusicManager.instance.switchTo(2);

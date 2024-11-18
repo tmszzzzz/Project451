@@ -9,7 +9,6 @@ public class BackgroundMusicManager : MonoBehaviour
     
     public AudioSource audioSource; // 负责播放背景音乐的音频源
     public List<AudioClip> bgms; // 背景音乐列表
-    public int nowPlaying = -1; // 当前播放的背景音乐索引
     private IEnumerator fadeCoroutine; 
 
 
@@ -29,7 +28,7 @@ public class BackgroundMusicManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (nowPlaying == -1)
+        if (GlobalVar.instance.nowPlaying == -1)
         {
             if (audioSource.isPlaying) audioSource.Stop(); // 停止当前播放
             return;
@@ -47,15 +46,15 @@ public class BackgroundMusicManager : MonoBehaviour
 
     private void PlayCurrentBGM()
     {
-        if (bgms.Count == 0 || nowPlaying < 0) return; // 没有音频时直接返回
-        nowPlaying %= bgms.Count; // 防止索引超出范围
-        audioSource.clip = bgms[nowPlaying]; // 设置当前音频片段
+        if (bgms.Count == 0 || GlobalVar.instance.nowPlaying < 0) return; // 没有音频时直接返回
+        GlobalVar.instance.nowPlaying %= bgms.Count; // 防止索引超出范围
+        audioSource.clip = bgms[GlobalVar.instance.nowPlaying]; // 设置当前音频片段
         audioSource.loop = false; // 禁止音频源自带循环
         audioSource.Play(); // 开始播放
     }
     public void func()
     {
-        fadeCoroutine = FadeAndSwitchBGM((nowPlaying + 2) % 4 - 1, 1f);
+        fadeCoroutine = FadeAndSwitchBGM((GlobalVar.instance.nowPlaying + 2) % 4 - 1, 1f);
         StartCoroutine(fadeCoroutine);
     }
     
@@ -82,7 +81,7 @@ public class BackgroundMusicManager : MonoBehaviour
         }
 
         // 切换并播放新的音频
-        nowPlaying = nextIndex;
+        GlobalVar.instance.nowPlaying = nextIndex;
         PlayCurrentBGM();
         fadeCoroutine = null;
     }
