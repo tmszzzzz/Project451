@@ -24,21 +24,20 @@ public class BookController : MonoBehaviour
     {
         book.addOnePageToEndOfBook(pageSpirite);
         TurnPageTo(book.bookPages.Length);
-        Canvas.ForceUpdateCanvases();
         Alarm();
     }
 
     public void TurnPageTo(int num)
     {
         book.currentPage = num % 2 == 0? num + 1 : num;
+        book.UpdateSprites();
     }
 
     public void subsititute(Sprite pageSprite, int num)
     {
         book.SubstitutueAPageInTheMiddle(pageSprite, num);
         TurnPageTo(num);
-        Canvas.ForceUpdateCanvases();
-        Alarm();   
+        Alarm(); 
     }
 
     public void Alarm()
