@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -51,6 +52,11 @@ public class EndSceneController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            string pth = "Assets/Saves/save.json";
+            if (File.Exists(pth))
+            {
+                File.Delete(pth);
+            }
             ExitToMain();   
         }
     }

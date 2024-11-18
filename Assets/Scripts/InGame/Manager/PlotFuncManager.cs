@@ -57,7 +57,7 @@ public class PlotFuncManager : MonoBehaviour
         {
             int randomIndex = random.Next(bookL.Count);
             RoundManager.instance.canvas.AddNodeNumOfBooks(bookL[randomIndex],-1);
-            MessageBar.instance.AddMessage($"{bookL[randomIndex].gameObject.name}损失了一本书.");
+            MessageBar.instance.AddMessage($"{NameManager.instance.ConvertNodeNameToName(bookL[randomIndex].gameObject.name)}损失了一本书.");
         }
     }
 
@@ -133,7 +133,7 @@ public class PlotFuncManager : MonoBehaviour
             }
             int v = random.Next(nbL.Count);
             nbL[v].GetComponent<NodeBehavior>().SetState(Properties.StateEnum.AWAKENED);
-            MessageBar.instance.AddMessage($"{nbL[v].gameObject.name}加入了.");
+            MessageBar.instance.AddMessage($"{NameManager.instance.ConvertNodeNameToName(nbL[v].gameObject.name)}加入了.");
             nbL.Remove(nbL[v]);
         }
     }

@@ -69,7 +69,7 @@ public class PanelController : MonoBehaviour
         Properties properties = node.properties;
         if (properties != null && NodeInfoPanel.activeSelf)
         {
-            nameText.text = currentNode.name;
+            nameText.text = NameManager.instance.ConvertNodeNameToName(currentNode.name);
             stateText.text = properties.stateNameToCNString(properties.state);
             identityText.text = properties.typeNameToCNString(properties.type);
             awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
@@ -105,7 +105,7 @@ public class PanelController : MonoBehaviour
             Properties properties = node.properties;
             if (properties != null && NodeInfoPanel.activeSelf)
             {
-                nameText.text = hoveredObject.name;
+                nameText.text = NameManager.instance.ConvertNodeNameToName(hoveredObject.name);
                 stateText.text = properties.stateNameToCNString(properties.state);
                 identityText.text = properties.typeNameToCNString(properties.type);
                 awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
@@ -132,7 +132,7 @@ public class PanelController : MonoBehaviour
             Properties properties = node.properties;
             if (properties != null && NodeInfoPanel.activeSelf)
             {
-                nameText.text = currentNode.name;
+                nameText.text = NameManager.instance.ConvertNodeNameToName(currentNode.name);
                 stateText.text = properties.stateNameToCNString(properties.state);
                 identityText.text = properties.typeNameToCNString(properties.type);
                 awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
