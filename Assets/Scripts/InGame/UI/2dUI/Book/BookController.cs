@@ -29,7 +29,7 @@ public class BookController : MonoBehaviour
 
     public void TurnPageTo(int num)
     {
-        book.currentPage = num % 2 == 0? num + 1 : num;
+        book.currentPage = num % 2 == 0? num - 1 : num;
         book.UpdateSprites();
     }
 
