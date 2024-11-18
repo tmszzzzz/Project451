@@ -375,6 +375,7 @@ public class PlotManager : MonoBehaviour
                 await Task.Delay(5000);
                 await RoundManager.instance.mainCamera.FocusExit();
                 BackgroundMusicManager.instance.switchTo(0);
+                RoundManager.instance.switching1 = false;
             }
             if (RoundManager.instance.switching2)
             {
@@ -385,6 +386,7 @@ public class PlotManager : MonoBehaviour
                 await Task.Delay(5000);
                 await RoundManager.instance.mainCamera.FocusExit();
                 BackgroundMusicManager.instance.switchTo(1);
+                RoundManager.instance.switching2 = false;
             }
             if (RoundManager.instance.switching3)
             {
@@ -395,6 +397,7 @@ public class PlotManager : MonoBehaviour
                 await Task.Delay(5000);
                 await RoundManager.instance.mainCamera.FocusExit();
                 BackgroundMusicManager.instance.switchTo(2);
+                RoundManager.instance.switching3 = false;
             }
         }
     }
