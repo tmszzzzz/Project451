@@ -11,6 +11,8 @@ public class esc : MonoBehaviour
     public Animator bg;
 
     public Animator loading;
+
+    public AudioClip saveQuit;
     // Update is called once per frame
     void Update()
     {
@@ -24,6 +26,7 @@ public class esc : MonoBehaviour
     {
         QuitPanel.SetActive(true);
         RoundManager.instance.OperationForbidden();
+        GetComponent<AudioSource>().PlayOneShot(saveQuit);
         animator.Play("SaveAndQuitAppear");
     }
 

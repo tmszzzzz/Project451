@@ -163,6 +163,7 @@ public class RoundManager : MonoBehaviour
                         && nb.properties.numOfBooks + BookAllocationMap[targetNode] < nb.properties.maximumNumOfBooks //不可达上限
                         && BookAllocationNum() < GlobalVar.instance.allocationLimit) //分配不可达上限
                     {
+                        CameraBehavior.instance.PageSound();
                         // 执行书籍的转移
                         BookAllocationMap[startNode]--;
                         BookAllocationMap[targetNode]++;

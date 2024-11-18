@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -30,6 +31,7 @@ public class CameraBehavior : MonoBehaviour
     [SerializeField] private float lerpSpeed = 1f;
     [SerializeField] private float decrementLerpSpeed = 0.6f;
     [SerializeField] private GameObject PlotPtrPrefab;
+    public AudioClip pageSound;
 
     void HandleMovement()
     {
@@ -249,5 +251,10 @@ public class CameraBehavior : MonoBehaviour
         realPosition = new Vector3(1.45255613f,58.9099998f,-6.43465853f);
         realRotation = Quaternion.Euler(new Vector3(56.5750008f, 180f, 0f));
         await Task.Delay(1500);
+    }
+
+    public void PageSound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(pageSound);
     }
 }
