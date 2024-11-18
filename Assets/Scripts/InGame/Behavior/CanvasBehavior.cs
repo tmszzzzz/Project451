@@ -173,6 +173,7 @@ public class CanvasBehavior : MonoBehaviour
                     // 如果字段为默认值，则填充默认值
                     nodeBehavior.properties = new Properties
                     {
+                        state = loadedProperties.state != 0 ? loadedProperties.state : 0,
                         type = loadedProperties.type != 0 ? loadedProperties.type : 0,
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
