@@ -37,5 +37,5 @@ def pdf_to_png_with_transparency(input_pdf_path):
     print(f"PDF conversion to PNG with transparency completed. Pages saved in: {output_dir}")
 
 # Usage example
-input_pdf_path = "./6.pdf"  # Replace with your PDF file path
+input_pdf_path = "./7.pdf"  # Replace with your PDF file path
 pdf_to_png_with_transparency(input_pdf_path)
