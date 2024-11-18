@@ -19,11 +19,13 @@ public class ResourcePointAdderButton : MonoBehaviour
     [SerializeField] private GameObject button;
     private float targetScale;
     [SerializeField] float lerpSpeed = 10f;
+    private BreathingEffect _breathingEffect;
 
     // Start is called before the first frame update
     void Start()
     {
         globalVar = GlobalVar.instance;
+        _breathingEffect = this.GetComponent<BreathingEffect>();
     }
 
     // Update is called once per frame
@@ -32,10 +34,12 @@ public class ResourcePointAdderButton : MonoBehaviour
         if (globalVar.resourcePoint <= 0)
         {
             targetScale = 0;
+            _breathingEffect.enabled = false;
         }
         else
         {
             targetScale = 1;
+            _breathingEffect.enabled = true;
         }
 
         textMesh.text = globalVar.resourcePoint.ToString();
