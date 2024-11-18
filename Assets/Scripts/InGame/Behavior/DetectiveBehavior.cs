@@ -17,6 +17,9 @@ public class DetectiveBehavior : MonoBehaviour
     [SerializeField] private Transform LightconeCenter;
     [SerializeField] private GameObject LightconePrefab;
     [SerializeField] private List<GameObject> Lightcones;
+    public AudioClip detedted;
+    public AudioClip spotlight;
+    public AudioClip notice;
     private void Start()
     {
         if (GameLoader.instance != null && !GameLoader.instance.loadingAnExistingGame)
@@ -173,7 +176,12 @@ public class DetectiveBehavior : MonoBehaviour
                 
             }
         }
-        if (!skip) await Task.Delay(1000);
+
+        if (!skip)
+        {
+            CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(detedted);
+            await Task.Delay(1000);
+        }
         foreach (var i in founds)
         {
             GameObject target = i;
@@ -184,6 +192,7 @@ public class DetectiveBehavior : MonoBehaviour
             Vector3 facing = target.transform.position - pos;
             Lightcones.Add(Instantiate(LightconePrefab, pos, Quaternion.LookRotation(facing)));
             GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
+            CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(spotlight);
             await Task.Delay(250);
 
         }
@@ -212,10 +221,15 @@ public class DetectiveBehavior : MonoBehaviour
             {
                 skip = false;
                 Instantiate(PointFx,focusOnNodes[i].transform.position,Quaternion.Euler(0,0,0));
+                
             }
         }
 
-        if (!skip) await Task.Delay(4000);
+        if (!skip)
+        {
+            CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(notice);
+            await Task.Delay(4000);
+        }
     }
 
     public async Task LightconeInvis()
