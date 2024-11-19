@@ -51,7 +51,7 @@ public class ConnectionBehavior : MonoBehaviour
     {
         System.Random r = new System.Random();
         double d = r.NextDouble();
-        if (d > GlobalVar.instance.probabilityOfNodesInspectingDetective)
+        if (d > GlobalVar.instance.probabilityOfNodesInspectingDetective / 100f)
         {
             NonInfoColor();
             return;

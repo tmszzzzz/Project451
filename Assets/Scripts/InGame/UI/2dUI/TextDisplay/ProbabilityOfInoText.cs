@@ -17,6 +17,6 @@ public class ProbabilityOfInoText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textMesh.text = $"{globalVar.probabilityOfNodesInspectingDetective * 100}%";
+        textMesh.text = $"{globalVar.probabilityOfNodesInspectingDetective}%";
     }
 }
