@@ -52,6 +52,7 @@ MonoBehaviour:
   unlockDemand: 0
   lineRenderer: {fileID: 7291519557263507792}
   detective: {fileID: 0}
+  isDisplayingInfo: 0
 --- !u!120 &7291519557263507792
 LineRenderer:
   serializedVersion: 2
@@ -117,9 +118,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.023529412}
+      key0: {r: 1, g: 1, b: 1, a: 1}
       key1: {r: 1, g: 1, b: 1, a: 0.07058824}
-      key2: {r: 0, g: 0, b: 0, a: 0.20784314}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}

@@ -33,10 +33,10 @@ public class GlobalVar : MonoBehaviour
     public int numOfFirefighterGiveBooks = 1;
     public int numOfMaximumBookDeliverRange = 2;
     public int numOfDetectiveOnStart = 4;
-    public float probabilityOfNodesInspectingDetective = 0.1f;
+    public int probabilityOfNodesInspectingDetective = 0;
     public int resourcePoint = 0;
     public int resourcePointPerInfoIncrement = 3;
-    public float infoIncreaseBy = 0.01f;
+    public int infoIncreaseBy = 5;
     public int resourcePointPerDistanceIncrement = 3;
     public int distanceIncreaseBy = 1;
     public int resourcePointPerAllocationLimitIncrement = 3;
@@ -72,7 +72,7 @@ public class GlobalVar : MonoBehaviour
         while (infoResourcePoint >= resourcePointPerInfoIncrement)
         {
             infoResourcePoint -= resourcePointPerInfoIncrement;
-            probabilityOfNodesInspectingDetective+=infoIncreaseBy;
+            probabilityOfNodesInspectingDetective += infoIncreaseBy;
         }
     }
     
