@@ -14,6 +14,7 @@ public class EndSceneController : MonoBehaviour
 
     [SerializeField] private string winText = "你赢了";
     [SerializeField] private string loseText = "你输了";
+    private bool escape = true;
     public Animator loading;
     public Animator bg;
     public AudioClip win;
@@ -50,8 +51,9 @@ public class EndSceneController : MonoBehaviour
             + "\n\n" +
             "按ESC键返回主菜单";
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && escape)
         {
+            escape = false;
             string pth = "Assets/Saves/save.json";
             if (File.Exists(pth))
             {
