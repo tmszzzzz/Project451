@@ -42,7 +42,7 @@ public class QuestFinal : QuestUnit
 
     public override string UpdateDescription()
     {
-        return "使本区域全部（"+ NumOfCurrentAwakenedNodes() +"/"+ _nodesList.Count + "）个人加入";
+        return "使全部（"+ NumOfCurrentAwakenedNodes() +"/"+ _nodesList.Count + "）潜在成员加入";
     }
     
     [SerializeField] private string winGamePlotPath = "Assets/Resources/Plots/winGameScene.txt";
