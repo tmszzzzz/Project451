@@ -117,7 +117,7 @@ public class PlotFuncManager : MonoBehaviour
             var nodeNb = cb.GetNeighbors(node);
             foreach (var nbs in nodeNb)
             {
-                if (nbs.GetComponent<NodeBehavior>().properties.state <= Properties.StateEnum.NORMAL)
+                if (nbs.GetComponent<NodeBehavior>().properties.state <= Properties.StateEnum.NORMAL && !nbL.Contains(nbs))
                 {
                     nbL.Add(nbs);
                 }
