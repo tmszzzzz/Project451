@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 1191575839494726708}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7843480838791873788}
@@ -90,11 +90,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 740cdd8c276642f69e38db5fed708758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questDescription: "\u6700\u7EC8\u7AE0"
-  questTitle: "\u6D4B\u8BD5\u6807\u9898"
+  questDescription: 
+  questTitle: "\u98CE\u66B4\u4E4B\u524D"
   isQuestCompleted: 0
   questTitleText: {fileID: 15916242575183202}
   questDescriptionText: {fileID: 5016080085052919902}
+  winGamePlotPath: Assets/Resources/Plots/WinGame.plot
 --- !u!1 &3090739914789584621
 GameObject:
   m_ObjectHideFlags: 0
