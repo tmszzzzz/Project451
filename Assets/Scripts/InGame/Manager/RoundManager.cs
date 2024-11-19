@@ -334,6 +334,8 @@ public class RoundManager : MonoBehaviour
             OperationForbidden();
             isDetectiveComing = false;
         }
+        
+        SavesLoadManager.instance.AutoSerializeAll(GlobalVar.instance.roundNum - 1);
     }
 
     public void OperationForbidden()

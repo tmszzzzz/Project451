@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -267,6 +269,49 @@ public class SavesLoadManager : MonoBehaviour
         }
 
         System.IO.File.WriteAllText(saveFilePath, json);
+    }
+    
+    public void AutoSerializeAll(int round)
+    {
+        // 使用包装类创建一个可序列化的对象
+        SerializableAll serializableData =
+            new SerializableAll(GlobalVar.instance, canvas, detective, QuestPanel.instance, book, SpriteList);
+
+        // 使用 JsonUtility 序列化为 JSON 字符串
+        string json = JsonUtility.ToJson(serializableData);
+
+        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        string saveFilePath;
+        
+        saveFilePath = $"Assets/Saves/autosaves/save_{round}_{timestamp}.json";
+
+        System.IO.File.WriteAllText(saveFilePath, json);
+        string directoryPath = "Assets/Saves/autosaves";
+        // 检查目录是否存在
+        if (!Directory.Exists(directoryPath))
+        {
+            return;
+        }
+
+        // 获取目录下的所有文件
+        FileInfo[] files = new DirectoryInfo(directoryPath).GetFiles();
+
+        // 检查文件数量是否超限
+        if (files.Length > 5)
+        {
+            // 按文件创建时间升序排序
+            FileInfo oldestFile = files.OrderBy(f => f.CreationTime).First();
+
+            Console.WriteLine($"删除文件: {oldestFile.FullName}");
+            try
+            {
+                oldestFile.Delete(); // 删除最早的文件
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
     }
 
     public void DeserializeAll(string filePath)
