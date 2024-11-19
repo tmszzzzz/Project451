@@ -15,7 +15,7 @@ public class ToggleCreditAndButtonList : MonoBehaviour
     void Start()
     {
         creditText.SetActive(false);
-        toggleText.text = "制作组名单/致谢";
+        toggleText.text = "致谢";
     }
 
     public void ToggleCreditAndList()
@@ -24,7 +24,7 @@ public class ToggleCreditAndButtonList : MonoBehaviour
         {
             creditText.SetActive(false);
             buttonList.SetActive(true);
-            toggleText.text = "制作组名单/致谢";
+            toggleText.text = "致谢";
         }
         else
         {
