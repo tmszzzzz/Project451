@@ -108,6 +108,8 @@ public class PlotDisplayArea : MonoBehaviour
     
     public void PlotNewText(bool isSelf, string name, string context)
     {
+        StartCoroutine(WaitUntilCurrenPlotIsNull());
+        
         string presentedName = WrapUpNameWithRichText(name);
 
         GameObject newPlotTextGameObject = new();
@@ -155,6 +157,14 @@ public class PlotDisplayArea : MonoBehaviour
 
     }
 
+    private System.Collections.IEnumerator WaitUntilCurrenPlotIsNull()
+    {
+        while (currentPlottingPlot != null)
+        {
+            yield return null;
+        }
+    }
+    
     void UpdateHeightOfAlreadyFinishedPlots()
     {
         if (currentPlottingPlot == null) return;
