@@ -11,7 +11,7 @@ public class GameProcessManager : MonoBehaviour
     //public List<int> nodesAwakendOnce = new List<int>();
     public CanvasBehavior canvasBehavior;
     public DetectiveBehavior detectiveBehavior;
-    [SerializeField] float initialProbabilityOfInfo = 0.4f;
+    [SerializeField] int initialProbabilityOfInfo = 30;
     [SerializeField] public GameObject probabilityOfInfoPanel;
     [SerializeField] public TutorialsController _tutorialsController;
 

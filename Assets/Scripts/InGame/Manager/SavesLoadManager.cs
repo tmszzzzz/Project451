@@ -30,10 +30,10 @@ public class SavesLoadManager : MonoBehaviour
         public int numOfFirefighterGiveBooks;
         public int numOfMaximumBookDeliverRange;
         public int numOfDetectiveOnStart;
-        public float probabilityOfNodesInspectingDetective;
+        public int probabilityOfNodesInspectingDetective;
         public int resourcePoint;
         public int resourcePointPerInfoIncrement;
-        public float infoIncreaseBy;
+        public int infoIncreaseBy;
         public int resourcePointPerDistanceIncrement;
         public int distanceIncreaseBy;
         public int resourcePointPerAllocationLimitIncrement;
