@@ -373,7 +373,8 @@ public class SavesLoadManager : MonoBehaviour
             List<SerializableNodeBehavior> serializableNodeBehaviors = deserializedData.nodeBehaviors;
             var nodeL = canvas.GetNodeList();
             int l = nodeL.Count;
-            for (int i = 0; i < l; i++)
+            int minL = Mathf.Min(l, deserializedData.nodeBehaviors.Count);
+            for (int i = 0; i < minL; i++)
             {
                 var nb = nodeL[i].GetComponent<NodeBehavior>();
                 nb.properties.state = serializableNodeBehaviors[i].state;
