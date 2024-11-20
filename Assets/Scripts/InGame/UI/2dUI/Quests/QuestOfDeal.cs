@@ -65,6 +65,7 @@ public class QuestOfDeal : QuestUnit
         if (AllKeyNodesInRegionTransformed())
         {
             PlotManager.instance.AddPlotQueue(winDealPlotPath, RoundManager.instance.canvas.Me);
+            //PlotFuncManager.instance.gainOneResourcePoint();
         }
         else
         {
