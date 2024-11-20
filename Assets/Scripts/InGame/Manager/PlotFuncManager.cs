@@ -171,4 +171,15 @@ public class PlotFuncManager : MonoBehaviour
     {
         BackgroundMusicManager.instance.switchTo(-1);
     }
+
+    public void winDealWithD()
+    {
+        GlobalVar.instance.resourcePoint+=3;
+        MessageBar.instance.AddMessage("你获得了三点情报点.");
+    }
+    
+    public void loseDealWithD()
+    {
+        MessageBar.instance.AddMessage("赌约失败了.");
+    }
 }
