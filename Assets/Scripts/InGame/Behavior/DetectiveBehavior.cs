@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -188,7 +187,7 @@ public class DetectiveBehavior : MonoBehaviour
             Vector3 horizontalDirection = target.transform.position - LightconeCenter.transform.position;
             horizontalDirection.y = 0;
             horizontalDirection = horizontalDirection.normalized;
-            Vector3 pos = LightconeCenter.position + 1.5f * horizontalDirection;
+            Vector3 pos = LightconeCenter.position + 3f * horizontalDirection; 
             Vector3 facing = target.transform.position - pos;
             Lightcones.Add(Instantiate(LightconePrefab, pos, Quaternion.LookRotation(facing)));
             GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
