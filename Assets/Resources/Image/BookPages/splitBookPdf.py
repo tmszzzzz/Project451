@@ -5,7 +5,7 @@ from pdf2image import convert_from_path
 
 def pdf_to_png_with_transparency(input_pdf_path):
     # Create a directory to save the PNG pages
-    output_dir = os.path.join(os.path.dirname(input_pdf_path), 'png_pages_with_transparency')
+    output_dir = os.path.join(os.path.dirname(input_pdf_path), 'png_pages_with_transparencies')
     os.makedirs(output_dir, exist_ok=True)
 
     # Convert PDF to images (one per page)
@@ -37,5 +37,5 @@ def pdf_to_png_with_transparency(input_pdf_path):
     print(f"PDF conversion to PNG with transparency completed. Pages saved in: {output_dir}")
 
 # Usage example
-input_pdf_path = "./8.pdf"  # Replace with your PDF file path
+input_pdf_path = "./9.pdf"  # Replace with your PDF file path
 pdf_to_png_with_transparency(input_pdf_path)
