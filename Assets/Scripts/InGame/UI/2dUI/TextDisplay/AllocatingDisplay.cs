@@ -7,6 +7,7 @@ public class AllocatingDisplay : MonoBehaviour
 {
     void Update()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = $"Allocating: {RoundManager.instance.held}/{RoundManager.instance.GetNeedToAllocate()}";
+        gameObject.GetComponent<TextMeshProUGUI>().text = $"每回合最大的传递数目：{RoundManager.instance.GetNeedToAllocate()}";
+        // {RoundManager.instance.held}
     }
 }
