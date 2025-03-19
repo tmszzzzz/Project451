@@ -24,7 +24,11 @@ public class PanelController : MonoBehaviour
     [SerializeField] private Slider BookSlider;
     [SerializeField] private Slider InfluenceSlider;
     [SerializeField] private TextMeshProUGUI fallThresholdText;
-
+    
+    private Vector3 _nodeInfoPanelOffset = new Vector3(20, -20, 0);
+    [SerializeField] private GameObject _ResourceUsagePanel;
+    [SerializeField] private Image _ImageThatSeperateResourceUsagePanel;
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -42,6 +46,21 @@ public class PanelController : MonoBehaviour
     {
         RoundManager.instance.BookAllocationChange += OnBookAllocationChange;
     }
+    
+    public void OpenResourceUsagePanel()
+    {
+        _ResourceUsagePanel.SetActive(true);
+    }
+    
+    public void CloseResourceUsagePanel()
+    {
+        _ResourceUsagePanel.SetActive(false);
+    }
+    
+    public void ToggleResourceUsagePanel()
+    {
+        _ResourceUsagePanel.SetActive(!_ResourceUsagePanel.activeSelf);
+    }
 
     public void NodePanelControl(RaycastHit hit)
     {
@@ -56,15 +75,9 @@ public class PanelController : MonoBehaviour
             DisableNodeInfoPanel();
         }
     }
-    public void EnableNodeInfoPanel(NodeBehavior node)
-    {   
-        if (NodeInfoPanel == null)
-        {
-            Debug.LogWarning("NodeInfoPanel is not assigned in the inspector.");
-            return;
-        }
 
-        NodeInfoPanel.SetActive(true);
+    private void _changeNodeInfoPanleContenAndPosition(NodeBehavior node)
+    {
         currentNode = node.gameObject;
         Properties properties = node.properties;
         if (properties != null && NodeInfoPanel.activeSelf)
@@ -82,6 +95,19 @@ public class PanelController : MonoBehaviour
             InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
             //Debug.Log(InfluenceSlider.value);
         }
+        NodeInfoPanel.transform.position = mainCamera.WorldToScreenPoint(node.transform.position) + _nodeInfoPanelOffset;
+    }
+    
+    public void EnableNodeInfoPanel(NodeBehavior node)
+    {   
+        if (NodeInfoPanel == null)
+        {
+            Debug.LogWarning("NodeInfoPanel is not assigned in the inspector.");
+            return;
+        }
+
+        NodeInfoPanel.SetActive(true);
+        _changeNodeInfoPanleContenAndPosition(node);
     }
     public void DisableNodeInfoPanel()
     {
@@ -90,36 +116,26 @@ public class PanelController : MonoBehaviour
             Debug.LogWarning("NodeInfoPanel is not assigned in the inspector.");
             return;
         }
+        currentNode = null;
         NodeInfoPanel.SetActive(false);
     }
+    
     public void UpdateInfo(RaycastHit hit)
     {
         GameObject hoveredObject = hit.collider.gameObject;
-
+        
         // 检查物体是否有 CubeBehavior 脚本
         NodeBehavior node = hoveredObject.GetComponent<NodeBehavior>();
         if (node != null)
         {
             currentNode = hoveredObject;
             // 获取 Properties 数据并展示
-            Properties properties = node.properties;
-            if (properties != null && NodeInfoPanel.activeSelf)
-            {
-                nameText.text = NameManager.instance.ConvertNodeNameToName(hoveredObject.name);
-                stateText.text = properties.stateNameToCNString(properties.state);
-                identityText.text = properties.typeNameToCNString(properties.type);
-                awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
-                exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
-                numOfBooksText.text = "持有书籍: " + properties.numOfBooks + "/" + properties.maximumNumOfBooks;
-                influenceText.text = "当前受影响: " + node.NowState().influence;
-                fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
-
-                BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
-                InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
-                //Debug.Log(InfluenceSlider.value);
-            }
+            _changeNodeInfoPanleContenAndPosition(node);
         }
-
+        else
+        {
+            DisableNodeInfoPanel();
+        }
     }
 
     private void OnBookAllocationChange()
@@ -129,21 +145,7 @@ public class PanelController : MonoBehaviour
         {
             //Debug.Log(2);
             var node = currentNode.GetComponent<NodeBehavior>();
-            Properties properties = node.properties;
-            if (properties != null && NodeInfoPanel.activeSelf)
-            {
-                nameText.text = NameManager.instance.ConvertNodeNameToName(currentNode.name);
-                stateText.text = properties.stateNameToCNString(properties.state);
-                identityText.text = properties.typeNameToCNString(properties.type);
-                awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
-                exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
-                numOfBooksText.text = "持有书籍: " + (properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode]) + "/" + properties.maximumNumOfBooks;
-                influenceText.text = "当前受影响: " + node.PredictState().influence;
-                fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
-
-                BookSlider.value = (float)(properties.numOfBooks + RoundManager.instance.BookAllocationMap[currentNode])/(float)properties.maximumNumOfBooks;
-                InfluenceSlider.value = (float) node.PredictState().influence / (float)properties.exposeThreshold;
-            }
+            _changeNodeInfoPanleContenAndPosition(node);
         }
     }
 }

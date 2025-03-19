@@ -15,7 +15,7 @@ public class AllocationRangeText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<TextMeshProUGUI>().text = $"×î´ó´«²¥·¶Î§£º{globalVar.numOfMaximumBookDeliverRange}";
+        gameObject.GetComponent<TextMeshProUGUI>().text = $"{globalVar.numOfMaximumBookDeliverRange}";
         //Debug.Log(globalVar.numOfMaximumBookDeliverRange);
     }
 }

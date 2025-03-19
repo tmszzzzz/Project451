@@ -35,11 +35,15 @@ public class GlobalVar : MonoBehaviour
     public int numOfDetectiveOnStart = 4;
     public int probabilityOfNodesInspectingDetective = 0;
     public int resourcePoint = 0;
-    public int resourcePointPerInfoIncrement = 3;
+    
+    // 需要序列化
+    public int maxResourcePoint = 9;
+    
+    public int resourcePointPerInfoIncrement = 1;
     public int infoIncreaseBy = 5;
-    public int resourcePointPerDistanceIncrement = 3;
+    public int resourcePointPerDistanceIncrement = 1;
     public int distanceIncreaseBy = 1;
-    public int resourcePointPerAllocationLimitIncrement = 3;
+    public int resourcePointPerAllocationLimitIncrement = 1;
     public int allocationLimitIncreaseBy = 1;
     public int exposureValuePerResource = 30;
     public bool everReachedPoliceStation = false;
@@ -57,6 +61,7 @@ public class GlobalVar : MonoBehaviour
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;
+        resourcePoint = Math.Min(resourcePoint, maxResourcePoint);
     }
     [SerializeField] private int infoResourcePoint = 0;
     public void InfoResourcePointIncrement(int v)
@@ -144,11 +149,5 @@ public class GlobalVar : MonoBehaviour
     private void KeepLimitEqualToHalfOfBookNum()
     {
         allocationLimit = RoundManager.instance.canvas.GetTotalBookNum();
-    }
-
-
-
-    void Update()
-    {
     }
 }

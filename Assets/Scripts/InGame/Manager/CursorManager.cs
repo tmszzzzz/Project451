@@ -38,7 +38,7 @@ public class CursorManager : MonoBehaviour
                 else
                 {
                     //左键空击
-                    panelController.DisableNodeInfoPanel();
+                    //panelController.DisableNodeInfoPanel();
                 }
             }
             else if (Input.GetMouseButtonDown(1))
@@ -62,14 +62,15 @@ public class CursorManager : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     //鼠标悬停
+                    panelController.NodePanelControl(hit);
                     canvas.SetRegion(hit);
-                    panelController.UpdateInfo(hit);
                     canvas.AddConnection(hit);
                     CursorSelected(hit);
                 }
                 else
                 {
                     ResetCursorSelected();
+                    panelController.DisableNodeInfoPanel();
                 }
             }
         }
