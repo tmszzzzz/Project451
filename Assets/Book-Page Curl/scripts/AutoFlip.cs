@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
-[RequireComponent(typeof(Book))]
+[RequireComponent(typeof(Journal))]
 public class AutoFlip : MonoBehaviour {
     public FlipMode Mode;
     public float PageFlipTime = 1;
     public float TimeBetweenPages = 1;
     public float DelayBeforeStarting = 0;
     public bool AutoStartFlip=true;
-    public Book ControledBook;
+    public Journal ControledBook;
     public int AnimationFramesCount = 40;
     bool isFlipping = false;
     // Use this for initialization
     void Start () {
         if (!ControledBook)
-            ControledBook = GetComponent<Book>();
+            ControledBook = GetComponent<Journal>();
         if (AutoStartFlip)
             StartFlipping();
         ControledBook.OnFlip.AddListener(new UnityEngine.Events.UnityAction(PageFlipped));

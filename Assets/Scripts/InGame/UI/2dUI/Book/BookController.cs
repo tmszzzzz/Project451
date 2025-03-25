@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BookController : MonoBehaviour
 {
-    public Book book;
+    public Journal book;
     public GameObject newContentBookAlertImage;
     public static BookController instance;
     

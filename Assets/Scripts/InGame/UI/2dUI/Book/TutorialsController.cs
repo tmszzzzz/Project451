@@ -6,7 +6,7 @@ using UnityEngine.Timeline;
 
 public class TutorialsController : MonoBehaviour
 {
-    [SerializeField] private Book book;
+    [SerializeField] private Journal book;
     [SerializeField] private GameObject button1;
     [SerializeField] private GameObject button2;
     [SerializeField] private GameObject button3;

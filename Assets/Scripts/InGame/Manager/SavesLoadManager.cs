@@ -11,7 +11,7 @@ public class SavesLoadManager : MonoBehaviour
     public static SavesLoadManager instance;
     private CanvasBehavior canvas;
     private DetectiveBehavior detective;
-    [SerializeField] private Book book;
+    [SerializeField] private Journal book;
     [SerializeField] private List<Sprite> SpriteList;
 
 
@@ -201,7 +201,7 @@ public class SavesLoadManager : MonoBehaviour
     {
         public List<int> PageIds;
 
-        public SerializableBookPages(Book book,List<Sprite> sprites)
+        public SerializableBookPages(Journal book,List<Sprite> sprites)
         {
             PageIds = new List<int>();
             foreach (var page in book.bookPages)
@@ -223,7 +223,7 @@ public class SavesLoadManager : MonoBehaviour
         public SerializableQuests quests;
         public SerializableBookPages bookPages;
 
-        public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective,QuestPanel quest,Book book,List<Sprite> sprites)
+        public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective,QuestPanel quest,Journal book,List<Sprite> sprites)
         {
             this.globalVar = new SerializableGlobalVar(globalVar);
             var sNodeL = new List<SerializableNodeBehavior>();

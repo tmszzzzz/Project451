@@ -6,5 +6,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BooksData", menuName = "Custom/BooksData")]
 public class BooksData : ScriptableObject
 {
-    public BookManager.BookInfo[] booksInfo;
+    public BookManager.Book[] books;
 }

@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using BookInfo = BookManager.BookInfo;
-
 [System.Serializable]
 public class Properties
 {
@@ -24,7 +22,7 @@ public class Properties
     public int awakeThreshold;
     public int exposeThreshold;
     public int fallThreshold;
-    public List<BookInfo> books = new List<BookInfo>();
+    public List<BookManager.Book> books = new List<BookManager.Book>();
     public int numOfBooks = 0;
     public int maximumNumOfBooks;
     public int unlockTag;

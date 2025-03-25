@@ -48,7 +48,7 @@ public class CursorManager : MonoBehaviour
                 if (Physics.Raycast(ray, out hit))
                 {
                     //右键点击判定箱
-                    RoundManager.instance.BookAllocation(1, hit);
+                    // RoundManager.instance.BookAllocation(1, hit);
                 }
                 else
                 {

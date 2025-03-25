@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class CanvasBehavior : MonoBehaviour
 {
+    public static CanvasBehavior instance;
     //public GameObject nodePrefab;
     public List<GameObject> nodePrefabMap;
     public List<GameObject> editorNodePrefabMap;
@@ -20,6 +21,10 @@ public class CanvasBehavior : MonoBehaviour
     public List<GameObject> GetNodeList()
     {
         return new List<GameObject>(nodeList);
+    }
+    public GameObject GetNodeByID(int id)
+    {
+        return nodeList[id];
     }
     [SerializeField]
     private List<GameObject> connectionList;
@@ -225,6 +230,12 @@ public class CanvasBehavior : MonoBehaviour
 
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
         cam = Camera.main;
         plane = new Plane(Vector3.up, Vector3.zero);
         nodeList = new List<GameObject>();

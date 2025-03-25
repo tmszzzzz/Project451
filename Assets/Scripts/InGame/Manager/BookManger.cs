@@ -4,28 +4,35 @@ using UnityEngine;
 public class BookManager : MonoBehaviour
 {
     public static BookManager instance;
-
-    // Book½á¹¹Ìå
+    public int assignRuntimeId = 0;
+    
     [System.Serializable]
-    public struct BookInfo
+    public class Book
     {
-        public string id;                   // Î¨Ò»Êé¼®ID
-        public string name;                 // ÊéÃû
-        public string description;          // ÃèÊö
-        public int basic_influence;         // Ìá¹©µÄ»ù´¡Ó°ÏìÁ¦Öµ
-        public int additional_influence;    // Ìá¹©µÄ¶îÍâÓ°ÏìÁ¦Öµ
-        public BookType type;               // Êé¼®ÀàĞÍ£¬ÓÃÓÚ·ÖÀàËæ»ú»ñÈ¡
+        public enum BookType
+        {
+            TravelerFlint,
+            StonemasonChisel
+        }
+        public string id;                   // å”¯ä¸€ä¹¦ç±ID
+        public string name;                 // ä¹¦å
+        public string description;          // æè¿°
+        public int basicInfluence;          // æä¾›çš„åŸºç¡€å½±å“åŠ›å€¼
+        public int additionalInfluence;     // æä¾›çš„é¢å¤–å½±å“åŠ›å€¼
+        public BookType type;               // ä¹¦ç±ç±»å‹ï¼Œç”¨äºåˆ†ç±»éšæœºè·å–
+        public bool isPreallocatedIn;       // æ˜¯å¦è¢«é¢„åˆ†é…å…¥
+        public bool isPreallocatedOut;      // æ˜¯å¦è¢«é¢„åˆ†é…å‡º
+        public int parentId;                // æ‰€å±èŠ‚ç‚¹ID
+        public int runtimeId;            // è¿è¡Œæ—¶ID
+        
+        public GameObject GetParent() 
+        {
+            return CanvasBehavior.instance.GetNodeByID(this.parentId);    
+        }
     }
-
-    [System.Serializable]
-    public enum BookType
-    {
-        A,
-        B
-    }
-
+    
     [SerializeField] private BooksData booksData;
-    public BookInfo[] bookDictionary;
+    public Book[] illustration;
 
     void Awake()
     {
@@ -37,17 +44,19 @@ public class BookManager : MonoBehaviour
         instance = this;
         if (booksData == null)
         {
-            Debug.LogError("BooksData Î´ÅäÖÃ£¡");
+            Debug.LogError("BooksData is null");
             return;
         }
-        bookDictionary = booksData.booksInfo;
+        illustration = booksData.books;
     }
 
-    // Ëæ»ú»ñÈ¡Ò»±¾Êé
-    public BookInfo GetRandomBook()
+    // éšæœºè·å–ä¸€æœ¬ä¹¦
+    public Book GetRandomBook()
     {
-        if (bookDictionary.Length == 0) return default;
-        int index = Random.Range(0, bookDictionary.Length);
-        return bookDictionary[index];
+        if (illustration.Length == 0) return null;
+        int index = Random.Range(0, illustration.Length);
+        illustration[index].runtimeId = assignRuntimeId++;
+        return illustration[index];
     }
 }
+
