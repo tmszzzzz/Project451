@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -245,8 +246,12 @@ public class RoundManager : MonoBehaviour
                     CameraBehavior.instance.PageSound();
                     // 执行书籍的转移
                     BeginBook.isPreallocatedOut = true;
-                    // TODO 在end里新创建一个相同id的Book，设为被预分配入
-                    BookManager.Book endBook = null;
+                    // 在end里新创建一个相同id的Book，设为被预分配入
+                    BookManager.Book endBook = new BookManager.Book(BeginBook);
+                    endBook.isPreallocatedIn = true;
+                    endBook.isPreallocatedOut = false;
+                    endBook.parentId = CanvasBehavior.instance.GetNodeList().IndexOf(end);
+                    end.GetComponent<Properties>().books.Add(endBook);
     
                     // 查找是否已有对应的分配箭头
                     BookAllocationItem? existingItem = FindAllocationItem(startNode, end);
@@ -277,7 +282,6 @@ public class RoundManager : MonoBehaviour
                         arrowScript.allocationNum++;
                     }
     
-    
                     // 重置选择状态
                     RestartFirstSelection();
                 }
@@ -291,6 +295,68 @@ public class RoundManager : MonoBehaviour
         }
     }
 
+    public void CancelBookAllocation(ref BookAllocationItem alloc)
+    {
+        if (alloc.EndBook != null && alloc.EndBook.isPreallocatedOut)
+        {
+            for (int j = 0; j < BookAllocationItems.Count; j++)
+            {
+                var item = BookAllocationItems[j];
+                if (item.BeginBook == alloc.EndBook)
+                {
+                    CancelBookAllocation(ref item);
+                    alloc.End.GetComponent<Properties>().books.Remove(alloc.EndBook);
+                    alloc.BeginBook.isPreallocatedOut = false;
+                    
+                    // 销毁Arrow
+                    BookAllocationItem? reverseItem = FindAllocationItem(alloc.End, alloc.Begin);
+                    
+                    BookAllocationArrow reverseArrowScript = reverseItem.Value.Arrow.GetComponent<BookAllocationArrow>();
+                    reverseArrowScript.allocationNum--;  // 减少反向分配线的数量
+                    // 如果数量为0，则删除该反向分配线
+                    if (reverseArrowScript.allocationNum <= 0)
+                    {
+                        reverseItem.Value.Arrow.GetComponent<BookAllocationArrow>().Cancel();
+                        BookAllocationItems.Remove(reverseItem.Value); // 从列表中移除
+                    }
+                    
+                    List<BookAllocationItem> toBeDeleted = new List<BookAllocationItem>();
+                    // 在此操作后，检查所有分配线是否合法
+                    foreach (var i in BookAllocationItems)
+                    {
+                        NodeBehavior bnb = i.Begin.GetComponent<NodeBehavior>();
+                        int cnt = 0;// 书的数量
+                        foreach (var k in bnb.properties.books)
+                        {
+                            ++cnt;
+                            if (k.isPreallocatedOut)
+                            {
+                                --cnt;
+                            }
+                        }
+                        if (cnt <= 0)
+                        {
+                            toBeDeleted.Add(i);
+                        }
+                    }
+                    foreach (var i in toBeDeleted)
+                    {
+                        BookAllocationItems.Remove(i);
+                        var allocationArrow = i.Arrow.GetComponent<BookAllocationArrow>();
+                    
+                        allocationArrow.Cancel();
+                    }
+                    // 重置选择状态
+                    RestartFirstSelection();
+    
+                    // 触发分配变化事件
+                    BookAllocationChange?.Invoke();
+                }
+            }
+        }
+        BookAllocationItems.Remove(alloc);
+    }
+    
     public int BookAllocationNum()
     {
         int sum = 0;
@@ -314,20 +380,25 @@ public class RoundManager : MonoBehaviour
         return null; // 如果未找到匹配项，返回null
     }
 
-    public int GetNeedToAllocate()
-    {
-        int v = 0;
-        var keys = new List<GameObject>(BookAllocationMap.Keys);
-        for (int i = 0; i < keys.Count; i++)
-        {
-            if (BookAllocationMap[keys[i]] < 0) v -= BookAllocationMap[keys[i]];
-
-        }
-        return v;
-    }
+    // public int GetNeedToAllocate()
+    // {
+    //     int v = 0;
+    //     var keys = new List<GameObject>(BookAllocationMap.Keys);
+    //     for (int i = 0; i < keys.Count; i++)
+    //     {
+    //         if (BookAllocationMap[keys[i]] < 0) v -= BookAllocationMap[keys[i]];
+    //
+    //     }
+    //     return v;
+    // }
 
     //public bool skipCameraOverview = true;
 
+    public int CurrentAllocate()
+    {
+        return BookAllocationItems.Count;
+    }
+    
     public async void NextRound()
     {
         PanelController.instance.DisableNodeInfoPanel();
@@ -367,23 +438,26 @@ public class RoundManager : MonoBehaviour
 
         canvas.RefreshAllConnections();//连接数据更新
 
-
-        var keys = new List<GameObject>(BookAllocationMap.Keys);
-        for (int i = 0; i < keys.Count; i++)
-        {
-            canvas.AddNodeNumOfBooks(keys[i], BookAllocationMap[keys[i]]);
-        }//执行分配
-         //由于更新状态时已经考虑了预分配的书，所以这里先更新后分配书。这里的分配书实际上没有逻辑上的影响。
+        // 把所有预分配数据落到实处
+        CanvasBehavior.instance.ExecutePreallocatedBooks();
+        
+        // 被替代
+        // var keys = new List<GameObject>(BookAllocationMap.Keys);
+        // for (int i = 0; i < keys.Count; i++)
+        // {
+        //     canvas.AddNodeNumOfBooks(keys[i], BookAllocationMap[keys[i]]);
+        // }//执行分配
+        //  //由于更新状态时已经考虑了预分配的书，所以这里先更新后分配书。这里的分配书实际上没有逻辑上的影响。
          
         GameProcessManager.instance.ProcessManagerCheckingForMaxExposureValue();
 
         GlobalVar.instance.roundNum++;//更新回合数
 
 
-        for (int i = 0; i < keys.Count; i++)
-        {
-            BookAllocationMap[keys[i]] = 0;
-        }
+        // for (int i = 0; i < keys.Count; i++)
+        // {
+        //     BookAllocationMap[keys[i]] = 0;
+        // } // 已删除
         foreach (var i in BookAllocationItems)
         {
             Destroy(i.Arrow.gameObject);

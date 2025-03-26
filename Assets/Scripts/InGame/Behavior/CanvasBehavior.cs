@@ -355,6 +355,27 @@ public class CanvasBehavior : MonoBehaviour
         if (nb != null) nb.properties.numOfBooks = v;
         else Debug.LogWarning("NodeBehavior script is null.");
     }
+
+    public void ExecutePreallocatedBooks()
+    {
+        for (int i = 0; i < GetNodeList().Count; i++)
+        {
+            List<GameObject> nodeList = GetNodeList();
+            for (int j = 0; j < nodeList[i].GetComponent<Properties>().books.Count; j++)
+            {
+                BookManager.Book book = nodeList[i].GetComponent<Properties>().books[j];
+                if (book.isPreallocatedOut)
+                {
+                    nodeList[i].GetComponent<Properties>().books.Remove(book);
+                }
+                if (book.isPreallocatedIn)
+                {
+                    book.isPreallocatedIn = false;
+                }
+            }
+        }
+    }
+    
     public void AddNodeNumOfBooks(GameObject node, int v)
     {
         NodeBehavior nb = node.GetComponent<NodeBehavior>();
