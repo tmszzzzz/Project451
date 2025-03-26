@@ -17,6 +17,8 @@ public class NodeBehavior : BaseNodeBehavior
     public string description = "";
     public string plotFileName = "";
     public Sprite pageSprite;
+    
+    
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -40,64 +42,125 @@ public class NodeBehavior : BaseNodeBehavior
 
     public override StatePrediction NowState()
     {
-        //修改此方法的判断逻辑时，请记得一并修改PredictState
-        CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
-        if (cb == null)
-        {
-            Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
-            return new StatePrediction(Properties.StateEnum.DEAD,0);
-        }
-        List<GameObject> nList = cb.GetNeighbors(gameObject);
+        // 考虑所有未被预分配入的书，而且不关心它们是否被预分配出
+        // 修改此方法的判断逻辑时，请记得一并修改PredictState
+        
+        // 单例模式省略下面的内容
+        // CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
+        // if (cb == null)
+        // {
+        //     Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
+        //     return new StatePrediction(Properties.StateEnum.DEAD,0);
+        // }
+        
+        List<GameObject> nList = CanvasBehavior.instance.GetNeighbors(gameObject);
 
-        int influence = properties.numOfBooks;
+        // 处理自身影响力
+        int influence = 0;
+        int additionalInfluence = 0;
+        List<BookManager.Book.BookType> types = properties.GetBookType();
+        foreach (var book in properties.books)
+        {
+            if (!book.isPreallocatedIn)
+            {
+                influence++;
+                if (types.Contains(book.type))
+                {
+                    additionalInfluence += book.additionalInfluence;
+                }
+            }
+        }
+        
+        // 处理周围节点影响力
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
-            if (cub != null)
+            if (cub != null && cub.properties.state > 0)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks : 0;
+                types = cub.properties.GetBookType();
+                foreach (var book in cub.properties.books)
+                {
+                    if (!book.isPreallocatedIn)
+                    {
+                        influence++;
+                        if (types.Contains(book.type))
+                        {
+                            additionalInfluence += book.additionalInfluence;
+                        }
+                    }
+                }
             }
         }
-        return new StatePrediction(properties.state, influence);
+        return new StatePrediction(properties.state, influence, additionalInfluence);
     }
 
     public override StatePrediction PredictState()
     {
-        //修改此方法的判断逻辑时，请记得一并修改NowState
-        CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
-        if (cb == null)
-        {
-            Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
-            return new StatePrediction(Properties.StateEnum.DEAD,0);
-        }
-        List<GameObject> nList = cb.GetNeighbors(gameObject);
+        // 考虑所有未被预分配出的书，而且不关心它们是否被预分配入
+        // 修改此方法的判断逻辑时，请记得一并修改NowState
+        
+        // CanvasBehavior cb = transform.parent.GetComponent<CanvasBehavior>();
+        // if (cb == null)
+        // {
+        //     Debug.LogWarning("Script \"CanvasBehavior\" not found in canvas.");
+        //     return new StatePrediction(Properties.StateEnum.DEAD,0);
+        // }
+        
+        List<GameObject> nList = CanvasBehavior.instance.GetNeighbors(gameObject);
 
-        int influence = properties.numOfBooks + RoundManager.instance.BookAllocationMap[gameObject];
+        // 处理自身影响力
+        int influence = 0;
+        int additionalInfluence = 0;
+        List<BookManager.Book.BookType> types = properties.GetBookType();
+        foreach (var book in properties.books)
+        {
+            if (!book.isPreallocatedOut)
+            {
+                influence++;
+                if (types.Contains(book.type))
+                {
+                    additionalInfluence += book.additionalInfluence;
+                }
+            }
+        }
+        
+        // 处理周围节点影响力
         foreach (GameObject go in nList)
         {
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
-            if (cub != null)
+            if (cub != null && cub.properties.state > 0)
             {
-                influence += cub.properties.state > 0 ? cub.properties.numOfBooks  + RoundManager.instance.BookAllocationMap[cub.gameObject] : 0;
+                types = cub.properties.GetBookType();
+                foreach (var book in cub.properties.books)
+                {
+                    if (!book.isPreallocatedOut)
+                    {
+                        influence++;
+                        if (types.Contains(book.type))
+                        {
+                            additionalInfluence += book.additionalInfluence;
+                        }
+                    }
+                }
             }
         }
 
-        StatePrediction prediction = new StatePrediction(Properties.StateEnum.DEAD, influence);
+        StatePrediction prediction = new StatePrediction(Properties.StateEnum.DEAD, influence, additionalInfluence);
         switch (properties.state)
         {
             case Properties.StateEnum.NORMAL:
                 prediction.state = Properties.StateEnum.NORMAL;
-                if(influence >= properties.awakeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
+                if(influence +additionalInfluence >= properties.awakeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
                 if(influence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
                 break;
             case Properties.StateEnum.AWAKENED:
                 prediction.state = Properties.StateEnum.AWAKENED;
-                if(influence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
+                if(influence +additionalInfluence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
                 if(influence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
                 break;
             case Properties.StateEnum.EXPOSED:
                 prediction.state = Properties.StateEnum.EXPOSED;
-                if(influence < properties.exposeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
+                if(influence +additionalInfluence < properties.exposeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
                 if(influence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
                 break;
         }

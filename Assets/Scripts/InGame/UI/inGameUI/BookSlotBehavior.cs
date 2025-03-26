@@ -57,7 +57,7 @@ public class BookSlotBehavior : MonoBehaviour
         transform.rotation = transform.parent.rotation;
         //caculate the current book and update the book slots
         currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;
-        currentBook += RoundManager.instance.BookAllocationMap[thisNode];
+        // currentBook += RoundManager.instance.BookAllocationMap[thisNode];
         updateBookSlots();
     }
 }

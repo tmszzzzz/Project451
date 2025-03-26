@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,8 @@ public class Properties
     public int maximumNumOfBooks;
     public int unlockTag;
     public int region;
-
+    public List<BookManager.Book> borrowBooks = new List<BookManager.Book>();
+    
     public string typeNameToCNString(typeEnum inputType)
     {
         switch (inputType)
@@ -64,4 +66,14 @@ public class Properties
     //public string description = "";
     //public string plotFileName = "";
     //public Sprite pageSprite;
+    
+    public List<BookManager.Book.BookType> GetBookType()
+    {
+        HashSet<BookManager.Book.BookType> types = new HashSet<BookManager.Book.BookType>();
+        foreach (BookManager.Book book in borrowBooks)
+        {
+            types.Add(book.type); // 重复的不会添加
+        }
+        return types.ToList();
+    }
 }

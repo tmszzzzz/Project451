@@ -13,10 +13,12 @@ public abstract class BaseNodeBehavior : MonoBehaviour
     {
         public Properties.StateEnum state;
         public int influence;
-        public StatePrediction(Properties.StateEnum s, int i)
+        public int additionalInfluence;
+        public StatePrediction(Properties.StateEnum s, int i, int j)
         {
             state = s;
             influence = i;
+            additionalInfluence = j;
         }
     }
 }
