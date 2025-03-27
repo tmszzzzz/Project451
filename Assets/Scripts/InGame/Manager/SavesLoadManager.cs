@@ -94,14 +94,27 @@ public class SavesLoadManager : MonoBehaviour
     public class SerializableNodeBehavior
     {
         public Properties.StateEnum state;
-        public int numOfBooks;
+        // public int numOfBooks;
+        public List<BookManager.Book> books;
         public bool hadAwakenedBefore;
         public bool isPaging;
 
         public SerializableNodeBehavior(NodeBehavior nodeBehavior)
         {
             this.state = nodeBehavior.properties.state;
-            this.numOfBooks = nodeBehavior.properties.numOfBooks;
+            this.books = new(nodeBehavior.properties.books);
+            for (int i = 0; i < this.books.Count; i++)
+            {
+                if (this.books[i].isPreallocatedIn)
+                {
+                    this.books.Remove(this.books[i]);
+                    continue;
+                }
+                if (this.books[i].isPreallocatedOut)
+                {
+                    this.books[i].isPreallocatedOut = false;
+                }
+            }
             this.hadAwakenedBefore = nodeBehavior.hadAwakenedBefore;
             this.isPaging = nodeBehavior.plotAndPageHandler.isPaging;
         }
@@ -378,7 +391,8 @@ public class SavesLoadManager : MonoBehaviour
             {
                 var nb = nodeL[i].GetComponent<NodeBehavior>();
                 nb.properties.state = serializableNodeBehaviors[i].state;
-                nb.properties.numOfBooks = serializableNodeBehaviors[i].numOfBooks;
+                // nb.properties.numOfBooks = serializableNodeBehaviors[i].numOfBooks;
+                nb.properties.books = serializableNodeBehaviors[i].books;
                 nb.hadAwakenedBefore = serializableNodeBehaviors[i].hadAwakenedBefore;
                 if(serializableNodeBehaviors[i].isPaging) nb.plotAndPageHandler.OnLoadShowButtons();
             }
