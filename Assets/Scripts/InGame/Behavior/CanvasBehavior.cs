@@ -345,7 +345,7 @@ public class CanvasBehavior : MonoBehaviour
                 BookManager.Book book = p.books[j];
                 if (book.isPreallocatedOut)
                 {
-                    p.books.Remove(book);
+                    p.RemoveABook(book);
                 }
                 if (book.isPreallocatedIn)
                 {
@@ -366,11 +366,12 @@ public class CanvasBehavior : MonoBehaviour
                 {
                     System.Random random = new System.Random();
                     int randomIndex = random.Next(nb.properties.books.Count); // 随机索引范围：[0, list.Count)
-                    nb.properties.books.RemoveAt(randomIndex);
+                    var b = nb.properties.books[randomIndex];
+                    nb.properties.RemoveABook(b);
                 }
             }else for(int i=0;i<v;i++)
             {
-                nb.properties.books.Add(BookManager.instance.GetRandomBook());
+                nb.properties.AddABook(BookManager.instance.GetRandomBook());
             }
         }
         else Debug.LogWarning("NodeBehavior script is null.");

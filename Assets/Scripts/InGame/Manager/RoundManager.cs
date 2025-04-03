@@ -230,7 +230,7 @@ public class RoundManager : MonoBehaviour
             endBook.isPreallocatedIn = true;
             endBook.isPreallocatedOut = false;
             endBook.parentId = CanvasBehavior.instance.GetNodeList().IndexOf(end);
-            end.GetComponent<Properties>().books.Add(endBook);
+            end.GetComponent<Properties>().AddABook(endBook);
 
             // 查找是否已有对应的分配箭头
             BookAllocationItem existingItem = FindAllocationItem(begin, end);
@@ -287,7 +287,7 @@ public class RoundManager : MonoBehaviour
                 }
             }
         }
-        alloc.End.GetComponent<NodeBehavior>().properties.books.Remove(alloc.EndBook);
+        alloc.End.GetComponent<NodeBehavior>().properties.RemoveABook(alloc.EndBook);
         alloc.BeginBook.isPreallocatedOut = false;
         var arr = alloc.Arrow.GetComponent<BookAllocationArrow>();
         arr.allocationNum--;
@@ -460,6 +460,6 @@ public class RoundManager : MonoBehaviour
     }
     public void BookNumOfMeIncreaseBy(int i)
     {
-        canvas.Me.GetComponent<NodeBehavior>().properties.books.Add(BookManager.instance.GetRandomBook());
+        canvas.Me.GetComponent<NodeBehavior>().properties.AddABook(BookManager.instance.GetRandomBook());
     }
 }
