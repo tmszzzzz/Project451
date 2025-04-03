@@ -339,17 +339,17 @@ public class CanvasBehavior : MonoBehaviour
         for (int i = 0; i < GetNodeList().Count; i++)
         {
             List<GameObject> nodeList = GetNodeList();
-            for (int j = 0; j < nodeList[i].GetComponent<Properties>().books.Count; j++)
+            for (int j = 0; j < nodeList[i].GetComponent<NodeBehavior>().properties.books.Count; j++)
             {
-                Properties p = nodeList[i].GetComponent<Properties>();
+                Properties p = nodeList[i].GetComponent<NodeBehavior>().properties;
                 BookManager.Book book = p.books[j];
                 if (book.isPreallocatedOut)
                 {
-                    p.RemoveABook(book);
+                    nodeList[i].GetComponent<NodeBehavior>().RemoveABook(book);
                 }
                 if (book.isPreallocatedIn)
                 {
-                    book.isPreallocatedIn = false;
+                    nodeList[i].GetComponent<NodeBehavior>().SetABooksState(book,-1,0);
                 }
             }
         }
@@ -367,11 +367,11 @@ public class CanvasBehavior : MonoBehaviour
                     System.Random random = new System.Random();
                     int randomIndex = random.Next(nb.properties.books.Count); // 随机索引范围：[0, list.Count)
                     var b = nb.properties.books[randomIndex];
-                    nb.properties.RemoveABook(b);
+                    nb.RemoveABook(b);
                 }
             }else for(int i=0;i<v;i++)
             {
-                nb.properties.AddABook(BookManager.instance.GetRandomBook());
+                nb.AddABook(BookManager.instance.GetRandomBook());
             }
         }
         else Debug.LogWarning("NodeBehavior script is null.");

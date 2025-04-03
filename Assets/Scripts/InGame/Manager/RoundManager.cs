@@ -224,13 +224,12 @@ public class RoundManager : MonoBehaviour
         {
             CameraBehavior.instance.PageSound();
             // 执行书籍的转移
-            beginBook.isPreallocatedOut = true;
+            nb.SetABooksState(beginBook,0,1);
             // 在end里新创建一个相同id的Book，设为被预分配入
             BookManager.Book endBook = new BookManager.Book(beginBook);
-            endBook.isPreallocatedIn = true;
-            endBook.isPreallocatedOut = false;
+            end.GetComponent<NodeBehavior>().SetABooksState(endBook,1,-1);
             endBook.parentId = CanvasBehavior.instance.GetNodeList().IndexOf(end);
-            end.GetComponent<Properties>().AddABook(endBook);
+            end.GetComponent<NodeBehavior>().AddABook(endBook);
 
             // 查找是否已有对应的分配箭头
             BookAllocationItem existingItem = FindAllocationItem(begin, end);
@@ -287,8 +286,9 @@ public class RoundManager : MonoBehaviour
                 }
             }
         }
-        alloc.End.GetComponent<NodeBehavior>().properties.RemoveABook(alloc.EndBook);
+        alloc.End.GetComponent<NodeBehavior>().RemoveABook(alloc.EndBook);
         alloc.BeginBook.isPreallocatedOut = false;
+        alloc.Begin.GetComponent<NodeBehavior>().SetABooksState(alloc.BeginBook,0,-1);
         var arr = alloc.Arrow.GetComponent<BookAllocationArrow>();
         arr.allocationNum--;
         if (arr.allocationNum <= 0)
@@ -460,6 +460,6 @@ public class RoundManager : MonoBehaviour
     }
     public void BookNumOfMeIncreaseBy(int i)
     {
-        canvas.Me.GetComponent<NodeBehavior>().properties.AddABook(BookManager.instance.GetRandomBook());
+        canvas.Me.GetComponent<NodeBehavior>().AddABook(BookManager.instance.GetRandomBook());
     }
 }

@@ -276,4 +276,24 @@ public class NodeBehavior : BaseNodeBehavior
         }
         spawnedBookmarks.Clear();
     }
+    
+    public void AddABook(BookManager.Book book)
+    {
+        properties.books.Add(book);
+        //TODO
+    }
+    
+    public void RemoveABook(BookManager.Book book)
+    {
+        properties.books.Remove(book);
+        //TODO
+    }
+
+    public void SetABooksState(BookManager.Book book,int pin,int pout)
+    {
+        //传入的两个参数取值为任意，规则是：如果为正，对应in/out字段设为true，为负则设为false，否则保持原状。
+        if (pin != 0) book.isPreallocatedIn = pin > 0;
+        if (pout != 0) book.isPreallocatedOut = pout > 0;
+        //TODO
+    }
 }
