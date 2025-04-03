@@ -87,11 +87,11 @@ public class PanelController : MonoBehaviour
             identityText.text = properties.typeNameToCNString(properties.type);
             awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
             exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
-            numOfBooksText.text = "持有书籍: " + properties.numOfBooks + "/" + properties.maximumNumOfBooks;
+            numOfBooksText.text = "持有书籍: " + properties.books.Count;
             influenceText.text = "当前受影响: " + node.NowState().influence;
             fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
 
-            BookSlider.value = properties.numOfBooks/(float)properties.maximumNumOfBooks;
+            BookSlider.value = 0.5f;
             InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
             //Debug.Log(InfluenceSlider.value);
         }

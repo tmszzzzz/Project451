@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -49,7 +50,7 @@ public class PlotFuncManager : MonoBehaviour
         var bookL = new List<GameObject>();
         foreach (var node in l)
         {
-            if(node.GetComponent<NodeBehavior>().properties.numOfBooks > 0) bookL.Add(node);
+            if(node.GetComponent<NodeBehavior>().properties.books.Count > 0) bookL.Add(node);
         }
 
         System.Random random = new System.Random();

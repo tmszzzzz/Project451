@@ -118,7 +118,6 @@ public class CanvasBehavior : MonoBehaviour
                 exposeThreshold = 0, // default
                 fallThreshold = 0,
                 unlockTag = 0,
-                maximumNumOfBooks = 0, // default
                 region = 0
             };
         }
@@ -184,7 +183,6 @@ public class CanvasBehavior : MonoBehaviour
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
                         fallThreshold = loadedProperties.fallThreshold != 0 ? loadedProperties.fallThreshold : 0,
                         unlockTag = loadedProperties.unlockTag != 0 ? loadedProperties.unlockTag : 0,
-                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0,
                         region = loadedProperties.region != 0 ? loadedProperties.region : 0
                     };
                     nodeBehavior.description = description.GetDescriptionByID(position.id);
@@ -224,7 +222,6 @@ public class CanvasBehavior : MonoBehaviour
     public void Initialization()
     {
         //这里是一些需要初始化的信息
-        Me.GetComponent<NodeBehavior>().properties.numOfBooks = 1;
         Me.GetComponent<NodeBehavior>().properties.state = Properties.StateEnum.AWAKENED;
     }
 
@@ -243,18 +240,6 @@ public class CanvasBehavior : MonoBehaviour
         connectionCreating = new List<GameObject>();
         LoadConfiguration("Assets/Maps/map.json");
         Initialization();
-    }
-
-    public int GetTotalBookNum()
-    {
-        int total = 0;
-        foreach (var i in nodeList)
-        {
-            NodeBehavior nb = i.GetComponent<NodeBehavior>();
-            if (nb != null) total += nb.properties.numOfBooks;
-        }
-
-        return total;
     }
 
     public List<GameObject> GetNeighbors(GameObject node)
@@ -349,13 +334,6 @@ public class CanvasBehavior : MonoBehaviour
         }
     }
 
-    public void SetNodeNumOfBooks(GameObject node,int v)
-    {
-        NodeBehavior nb = node.GetComponent<NodeBehavior>();
-        if (nb != null) nb.properties.numOfBooks = v;
-        else Debug.LogWarning("NodeBehavior script is null.");
-    }
-
     public void ExecutePreallocatedBooks()
     {
         for (int i = 0; i < GetNodeList().Count; i++)
@@ -368,12 +346,10 @@ public class CanvasBehavior : MonoBehaviour
                 if (book.isPreallocatedOut)
                 {
                     p.books.Remove(book);
-                    p.numOfBooks--;
                 }
                 if (book.isPreallocatedIn)
                 {
                     book.isPreallocatedIn = false;
-                    p.numOfBooks++;
                 }
             }
         }
@@ -384,8 +360,18 @@ public class CanvasBehavior : MonoBehaviour
         NodeBehavior nb = node.GetComponent<NodeBehavior>();
         if (nb != null)
         {
-            nb.properties.numOfBooks += v;
-            nb.properties.numOfBooks = Mathf.Min(nb.properties.numOfBooks, nb.properties.maximumNumOfBooks);
+            if (v < 0)
+            {
+                for (int i = 0; i < -v; i++)
+                {
+                    System.Random random = new System.Random();
+                    int randomIndex = random.Next(nb.properties.books.Count); // 随机索引范围：[0, list.Count)
+                    nb.properties.books.RemoveAt(randomIndex);
+                }
+            }else for(int i=0;i<v;i++)
+            {
+                nb.properties.books.Add(BookManager.instance.GetRandomBook());
+            }
         }
         else Debug.LogWarning("NodeBehavior script is null.");
     }

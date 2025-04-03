@@ -36,7 +36,7 @@ public class GameLoader : MonoBehaviour
         {
             NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
 
-            gainBooks += nodeBehavior.properties.numOfBooks;
+            gainBooks += nodeBehavior.properties.books.Count;
             
             if (nodeBehavior.properties.state >= Properties.StateEnum.AWAKENED)
             {

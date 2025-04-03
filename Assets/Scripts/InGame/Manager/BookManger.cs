@@ -46,7 +46,7 @@ public class BookManager : MonoBehaviour
     }
     
     [SerializeField] private BooksData booksData;
-    public Book[] illustration;
+    public List<Book> illustration;
 
     void Awake()
     {
@@ -65,10 +65,10 @@ public class BookManager : MonoBehaviour
     }
 
     // 随机获取一本书
-    public Book GetRandomBook(int id)
+    public Book GetRandomBook()
     {
-        if (illustration.Length == 0) return null;
-        int index = Random.Range(0, illustration.Length);
+        if (illustration.Count == 0) return null;
+        int index = Random.Range(0, illustration.Count);
         // illustration[index].runtimeId = assignRuntimeId++;
         return illustration[index];
     }

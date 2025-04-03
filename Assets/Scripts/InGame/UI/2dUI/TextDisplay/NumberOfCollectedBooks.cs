@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ public class NumberOfCollectedBooks : MonoBehaviour
         foreach (GameObject node in RoundManager.instance.canvas.GetNodeList())
         {
             NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
-            gainBooks += nodeBehavior.properties.numOfBooks;
+            gainBooks += nodeBehavior.properties.books.Count;
         }
         gameObject.GetComponent<TextMeshProUGUI>().text = $"{gainBooks}";
         gainBooks = 0;

@@ -21,7 +21,7 @@ public class RoundManager : MonoBehaviour
     public DetectiveBehavior detective;
     public Canvas uiCanvas; // 这是你的UI Canvas
     // public Dictionary<GameObject, int> BookAllocationMap; //<node,value>
-    [SerializeField] private GameObject startNode = null;
+    //[SerializeField] private GameObject startNode = null;
     public List<BookAllocationItem> BookAllocationItems = new List<BookAllocationItem>(); // 存储分配项的列表
     public GameObject bookAllocationArrow;
     public GameObject DownFx;
@@ -68,7 +68,7 @@ public class RoundManager : MonoBehaviour
         // }
     }
     
-    public struct BookAllocationItem
+    public class BookAllocationItem
     {
         public GameObject Begin;
         public GameObject End;
@@ -76,11 +76,11 @@ public class RoundManager : MonoBehaviour
         public BookManager.Book BeginBook;
         public BookManager.Book EndBook;
     }
-    void RestartFirstSelection()
-    {
-        startNode = null;
-        Destroy(_currentSelectedPointer);
-    }
+    //void RestartFirstSelection()
+    //{
+    //    startNode = null;
+    //    Destroy(_currentSelectedPointer);
+    //}
 
     // public void BookAllocation(int mouseButton, RaycastHit hit)
     // {
@@ -213,148 +213,91 @@ public class RoundManager : MonoBehaviour
     //
     // }
 
-    public void BookAllocation(BookManager.Book BeginBook, GameObject begin, GameObject end)
+    public void BookAllocation(BookManager.Book beginBook, GameObject begin, GameObject end)
     {
-        NodeBehavior nb = begin.GetComponent<NodeBehavior>();
-        if (nb != null)
+        var nb = begin.GetComponent<NodeBehavior>();
+        // 检查目标节点是否满足接收书的条件
+        if (end != begin //节点不可重
+            && canvas.CanConnectNodes(begin, end, GlobalVar.instance.numOfMaximumBookDeliverRange) //不可超距离
+            && (int)nb.properties.state >= 1 //需已觉醒
+            && BookAllocationNum() < GlobalVar.instance.allocationLimit) //分配不可达上限
         {
-            // 处理第一次点击，选择起始节点
-            if (startNode == null)
+            CameraBehavior.instance.PageSound();
+            // 执行书籍的转移
+            beginBook.isPreallocatedOut = true;
+            // 在end里新创建一个相同id的Book，设为被预分配入
+            BookManager.Book endBook = new BookManager.Book(beginBook);
+            endBook.isPreallocatedIn = true;
+            endBook.isPreallocatedOut = false;
+            endBook.parentId = CanvasBehavior.instance.GetNodeList().IndexOf(end);
+            end.GetComponent<Properties>().books.Add(endBook);
+
+            // 查找是否已有对应的分配箭头
+            BookAllocationItem existingItem = FindAllocationItem(begin, end);
+
+            if (existingItem == null)
             {
-                // 检查起始节点是否有书可以移出
-                if (!BeginBook.isPreallocatedOut && (int)nb.properties.state >= 1 && nb.properties.numOfBooks > 0)
+                // 如果不存在对应的箭头，创建新箭头
+                GameObject arrowInstance = Instantiate(bookAllocationArrow);
+                BookAllocationArrow arrowScript = arrowInstance.GetComponent<BookAllocationArrow>();
+                arrowScript.pointA = begin.transform;
+                arrowScript.pointB = end.transform;
+                arrowScript.allocationNum = 1; // 初始分配书数量
+
+                // 添加到allocationItems列表
+                BookAllocationItems.Add(new BookAllocationItem
                 {
-                    startNode = begin; // 记录起始节点
-                    _currentSelectedPointer = Instantiate(selectedPointerPrefab, startNode.transform.position + new Vector3(0, 5, 0), Quaternion.identity);
-                }
-                else
-                {
-                    messageBar.AddMessage("此节点不能成为分配起始.");
-                    // 起始节点无书，清除选择状态
-                    RestartFirstSelection();
-                }
+                    Begin = begin,
+                    End = end,
+                    Arrow = arrowInstance,
+                    BeginBook = beginBook,
+                    EndBook = endBook,
+                });
             }
             else
             {
-                // 第二次点击，目标节点为end
-                // 检查目标节点是否满足接收书的条件
-                if (end != startNode //节点不可重
-                    && canvas.CanConnectNodes(startNode, end, GlobalVar.instance.numOfMaximumBookDeliverRange) //不可超距离
-                    && (int)nb.properties.state >= 1 //需已觉醒
-                    && BookAllocationNum() < GlobalVar.instance.allocationLimit) //分配不可达上限
+                // 如果已经存在箭头，更新其书籍数量
+                BookAllocationArrow arrowScript = existingItem.Arrow.GetComponent<BookAllocationArrow>();
+                arrowScript.allocationNum++;
+                BookAllocationItems.Add(new BookAllocationItem
                 {
-                    CameraBehavior.instance.PageSound();
-                    // 执行书籍的转移
-                    BeginBook.isPreallocatedOut = true;
-                    // 在end里新创建一个相同id的Book，设为被预分配入
-                    BookManager.Book endBook = new BookManager.Book(BeginBook);
-                    endBook.isPreallocatedIn = true;
-                    endBook.isPreallocatedOut = false;
-                    endBook.parentId = CanvasBehavior.instance.GetNodeList().IndexOf(end);
-                    end.GetComponent<Properties>().books.Add(endBook);
-    
-                    // 查找是否已有对应的分配箭头
-                    BookAllocationItem? existingItem = FindAllocationItem(startNode, end);
-    
-                    if (existingItem == null)
-                    {
-                        // 如果不存在对应的箭头，创建新箭头
-                        GameObject arrowInstance = Instantiate(bookAllocationArrow);
-                        BookAllocationArrow arrowScript = arrowInstance.GetComponent<BookAllocationArrow>();
-                        arrowScript.pointA = startNode.transform;
-                        arrowScript.pointB = end.transform;
-                        arrowScript.allocationNum = 1;  // 初始分配书数量
-    
-                        // 添加到allocationItems列表
-                        BookAllocationItems.Add(new BookAllocationItem
-                        {
-                            Begin = startNode,
-                            End = end,
-                            Arrow = arrowInstance,
-                            BeginBook = BeginBook,
-                            EndBook = endBook,
-                        });
-                    }
-                    else
-                    {
-                        // 如果已经存在箭头，更新其书籍数量
-                        BookAllocationArrow arrowScript = existingItem.Value.Arrow.GetComponent<BookAllocationArrow>();
-                        arrowScript.allocationNum++;
-                    }
-    
-                    // 重置选择状态
-                    RestartFirstSelection();
-                }
-                else
-                {
-                    messageBar.AddMessage("此次移动是不合法的.");
-                    // 目标节点不满足条件，清除选择状态
-                    RestartFirstSelection();
-                }
+                    Begin = begin,
+                    End = end,
+                    Arrow = existingItem.Arrow,
+                    BeginBook = beginBook,
+                    EndBook = endBook,
+                });
             }
+        }
+        else
+        {
+            messageBar.AddMessage("此次移动是不合法的.");
         }
     }
 
-    public void CancelBookAllocation(ref BookAllocationItem alloc)
+    public void CancelBookAllocation(BookAllocationItem alloc)
     {
-        if (alloc.EndBook != null && alloc.EndBook.isPreallocatedOut)
+        if (alloc.EndBook.isPreallocatedOut)
         {
             for (int j = 0; j < BookAllocationItems.Count; j++)
             {
-                var item = BookAllocationItems[j];
-                if (item.BeginBook == alloc.EndBook)
+                if (BookAllocationItems[j].BeginBook == alloc.EndBook)
                 {
-                    CancelBookAllocation(ref item);
-                    alloc.End.GetComponent<Properties>().books.Remove(alloc.EndBook);
-                    alloc.BeginBook.isPreallocatedOut = false;
-                    
-                    // 销毁Arrow
-                    BookAllocationItem? reverseItem = FindAllocationItem(alloc.End, alloc.Begin);
-                    
-                    BookAllocationArrow reverseArrowScript = reverseItem.Value.Arrow.GetComponent<BookAllocationArrow>();
-                    reverseArrowScript.allocationNum--;  // 减少反向分配线的数量
-                    // 如果数量为0，则删除该反向分配线
-                    if (reverseArrowScript.allocationNum <= 0)
-                    {
-                        reverseItem.Value.Arrow.GetComponent<BookAllocationArrow>().Cancel();
-                        BookAllocationItems.Remove(reverseItem.Value); // 从列表中移除
-                    }
-                    
-                    List<BookAllocationItem> toBeDeleted = new List<BookAllocationItem>();
-                    // 在此操作后，检查所有分配线是否合法
-                    foreach (var i in BookAllocationItems)
-                    {
-                        NodeBehavior bnb = i.Begin.GetComponent<NodeBehavior>();
-                        int cnt = 0;// 书的数量
-                        foreach (var k in bnb.properties.books)
-                        {
-                            ++cnt;
-                            if (k.isPreallocatedOut)
-                            {
-                                --cnt;
-                            }
-                        }
-                        if (cnt <= 0)
-                        {
-                            toBeDeleted.Add(i);
-                        }
-                    }
-                    foreach (var i in toBeDeleted)
-                    {
-                        BookAllocationItems.Remove(i);
-                        var allocationArrow = i.Arrow.GetComponent<BookAllocationArrow>();
-                    
-                        allocationArrow.Cancel();
-                    }
-                    // 重置选择状态
-                    RestartFirstSelection();
-    
-                    // 触发分配变化事件
-                    BookAllocationChange?.Invoke();
+                    CancelBookAllocation(BookAllocationItems[j]);
                 }
             }
         }
+        alloc.End.GetComponent<NodeBehavior>().properties.books.Remove(alloc.EndBook);
+        alloc.BeginBook.isPreallocatedOut = false;
+        var arr = alloc.Arrow.GetComponent<BookAllocationArrow>();
+        arr.allocationNum--;
+        if (arr.allocationNum <= 0)
+        {
+            arr.Cancel();
+        }
         BookAllocationItems.Remove(alloc);
+        // 触发分配变化事件
+        BookAllocationChange?.Invoke();
     }
     
     public int BookAllocationNum()
@@ -367,7 +310,7 @@ public class RoundManager : MonoBehaviour
         return sum;
     }
 
-    private BookAllocationItem? FindAllocationItem(GameObject begin, GameObject end)
+    private BookAllocationItem FindAllocationItem(GameObject begin, GameObject end)
     {
         // 遍历allocationItems列表，查找是否存在对应的分配箭头
         foreach (var item in BookAllocationItems)
@@ -517,6 +460,6 @@ public class RoundManager : MonoBehaviour
     }
     public void BookNumOfMeIncreaseBy(int i)
     {
-        canvas.Me.GetComponent<NodeBehavior>().properties.numOfBooks++;
+        canvas.Me.GetComponent<NodeBehavior>().properties.books.Add(BookManager.instance.GetRandomBook());
     }
 }

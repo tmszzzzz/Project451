@@ -322,7 +322,7 @@ public class SavesLoadManager : MonoBehaviour
             }
             catch (Exception ex)
             {
-                
+                Debug.LogWarning(ex);
             }
         }
     }

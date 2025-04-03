@@ -14,8 +14,8 @@ public class BookSlotBehavior : MonoBehaviour
 
     void Start()
     {
-        currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;
-        maxBook = thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks;
+        //currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;
+        //maxBook = thisNode.GetComponent<NodeBehavior>().properties.maximumNumOfBooks;
 
         bookSlots = new List<GameObject>();
         initializeBookSlots();
@@ -56,7 +56,7 @@ public class BookSlotBehavior : MonoBehaviour
 
         transform.rotation = transform.parent.rotation;
         //caculate the current book and update the book slots
-        currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;
+        //currentBook = thisNode.GetComponent<NodeBehavior>().properties.numOfBooks;
         // currentBook += RoundManager.instance.BookAllocationMap[thisNode];
         updateBookSlots();
     }

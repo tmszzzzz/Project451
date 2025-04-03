@@ -146,8 +146,5 @@ public class GlobalVar : MonoBehaviour
 
 
 
-    private void KeepLimitEqualToHalfOfBookNum()
-    {
-        allocationLimit = RoundManager.instance.canvas.GetTotalBookNum();
-    }
+    
 }

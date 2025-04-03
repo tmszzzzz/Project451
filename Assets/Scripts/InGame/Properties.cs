@@ -24,8 +24,6 @@ public class Properties
     public int exposeThreshold;
     public int fallThreshold;
     public List<BookManager.Book> books = new List<BookManager.Book>();
-    public int numOfBooks = 0;
-    public int maximumNumOfBooks;
     public int unlockTag;
     public int region;
     public List<BookManager.Book> borrowBooks = new List<BookManager.Book>();
