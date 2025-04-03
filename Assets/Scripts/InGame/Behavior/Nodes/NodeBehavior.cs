@@ -264,10 +264,24 @@ public class NodeBehavior : BaseNodeBehavior
     }
 
     // 配置书签视觉和交互
-    private void ConfigureBookmark(GameObject bookmark, BookManager.Book book) {
+    private void ConfigureBookmark(GameObject bookmark, BookManager.Book book)
+    {
+        Transform canvas = transform.Find("Canvas");
+        Image colorImage = canvas.Find("Color").GetComponent<Image>();
+        Image patternImage = canvas.Find("Pattern").GetComponent<Image>();
         // 设置基础颜色
-        
+        if (book.type == BookManager.Book.BookType.StonemasonChisel)
+        {
+            colorImage.color = Color.red;
+        }else if (book.type == BookManager.Book.BookType.TravelerFlint)
+        {
+            colorImage.color = Color.blue;
+        }
         // 设置花纹
+        if (book.additionalInfluence > 1)
+        {
+            // patternImage.sprite = ;
+        }
     }
 
     void ClearBookmarks() {
@@ -280,13 +294,13 @@ public class NodeBehavior : BaseNodeBehavior
     public void AddABook(BookManager.Book book)
     {
         properties.books.Add(book);
-        //TODO
+        GenerateBookmarks();
     }
     
     public void RemoveABook(BookManager.Book book)
     {
         properties.books.Remove(book);
-        //TODO
+        GenerateBookmarks();
     }
 
     public void SetABooksState(BookManager.Book book,int pin,int pout)

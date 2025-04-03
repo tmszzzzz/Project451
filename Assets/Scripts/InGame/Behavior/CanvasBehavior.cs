@@ -339,17 +339,18 @@ public class CanvasBehavior : MonoBehaviour
         for (int i = 0; i < GetNodeList().Count; i++)
         {
             List<GameObject> nodeList = GetNodeList();
-            for (int j = 0; j < nodeList[i].GetComponent<NodeBehavior>().properties.books.Count; j++)
+            NodeBehavior nb = nodeList[i].GetComponent<NodeBehavior>();
+            for (int j = 0; j < nb.properties.books.Count; j++)
             {
-                Properties p = nodeList[i].GetComponent<NodeBehavior>().properties;
+                Properties p = nb.properties;
                 BookManager.Book book = p.books[j];
                 if (book.isPreallocatedOut)
                 {
-                    nodeList[i].GetComponent<NodeBehavior>().RemoveABook(book);
+                    nb.RemoveABook(book);
                 }
                 if (book.isPreallocatedIn)
                 {
-                    nodeList[i].GetComponent<NodeBehavior>().SetABooksState(book,-1,0);
+                    nb.SetABooksState(book,-1,0);
                 }
             }
         }
