@@ -165,9 +165,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c087401cecdd843aaaedee6c3a0bb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPaging: 0
   pageButton: {fileID: 1180488968679763961}
   thisNode: {fileID: 0}
   targetScale: 2.3
+  pageSprite: {fileID: 0}
 --- !u!1 &1180488968679763961
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,20 +17,31 @@ public class NodeBehavior : BaseNodeBehavior
     public string description = "";
     public string plotFileName = "";
     public Sprite pageSprite;
+    [SerializeField] protected GameObject bookmarkPrefab; // 书签预制体
+    private List<GameObject> spawnedBookmarks = new List<GameObject>();
+    public float bookmarkSpacing = 0.8f;                    // 书签间距
+    
     
     
     // Start is called before the first frame update
     protected virtual void Start()
     {
-        if(String.IsNullOrEmpty(plotFileName))plotFileName = "null";
-        
+        if (String.IsNullOrEmpty(plotFileName)) plotFileName = "null";
+
         ColorMap = new Dictionary<int, Color>();
         ColorMap.Add(-1, Color.gray);
         ColorMap.Add(0, Color.gray);
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = MessageBar.instance;
+        // GenerateBookmarks();
+        if (this.properties.state > 0)
+        {
+            // 生成书签
+            GenerateBookmarks();
+        }
     }
+
     protected virtual void Update()
     {
         objColor.color = ColorMap[(int)properties.state];
@@ -38,6 +49,13 @@ public class NodeBehavior : BaseNodeBehavior
         {
             GetComponent<MeshRenderer>().material.color = ColorMap[properties.region];
         }
+
+        if (this.properties.state > 0)
+        {
+            // 更新书签
+            
+        }
+        //GenerateBookmarks();
     }
 
     public override StatePrediction NowState()
@@ -216,4 +234,46 @@ public class NodeBehavior : BaseNodeBehavior
         properties.state = stateEnum;
     }
 
+    // 动态生成书签
+    private void GenerateBookmarks() {
+        ClearBookmarks();
+        Debug.Log("删除成功！");
+        foreach (var book in properties.books) {
+            // 实例化书签
+            Debug.Log(properties.books.IndexOf(book));
+            GameObject bookmarkObj = Instantiate(
+                bookmarkPrefab, 
+                CalculateBookmarkPosition(properties.books.IndexOf(book)),
+                Quaternion.identity
+            );
+            Debug.Log("创建成功" + properties.books.IndexOf(book));
+            // 配置书签
+            ConfigureBookmark(bookmarkObj, book);
+            
+            spawnedBookmarks.Add(bookmarkObj);
+        }
+    }
+    // 计算书签位置（圆形布局）
+    private Vector3 CalculateBookmarkPosition(int index) {
+        float angle = index * (360f / properties.books.Count);
+        return transform.position + new Vector3(
+            Mathf.Cos(angle * Mathf.Deg2Rad) * bookmarkSpacing,
+            Mathf.Sin(angle * Mathf.Deg2Rad) * bookmarkSpacing,
+            0
+        );
+    }
+
+    // 配置书签视觉和交互
+    private void ConfigureBookmark(GameObject bookmark, BookManager.Book book) {
+        // 设置基础颜色
+        
+        // 设置花纹
+    }
+
+    void ClearBookmarks() {
+        foreach (var bm in spawnedBookmarks) {
+            Destroy(bm.gameObject);
+        }
+        spawnedBookmarks.Clear();
+    }
 }

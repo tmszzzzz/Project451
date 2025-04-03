@@ -126,10 +126,12 @@ MonoBehaviour:
     awakeThreshold: 0
     exposeThreshold: 0
     fallThreshold: 0
+    books: []
     numOfBooks: 0
     maximumNumOfBooks: 0
     unlockTag: 0
     region: 0
+    borrowBooks: []
   plotAndPageHandler: {fileID: 2798616845115293210}
   mb: {fileID: 0}
   objColor: {fileID: 7774122826693232804}
@@ -137,6 +139,8 @@ MonoBehaviour:
   description: 
   plotFileName: 
   pageSprite: {fileID: 0}
+  bookmarkPrefab: {fileID: 5906648441195115135, guid: c2f955f4b8ede894ba3a596b9f64d341,
+    type: 3}
 --- !u!1001 &1796190036625346765
 PrefabInstance:
   m_ObjectHideFlags: 0
