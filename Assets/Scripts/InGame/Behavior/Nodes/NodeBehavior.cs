@@ -53,9 +53,11 @@ public class NodeBehavior : BaseNodeBehavior
         if (this.properties.state > 0)
         {
             // 更新书签
-            
+            foreach (var bookmark in spawnedBookmarks)
+            {
+                bookmark.transform.rotation = Camera.main.transform.rotation;
+            }
         }
-        //GenerateBookmarks();
     }
 
     public override StatePrediction NowState()
@@ -237,23 +239,20 @@ public class NodeBehavior : BaseNodeBehavior
     // 动态生成书签
     private void GenerateBookmarks() {
         ClearBookmarks();
-        Debug.Log("删除成功！");
         foreach (var book in properties.books) {
             // 实例化书签
-            Debug.Log(properties.books.IndexOf(book));
             GameObject bookmarkObj = Instantiate(
                 bookmarkPrefab, 
                 CalculateBookmarkPosition(properties.books.IndexOf(book)),
-                Quaternion.identity
+                Camera.main.transform.rotation
             );
-            Debug.Log("创建成功" + properties.books.IndexOf(book));
             // 配置书签
             ConfigureBookmark(bookmarkObj, book);
             
             spawnedBookmarks.Add(bookmarkObj);
         }
     }
-    // 计算书签位置（圆形布局）
+    // 计算书签位置
     private Vector3 CalculateBookmarkPosition(int index) {
         float angle = index * (360f / properties.books.Count);
         return transform.position + new Vector3(
@@ -266,13 +265,15 @@ public class NodeBehavior : BaseNodeBehavior
     // 配置书签视觉和交互
     private void ConfigureBookmark(GameObject bookmark, BookManager.Book book)
     {
-        Transform canvas = transform.Find("Canvas");
+        Transform canvas = bookmark.transform.Find("Canvas");
         Image colorImage = canvas.Find("Color").GetComponent<Image>();
         Image patternImage = canvas.Find("Pattern").GetComponent<Image>();
+        Debug.Log(colorImage.color);
         // 设置基础颜色
         if (book.type == BookManager.Book.BookType.StonemasonChisel)
         {
             colorImage.color = Color.red;
+            Debug.Log(colorImage.color);
         }else if (book.type == BookManager.Book.BookType.TravelerFlint)
         {
             colorImage.color = Color.blue;
@@ -299,8 +300,16 @@ public class NodeBehavior : BaseNodeBehavior
     
     public void RemoveABook(BookManager.Book book)
     {
-        properties.books.Remove(book);
-        GenerateBookmarks();
+        if (properties.books.Contains(book))
+        {
+            properties.books.Remove(book);
+            GenerateBookmarks();
+        }
+        else
+        {
+            Debug.Log("not found");
+        }
+        
     }
 
     public void SetABooksState(BookManager.Book book,int pin,int pout)

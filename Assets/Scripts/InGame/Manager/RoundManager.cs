@@ -462,4 +462,9 @@ public class RoundManager : MonoBehaviour
     {
         canvas.Me.GetComponent<NodeBehavior>().AddABook(BookManager.instance.GetRandomBook());
     }
+    
+    public void BookNumOfMeDecreaseBy(int i)
+    {
+        canvas.Me.GetComponent<NodeBehavior>().RemoveABook(canvas.Me.GetComponent<NodeBehavior>().properties.books[0]);
+    }
 }
