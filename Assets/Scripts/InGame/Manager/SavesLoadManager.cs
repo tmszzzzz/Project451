@@ -32,6 +32,7 @@ public class SavesLoadManager : MonoBehaviour
         public int numOfDetectiveOnStart;
         public int probabilityOfNodesInspectingDetective;
         public int resourcePoint;
+        public int maxResourcePoint;
         public int resourcePointPerInfoIncrement;
         public int infoIncreaseBy;
         public int resourcePointPerDistanceIncrement;
@@ -68,6 +69,7 @@ public class SavesLoadManager : MonoBehaviour
             this.numOfDetectiveOnStart = globalVar.numOfDetectiveOnStart;
             this.probabilityOfNodesInspectingDetective = globalVar.probabilityOfNodesInspectingDetective;
             this.resourcePoint = globalVar.resourcePoint;
+            this.maxResourcePoint = globalVar.maxResourcePoint;
             this.resourcePointPerInfoIncrement = globalVar.resourcePointPerInfoIncrement;
             this.infoIncreaseBy = globalVar.infoIncreaseBy;
             this.resourcePointPerDistanceIncrement = globalVar.resourcePointPerDistanceIncrement;
@@ -355,6 +357,7 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.probabilityOfNodesInspectingDetective =
                 serializableGlobalVar.probabilityOfNodesInspectingDetective;
             GlobalVar.instance.resourcePoint = serializableGlobalVar.resourcePoint;
+            GlobalVar.instance.maxResourcePoint = serializableGlobalVar.maxResourcePoint;
             GlobalVar.instance.resourcePointPerInfoIncrement = serializableGlobalVar.resourcePointPerInfoIncrement;
             GlobalVar.instance.infoIncreaseBy = serializableGlobalVar.infoIncreaseBy;
             GlobalVar.instance.resourcePointPerDistanceIncrement =
