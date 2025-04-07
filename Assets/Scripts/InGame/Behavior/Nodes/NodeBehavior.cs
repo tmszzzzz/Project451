@@ -19,7 +19,7 @@ public class NodeBehavior : BaseNodeBehavior
     public Sprite pageSprite;
     [SerializeField] protected GameObject bookmarkPrefab; // 书签预制体
     private List<GameObject> spawnedBookmarks = new List<GameObject>();
-    public float bookmarkSpacing = 0.8f;                    // 书签间距
+    public float bookmarkSpacing = 1f;                    // 书签间距
     
     
     
@@ -34,8 +34,7 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = MessageBar.instance;
-        // GenerateBookmarks();
-        if (this.properties.state > 0)
+        if (properties.state > 0)
         {
             // 生成书签
             GenerateBookmarks();
@@ -48,15 +47,6 @@ public class NodeBehavior : BaseNodeBehavior
         if (transform.parent.GetComponent<CanvasBehavior>().editorMode)
         {
             GetComponent<MeshRenderer>().material.color = ColorMap[properties.region];
-        }
-
-        if (this.properties.state > 0)
-        {
-            // 更新书签
-            foreach (var bookmark in spawnedBookmarks)
-            {
-                bookmark.transform.rotation = Camera.main.transform.rotation;
-            }
         }
     }
 
@@ -236,55 +226,46 @@ public class NodeBehavior : BaseNodeBehavior
         properties.state = stateEnum;
     }
 
-    // 动态生成书签
-    private void GenerateBookmarks() {
+    // 生成书签
+    private void GenerateBookmarks()
+    {
+        Transform canvas = transform.Find("NodeUICanvas");
         ClearBookmarks();
+        List<float> offsets = new List<float>();
+        int count = properties.books.Count;
+        bool isOdd = count % 2 == 1;
+        
+        if (isOdd) {
+            int initial = - count / 2;
+            for (int i = 0; i < count; ++i)
+            {
+                offsets.Add(initial);
+                initial += 1;
+            }
+        } else {
+            float initial = - count / 2 + 0.5f;
+            for (int i = 0; i < count; ++i)
+            {
+                offsets.Add(initial);
+                initial += 1;
+            }
+        }
+
         foreach (var book in properties.books) {
             // 实例化书签
             GameObject bookmarkObj = Instantiate(
-                bookmarkPrefab, 
-                CalculateBookmarkPosition(properties.books.IndexOf(book)),
-                Camera.main.transform.rotation
+                bookmarkPrefab,
+                canvas.transform
             );
+            bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, 1.3f, 0f);
+            bookmarkObj.transform.localRotation = Quaternion.identity;
+            bookmarkObj.transform.localScale = Vector3.one;
             // 配置书签
-            ConfigureBookmark(bookmarkObj, book);
-            
+            bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book);
             spawnedBookmarks.Add(bookmarkObj);
         }
     }
-    // 计算书签位置
-    private Vector3 CalculateBookmarkPosition(int index) {
-        float angle = index * (360f / properties.books.Count);
-        return transform.position + new Vector3(
-            Mathf.Cos(angle * Mathf.Deg2Rad) * bookmarkSpacing,
-            Mathf.Sin(angle * Mathf.Deg2Rad) * bookmarkSpacing,
-            0
-        );
-    }
-
-    // 配置书签视觉和交互
-    private void ConfigureBookmark(GameObject bookmark, BookManager.Book book)
-    {
-        Transform canvas = bookmark.transform.Find("Canvas");
-        Image colorImage = canvas.Find("Color").GetComponent<Image>();
-        Image patternImage = canvas.Find("Pattern").GetComponent<Image>();
-        Debug.Log(colorImage.color);
-        // 设置基础颜色
-        if (book.type == BookManager.Book.BookType.StonemasonChisel)
-        {
-            colorImage.color = Color.red;
-            Debug.Log(colorImage.color);
-        }else if (book.type == BookManager.Book.BookType.TravelerFlint)
-        {
-            colorImage.color = Color.blue;
-        }
-        // 设置花纹
-        if (book.additionalInfluence > 1)
-        {
-            // patternImage.sprite = ;
-        }
-    }
-
+    
     void ClearBookmarks() {
         foreach (var bm in spawnedBookmarks) {
             Destroy(bm.gameObject);
