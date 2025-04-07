@@ -1,20 +1,30 @@
+using System;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class NodeInfoEditorDisplay : MonoBehaviour
 {
-    public GameObject infoTextGo; // 在 Inspector 中指定的 UI Text 用于显示信息
-    private TextMeshProUGUI infoText;
     private Camera mainCamera;
     private CubeEditorBehavior selectedCB;
+    public TextMeshProUGUI NodeName;
+    public Slider AwakeThresholdSlider;
+    public TextMeshProUGUI AwakeThresholdText;
+    public Slider ExposedThresholdSlider;
+    public TextMeshProUGUI ExposedThresholdText;
+    public Slider FallThresholdSlider;
+    public TextMeshProUGUI FallThresholdText;
+    public Slider TypeSlider;
+    public TextMeshProUGUI TypeText;
+    public Slider RegionSlider;
+    public TextMeshProUGUI RegionText;
+    private bool changing;
 
     void Start()
     {
         mainCamera = Camera.main;
-        infoText = infoTextGo.GetComponent<TextMeshProUGUI>();
-        // 初始化文本为空
-        infoText.text = "";
+        changing = false;
     }
 
     void Update()
@@ -23,7 +33,7 @@ public class NodeInfoEditorDisplay : MonoBehaviour
         Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit))
+        if (Input.GetMouseButtonDown(0) && Physics.Raycast(ray, out hit))
         {
             GameObject hoveredObject = hit.collider.gameObject;
 
@@ -32,19 +42,54 @@ public class NodeInfoEditorDisplay : MonoBehaviour
             if (cubeBehavior != null)
             {
                 // 获取 Properties 数据并展示
-                PropertiesEditor properties = cubeBehavior.properties;
+                Properties properties = cubeBehavior.properties;
                 if (properties != null)
                 {
-                    // 显示属性值
-                    infoText.text = $"Name: {hoveredObject.name}\n" +
-                                    $"Awake Threshold: {properties.awakeThreshold}\n" +
-                                    $"Expose Threshold: {properties.exposeThreshold}\n" +
-                                    $"Maximum Books: {properties.maximumNumOfBooks}";
+                    changing = true;
+                    NodeName.text = cubeBehavior.name;
+                    AwakeThresholdSlider.value = properties.awakeThreshold;
+                    AwakeThresholdText.text = $"觉醒阈值 - {properties.awakeThreshold}";
+                    ExposedThresholdSlider.value = properties.exposeThreshold;
+                    ExposedThresholdText.text = $"暴露阈值 - {properties.exposeThreshold}";
+                    FallThresholdSlider.value = properties.fallThreshold;
+                    FallThresholdText.text = $"维持阈值 - {properties.fallThreshold}";
+                    TypeSlider.value = (int)(properties.type);
+                    TypeText.text = $"节点类型 - {properties.type}";
+                    RegionSlider.value = properties.region;
+                    RegionText.text = $"所处区域 - {properties.region}";
+                    
                     cubeBehavior.selected = true;
                     if (selectedCB != null && selectedCB != cubeBehavior) selectedCB.selected = false;
                     selectedCB = cubeBehavior;
+                    changing = false;
                 }
             }
+        }
+    }
+
+    public void UpdateInfo()
+    {
+        if (!changing && selectedCB != null)
+        {
+            Debug.Log(1);
+            var properties = selectedCB.properties;
+            properties.awakeThreshold = (int)AwakeThresholdSlider.value;
+            properties.exposeThreshold = (int)ExposedThresholdSlider.value;
+            properties.fallThreshold = (int)FallThresholdSlider.value;
+            properties.type = (Properties.typeEnum)TypeSlider.value;
+            properties.region = (int)RegionSlider.value;
+            
+            NodeName.text = selectedCB.name;
+            AwakeThresholdSlider.value = properties.awakeThreshold;
+            AwakeThresholdText.text = $"觉醒阈值 - {properties.awakeThreshold}";
+            ExposedThresholdSlider.value = properties.exposeThreshold;
+            ExposedThresholdText.text = $"暴露阈值 - {properties.exposeThreshold}";
+            FallThresholdSlider.value = properties.fallThreshold;
+            FallThresholdText.text = $"维持阈值 - {properties.fallThreshold}";
+            TypeSlider.value = (int)(properties.type);
+            TypeText.text = $"节点类型 - {properties.type}";
+            RegionSlider.value = properties.region;
+            RegionText.text = $"所处区域 - {properties.region}";
         }
     }
 }

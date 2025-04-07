@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class CubeEditorBehavior : MonoBehaviour
 {
-    public PropertiesEditor properties;
+    public Properties properties;
     private Renderer objRenderer;
     private Dictionary<int, Color> ColorMap;
     public bool selected;
+
+    public List<GameObject> TypeTag;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +19,18 @@ public class CubeEditorBehavior : MonoBehaviour
         objRenderer.material = new Material(objRenderer.material);
 
         ColorMap = new Dictionary<int, Color>();
-        ColorMap.Add(-1, Color.gray);
         ColorMap.Add(0, Color.green);
-        ColorMap.Add(1, Color.yellow);
+        ColorMap.Add(1, Color.blue);
         ColorMap.Add(2, Color.red);
     }
     void Update()
     {
-        objRenderer.material.color = selected ? Color.red : Color.white;
+        objRenderer.material.color = ColorMap[properties.region] + (!selected ? Color.black : 0.5f * Color.white);
+        int l = TypeTag.Count;
+        for (int i = 0; i < l; i++)
+        {
+            if(i != (int)properties.type-1) TypeTag[i].SetActive(false);
+            else TypeTag[i].SetActive(true);
+        }
     }
 }

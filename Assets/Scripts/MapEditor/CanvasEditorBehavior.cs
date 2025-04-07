@@ -36,7 +36,7 @@ public class CanvasEditorBehavior : MonoBehaviour
             GameObject obj = cubeList[i];
             float[] f = { obj.transform.position.x, obj.transform.position.y, obj.transform.position.z };
             CubeEditorBehavior cubeBehavior = obj.GetComponent<CubeEditorBehavior>();
-            PropertiesEditor properties = cubeBehavior != null ? cubeBehavior.properties : null; 
+            Properties properties = cubeBehavior != null ? cubeBehavior.properties : null; 
 
             NodeData data = new NodeData(i, f, properties);
 
@@ -83,17 +83,14 @@ public class CanvasEditorBehavior : MonoBehaviour
         //存储cube时使用
         public int id;
         public float[] position;
-        public PropertiesEditor properties;
-        public NodeData(int id, float[] position, PropertiesEditor properties = null)
+        public Properties properties;
+        public NodeData(int id, float[] position, Properties properties = null)
         {
             this.id = id;
             this.position = new float[] { position[0], position[1], position[2] };
-            this.properties = properties ?? new PropertiesEditor
+            this.properties = properties ?? new Properties
             {
-                type = PropertiesEditor.typeEnum.NORMAL,
-                awakeThreshold = 0, // default
-                exposeThreshold = 0, // default
-                maximumNumOfBooks = 0 // default
+                
             };
         }
 
@@ -141,16 +138,8 @@ public class CanvasEditorBehavior : MonoBehaviour
                 CubeEditorBehavior cubeBehavior = node.GetComponent<CubeEditorBehavior>();
                 if (cubeBehavior != null)
                 {
-                    PropertiesEditor loadedProperties = position.properties ?? new PropertiesEditor();
-
-                    // 如果字段为默认值，则填充默认值
-                    cubeBehavior.properties = new PropertiesEditor
-                    {
-                        type = (PropertiesEditor.typeEnum)(loadedProperties.type != 0 ? loadedProperties.type : 0),
-                        awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
-                        exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
-                        maximumNumOfBooks = loadedProperties.maximumNumOfBooks != 0 ? loadedProperties.maximumNumOfBooks : 0
-                    };
+                    Properties loadedProperties = position.properties ?? new Properties();
+                    cubeBehavior.properties = loadedProperties;
                 }
                 cubeList.Add(node);
             }
