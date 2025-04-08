@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -6,6 +8,7 @@ using UnityEngine.UI;
 
 public class NodeInfoEditorDisplay : MonoBehaviour
 {
+    public static NodeInfoEditorDisplay instance;
     private Camera mainCamera;
     private CubeEditorBehavior selectedCB;
     public TextMeshProUGUI NodeName;
@@ -19,12 +22,27 @@ public class NodeInfoEditorDisplay : MonoBehaviour
     public TextMeshProUGUI TypeText;
     public Slider RegionSlider;
     public TextMeshProUGUI RegionText;
+
+    public BooksData BookListSO;
+    public GameObject BookEditorItemPrefab;
+    public GameObject BookListScrollViewContent;
+    public Dictionary<GameObject,BookManager.Book> BookEditorItemDictionary = new Dictionary<GameObject, BookManager.Book>();
+    public TextMeshProUGUI BorrowBooksText;
+    
     private bool changing;
 
     void Start()
     {
+        instance = this;
         mainCamera = Camera.main;
         changing = false;
+        foreach (var book in BookListSO.books)
+        {
+            var b = Instantiate(BookEditorItemPrefab, BookListScrollViewContent.transform);
+            var t = b.transform.Find("BookText").GetComponent<TextMeshProUGUI>();
+            t.text = $"ID - {book.id}\n{book.name}\n{book.type}";
+            BookEditorItemDictionary.Add(b,book);
+        }
     }
 
     void Update()
@@ -46,6 +64,10 @@ public class NodeInfoEditorDisplay : MonoBehaviour
                 if (properties != null)
                 {
                     changing = true;
+                    cubeBehavior.selected = true;
+                    if (selectedCB != null && selectedCB != cubeBehavior) selectedCB.selected = false;
+                    selectedCB = cubeBehavior;
+                    
                     NodeName.text = cubeBehavior.name;
                     AwakeThresholdSlider.value = properties.awakeThreshold;
                     AwakeThresholdText.text = $"觉醒阈值 - {properties.awakeThreshold}";
@@ -57,10 +79,8 @@ public class NodeInfoEditorDisplay : MonoBehaviour
                     TypeText.text = $"节点类型 - {properties.type}";
                     RegionSlider.value = properties.region;
                     RegionText.text = $"所处区域 - {properties.region}";
-                    
-                    cubeBehavior.selected = true;
-                    if (selectedCB != null && selectedCB != cubeBehavior) selectedCB.selected = false;
-                    selectedCB = cubeBehavior;
+                    UpdateBookInfo();
+
                     changing = false;
                 }
             }
@@ -71,7 +91,6 @@ public class NodeInfoEditorDisplay : MonoBehaviour
     {
         if (!changing && selectedCB != null)
         {
-            Debug.Log(1);
             var properties = selectedCB.properties;
             properties.awakeThreshold = (int)AwakeThresholdSlider.value;
             properties.exposeThreshold = (int)ExposedThresholdSlider.value;
@@ -90,6 +109,42 @@ public class NodeInfoEditorDisplay : MonoBehaviour
             TypeText.text = $"节点类型 - {properties.type}";
             RegionSlider.value = properties.region;
             RegionText.text = $"所处区域 - {properties.region}";
+        }
+    }
+
+    public void Select(GameObject bookEI)
+    {
+        if (selectedCB != null)
+        {
+            var book = BookEditorItemDictionary[bookEI];
+            var beib = bookEI.GetComponent<BookEditorItemBehavior>();
+            if (beib.Tag)
+            {
+                selectedCB.properties.borrowBooks.Remove(book);
+            }
+            else
+            {
+                selectedCB.properties.borrowBooks.Add(book);
+            }
+            UpdateBookInfo();
+        }
+    }
+
+    void UpdateBookInfo()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        foreach (var book in selectedCB.properties.borrowBooks)
+        {
+            stringBuilder.Append(book.name + " - ").Append(book.type).Append("\n");
+        }
+
+        BorrowBooksText.text = stringBuilder.ToString();
+        foreach (var kv in BookEditorItemDictionary)
+        {
+            if (selectedCB.properties.borrowBooks.Contains(kv.Value))
+            {
+                kv.Key.GetComponent<BookEditorItemBehavior>().Tag = true;
+            }else kv.Key.GetComponent<BookEditorItemBehavior>().Tag = false;
         }
     }
 }

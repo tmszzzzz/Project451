@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class CubeEditorBehavior : MonoBehaviour
     public bool selected;
 
     public List<GameObject> TypeTag;
+
+    public TextMeshPro BookNum;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,5 +35,11 @@ public class CubeEditorBehavior : MonoBehaviour
             if(i != (int)properties.type-1) TypeTag[i].SetActive(false);
             else TypeTag[i].SetActive(true);
         }
+
+        if (properties.borrowBooks.Count > 0)
+        {
+            BookNum.gameObject.SetActive(true);
+            BookNum.text = $"{properties.borrowBooks.Count}";
+        }else BookNum.gameObject.SetActive(false);
     }
 }
