@@ -4,27 +4,64 @@ using UnityEngine;
 public class BookManager : MonoBehaviour
 {
     public static BookManager instance;
-    // public int assignRuntimeId = 0;
-    
+
     [System.Serializable]
     public class Book
     {
         public enum BookType
         {
-            nostalgia,
-            prophecy,
-            
+            Nostalgia,
+            Prophecy,
+            Qishi,
+            Fansi,
+            Gushi,
+            Unknown
         }
-        public int id;                   // 唯一书籍ID
-        public string name;                 // 书名
-        public string description;          // 描述
-        public int basicInfluence;          // 提供的基础影响力值
-        public int additionalInfluence;     // 提供的额外影响力值
-        public BookType type;               // 书籍类型，用于分类随机获取
-        public bool isPreallocatedIn;       // 是否被预分配入
-        public bool isPreallocatedOut;      // 是否被预分配出
-        public int parentId;                // 所属节点ID
-        // public int runtimeId;            // 运行时ID
+
+        private static Dictionary<string, BookType> _dictionary = new Dictionary<string, BookType>
+        {
+            { "往昔", BookType.Nostalgia },
+            { "预言", BookType.Prophecy },
+            { "启示", BookType.Qishi },
+            { "反思", BookType.Fansi },
+            { "故事", BookType.Gushi },
+        };
+
+        private static Dictionary<BookType, Color> _colors = new Dictionary<BookType, Color>
+        {
+            { BookType.Nostalgia, Color.red },
+            { BookType.Prophecy, Color.blue },
+            { BookType.Qishi, Color.magenta },
+            { BookType.Fansi, Color.cyan },
+            { BookType.Gushi, Color.yellow },
+            { BookType.Unknown, Color.gray }
+        };
+
+        public static Color GetBookMarksColor(BookType bt)
+        {
+            return _colors[bt];
+        }
+
+        public static BookType ParseCnToBookType(string bt)
+        {
+            BookType v;
+            if (_dictionary.TryGetValue(bt, out v))
+            {
+                return v;
+            }
+
+            return BookType.Unknown;
+        }
+
+        public int id; // 唯一书籍ID
+        public string name; // 书名
+        public string description; // 描述
+        public int basicInfluence; // 提供的基础影响力值
+        public int additionalInfluence; // 提供的额外影响力值
+        public BookType type; // 书籍类型，用于分类随机获取
+        public bool isPreallocatedIn; // 是否被预分配入
+        public bool isPreallocatedOut; // 是否被预分配出
+        public int parentId; // 所属节点ID
 
         public Book(Book book)
         {
@@ -39,9 +76,10 @@ public class BookManager : MonoBehaviour
             this.parentId = book.parentId;
             // this.runtimeId = book.runtimeId;
         }
-        
+
         // 带参数的构造函数
-        public Book(int id, string name, string description, int basicInfluence, int additionalInfluence, BookType type, bool isPreallocatedIn, bool isPreallocatedOut, int parentId)
+        public Book(int id, string name, string description, int basicInfluence, int additionalInfluence, BookType type,
+            bool isPreallocatedIn, bool isPreallocatedOut, int parentId)
         {
             this.id = id;
             this.name = name;
@@ -54,12 +92,12 @@ public class BookManager : MonoBehaviour
             this.parentId = parentId;
         }
 
-        public GameObject GetParent() 
+        public GameObject GetParent()
         {
-            return CanvasBehavior.instance.GetNodeByID(this.parentId);    
+            return CanvasBehavior.instance.GetNodeByID(this.parentId);
         }
     }
-    
+
     [SerializeField] private BooksData booksData;
     public List<Book> illustration;
 

@@ -17,14 +17,7 @@ public class BookMark : MonoBehaviour
     // 配置书签视觉和交互
     public void ConfigureBookmark(BookManager.Book book)
     {
-        // 设置基础颜色
-        if (book.type == BookManager.Book.BookType.StonemasonChisel)
-        {
-            colorImage.color = Color.red;
-        }else if (book.type == BookManager.Book.BookType.TravelerFlint)
-        {
-            colorImage.color = Color.blue;
-        }
+        colorImage.color = BookManager.Book.GetBookMarksColor(book.type);
         // 设置花纹
         if (book.additionalInfluence > 1)
         {

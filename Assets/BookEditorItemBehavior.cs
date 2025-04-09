@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class BookEditorItemBehavior : MonoBehaviour
 {
-    private bool tag;
+    private bool _tag;
     public bool Tag
     {
         set
         {
             gameObject.GetComponent<UnityEngine.UI.Image>().color = !value ? Color.white : Color.gray;
-            tag = value;
+            _tag = value;
         }
         get
         {
-            return tag;
+            return _tag;
         }
     }
     
