@@ -11,8 +11,9 @@ public class BookManager : MonoBehaviour
     {
         public enum BookType
         {
-            TravelerFlint,
-            StonemasonChisel
+            nostalgia,
+            prophecy,
+            
         }
         public int id;                   // 唯一书籍ID
         public string name;                 // 书名
@@ -37,6 +38,20 @@ public class BookManager : MonoBehaviour
             this.isPreallocatedOut = book.isPreallocatedOut;
             this.parentId = book.parentId;
             // this.runtimeId = book.runtimeId;
+        }
+        
+        // 带参数的构造函数
+        public Book(int id, string name, string description, int basicInfluence, int additionalInfluence, BookType type, bool isPreallocatedIn, bool isPreallocatedOut, int parentId)
+        {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.basicInfluence = basicInfluence;
+            this.additionalInfluence = additionalInfluence;
+            this.type = type;
+            this.isPreallocatedIn = isPreallocatedIn;
+            this.isPreallocatedOut = isPreallocatedOut;
+            this.parentId = parentId;
         }
 
         public GameObject GetParent() 
