@@ -10,37 +10,26 @@ public class BookManager : MonoBehaviour
     {
         public enum BookType
         {
-            Nostalgia,
-            Prophecy,
-            Qishi,
-            Fansi,
-            Gushi,
+            fankang,
+            fansi,
+            huanxiang,
+            lijie,
+            wangxi,
+            yuyan,
+            zhishi,
             Unknown
         }
 
         private static Dictionary<string, BookType> _dictionary = new Dictionary<string, BookType>
         {
-            { "往昔", BookType.Nostalgia },
-            { "预言", BookType.Prophecy },
-            { "启示", BookType.Qishi },
-            { "反思", BookType.Fansi },
-            { "故事", BookType.Gushi },
+            { "反抗", BookType.fankang },
+            { "反思", BookType.fansi },
+            { "幻想", BookType.huanxiang },
+            { "理解", BookType.lijie },
+            { "往昔", BookType.wangxi },
+            { "预言", BookType.yuyan },
+            { "知识", BookType.zhishi },
         };
-
-        private static Dictionary<BookType, Color> _colors = new Dictionary<BookType, Color>
-        {
-            { BookType.Nostalgia, Color.red },
-            { BookType.Prophecy, Color.blue },
-            { BookType.Qishi, Color.magenta },
-            { BookType.Fansi, Color.cyan },
-            { BookType.Gushi, Color.yellow },
-            { BookType.Unknown, Color.gray }
-        };
-
-        public static Color GetBookMarksColor(BookType bt)
-        {
-            return _colors[bt];
-        }
 
         public static BookType ParseCnToBookType(string bt)
         {

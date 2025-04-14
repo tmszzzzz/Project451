@@ -14,34 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   books:
   - id: 1
-    name: "\u6628\u65E5\u7684\u4E16\u754C"
-    description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 0
-    isPreallocatedIn: 0
-    isPreallocatedOut: 0
-    parentId: 0
-  - id: 2
-    name: "\u7F57\u9A6C\u5E1D\u56FD\u8870\u4EA1\u53F2"
-    description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 0
-    isPreallocatedIn: 0
-    isPreallocatedOut: 0
-    parentId: 0
-  - id: 3
-    name: "\u8FFD\u5FC6\u4F3C\u6C34\u5E74\u534E"
-    description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 0
-    isPreallocatedIn: 0
-    isPreallocatedOut: 0
-    parentId: 0
-  - id: 4
-    name: "\u4E0A\u5E1D\u4E4B\u57CE"
+    name: 1984
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -49,8 +22,35 @@ MonoBehaviour:
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
+  - id: 2
+    name: "\u7F8E\u4E3D\u65B0\u4E16\u754C"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 0
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 3
+    name: "\u6211\u4EEC"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 0
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 4
+    name: "\u52A8\u7269\u519C\u573A"
+    description: 
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 0
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
   - id: 5
-    name: "\u6CD5\u56FD\u5927\u9769\u547D\u53F2"
+    name: "\u5229\u7EF4\u5766"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -59,7 +59,7 @@ MonoBehaviour:
     isPreallocatedOut: 0
     parentId: 0
   - id: 6
-    name: "\u4F2F\u7F57\u5954\u5C3C\u6492\u6218\u4E89\u53F2"
+    name: "\u5728\u8DEF\u4E0A"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -68,160 +68,169 @@ MonoBehaviour:
     isPreallocatedOut: 0
     parentId: 0
   - id: 7
-    name: "\u65E0\u58F0\u544A\u767D"
+    name: "\u534E\u6C0F451"
     description: 
-    basicInfluence: 2
-    additionalInfluence: 2
+    basicInfluence: 3
+    additionalInfluence: 6
     type: 0
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 8
-    name: "\u5411\u52A0\u6CF0\u7F57\u5C3C\u4E9A\u81F4\u656C"
+    name: "\u897F\u7EBF\u65E0\u6218\u4E8B"
     description: 
-    basicInfluence: 2
+    basicInfluence: 1
     additionalInfluence: 2
-    type: 0
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 9
-    name: "\u7F05\u7538\u5C81\u6708"
+    name: "\u5730\u4E0B\u5BA4\u624B\u8BB0"
     description: 
-    basicInfluence: 2
+    basicInfluence: 1
     additionalInfluence: 2
-    type: 0
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 10
-    name: "\u4E8C\u624B\u65F6\u95F4"
+    name: "\u767D\u75F4"
     description: 
-    basicInfluence: 2
-    additionalInfluence: 3
-    type: 0
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 11
-    name: 1984
+    name: "\u5361\u62C9\u9A6C\u4F50\u592B\u5144\u5F1F"
     description: 
     basicInfluence: 1
-    additionalInfluence: 1
+    additionalInfluence: 2
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 12
-    name: "\u7F8E\u4E3D\u65B0\u4E16\u754C"
+    name: "\u8352\u539F\u72FC"
     description: 
     basicInfluence: 1
-    additionalInfluence: 1
+    additionalInfluence: 2
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 13
-    name: "\u6211\u4EEC"
+    name: "\u4EBA\u4E0D\u5355\u9760\u9762\u5305\u6D3B\u7740"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
+    basicInfluence: 2
+    additionalInfluence: 4
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 14
-    name: "\u94F6\u6CB3\u5E1D\u56FD"
+    name: "\u5B88\u671B\u8005"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
+    basicInfluence: 2
+    additionalInfluence: 4
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 15
-    name: "\u6D77\u5E95\u4E24\u4E07\u91CC"
+    name: "\u5965\u5170\u591A"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
+    basicInfluence: 2
+    additionalInfluence: 4
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 16
-    name: "\u5C11\u6570\u6D3E\u62A5\u544A"
+    name: "\u575F\u573A\u4E4B\u4E66"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
+    basicInfluence: 2
+    additionalInfluence: 4
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 17
-    name: "\u96EA\u5D29"
+    name: "\u7F8E\u56FD\u4F17\u795E"
     description: 
     basicInfluence: 2
-    additionalInfluence: 2
+    additionalInfluence: 4
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 18
-    name: "\u52A8\u7269\u519C\u573A"
+    name: "\u4E27\u949F\u4E3A\u8C01\u800C\u9E23"
     description: 
     basicInfluence: 2
-    additionalInfluence: 2
+    additionalInfluence: 4
     type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 19
-    name: "\u7985\u4E0E\u6469\u6258\u8F66\u7EF4\u4FEE\u624B\u518C"
+    name: "\u751F\u6D3B\u4E0E\u547D\u8FD0"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 2
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 20
-    name: "\u6076\u5FC3"
+    name: "\u6218\u4E89\u4E0E\u548C\u5E73"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 2
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 21
-    name: "\u7406\u60F3\u56FD"
+    name: "\u6A31\u6843\u56ED"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 2
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 22
-    name: "\u4E0A\u6765\u900F\u53E3\u6C14"
+    name: "\u4E5D\u6545\u4E8B"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
-    type: 2
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 23
-    name: "\u4E5F\u8BB8\u4F60\u8BE5\u627E\u4EBA\u804A\u804A"
+    name: "\u5341\u4E00\u79CD\u5B64\u72EC"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
-    type: 2
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 1
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 24
-    name: "\u4EBA\u95F4\u98DF\u7CAE"
+    name: "\u4FEE\u8865\u5320\u3001\u88C1\u7F1D\u3001\u58EB\u5175\u4E0E\u95F4\u8C0D"
+    description: 
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 1
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 25
+    name: "\u9B54\u6212"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -229,44 +238,35 @@ MonoBehaviour:
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
-  - id: 25
-    name: "\u897F\u7EBF\u65E0\u6218\u4E8B"
-    description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 3
-    isPreallocatedIn: 0
-    isPreallocatedOut: 0
-    parentId: 0
   - id: 26
-    name: "\u5730\u4E0B\u5BA4\u624B\u8BB0"
+    name: "\u575F\u573A\u4E4B\u4E66"
     description: 
     basicInfluence: 1
-    additionalInfluence: 1
-    type: 3
+    additionalInfluence: 2
+    type: 2
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 27
-    name: "\u767D\u75F4"
+    name: "\u6D6E\u58EB\u5FB7"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 3
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 2
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 28
-    name: "\u5361\u62C9\u9A6C\u4F50\u592B\u5144\u5F1F"
+    name: "\u970D\u6BD4\u7279\u4EBA"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
-    type: 3
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 2
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 29
-    name: "\u8352\u539F\u72FC"
+    name: "\u7985\u4E0E\u6469\u6258\u8F66\u7EF4\u4FEE\u624B\u518C"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -275,7 +275,7 @@ MonoBehaviour:
     isPreallocatedOut: 0
     parentId: 0
   - id: 30
-    name: "\u4EBA\u4E0D\u5355\u9760\u9762\u5305\u6D3B\u7740"
+    name: "\u6076\u5FC3"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -284,43 +284,43 @@ MonoBehaviour:
     isPreallocatedOut: 0
     parentId: 0
   - id: 31
-    name: "\u6D6E\u58EB\u5FB7"
+    name: "\u7406\u60F3\u56FD"
     description: 
     basicInfluence: 1
-    additionalInfluence: 1
+    additionalInfluence: 2
     type: 3
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 32
-    name: "\u5B88\u671B\u8005"
+    name: "\u4E0A\u6765\u900F\u53E3\u6C14"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 4
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 3
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 33
-    name: "\u5965\u5170\u591A"
+    name: "\u4E5F\u8BB8\u4F60\u8BE5\u627E\u4EBA\u804A\u804A"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 1
-    type: 4
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 3
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 34
-    name: "\u575F\u573A\u4E4B\u4E66"
+    name: "\u4EBA\u95F4\u98DF\u7CAE"
     description: 
-    basicInfluence: 1
-    additionalInfluence: 2
-    type: 4
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 3
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 35
-    name: "\u7F8E\u56FD\u4F17\u795E"
+    name: "\u6628\u65E5\u7684\u4E16\u754C"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -329,7 +329,7 @@ MonoBehaviour:
     isPreallocatedOut: 0
     parentId: 0
   - id: 36
-    name: "\u4E27\u949F\u4E3A\u8C01\u800C\u9E23"
+    name: "\u7F57\u9A6C\u5E1D\u56FD\u8870\u4EA1\u53F2"
     description: 
     basicInfluence: 1
     additionalInfluence: 2
@@ -338,29 +338,155 @@ MonoBehaviour:
     isPreallocatedOut: 0
     parentId: 0
   - id: 37
-    name: "\u4E5D\u6545\u4E8B"
+    name: "\u8FFD\u5FC6\u4F3C\u6C34\u5E74\u534E"
     description: 
-    basicInfluence: 2
+    basicInfluence: 1
     additionalInfluence: 2
     type: 4
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 38
-    name: "\u5341\u4E00\u79CD\u5B64\u72EC"
+    name: "\u4E0A\u5E1D\u4E4B\u57CE"
     description: 
-    basicInfluence: 2
+    basicInfluence: 1
     additionalInfluence: 2
     type: 4
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
   - id: 39
-    name: "\u4FEE\u8865\u5320\u3001\u88C1\u7F1D\u3001\u58EB\u5175\u4E0E\u95F4\u8C0D"
+    name: "\u6CD5\u56FD\u5927\u9769\u547D\u53F2"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 4
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 40
+    name: "\u4F2F\u7F57\u5954\u5C3C\u6492\u6218\u4E89\u53F2"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 4
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 41
+    name: "\u65E0\u58F0\u544A\u767D"
     description: 
     basicInfluence: 2
-    additionalInfluence: 3
+    additionalInfluence: 4
     type: 4
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 42
+    name: "\u5411\u52A0\u6CF0\u7F57\u5C3C\u4E9A\u81F4\u656C"
+    description: 
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 4
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 43
+    name: "\u7F05\u7538\u5C81\u6708"
+    description: 
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 4
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 44
+    name: "\u4E8C\u624B\u65F6\u95F4"
+    description: 
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 4
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 45
+    name: "\u94F6\u6CB3\u5E1D\u56FD"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 5
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 46
+    name: "\u6D77\u5E95\u4E24\u4E07\u91CC"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 5
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 47
+    name: "\u5C11\u6570\u6D3E\u62A5\u544A"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 5
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 48
+    name: "\u96EA\u5D29"
+    description: 
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 5
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 49
+    name: "\u6D77\u5E95\u4E24\u4E07\u91CC"
+    description: 
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 5
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 50
+    name: "\u79D1\u5B66\u602A\u4EBA"
+    description: 
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 5
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 51
+    name: "\u7269\u79CD\u8D77\u6E90"
+    description: 
+    basicInfluence: 1
+    additionalInfluence: 2
+    type: 6
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 52
+    name: "\u63A7\u5236\u8BBA"
+    description: 
+    basicInfluence: 2
+    additionalInfluence: 4
+    type: 6
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+  - id: 53
+    name: "\u81EA\u7136\u54F2\u5B66\u7684\u6570\u5B66\u539F\u7406"
+    description: 
+    basicInfluence: 3
+    additionalInfluence: 6
+    type: 6
     isPreallocatedIn: 0
     isPreallocatedOut: 0
     parentId: 0
