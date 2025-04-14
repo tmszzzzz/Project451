@@ -147,6 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5764418423902180068}
   - component: {fileID: 8553541379303904528}
+  - component: {fileID: 2839775923338677645}
   m_Layer: 1
   m_Name: BookMark
   m_TagString: Untagged
@@ -164,7 +165,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.25, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3828212779363795512}
@@ -221,6 +222,38 @@ MonoBehaviour:
     - patternSprite: {fileID: 21300000, guid: 8ff3a0dd5d234f54396d44f5400da584, type: 3}
     - patternSprite: {fileID: 21300000, guid: 28038d4f876b2044a8f5ebb10683e441, type: 3}
     - patternSprite: {fileID: 21300000, guid: 7dff033d0aad0194994d8403d2b01621, type: 3}
+  nodeIndex: 0
+  book:
+    id: 0
+    name: 
+    description: 
+    basicInfluence: 0
+    additionalInfluence: 0
+    type: 0
+    isPreallocatedIn: 0
+    isPreallocatedOut: 0
+    parentId: 0
+--- !u!65 &2839775923338677645
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5906648441195115135}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6395607, y: 1.2665663, z: 0.001}
+  m_Center: {x: 0.0063014776, y: 2.408596, z: 0}
 --- !u!1 &6805722825383349384
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u4F60\u597D\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 752a4ebf931bbc246b37f9e0a277e95f, type: 2}
   m_sharedMaterial: {fileID: 3672000715591257060, guid: 752a4ebf931bbc246b37f9e0a277e95f,

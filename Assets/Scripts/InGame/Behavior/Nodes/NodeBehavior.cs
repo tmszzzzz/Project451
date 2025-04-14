@@ -261,7 +261,7 @@ public class NodeBehavior : BaseNodeBehavior
             bookmarkObj.transform.localRotation = Quaternion.identity;
             bookmarkObj.transform.localScale = Vector3.one;
             // 配置书签
-            bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book);
+            bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
             spawnedBookmarks.Add(bookmarkObj);
         }
     }

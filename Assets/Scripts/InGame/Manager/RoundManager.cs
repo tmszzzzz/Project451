@@ -42,7 +42,8 @@ public class RoundManager : MonoBehaviour
     public AudioClip s2;
     public AudioClip s3;
 
-
+    public bool selected = false;
+    private BookMark selectedBookMark;
     //以下是事件
     public event Action RoundChange;
     public event Action BookAllocationChange;
@@ -220,7 +221,8 @@ public class RoundManager : MonoBehaviour
         if (end != begin //节点不可重
             && canvas.CanConnectNodes(begin, end, GlobalVar.instance.numOfMaximumBookDeliverRange) //不可超距离
             && (int)nb.properties.state >= 1 //需已觉醒
-            && BookAllocationNum() < GlobalVar.instance.allocationLimit) //分配不可达上限
+            && BookAllocationNum() < GlobalVar.instance.allocationLimit //分配不可达上限
+            && !beginBook.isPreallocatedOut) // 未被分配出
         {
             CameraBehavior.instance.PageSound();
             // 执行书籍的转移
@@ -468,4 +470,32 @@ public class RoundManager : MonoBehaviour
         NodeBehavior nb = canvas.Me.GetComponent<NodeBehavior>();
         nb.RemoveABook(nb.properties.books[^1]);
     }
+
+    public void getObjectInfo(int mouseButton, RaycastHit hit)
+    {
+        if (hit.collider != null)
+        {
+            BookMark bookMark = hit.collider.GetComponent<BookMark>();
+            NodeBehavior nb = hit.collider.GetComponent<NodeBehavior>();
+            if (!selected && bookMark != null && mouseButton == 1)
+            {
+                selectedBookMark = bookMark;
+                selected = true;
+                // 选中的效果展示
+                
+            }else if (selected && nb != null && mouseButton == 1 && selectedBookMark.getParentNode().name != hit.collider.gameObject.name)
+            {
+                BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject);
+                selected = false;
+            }
+            else if (selected && bookMark != null && mouseButton == 1)
+            {
+                // 换一本书传递的情况
+                // 取消之前的展示
+                // 设置新的
+                selectedBookMark = bookMark;
+            }// else if (selected)  // 单纯取消选中？
+        }
+    }
+    
 }

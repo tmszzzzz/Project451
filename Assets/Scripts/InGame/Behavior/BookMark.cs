@@ -22,11 +22,13 @@ public class BookMark : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bookNameText;
     
     [SerializeField] private TypeConfig[] typeConfigurations;
-    
-    
+    public int nodeIndex;
+    public BookManager.Book book;
     // 配置书签视觉和交互
-    public void ConfigureBookmark(BookManager.Book book)
+    public void ConfigureBookmark(BookManager.Book associatedBook,int index)
     {
+        book = associatedBook;
+        nodeIndex = index;
         foreach (var v in typeConfigurations)
         {
             if (book.type == v.type)
@@ -48,4 +50,8 @@ public class BookMark : MonoBehaviour
         bookNameText.gameObject.SetActive(false);
     }
 
+    public GameObject getParentNode()
+    {
+        return CanvasBehavior.instance.GetNodeList()[nodeIndex];
+    }
 }
