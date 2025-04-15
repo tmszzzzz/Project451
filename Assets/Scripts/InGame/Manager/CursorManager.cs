@@ -24,8 +24,8 @@ public class CursorManager : MonoBehaviour
     }
     private void Update()
     {
-        // if (!EventSystem.current.IsPointerOverGameObject() && !RoundManager.instance.operationForbidden) 
-        if (!RoundManager.instance.operationForbidden)
+        if (!EventSystem.current.IsPointerOverGameObject() && !RoundManager.instance.operationForbidden) 
+        //if (!RoundManager.instance.operationForbidden)
         {
             if (Input.GetMouseButtonDown(0))
             {
