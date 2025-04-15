@@ -304,12 +304,13 @@ public class RoundManager : MonoBehaviour
     
     public int BookAllocationNum()
     {
-        int sum = 0;
-        foreach(var i in BookAllocationItems)
-        {
-            sum += i.Arrow.GetComponent<BookAllocationArrow>().allocationNum;
-        }
-        return sum;
+        // int sum = 0;
+        // foreach(var i in BookAllocationItems)
+        // {
+        //     sum += i.Arrow.GetComponent<BookAllocationArrow>().allocationNum;
+        // }
+        // return sum;
+        return BookAllocationItems.Count;
     }
 
     private BookAllocationItem FindAllocationItem(GameObject begin, GameObject end)
