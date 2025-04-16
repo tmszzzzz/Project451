@@ -19,9 +19,10 @@ public class NodeBehavior : BaseNodeBehavior
     public Sprite pageSprite;
     [SerializeField] protected GameObject bookmarkPrefab; // 书签预制体
     private List<GameObject> spawnedBookmarks = new List<GameObject>();
-    public float bookmarkSpacing = 1f;                    // 书签间距
-    
-    
+    public float bookmarkSpacing = 1f;                      // 书签间距
+    public float height = 1.3f;                             // 书签高度
+    public float xScale = 1f;
+    public float yScale = 1f;
     
     // Start is called before the first frame update
     protected virtual void Start()
@@ -257,9 +258,9 @@ public class NodeBehavior : BaseNodeBehavior
                 bookmarkPrefab,
                 canvas.transform
             );
-            bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, 1.3f, 0f);
+            bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, height, 0f);
             bookmarkObj.transform.localRotation = Quaternion.identity;
-            bookmarkObj.transform.localScale = Vector3.one;
+            bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
             // 配置书签
             bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
             spawnedBookmarks.Add(bookmarkObj);
