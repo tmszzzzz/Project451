@@ -35,6 +35,7 @@ public class GlobalVar : MonoBehaviour
     public int numOfDetectiveOnStart = 4;
     public int probabilityOfNodesInspectingDetective = 0;
     public int resourcePoint = 0;
+    public string bookName = "";
     
     // 需要序列化
     public int maxResourcePoint = 9;

@@ -483,6 +483,7 @@ public class RoundManager : MonoBehaviour
                 selectedBookMark = bookMark;
                 selected = true;
                 // 选中的效果展示
+                Debug.Log(selectedBookMark.book.name);
                 
             }else if (selected && nb != null && mouseButton == 1 && selectedBookMark.getParentNode().name != hit.collider.gameObject.name)
             {
