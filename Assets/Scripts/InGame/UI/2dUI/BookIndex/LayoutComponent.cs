@@ -21,6 +21,8 @@ public class LayoutComponent : MonoBehaviour
     private void Start()
     {
         firstMenuToggle.onValueChanged.AddListener(canOpen => OpenSecondMenu(canOpen));
+        OpenSecondMenu(true);
+        OpenSecondMenu(false);
     }
 
     public void OpenSecondMenu(bool canOpen)
