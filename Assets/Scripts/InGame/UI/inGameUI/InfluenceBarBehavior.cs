@@ -31,7 +31,7 @@ public class InfluenceBarBehavior : MonoBehaviour
     {
         statePrediction = nodeBehavior.PredictState();
 
-        targetValue = Math.Max((float)statePrediction.influence / (float)exposeThreshold, minValue);
+        targetValue = Math.Max((float)statePrediction.basicInfluence / (float)exposeThreshold, minValue);
 
         if (statePrediction.state == Properties.StateEnum.NORMAL) {
             influenceBarSlider.fillRect.GetComponent<Image>().color = normalColor;

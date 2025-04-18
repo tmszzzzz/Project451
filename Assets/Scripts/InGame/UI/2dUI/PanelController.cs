@@ -88,11 +88,11 @@ public class PanelController : MonoBehaviour
             awakeThresholdText.text = "转变阈值: " + properties.awakeThreshold;
             exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
             numOfBooksText.text = "持有书籍: " + properties.books.Count;
-            influenceText.text = "当前受影响: " + node.NowState().influence;
+            influenceText.text = "当前受影响: " + node.NowState().basicInfluence;
             fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
 
             BookSlider.value = 0.5f;
-            InfluenceSlider.value = node.NowState().influence / (float)properties.exposeThreshold;
+            InfluenceSlider.value = node.NowState().basicInfluence / (float)properties.exposeThreshold;
             //Debug.Log(InfluenceSlider.value);
         }
         NodeInfoPanel.transform.position = mainCamera.WorldToScreenPoint(node.transform.position) + _nodeInfoPanelOffset;
