@@ -67,14 +67,14 @@ public class NodeBehavior : BaseNodeBehavior
         List<GameObject> nList = CanvasBehavior.instance.GetNeighbors(gameObject);
 
         // 处理自身影响力
-        int influence = 0;
+        int basicInfluence = 0;
         int additionalInfluence = 0;
         List<BookManager.Book.BookType> types = properties.GetBookType();
         foreach (var book in properties.books)
         {
             if (!book.isPreallocatedIn)
             {
-                influence++;
+                basicInfluence += book.basicInfluence;
                 if (types.Contains(book.type))
                 {
                     additionalInfluence += book.additionalInfluence;
@@ -93,7 +93,7 @@ public class NodeBehavior : BaseNodeBehavior
                 {
                     if (!book.isPreallocatedIn)
                     {
-                        influence++;
+                        basicInfluence += book.basicInfluence;
                         if (types.Contains(book.type))
                         {
                             additionalInfluence += book.additionalInfluence;
@@ -102,7 +102,7 @@ public class NodeBehavior : BaseNodeBehavior
                 }
             }
         }
-        return new StatePrediction(properties.state, influence, additionalInfluence);
+        return new StatePrediction(properties.state, basicInfluence, additionalInfluence);
     }
 
     public override StatePrediction PredictState()
@@ -120,14 +120,14 @@ public class NodeBehavior : BaseNodeBehavior
         List<GameObject> nList = CanvasBehavior.instance.GetNeighbors(gameObject);
 
         // 处理自身影响力
-        int influence = 0;
+        int basicInfluence = 0;
         int additionalInfluence = 0;
         List<BookManager.Book.BookType> types = properties.GetBookType();
         foreach (var book in properties.books)
         {
             if (!book.isPreallocatedOut)
             {
-                influence++;
+                basicInfluence += book.basicInfluence;
                 if (types.Contains(book.type))
                 {
                     additionalInfluence += book.additionalInfluence;
@@ -146,7 +146,7 @@ public class NodeBehavior : BaseNodeBehavior
                 {
                     if (!book.isPreallocatedOut)
                     {
-                        influence++;
+                        basicInfluence += book.basicInfluence;
                         if (types.Contains(book.type))
                         {
                             additionalInfluence += book.additionalInfluence;
@@ -156,23 +156,23 @@ public class NodeBehavior : BaseNodeBehavior
             }
         }
 
-        StatePrediction prediction = new StatePrediction(Properties.StateEnum.DEAD, influence, additionalInfluence);
+        StatePrediction prediction = new StatePrediction(Properties.StateEnum.DEAD, basicInfluence, additionalInfluence);
         switch (properties.state)
         {
             case Properties.StateEnum.NORMAL:
                 prediction.state = Properties.StateEnum.NORMAL;
-                if(influence +additionalInfluence >= properties.awakeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
-                if(influence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
+                if(basicInfluence + additionalInfluence >= properties.awakeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
+                if(basicInfluence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
                 break;
             case Properties.StateEnum.AWAKENED:
                 prediction.state = Properties.StateEnum.AWAKENED;
-                if(influence +additionalInfluence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
-                if(influence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
+                if(basicInfluence + additionalInfluence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
+                if(basicInfluence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
                 break;
             case Properties.StateEnum.EXPOSED:
                 prediction.state = Properties.StateEnum.EXPOSED;
-                if(influence +additionalInfluence < properties.exposeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
-                if(influence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
+                if(basicInfluence < properties.exposeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
+                if(basicInfluence + additionalInfluence< properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
                 break;
         }
 

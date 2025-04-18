@@ -12,12 +12,12 @@ public abstract class BaseNodeBehavior : MonoBehaviour
     public struct StatePrediction
     {
         public Properties.StateEnum state;
-        public int influence;
+        public int basicInfluence;
         public int additionalInfluence;
         public StatePrediction(Properties.StateEnum s, int i, int j)
         {
             state = s;
-            influence = i;
+            basicInfluence = i;
             additionalInfluence = j;
         }
     }
