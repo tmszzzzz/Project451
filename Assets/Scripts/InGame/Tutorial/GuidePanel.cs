@@ -107,13 +107,4 @@ public class GuidePanel : MonoBehaviour
         
     }
     
-    public Vector2 WorldToScreenPoint(Canvas canvas, Vector3 worldPoint)
-    {
-        // 世界坐标转屏幕坐标
-        Vector2 screenPoint  = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldPoint);
-        Vector2 localPoint;
-        // 屏幕坐标转局部坐标
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out localPoint);
-        return localPoint;
-    }
 }

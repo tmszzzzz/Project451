@@ -120,6 +120,6 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
         {
             return true;    // 事件不会渗透
         }
-        return !RectTransformUtility.RectangleContainsScreenPoint(target, sp, Camera.main);
+        return !RectTransformUtility.RectangleContainsScreenPoint(target, sp);
     }
 }
