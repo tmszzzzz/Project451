@@ -12,15 +12,13 @@ public class RectGuide : GuideBase
     private float scaleHeight;
     private float startWidth;
     private float startHeight;
-    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
+    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
     {
-        base.Guide(canvas, target, lastData, translateType, moveTime);
+        base.Guide(canvas, target, lastData, renderType, translateType, moveTime);
         
         // 计算宽和高
-        //width = targetCorners[3].x - targetCorners[0].x;
-        //height = targetCorners[1].y - targetCorners[0].y;
-        width = target.rect.width / 2;
-        height = target.rect.height / 2;
+        width = (targetCorners[3].x - targetCorners[0].x) / 2;
+        height = (targetCorners[1].y - targetCorners[0].y) / 2;
         material.SetFloat("_SliderX", width);
         material.SetFloat("_SliderY", height);
         switch (translateType)
@@ -34,9 +32,9 @@ public class RectGuide : GuideBase
         }
     }
 
-    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, float scale, float scaleTime, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
+    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, float scale, float scaleTime, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
     {
-        this.Guide(canvas, target, lastData, translateType, moveTime);
+        this.Guide(canvas, target, lastData, renderType, translateType, moveTime);
         
         scaleWidth = scale * width;
         scaleHeight = scale * height;

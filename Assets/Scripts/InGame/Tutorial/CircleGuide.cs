@@ -8,13 +8,13 @@ public class CircleGuide : GuideBase
     private float radius;       // 镂空区域的半径
     private float scaleR;       // 变化之后的半径
     private float startRadius;
-    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
+    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
     {
-        base.Guide(canvas, target, base.lastData, translateType, moveTime);
+        base.Guide(canvas, target, lastData, renderType, translateType, moveTime);
         
         // 计算半径
-        float width = target.rect.width / 2;
-        float height = target.rect.height / 2;
+        float width = (targetCorners[3].x - targetCorners[0].x) / 2;
+        float height = (targetCorners[1].y - targetCorners[0].y) / 2;
         radius = Mathf.Sqrt(width * width + height * height);
         material.SetFloat("_Slider", radius);
         
@@ -28,9 +28,9 @@ public class CircleGuide : GuideBase
         }
     }
 
-    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, float scale, float scaleTime, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
+    public override void Guide(Canvas canvas, RectTransform target, LastData lastData, float scale, float scaleTime, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
     {
-        this.Guide(canvas, target, lastData, translateType, moveTime);
+        this.Guide(canvas, target, lastData, renderType, translateType, moveTime);
         
         scaleR = radius * scale;
         this.material.SetFloat("_Slider", scaleR);

@@ -301,4 +301,9 @@ public class NodeBehavior : BaseNodeBehavior
         if (pout != 0) book.isPreallocatedOut = pout > 0;
         //TODO
     }
+
+    public List<GameObject> GetBookMarkList()
+    {
+        return this.spawnedBookmarks;
+    }
 }

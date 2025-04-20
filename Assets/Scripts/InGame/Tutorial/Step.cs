@@ -9,6 +9,7 @@ public class Step : MonoBehaviour
     public GuideType guideType = GuideType.Rect;
     public float scale = 1;
     public float scaleTime = 0;
+    public RenderType renderType = RenderType.Screen;
     public TranslateType translateType = TranslateType.Direct;
     public float transTime = 1;
     LastData lastData;
@@ -18,7 +19,7 @@ public class Step : MonoBehaviour
     {
         this.gameObject.SetActive(true);
         this.lastData = lastData;
-        guideController.Guide(canvas, target, this.lastData, this.guideType, this.scale, this.scaleTime, this.translateType, this.transTime);
+        guideController.Guide(canvas, target, this.lastData, this.guideType, this.scale, this.scaleTime, this.renderType, this.translateType, this.transTime);
         if (targetPos != null)
         {
             targetPos.localPosition = guideController.Center;

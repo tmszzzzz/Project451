@@ -499,5 +499,4 @@ public class RoundManager : MonoBehaviour
             }// else if (selected)  // 单纯取消选中？
         }
     }
-    
 }

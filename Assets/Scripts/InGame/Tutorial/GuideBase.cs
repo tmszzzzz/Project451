@@ -10,6 +10,11 @@ public enum TranslateType
     Slow
 }
 
+public enum RenderType
+{
+    World,
+    Screen
+}
 public struct LastData
 {
     public float circleRadius;
@@ -47,7 +52,7 @@ public class GuideBase : MonoBehaviour
         }
     }
     
-    public virtual void Guide(Canvas canvas, RectTransform target, LastData lastData, TranslateType translateType = TranslateType.Direct, float time = 1.0f)
+    public virtual void Guide(Canvas canvas, RectTransform target, LastData lastData, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float time = 1.0f)
     {
         // 初始化材质
         material = transform.GetComponent<Image>().material;
@@ -60,7 +65,15 @@ public class GuideBase : MonoBehaviour
         
         for (int i = 0; i < targetCorners.Length; i++)
         {
-            targetCorners[i]  = WorldToScreenPoint(canvas, targetCorners[i]);
+            switch (renderType)
+            {
+                case RenderType.Screen:
+                    targetCorners[i]  = WorldToScreenPointScreenMode(canvas, targetCorners[i]);
+                    break;
+                case RenderType.World:
+                    targetCorners[i]  = WorldToScreenPointWorldMode(canvas, targetCorners[i]);
+                    break;
+            }
         }
         // 计算中心点
         center.x = targetCorners[0].x + (targetCorners[3].x - targetCorners[0].x) / 2;
@@ -80,12 +93,21 @@ public class GuideBase : MonoBehaviour
         }
     }
 
-    public virtual void Guide(Canvas canvas, RectTransform target,LastData lastData, float scale, float scaleTime,TranslateType translateType = TranslateType.Direct, float moveTime = 1.0f) { }
+    public virtual void Guide(Canvas canvas, RectTransform target,LastData lastData, float scale, float scaleTime, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1.0f) { }
     
-    public Vector2 WorldToScreenPoint(Canvas canvas, Vector3 worldPoint)
+    public Vector2 WorldToScreenPointScreenMode(Canvas canvas, Vector3 worldPoint)
     {
         // 世界坐标转屏幕坐标
         Vector2 screenPoint  = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldPoint);
+        Vector2 localPoint;
+        // 屏幕坐标转局部坐标
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out localPoint);
+        return localPoint;
+    }
+    
+    public Vector2 WorldToScreenPointWorldMode(Canvas canvas, Vector3 worldPoint)
+    {
+        Vector2 screenPoint = Camera.main.WorldToScreenPoint(worldPoint);
         Vector2 localPoint;
         // 屏幕坐标转局部坐标
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out localPoint);

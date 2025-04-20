@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GuidePanel : MonoBehaviour
 {
@@ -31,6 +33,9 @@ public class GuidePanel : MonoBehaviour
         {
             lastData = getLastData(steps[0].target);
         }
+
+        // var v = CanvasBehavior.instance.gameObject;
+        // steps[0].target = CanvasBehavior.instance.GetNodeList().First().GetComponent<NodeBehavior>().GetBookMarkList()[0].GetComponent<Image>().GetComponent<RectTransform>();
     }
     
     // 执行某一个任务
@@ -77,11 +82,20 @@ public class GuidePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ExecuteTask(0);
-        Invoke("Test",3);
+        Invoke("Test1",5);
+        // Invoke("Test1",10);
     }
 
-    void Test()
+    void Test1()
+    {
+        steps[0].target =
+            CanvasBehavior.instance.GetNodeList()[0].GetComponent<NodeBehavior>().GetBookMarkList()[0]
+                .GetComponentInChildren<Image>().GetComponent<RectTransform>();
+        ExecuteTask(0);
+        Invoke("Test2",3);
+    }
+
+    void Test2()
     {
         NextTask(steps[currentTask].eventName);
     }
@@ -91,5 +105,15 @@ public class GuidePanel : MonoBehaviour
     void Update()
     {
         
+    }
+    
+    public Vector2 WorldToScreenPoint(Canvas canvas, Vector3 worldPoint)
+    {
+        // 世界坐标转屏幕坐标
+        Vector2 screenPoint  = RectTransformUtility.WorldToScreenPoint(canvas.worldCamera, worldPoint);
+        Vector2 localPoint;
+        // 屏幕坐标转局部坐标
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.GetComponent<RectTransform>(), screenPoint, canvas.worldCamera, out localPoint);
+        return localPoint;
     }
 }

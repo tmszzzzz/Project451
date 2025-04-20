@@ -24,7 +24,7 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
     private Image mask;
 
     private RectTransform target;
-
+    private RenderType renderType;
     private GuideType guideType;
     public Vector3 Center
     {
@@ -57,10 +57,11 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
         rectGuide = transform.GetComponent<RectGuide>();
     }
 
-    private void Guide(RectTransform target, GuideType guideType)
+    private void Guide(RectTransform target, GuideType guideType, RenderType renderType)
     {
         this.target = target;
         this.guideType = guideType;
+        this.renderType = renderType;
         switch (guideType)
         {
             case GuideType.Rect:
@@ -73,41 +74,52 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
     }
     
     // 大小不变化
-    public void Guide(Canvas canvas, RectTransform target, LastData lastData, GuideType guideType, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
+    public void Guide(Canvas canvas, RectTransform target, LastData lastData, GuideType guideType, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
     {
-        Guide(target, guideType);
+        Guide(target, guideType, renderType);
         switch (guideType)
         {
             case GuideType.Rect:
-                rectGuide.Guide(canvas, target, lastData, translateType, moveTime);
+                rectGuide.Guide(canvas, target, lastData, renderType, translateType, moveTime);
                 break;
             case GuideType.Circle:
-                circleGuide.Guide(canvas, target, lastData, translateType, moveTime);
+                circleGuide.Guide(canvas, target, lastData, renderType, translateType, moveTime);
                 break;
         }
     }
 
     // 大小变化
-    public void Guide(Canvas canvas, RectTransform target, LastData lastData, GuideType guideType, float scale, float scaleTime, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
+    public void Guide(Canvas canvas, RectTransform target, LastData lastData, GuideType guideType, float scale, float scaleTime, RenderType renderType = RenderType.Screen, TranslateType translateType = TranslateType.Direct, float moveTime = 1)
     {
-        Guide(target, guideType);
+        Guide(target, guideType, renderType);
         switch (guideType)
         {
             case GuideType.Rect:
-                rectGuide.Guide(canvas, target, lastData, scale, scaleTime, translateType, moveTime);
+                rectGuide.Guide(canvas, target, lastData, scale, scaleTime, renderType, translateType, moveTime);
                 break;
             case GuideType.Circle:
-                circleGuide.Guide(canvas, target, lastData, scale, scaleTime, translateType, moveTime);
+                circleGuide.Guide(canvas, target, lastData, scale, scaleTime, renderType, translateType, moveTime);
                 break;
         }
     }
     
     public bool IsRaycastLocationValid(Vector2 sp, Camera eventCamera)
     {
+        switch (renderType)
+        {
+            case RenderType.Screen:
+                if (target == null)
+                {
+                    return true;    // 事件不会渗透
+                }
+                return !RectTransformUtility.RectangleContainsScreenPoint(target, sp);
+            case RenderType.World:
+                return !RectTransformUtility.RectangleContainsScreenPoint(target, sp, Camera.main);
+        }
         if (target == null)
         {
             return true;    // 事件不会渗透
         }
-        return !RectTransformUtility.RectangleContainsScreenPoint(target, sp);
+        return !RectTransformUtility.RectangleContainsScreenPoint(target, sp, Camera.main);
     }
 }
