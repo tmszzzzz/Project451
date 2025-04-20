@@ -38,6 +38,15 @@ public class GuideBase : MonoBehaviour
     protected bool isMoving;
     
     protected LastData lastData;
+
+    public Vector3 Center
+    {
+        get
+        {
+            return center;
+        }
+    }
+    
     public virtual void Guide(Canvas canvas, RectTransform target, LastData lastData, TranslateType translateType = TranslateType.Direct, float time = 1.0f)
     {
         // 初始化材质

@@ -24,6 +24,22 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
     private Image mask;
 
     private RectTransform target;
+
+    private GuideType guideType;
+    public Vector3 Center
+    {
+        get
+        {
+            switch (this.guideType)
+            {
+               case GuideType.Rect:
+                   return rectGuide.Center;
+               case GuideType.Circle:
+                   return circleGuide.Center;
+            }
+            return rectGuide.Center;
+        }
+    }
     private void Awake()
     {
         mask = transform.GetComponent<Image>();
@@ -44,7 +60,7 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
     private void Guide(RectTransform target, GuideType guideType)
     {
         this.target = target;
-        
+        this.guideType = guideType;
         switch (guideType)
         {
             case GuideType.Rect:
