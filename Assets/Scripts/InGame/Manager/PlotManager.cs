@@ -93,7 +93,7 @@ public class PlotManager : MonoBehaviour
         if (duringPlot)
         {
             Debug.LogWarning("不可重复触发剧情。");
-            return;
+            //return;
         }
         duringPlot = true;
         next = 0;
