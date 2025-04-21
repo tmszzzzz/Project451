@@ -14,7 +14,9 @@ public class GlobalVar : MonoBehaviour
 
     public void AddGlobalExposureValue(int v)
     {
-        globalExposureValue = Math.Min(globalExposureValue + v, maxGlobalExposureValue);
+        // globalExposureValue = Math.Min(globalExposureValue + v, maxGlobalExposureValue);
+        // TODO
+        Debug.Log(v);
     }
     public void RuduceGlobalExposureValue(int v)
     {
@@ -24,7 +26,7 @@ public class GlobalVar : MonoBehaviour
     public int globalExposureValue = 0;
     public int roundNum = 1;
     public int maxGlobalExposureValue = 100;
-    public int exposureValueAdditionOfExposedNode = 10;
+    // public int exposureValueAdditionOfExposedNode = 10;
     public int exposureValueAdditionOfDetective = 2;
     public int exposureValueAccelerationOfDetective = 1;
     public int exposureValueReductionOfNoExposedNode = 5;

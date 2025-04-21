@@ -386,7 +386,8 @@ public class CanvasBehavior : MonoBehaviour
             if((nb = i.GetComponent<NodeBehavior>()) != null && nb.properties.state == Properties.StateEnum.EXPOSED)
             {
                 exposed = true;
-                GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfExposedNode);
+                // GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfExposedNode);
+                GlobalVar.instance.AddGlobalExposureValue(nb.NowState().basicInfluence);
             }
         }
         if(!exposed) GlobalVar.instance.RuduceGlobalExposureValue(GlobalVar.instance.exposureValueReductionOfNoExposedNode);
