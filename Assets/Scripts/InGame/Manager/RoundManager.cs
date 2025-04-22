@@ -5,6 +5,7 @@ using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class RoundManager : MonoBehaviour
 {
@@ -483,19 +484,32 @@ public class RoundManager : MonoBehaviour
                 selectedBookMark = bookMark;
                 selected = true;
                 // 选中的效果展示
-                Debug.Log(selectedBookMark.book.name);
-                
-            }else if (selected && nb != null && mouseButton == 1 && selectedBookMark.getParentNode().name != hit.collider.gameObject.name)
+                // 目前是粗略的效果展示
+                selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
+                selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
+                selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
+            }else if (this.selected && nb != null && mouseButton == 1 && selectedBookMark.getParentNode().name != hit.collider.gameObject.name)
             {
                 BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject);
-                selected = false;
+                selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
+                selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
+                selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
+                selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color =
+                    new Color(1, 1, 1, 0.2f);
+                this.selected = false;
             }
             else if (selected && bookMark != null && mouseButton == 1)
             {
                 // 换一本书传递的情况
                 // 取消之前的展示
+                selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
+                selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
+                selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
                 // 设置新的
                 selectedBookMark = bookMark;
+                selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
+                selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
+                selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
             }// else if (selected)  // 单纯取消选中？
         }
     }
