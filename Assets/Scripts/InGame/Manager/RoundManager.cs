@@ -292,6 +292,7 @@ public class RoundManager : MonoBehaviour
         alloc.End.GetComponent<NodeBehavior>().RemoveABook(alloc.EndBook);
         alloc.BeginBook.isPreallocatedOut = false;
         alloc.Begin.GetComponent<NodeBehavior>().SetABooksState(alloc.BeginBook,0,-1);
+        alloc.Begin.GetComponent<NodeBehavior>().GenerateBookmarks();
         var arr = alloc.Arrow.GetComponent<BookAllocationArrow>();
         arr.allocationNum--;
         if (arr.allocationNum <= 0)
@@ -495,7 +496,7 @@ public class RoundManager : MonoBehaviour
                 selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
                 selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
                 selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color =
-                    new Color(1, 1, 1, 0.2f);
+                    new Color(1, 1, 1, 0.36f);
                 this.selected = false;
             }
             else if (selected && bookMark != null && mouseButton == 1)
@@ -512,5 +513,24 @@ public class RoundManager : MonoBehaviour
                 selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
             }// else if (selected)  // 单纯取消选中？
         }
+    }
+
+    public BookAllocationItem getCancelItemInfo(int mouseButton, RaycastHit hit)
+    {
+        if (hit.collider != null)
+        {
+            BookMark bookMark = hit.collider.GetComponent<BookMark>();
+            if (bookMark != null && mouseButton == 1)
+            {
+                foreach (BookAllocationItem i in BookAllocationItems)
+                {
+                    if (bookMark.book == i.EndBook || bookMark.book == i.BeginBook)
+                    {
+                        return i;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

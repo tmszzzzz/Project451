@@ -52,7 +52,19 @@ public class CursorManager : MonoBehaviour
                 {
                     //右键点击判定箱
                     // RoundManager.instance.BookAllocation(1, hit);
-                    RoundManager.instance.getObjectInfo(1, hit);
+                    if (Input.GetKey(KeyCode.F))
+                    {
+                        var v = RoundManager.instance.getCancelItemInfo(1, hit);
+                        if (v != null)
+                        {
+                            RoundManager.instance.CancelBookAllocation(v);
+                        }
+                        
+                    }
+                    else
+                    {
+                        RoundManager.instance.getObjectInfo(1, hit);
+                    }
                 }
                 else
                 {

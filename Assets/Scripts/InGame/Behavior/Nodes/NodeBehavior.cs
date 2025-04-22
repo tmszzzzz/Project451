@@ -228,7 +228,7 @@ public class NodeBehavior : BaseNodeBehavior
     }
 
     // 生成书签
-    private void GenerateBookmarks()
+    public void GenerateBookmarks()
     {
         Transform canvas = transform.Find("NodeUICanvas");
         ClearBookmarks();

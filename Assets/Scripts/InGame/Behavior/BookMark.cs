@@ -21,6 +21,7 @@ public class BookMark : MonoBehaviour
     [SerializeField] private List<TypeConfig> typeConfigurations;
     public int nodeIndex;
     public BookManager.Book book;
+    public RoundManager.BookAllocationItem alloc;
     private BookManager.Book.BookType temp; // 高亮改好之后删掉
     private void Update()
     {
@@ -85,7 +86,7 @@ public class BookMark : MonoBehaviour
                 // 分配出虚化效果
                 if (book.isPreallocatedOut)
                 {
-                    patternImage.color = new Color(1, 1, 1, 0.2f);
+                    patternImage.color = new Color(1, 1, 1, 0.36f);
                 }
                 break;
             }
