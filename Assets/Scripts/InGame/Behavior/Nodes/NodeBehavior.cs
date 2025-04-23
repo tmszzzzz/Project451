@@ -228,7 +228,7 @@ public class NodeBehavior : BaseNodeBehavior
     }
 
     // 生成书签
-    private void GenerateBookmarks()
+    public void GenerateBookmarks()
     {
         Transform canvas = transform.Find("NodeUICanvas");
         ClearBookmarks();
@@ -300,5 +300,10 @@ public class NodeBehavior : BaseNodeBehavior
         if (pin != 0) book.isPreallocatedIn = pin > 0;
         if (pout != 0) book.isPreallocatedOut = pout > 0;
         //TODO
+    }
+
+    public List<GameObject> GetBookMarkList()
+    {
+        return this.spawnedBookmarks;
     }
 }

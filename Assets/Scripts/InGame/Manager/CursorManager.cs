@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,6 +18,7 @@ public class CursorManager : MonoBehaviour
     [SerializeField]
     private AudioClip tap;
 
+    private GameObject bookMark;
     private bool ifTapSound = true;
     private void Awake()
     {
@@ -50,7 +52,19 @@ public class CursorManager : MonoBehaviour
                 {
                     //右键点击判定箱
                     // RoundManager.instance.BookAllocation(1, hit);
-                    RoundManager.instance.getObjectInfo(1, hit);
+                    if (Input.GetKey(KeyCode.F))
+                    {
+                        var v = RoundManager.instance.getCancelItemInfo(1, hit);
+                        if (v != null)
+                        {
+                            RoundManager.instance.CancelBookAllocation(v);
+                        }
+                        
+                    }
+                    else
+                    {
+                        RoundManager.instance.getObjectInfo(1, hit);
+                    }
                 }
                 else
                 {
@@ -68,6 +82,8 @@ public class CursorManager : MonoBehaviour
                     canvas.SetRegion(hit);
                     canvas.AddConnection(hit);
                     CursorSelected(hit);
+                    ShowBookMarkName(hit);
+                    HideBookMarkName(hit);
                 }
                 else
                 {
@@ -80,6 +96,30 @@ public class CursorManager : MonoBehaviour
         {
             ResetCursorSelected();
         }
+    }
+
+    private void ShowBookMarkName(RaycastHit hit)
+    {
+        var v = hit.collider.gameObject;
+        if (v.GetComponent<BookMark>() != null)
+        {
+            this.bookMark = v;
+            v.transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
+    
+    private void HideBookMarkName(RaycastHit hit)
+    {
+        var v = hit.collider.gameObject;
+        if (v.GetComponent<BookMark>() == null || v == null)
+        {
+            if (this.bookMark != null)
+            {
+                this.bookMark.transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+        
+        
     }
 
     private void CursorSelected(RaycastHit hit)

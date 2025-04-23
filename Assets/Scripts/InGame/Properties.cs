@@ -27,7 +27,6 @@ public class Properties
     public int unlockTag;
     public int region;
     public List<BookManager.Book> borrowBooks = new List<BookManager.Book>();
-    
     public string typeNameToCNString(typeEnum inputType)
     {
         switch (inputType)
@@ -74,6 +73,4 @@ public class Properties
         }
         return types.ToList();
     }
-
-    
 }

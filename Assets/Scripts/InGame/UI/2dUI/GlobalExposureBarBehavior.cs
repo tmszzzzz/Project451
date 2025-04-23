@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -70,5 +71,15 @@ public class GlobalExposureBarBehavior : MonoBehaviour
         HandleGlobalExposureBar();
         LerpingGlobalExposureBar();
         //HandleGlobalEaseExposureBarChange();
+    }
+
+    public void GlobalExposureBarEnter()
+    {
+        transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(true);
+    }
+    
+    public void GlobalExposureBarExit()
+    {
+        transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
     }
 }

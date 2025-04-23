@@ -58,7 +58,7 @@ public class SavesLoadManager : MonoBehaviour
             this.globalExposureValue = globalVar.globalExposureValue;
             this.roundNum = globalVar.roundNum;
             this.maxGlobalExposureValue = globalVar.maxGlobalExposureValue;
-            this.exposureValueAdditionOfExposedNode = globalVar.exposureValueAdditionOfExposedNode;
+            // this.exposureValueAdditionOfExposedNode = globalVar.exposureValueAdditionOfExposedNode;
             this.exposureValueAdditionOfDetective = globalVar.exposureValueAdditionOfDetective;
             this.exposureValueAccelerationOfDetective = globalVar.exposureValueAccelerationOfDetective;
             this.exposureValueReductionOfNoExposedNode = globalVar.exposureValueReductionOfNoExposedNode;
@@ -341,8 +341,8 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.globalExposureValue = serializableGlobalVar.globalExposureValue;
             GlobalVar.instance.roundNum = serializableGlobalVar.roundNum;
             GlobalVar.instance.maxGlobalExposureValue = serializableGlobalVar.maxGlobalExposureValue;
-            GlobalVar.instance.exposureValueAdditionOfExposedNode =
-                serializableGlobalVar.exposureValueAdditionOfExposedNode;
+            // GlobalVar.instance.exposureValueAdditionOfExposedNode =
+                // serializableGlobalVar.exposureValueAdditionOfExposedNode;
             GlobalVar.instance.exposureValueAdditionOfDetective =
                 serializableGlobalVar.exposureValueAdditionOfDetective;
             GlobalVar.instance.exposureValueAccelerationOfDetective =
