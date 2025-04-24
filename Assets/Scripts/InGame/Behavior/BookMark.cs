@@ -81,12 +81,13 @@ public class BookMark : MonoBehaviour
                 {
                     Debug.LogWarning($"Book {book.name} has illegal influence: {book.basicInfluence}");
                 }
-                // patternImage.material = v.influenceConfigs[book.basicInfluence - 1];
+
+                patternImage.material = new Material(v.influenceConfigs[book.basicInfluence - 1]);
                 patternImage.sprite = v.influenceSpriteConfigs[book.basicInfluence - 1];
                 // 分配出虚化效果
                 if (book.isPreallocatedOut)
                 {
-                    patternImage.color = new Color(1, 1, 1, 0.36f);
+                    patternImage.material.color = new Color(1, 1, 1, 0.5f);
                 }
                 break;
             }

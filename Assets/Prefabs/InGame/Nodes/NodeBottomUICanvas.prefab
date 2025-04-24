@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6958688261953230330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -103,8 +103,8 @@ RectTransform:
   m_GameObject: {fileID: 1417720544508628341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.74999994, y: 0.74999994, z: 0.74999994}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8034073138974602248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -179,8 +179,8 @@ RectTransform:
   m_GameObject: {fileID: 2004592886127001606}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8034073138974602248}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -432,9 +432,9 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4546677538892811286}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 1.4, y: 1.4, z: 1.4}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8677946238541899609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -463,8 +463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.63048506, b: 1, a: 1}
+  m_Material: {fileID: 2100000, guid: 2b83a494cc24d3f4d91f007c07d4efa2, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -477,7 +477,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
-  m_FillAmount: 0.859
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -570,7 +570,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.859
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -586,12 +586,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1876100f2a88ae41a79f56679554d24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initMaterial: {fileID: 2100000, guid: 2b83a494cc24d3f4d91f007c07d4efa2, type: 2}
   influenceBarSlider: {fileID: 0}
   nodeBehavior: {fileID: 0}
   normalColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
   awakenedColor: {r: 1, g: 0.48118353, b: 0, a: 1}
   exposedColor: {r: 1, g: 0.060802314, b: 0, a: 1}
-  minValue: 0.05
 --- !u!1 &9054268081216589577
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,6 +690,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "UI\u52A8\u753B_00000"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625762995678027026, guid: 39374c39f7ffbb542a56b9f97ff85297,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

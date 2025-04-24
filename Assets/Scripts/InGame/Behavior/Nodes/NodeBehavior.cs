@@ -13,7 +13,7 @@ public class NodeBehavior : BaseNodeBehavior
     [SerializeField] protected Image objColor;
     protected Dictionary<int, Color> ColorMap;
     public bool hadAwakenedBefore = false;
-
+    
     public string description = "";
     public string plotFileName = "";
     public Sprite pageSprite;
@@ -23,7 +23,8 @@ public class NodeBehavior : BaseNodeBehavior
     public float height = 1.3f;                             // 书签高度
     public float xScale = 1f;
     public float yScale = 1f;
-    
+    public Slider slider;
+    public Material sliderMaterial;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -44,6 +45,7 @@ public class NodeBehavior : BaseNodeBehavior
 
     protected virtual void Update()
     {
+        sliderMaterial = slider.GetComponent<InfluenceBarBehavior>()._material;
         objColor.color = ColorMap[(int)properties.state];
         if (transform.parent.GetComponent<CanvasBehavior>().editorMode)
         {

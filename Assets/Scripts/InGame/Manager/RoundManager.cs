@@ -42,9 +42,8 @@ public class RoundManager : MonoBehaviour
     public AudioClip s1;
     public AudioClip s2;
     public AudioClip s3;
-
     public bool selected = false;
-    private BookMark selectedBookMark;
+    public BookMark selectedBookMark;
     //以下是事件
     public event Action RoundChange;
     public event Action BookAllocationChange;
@@ -485,40 +484,58 @@ public class RoundManager : MonoBehaviour
                 selectedBookMark = bookMark;
                 selected = true;
                 // 选中的效果展示
-                // 目前是粗略的效果展示
+                selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+                // 以下是粗略的效果展示
                 selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
                 selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
                 selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
             }else if (this.selected && nb != null && mouseButton == 1 && selectedBookMark.getParentNode().name != hit.collider.gameObject.name)
             {
-                BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject);
-                selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
-                selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
-                selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
-                selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color =
-                    new Color(1, 1, 1, 0.36f);
+                if (selectedBookMark != null)
+                {
+                    BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject);
+                    selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
+                    selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
+                    selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
+                    selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().material.color =
+                        new Color(1, 1, 1, 0.5f);
+                    selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
+                }
                 this.selected = false;
             }
             else if (selected && bookMark != null && mouseButton == 1)
             {
                 // 换一本书传递的情况
                 // 取消之前的展示
-                selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
-                selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
-                selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
-                // 设置新的
-                selectedBookMark = bookMark;
-                selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
-                selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
-                selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
+                if (selectedBookMark != null)
+                {
+                    selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
+                    selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
+                    selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
+                    selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
+                    // 设置新的
+                    selectedBookMark = bookMark;
+                    selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+                    selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
+                    selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
+                    selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
+                }
             }// else if (selected)  // 单纯取消选中？
         }
     }
 
-    public BookAllocationItem getCancelItemInfo(int mouseButton, RaycastHit hit)
+    public BookAllocationItem  getCancelItemInfo(int mouseButton, RaycastHit hit)
     {
         if (hit.collider != null)
         {
+            BookMark temp = null;
+            if (selectedBookMark != null)
+            {
+                temp = selectedBookMark;
+                selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
+                selectedBookMark = null;
+                selected = false;
+            }
             BookMark bookMark = hit.collider.GetComponent<BookMark>();
             if (bookMark != null && mouseButton == 1)
             {
@@ -530,6 +547,9 @@ public class RoundManager : MonoBehaviour
                     }
                 }
             }
+            selectedBookMark = temp;
+            selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+            selected = true;
         }
         return null;
     }

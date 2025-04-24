@@ -59,7 +59,6 @@ public class CursorManager : MonoBehaviour
                         {
                             RoundManager.instance.CancelBookAllocation(v);
                         }
-                        
                     }
                     else
                     {
