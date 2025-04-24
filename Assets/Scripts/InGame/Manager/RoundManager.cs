@@ -485,6 +485,7 @@ public class RoundManager : MonoBehaviour
                 selected = true;
                 // 选中的效果展示
                 selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+                selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
                 // 以下是粗略的效果展示
                 selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
                 selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
@@ -497,9 +498,10 @@ public class RoundManager : MonoBehaviour
                     selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
                     selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
                     selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
-                    selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().material.color =
-                        new Color(1, 1, 1, 0.5f);
                     selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
+                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
+                    selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
+                    selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
                 }
                 this.selected = false;
             }
@@ -509,6 +511,8 @@ public class RoundManager : MonoBehaviour
                 // 取消之前的展示
                 if (selectedBookMark != null)
                 {
+                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
+                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().sprite = selectedBookMark.sprite;
                     selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
                     selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
                     selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
@@ -516,6 +520,7 @@ public class RoundManager : MonoBehaviour
                     // 设置新的
                     selectedBookMark = bookMark;
                     selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
                     selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
                     selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
                     selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
@@ -533,6 +538,8 @@ public class RoundManager : MonoBehaviour
             {
                 temp = selectedBookMark;
                 selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
+                selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
+                selectedBookMark.transform.GetChild(1).GetComponent<Image>().sprite = selectedBookMark.sprite;
                 selectedBookMark = null;
                 selected = false;
             }
@@ -549,6 +556,7 @@ public class RoundManager : MonoBehaviour
             }
             selectedBookMark = temp;
             selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+            selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
             selected = true;
         }
         return null;
