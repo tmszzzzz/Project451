@@ -1,0 +1,201 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Billboard_1x4_07
+  m_Shader: {fileID: 4800000, guid: 4535da714c5d3fa4fa8be92d3c0bea96, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 0
+  m_EnableInstancingVariants: 1
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 4c5075baba5f3d2488aa049428505424, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Animation:
+        m_Texture: {fileID: 2800000, guid: e92e31179f8f7f5429b331c0c8a7c78b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Background:
+        m_Texture: {fileID: 2800000, guid: c59dba587cdf9f547966c7f6b7613ac9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BlendTexture1:
+        m_Texture: {fileID: 2800000, guid: b9113450f965fce4c889f38621263953, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Decription:
+        m_Texture: {fileID: 2800000, guid: 1009ddab3af90ad498c5db25bed4fe61, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Distort:
+        m_Texture: {fileID: 2800000, guid: 63fe5b98ec4b4364dbbb1da0dce1ce3c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Distortion:
+        m_Texture: {fileID: 2800000, guid: b4857ec30bf68c240b485596777909fb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Distortions:
+        m_Texture: {fileID: 2800000, guid: 82daf544c37e7d148b94406f41d1a46d, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LED:
+        m_Texture: {fileID: 2800000, guid: 18e1965a87226254b8eb7f01462acc78, type: 3}
+        m_Scale: {x: 4, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _LEDGlow:
+        m_Texture: {fileID: 2800000, guid: 27642ca2a9fa91649812bb3bade99fd6, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Logo:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: e84b81d35ccaf294fa765df656ae1f16, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Maintexture:
+        m_Texture: {fileID: 2800000, guid: a499b7701bfed514a9bb11951c20dffe, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Mask:
+        m_Texture: {fileID: 2800000, guid: b694e0281c1aa6940acde04d761b3a2c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Masks:
+        m_Texture: {fileID: 2800000, guid: 9547db9cdfd61bf4182369a745bbf369, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: dabea5b1c44e615408c04cd2184de9e9, type: 3}
+        m_Scale: {x: 4, y: 8}
+        m_Offset: {x: 0, y: 0}
+    - _Normalmap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularGloss:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Text:
+        m_Texture: {fileID: 2800000, guid: b55e1cc67ebb2d64f839e83a9725119f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture0:
+        m_Texture: {fileID: 2800000, guid: 7264660150c07a642a7be33ecbadad56, type: 3}
+        m_Scale: {x: 2, y: 2}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample0:
+        m_Texture: {fileID: 2800000, guid: b55e1cc67ebb2d64f839e83a9725119f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _TextureSample1:
+        m_Texture: {fileID: 2800000, guid: 7a9be449de1c26743babf65329de84f1, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _texcoord:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _BackgroundEm: 0.7
+    - _BackgroundEmission: 1
+    - _BumpScale: 1
+    - _Columns: 16
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _Distort: 0.206
+    - _Distort2Tile: 0
+    - _DistortPower: 0.015
+    - _DistortSpeed: 0.14
+    - _DstBlend: 0
+    - _Emission: 1
+    - _EmissionAlbedo: 0.725
+    - _EmissionLED: 0.389
+    - _Float0: 0.01
+    - _GlitchIntensity: 0.59
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _LEDint: 0.7
+    - _LogoSpeedH: 0.2
+    - _LogoSpeedV: 0
+    - _Metallic: 0
+    - _Mode: 0
+    - _MovieSpeed: 28
+    - _OcclusionStrength: 1
+    - _PannerX: 0
+    - _PannerY: 0
+    - _Parallax: 0.02
+    - _RainMask: 0.5
+    - _RaindropsUVTile: 0
+    - _Rows: 16
+    - _Smoothness: 0.47
+    - _SmoothnessTextureChannel: 0
+    - _Specular: 0
+    - _SpecularHighlights: 1
+    - _Speed: 0.2
+    - _SrcBlend: 1
+    - _Strength: 0.11
+    - _UVSec: 0
+    - _Warp: 0.01
+    - _X: 8
+    - _Y: 15
+    - _ZWrite: 1
+    - __dirty: 0
+    m_Colors:
+    - _AlbedoColor: {r: 0.05660379, g: 0.05660379, b: 0.05660379, a: 1}
+    - _BlendColor: {r: 0, g: 0.13103437, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color0: {r: 0.16911763, g: 0.16911763, b: 0.16911763, a: 0}
+    - _ColorBackground: {r: 1, g: 1, b: 1, a: 1}
+    - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Glitch1: {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 0}
+    - _Glitch2: {r: 0.14413491, g: 0.30915603, b: 0.745283, a: 1}
+    - _Size: {r: 10.38, g: -0.63, b: 1, a: 1}
+    - _SlideSpeed: {r: 0, g: 0, b: 0, a: 0}
