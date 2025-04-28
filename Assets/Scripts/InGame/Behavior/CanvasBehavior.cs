@@ -287,7 +287,6 @@ public class CanvasBehavior : MonoBehaviour
                 Debug.LogWarning("Missing script \"NodeBehavior\" in " + node.name);
             }
         }
-
         // 第二步：统一应用所有节点的新状态
         foreach (var entry in newStateMap)
         {
@@ -309,7 +308,38 @@ public class CanvasBehavior : MonoBehaviour
 
         if (newStateMap.Count != 0) await Task.Delay(750);
     }
+    
+    public void RefreshPreviewExposureValue()
+    {
+        GlobalVar.instance.previewExposureValue = 0;
+        Dictionary<GameObject, Properties.StateEnum> newStateMap = new Dictionary<GameObject, Properties.StateEnum>();
+        foreach (GameObject node in nodeList)
+        {
+            NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
 
+            if (nodeBehavior != null)
+            {
+                // 收集每个节点的新状态
+                Properties.StateEnum newState = nodeBehavior.PredictState().state;
+                newStateMap.Add(node, newState);
+            }
+            else
+            {
+                Debug.LogWarning("Missing script \"NodeBehavior\" in " + node.name);
+            }
+        }
+        foreach (var entry in newStateMap)
+        {
+            GameObject node = entry.Key;
+            Properties.StateEnum newState = entry.Value;
+            NodeBehavior nodeBehavior = node.GetComponent<NodeBehavior>();
+            if (nodeBehavior != null && newState == Properties.StateEnum.EXPOSED)
+            {
+                GlobalVar.instance.previewExposureValue += nodeBehavior.GetExposureValue();
+            }
+        }
+    }
+    
     public void RefreshAllConnections()
     {
         foreach(var i in connectionList)
@@ -387,11 +417,13 @@ public class CanvasBehavior : MonoBehaviour
             {
                 exposed = true;
                 // GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfExposedNode);
-                GlobalVar.instance.AddGlobalExposureValue(nb.NowState().basicInfluence);
+                GlobalVar.instance.AddGlobalExposureValue(nb.GetExposureValue());
             }
         }
         if(!exposed) GlobalVar.instance.RuduceGlobalExposureValue(GlobalVar.instance.exposureValueReductionOfNoExposedNode);
+        GlobalVar.instance.previewExposureValue = 0;
     }
+    
     public List<GameObject> ExposedList()
     {
         List<GameObject> exposed = new List<GameObject>();

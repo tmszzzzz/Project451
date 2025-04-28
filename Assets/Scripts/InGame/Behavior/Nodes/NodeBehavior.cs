@@ -164,12 +164,12 @@ public class NodeBehavior : BaseNodeBehavior
             case Properties.StateEnum.NORMAL:
                 prediction.state = Properties.StateEnum.NORMAL;
                 if(basicInfluence + additionalInfluence >= properties.awakeThreshold) prediction.state = Properties.StateEnum.AWAKENED;
-                if(basicInfluence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
+                if (basicInfluence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
                 break;
             case Properties.StateEnum.AWAKENED:
                 prediction.state = Properties.StateEnum.AWAKENED;
                 if(basicInfluence + additionalInfluence < properties.fallThreshold) prediction.state = Properties.StateEnum.NORMAL;
-                if(basicInfluence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
+                if (basicInfluence >= properties.exposeThreshold) prediction.state = Properties.StateEnum.EXPOSED;
                 break;
             case Properties.StateEnum.EXPOSED:
                 prediction.state = Properties.StateEnum.EXPOSED;
@@ -280,6 +280,7 @@ public class NodeBehavior : BaseNodeBehavior
     {
         properties.books.Add(book);
         GenerateBookmarks();
+        CanvasBehavior.instance.RefreshPreviewExposureValue();
     }
     
     public void RemoveABook(BookManager.Book book)
@@ -288,6 +289,7 @@ public class NodeBehavior : BaseNodeBehavior
         {
             properties.books.Remove(book);
             GenerateBookmarks();
+            CanvasBehavior.instance.RefreshPreviewExposureValue();
         }
         else
         {
@@ -307,5 +309,10 @@ public class NodeBehavior : BaseNodeBehavior
     public List<GameObject> GetBookMarkList()
     {
         return this.spawnedBookmarks;
+    }
+
+    public int GetExposureValue()
+    {
+        return GlobalVar.instance.exposureValueAdditionOfExposedNode * this.properties.books.Count;
     }
 }

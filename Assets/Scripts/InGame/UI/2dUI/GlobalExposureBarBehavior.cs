@@ -8,21 +8,24 @@ public class GlobalExposureBarBehavior : MonoBehaviour
 {
     public Slider globalExposureBar;
     public Slider easeGlobalExposureBar;
+    public Slider previewGlobalExposureBar;
     public GlobalVar globalVar;
     [SerializeField] private Image easeImage; 
     private float targetValue;
     [SerializeField] private float lerpSpeed = 0.001f;
-
+    private float previewValue;
     // Start is called before the first frame update
     void Start()
     {
         globalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
         easeGlobalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
+        previewGlobalExposureBar.maxValue = GlobalVar.instance.maxGlobalExposureValue;
     }
 
     void HandleGlobalExposureBar() 
     {
         targetValue = globalVar.globalExposureValue;
+        previewValue = globalVar.previewExposureValue;
         // globalExposureBar.value = newValue;
     }
 
@@ -46,6 +49,15 @@ public class GlobalExposureBarBehavior : MonoBehaviour
         {
             easeGlobalExposureBar.value = Mathf.Max(easeGlobalExposureBar.value - lerpSpeed, targetValue);
             easeImage.color = new Color(0.63f,1,0.68f,1);
+        }
+        
+        if (previewGlobalExposureBar.value < targetValue + previewValue)
+        {
+            previewGlobalExposureBar.value = Mathf.Min(previewGlobalExposureBar.value + lerpSpeed, targetValue + previewValue);
+        }
+        else if (previewGlobalExposureBar.value > targetValue + previewValue)
+        {
+            previewGlobalExposureBar.value = Mathf.Max(previewGlobalExposureBar.value - lerpSpeed, targetValue + previewValue);
         }
     }
 

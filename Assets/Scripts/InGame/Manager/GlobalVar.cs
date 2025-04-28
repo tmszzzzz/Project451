@@ -14,9 +14,7 @@ public class GlobalVar : MonoBehaviour
 
     public void AddGlobalExposureValue(int v)
     {
-        // globalExposureValue = Math.Min(globalExposureValue + v, maxGlobalExposureValue);
-        // TODO
-        Debug.Log(v);
+        globalExposureValue = Math.Min(globalExposureValue + v, maxGlobalExposureValue);
     }
     public void RuduceGlobalExposureValue(int v)
     {
@@ -26,7 +24,7 @@ public class GlobalVar : MonoBehaviour
     public int globalExposureValue = 0;
     public int roundNum = 1;
     public int maxGlobalExposureValue = 100;
-    // public int exposureValueAdditionOfExposedNode = 10;
+    public int exposureValueAdditionOfExposedNode = 10;
     public int exposureValueAdditionOfDetective = 2;
     public int exposureValueAccelerationOfDetective = 1;
     public int exposureValueReductionOfNoExposedNode = 5;
@@ -37,8 +35,8 @@ public class GlobalVar : MonoBehaviour
     public int numOfDetectiveOnStart = 4;
     public int probabilityOfNodesInspectingDetective = 0;
     public int resourcePoint = 0;
+    public float previewExposureValue = 0;
     public string bookName = "";
-    
     // 需要序列化
     public int maxResourcePoint = 9;
     
