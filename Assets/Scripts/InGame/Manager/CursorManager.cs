@@ -8,7 +8,9 @@ public class CursorManager : MonoBehaviour
 {
     // Update is called once per frame
     // 所有检测鼠标点击、raycast行为
+    
     private Camera _mainCamera;
+    Plane plane = new Plane(Vector3.up, Vector3.zero);
     [SerializeField] private PanelController panelController;
     [SerializeField] private CanvasBehavior canvas;
     [SerializeField] private GameObject cursorSelected;
@@ -18,6 +20,11 @@ public class CursorManager : MonoBehaviour
     [SerializeField]
     private AudioClip tap;
 
+    private Vector3 cameraStartPosition;                // 记录镜头初始位置
+    private Vector3 dragStartPosition;                         // 拖拽起点
+    private bool isDragging = false;                    // 拖拽状态
+    private Vector3 totalDragOffset;
+    
     private GameObject bookMark;
     private bool ifTapSound = true;
     private void Awake()
@@ -26,8 +33,9 @@ public class CursorManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!EventSystem.current.IsPointerOverGameObject() && !RoundManager.instance.operationForbidden) 
-        // if (!RoundManager.instance.operationForbidden)
+        HandleCameraDrag();
+        if (!EventSystem.current.IsPointerOverGameObject() && !RoundManager.instance.operationForbidden)
+            // if (!RoundManager.instance.operationForbidden)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -91,10 +99,6 @@ public class CursorManager : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            ResetCursorSelected();
-        }
     }
 
     private void ShowBookMarkName(RaycastHit hit)
@@ -142,5 +146,41 @@ public class CursorManager : MonoBehaviour
     private void ResetCursorSelected()
     {
         cursorSelected.transform.position = new(0,1000,0);
+    }
+    
+    private void HandleCameraDrag()
+    {
+        // 右键按下开始拖拽
+        if (Input.GetMouseButtonDown(1))
+        {
+            dragStartPosition = Input.mousePosition;
+            cameraStartPosition = _mainCamera.transform.position;
+            isDragging = true;
+            totalDragOffset = Vector3.zero; // 重置累计偏移
+        }
+
+        // 右键释放结束拖拽
+        if (Input.GetMouseButtonUp(1))
+        {
+            isDragging = false;
+        }
+
+        // 拖拽中处理镜头移动
+        if (isDragging)
+        {
+            // 计算鼠标在屏幕空间的位移差值
+            Vector3 currentMousePos = Input.mousePosition;
+            Vector3 screenDelta = (currentMousePos - dragStartPosition) * 0.1f; // 灵敏度系数
+
+            // 转换为世界空间移动量（考虑相机朝向）
+            Vector3 move = _mainCamera.transform.right * -screenDelta.x 
+                           + _mainCamera.transform.up * -screenDelta.y;
+        
+            // 保持高度不变
+            move.y = 0;
+            totalDragOffset += move;
+            // 应用位移到相机
+            _mainCamera.GetComponent<CameraBehavior>().realPosition = cameraStartPosition + move;
+        }
     }
 }

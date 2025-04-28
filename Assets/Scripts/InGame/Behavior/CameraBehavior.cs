@@ -25,7 +25,7 @@ public class CameraBehavior : MonoBehaviour
     [SerializeField] private GameObject circleCenter;
     [SerializeField] private float cameraCircleRadius = 10f;
 
-    private Vector3 realPosition;
+    public Vector3 realPosition;
     private Quaternion realRotation;
     private float realFieldOfView;
     [SerializeField] private float lerpSpeed = 1f;
