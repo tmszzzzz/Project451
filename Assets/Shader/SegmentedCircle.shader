@@ -162,7 +162,15 @@ Shader "UI/SegmentedCircle"
                     }
                 }
 
-                return segmentID < _Active ? _ColorOn : _ColorOff;
+                // Support for fractional _Active values using fill amount
+                float fractionalPart = _Active - floor(_Active);
+                 float fillPosition = localAngle / angleWithGap;
+                
+                if (segmentID == floor(_Active)) {
+                    return fillPosition < fractionalPart ? _ColorOn : _ColorOff;
+                }
+                
+                return segmentID < floor(_Active) ? _ColorOn : _ColorOff;
             }
             ENDCG
         }

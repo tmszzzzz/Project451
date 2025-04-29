@@ -162,7 +162,23 @@ Shader "UI/SegmentedCircle"
                     }
                 }
 
-                return segmentID < _Active ? _ColorOn : _ColorOff;
+                // Support for fractional _Active values using fill amount
+                float fractionalPart = _Active - floor(_Active);
+                float fillAmount = 1.0;
+                
+                if (segmentID == floor(_Active)) {
+                    fillAmount = fractionalPart;
+                }
+                
+                // Calculate the fill position based on local angle
+                float fillPosition = localAngle / angleWithGap;
+                
+                // Discard pixels that are beyond the fill amount
+                if (fillPosition > fillAmount) {
+                    discard;
+                }
+                
+                return segmentID < floor(_Active) ? _ColorOn : _ColorOff;
             }
             ENDCG
         }
