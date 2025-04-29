@@ -232,6 +232,7 @@ public class NodeBehavior : BaseNodeBehavior
     // 生成书签
     public void GenerateBookmarks()
     {
+        CanvasBehavior.instance.RefreshPreviewExposureValue();
         Transform canvas = transform.Find("NodeUICanvas");
         ClearBookmarks();
         List<float> offsets = new List<float>();
@@ -280,7 +281,6 @@ public class NodeBehavior : BaseNodeBehavior
     {
         properties.books.Add(book);
         GenerateBookmarks();
-        CanvasBehavior.instance.RefreshPreviewExposureValue();
     }
     
     public void RemoveABook(BookManager.Book book)
@@ -289,7 +289,6 @@ public class NodeBehavior : BaseNodeBehavior
         {
             properties.books.Remove(book);
             GenerateBookmarks();
-            CanvasBehavior.instance.RefreshPreviewExposureValue();
         }
         else
         {
@@ -313,6 +312,6 @@ public class NodeBehavior : BaseNodeBehavior
 
     public int GetExposureValue()
     {
-        return GlobalVar.instance.exposureValueAdditionOfExposedNode * this.properties.books.Count;
+        return GlobalVar.instance.exposureValueAdditionOfExposedNode * (this.properties.books.Count + 1);
     }
 }

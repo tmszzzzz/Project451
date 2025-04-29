@@ -52,7 +52,7 @@ public class BookMark : MonoBehaviour
         patternImage.sprite = this.sprite;
         if (book.isPreallocatedOut)
         {
-            patternImage.color = new Color(1, 1, 1, 0.5f);
+            patternImage.color = new Color(1, 1, 1, 0.4f);
         }
         bookNameText.text = book.name;
     }

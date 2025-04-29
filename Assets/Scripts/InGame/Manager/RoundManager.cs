@@ -214,24 +214,24 @@ public class RoundManager : MonoBehaviour
     //
     // }
 
-    public void BookAllocation(BookManager.Book beginBook, GameObject begin, GameObject end)
+    public bool BookAllocation(BookManager.Book beginBook, GameObject begin, GameObject end)
     {
         var nb = begin.GetComponent<NodeBehavior>();
+        var nbEnd = end.GetComponent<NodeBehavior>();
         // 检查目标节点是否满足接收书的条件
-        if (end != begin //节点不可重
-            && canvas.CanConnectNodes(begin, end, GlobalVar.instance.numOfMaximumBookDeliverRange) //不可超距离
-            && (int)nb.properties.state >= 1 //需已觉醒
-            && BookAllocationNum() < GlobalVar.instance.allocationLimit //分配不可达上限
-            && !beginBook.isPreallocatedOut) // 未被分配出
+        if (canvas.CanConnectNodes(begin, end, GlobalVar.instance.numOfMaximumBookDeliverRange) //不可超距离
+            && (int)nb.properties.state >= 1
+            && (int)nbEnd.properties.state >= 1//需已觉醒
+            && BookAllocationNum() < GlobalVar.instance.allocationLimit) //分配不可达上限
         {
             CameraBehavior.instance.PageSound();
             // 执行书籍的转移
             nb.SetABooksState(beginBook,0,1);
             // 在end里新创建一个相同id的Book，设为被预分配入
             BookManager.Book endBook = new BookManager.Book(beginBook);
-            end.GetComponent<NodeBehavior>().SetABooksState(endBook,1,-1);
+            nbEnd.SetABooksState(endBook,1,-1);
             endBook.parentId = CanvasBehavior.instance.GetNodeList().IndexOf(end);
-            end.GetComponent<NodeBehavior>().AddABook(endBook);
+            nbEnd.AddABook(endBook);
 
             // 查找是否已有对应的分配箭头
             BookAllocationItem existingItem = FindAllocationItem(begin, end);
@@ -269,10 +269,24 @@ public class RoundManager : MonoBehaviour
                     EndBook = endBook,
                 });
             }
+            return true;
         }
         else
         {
-            messageBar.AddMessage("此次移动是不合法的.");
+            if (!canvas.CanConnectNodes(begin, end, GlobalVar.instance.numOfMaximumBookDeliverRange))
+            {
+                messageBar.AddMessage("超过可分配最大距离.");
+            }else if ((int)nb.properties.state < 1 || (int)nbEnd.properties.state < 1)
+            {
+                messageBar.AddMessage("该成员未觉醒.");
+            }else if (BookAllocationNum() >= GlobalVar.instance.allocationLimit)
+            {
+                messageBar.AddMessage("已达到本回合分配上限.");
+            }else
+            {
+                messageBar.AddMessage("此次移动是不合法的.");
+            }
+            return false;
         }
     }
 
@@ -473,62 +487,89 @@ public class RoundManager : MonoBehaviour
         nb.RemoveABook(nb.properties.books[^1]);
     }
 
-    public void getObjectInfo(int mouseButton, RaycastHit hit)
+    public void GetObjectInfo(int mouseButton, RaycastHit hit)
     {
         if (hit.collider != null)
         {
             BookMark bookMark = hit.collider.GetComponent<BookMark>();
             NodeBehavior nb = hit.collider.GetComponent<NodeBehavior>();
-            if (!selected && bookMark != null && mouseButton == 1)
+            if (bookMark != null && mouseButton == 1)
             {
-                selectedBookMark = bookMark;
-                selected = true;
-                // 选中的效果展示
-                selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
-                selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
-                // 以下是粗略的效果展示
-                selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
-                selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
-                selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
-            }else if (this.selected && nb != null && mouseButton == 1 && selectedBookMark.getParentNode().name != hit.collider.gameObject.name)
-            {
-                if (selectedBookMark != null)
+                if (!selected)
                 {
-                    BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject);
-                    selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
-                    selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
-                    selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
-                    selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
-                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
-                    selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
-                    selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color = new Color(1, 1, 1, 0.5f);
+                    if (!bookMark.book.isPreallocatedOut)
+                    {
+                        selectedBookMark = bookMark;
+                        selected = true;
+                        // 选中并高亮的效果展示
+                        BookMarkOutline();
+                    }
+                    else
+                    {
+                        messageBar.AddMessage("此书已被分配出.");
+                    }
                 }
-                this.selected = false;
+                else
+                {
+                    if (selectedBookMark != null)
+                    {
+                        CancelBookMarkOutline();
+                    }
+                    if (!bookMark.book.isPreallocatedOut)
+                    {
+                        // 设置新的
+                        selectedBookMark = bookMark;
+                        BookMarkOutline();
+                    }
+                    else
+                    {
+                        selected = false;
+                        messageBar.AddMessage("此书已被分配出.");
+                    }
+                }
+            }else if (selected && nb != null && mouseButton == 1 && selectedBookMark != null)
+            {
+                if (selectedBookMark.getParentNode() != nb.gameObject)
+                {
+                    if (BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject))
+                    {
+                        CancelBookMarkOutline();
+                        selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color = new Color(1, 1, 1, 0.4f);
+                        selected = false;
+                    }
+                }
+                else
+                {
+                    messageBar.AddMessage("此书已属于该成员.");
+                }
+            }else if (selected && selectedBookMark != null) // 取消选中
+            {
+                CancelBookMarkOutline();
+                selected = false;
             }
-            else if (selected && bookMark != null && mouseButton == 1)
-            {
-                // 换一本书传递的情况
-                // 取消之前的展示
-                if (selectedBookMark != null)
-                {
-                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
-                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().sprite = selectedBookMark.sprite;
-                    selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
-                    selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
-                    selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
-                    selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
-                    // 设置新的
-                    selectedBookMark = bookMark;
-                    selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
-                    selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
-                    selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
-                    selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
-                    selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
-                }
-            }// else if (selected)  // 单纯取消选中？
         }
     }
 
+    public void BookMarkOutline()
+    {
+        selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
+        selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
+        selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
+        selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
+        selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
+    }
+    
+    public void CancelBookMarkOutline()
+    {
+        
+        selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
+        selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
+        selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
+        selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
+        selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
+        selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
+    }
+    
     public BookAllocationItem  getCancelItemInfo(int mouseButton, RaycastHit hit)
     {
         if (hit.collider != null)
@@ -537,9 +578,7 @@ public class RoundManager : MonoBehaviour
             if (selectedBookMark != null)
             {
                 temp = selectedBookMark;
-                selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
-                selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
-                selectedBookMark.transform.GetChild(1).GetComponent<Image>().sprite = selectedBookMark.sprite;
+                CancelBookMarkOutline();
                 selectedBookMark = null;
                 selected = false;
             }
@@ -554,9 +593,9 @@ public class RoundManager : MonoBehaviour
                     }
                 }
             }
+            messageBar.AddMessage("此书未在分配项中.");
             selectedBookMark = temp;
-            selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
-            selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
+            BookMarkOutline();
             selected = true;
         }
         return null;

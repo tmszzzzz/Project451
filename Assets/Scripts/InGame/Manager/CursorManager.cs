@@ -70,7 +70,7 @@ public class CursorManager : MonoBehaviour
                     }
                     else
                     {
-                        RoundManager.instance.getObjectInfo(1, hit);
+                        RoundManager.instance.GetObjectInfo(1, hit);
                     }
                 }
                 else
