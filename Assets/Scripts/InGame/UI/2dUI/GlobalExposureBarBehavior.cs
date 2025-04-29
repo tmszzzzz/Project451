@@ -94,4 +94,9 @@ public class GlobalExposureBarBehavior : MonoBehaviour
     {
         transform.GetChild(2).transform.GetChild(0).gameObject.SetActive(false);
     }
+
+    public void PreviewGlobalExposureBarChange()
+    {
+        previewGlobalExposureBar.gameObject.SetActive(!previewGlobalExposureBar.gameObject.activeSelf);
+    }
 }
