@@ -362,6 +362,10 @@ public class RoundManager : MonoBehaviour
     
     public async void NextRound()
     {
+        if (selectedBookMark != null)
+        {
+            CancelBookMarkOutline();
+        }
         PanelController.instance.DisableNodeInfoPanel();
         OperationForbidden();//屏蔽所有操作
         forbidden.SetActive(true);
@@ -561,7 +565,6 @@ public class RoundManager : MonoBehaviour
     
     public void CancelBookMarkOutline()
     {
-        
         selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
         selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
         selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
