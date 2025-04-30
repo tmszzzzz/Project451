@@ -589,10 +589,8 @@ public class RoundManager : MonoBehaviour
     {
         if (hit.collider != null)
         {
-            BookMark temp = null;
             if (selectedBookMark != null)
             {
-                temp = selectedBookMark;
                 CancelBookMarkOutline();
                 selectedBookMark = null;
                 selected = false;
@@ -609,9 +607,6 @@ public class RoundManager : MonoBehaviour
                 }
             }
             messageBar.AddMessage("此书未在分配项中.");
-            selectedBookMark = temp;
-            BookMarkOutline();
-            selected = true;
         }
         return null;
     }
