@@ -16,6 +16,7 @@ public class BookAllocationArrow : MonoBehaviour
     private Animator anim;
     public bool displayNum = true;
     public bool isDoubleDirection = false;
+    public bool changedTextPosition = false;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -25,12 +26,41 @@ public class BookAllocationArrow : MonoBehaviour
     private void Start()
     {
         transform.position = (pointA.position + pointB.position) / 2 + Vector3.up * (curveHeight + nodeHeight + deltaYText);
+        ChangeTextPosition(isDoubleDirection, pointA, pointB);
+    }
+
+    private void ChangeTextPosition(bool b, Transform pointA, Transform pointB)
+    {
+        if (isDoubleDirection && !changedTextPosition)
+        {
+            changedTextPosition = true;
+            // 修改text的位置
+            float k = 0.33f;         // 从中点变化到text位置变化的缩放比例（经验值
+            Vector3 start = pointA.position + Vector3.up * nodeHeight;
+            Vector3 end = pointB.position + Vector3.up * nodeHeight;
+            Vector3 middle1, middle2;
+            middle1 = new Vector3(start.x, end.y + curveHeight + nodeHeight, end.z);
+            middle2 = (start + end) / 2 + Vector3.up * (curveHeight + nodeHeight);
+            text.transform.position += k * (middle1 - middle2);
+        }
+        if (!isDoubleDirection && changedTextPosition)
+        {
+            float k = 0.33f;         // 从中点变化到text位置变化的缩放比例（经验值
+            Vector3 start = pointA.position + Vector3.up * nodeHeight;
+            Vector3 end = pointB.position + Vector3.up * nodeHeight;
+            Vector3 middle1, middle2;
+            middle1 = new Vector3(start.x, end.y + curveHeight + nodeHeight, end.z);
+            middle2 = (start + end) / 2 + Vector3.up * (curveHeight + nodeHeight);
+            text.transform.position -= k * (middle1 - middle2);
+            changedTextPosition = false;
+        }
     }
 
     void Update()
     {
         if (pointA != null && pointB != null)
         {
+            ChangeTextPosition(isDoubleDirection, pointA, pointB);
             // 设置线条的点数，曲线的分辨率+箭头的点数
             lineRenderer.positionCount = curveResolution;
 
@@ -52,7 +82,6 @@ public class BookAllocationArrow : MonoBehaviour
         else
         {
             middle = (start + end) / 2 + Vector3.up * (curveHeight + nodeHeight);
-            // 修改text的位置?
         }
         
         // 生成曲线的点
