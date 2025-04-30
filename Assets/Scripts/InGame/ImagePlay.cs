@@ -7,6 +7,7 @@ public class ImagePlay : MonoBehaviour
 {
     public List<Image> images;
     public float fadeDuration = 1.0f; // 淡入持续时间（秒）
+    public AudioSource audioSource;
     private int currentImage = 0;
     private void Start()
     {
@@ -30,6 +31,14 @@ public class ImagePlay : MonoBehaviour
     
     private IEnumerator FadeInImage(Image image, float duration)
     {
+        if (audioSource != null && audioSource.clip != null)
+        {
+            audioSource.Play(); // 直接播放
+        }
+        else
+        {
+            Debug.LogWarning("No audio clip assigned");
+        }
         float elapsedTime = 0f;
         Color startColor = image.color;
         Color targetColor = new Color(1, 1, 1, 1); // 完全不透明
