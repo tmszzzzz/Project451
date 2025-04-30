@@ -244,6 +244,13 @@ public class RoundManager : MonoBehaviour
                 arrowScript.pointA = begin.transform;
                 arrowScript.pointB = end.transform;
                 arrowScript.allocationNum = 1; // 初始分配书数量
+                // 查找是否有反向分配
+                existingItem = FindAllocationItem(end, begin);
+                if (existingItem != null)
+                {
+                    arrowScript.isDoubleDirection = true;
+                    existingItem.Arrow.GetComponent<BookAllocationArrow>().isDoubleDirection = true;
+                }
 
                 // 添加到allocationItems列表
                 BookAllocationItems.Add(new BookAllocationItem
@@ -311,6 +318,11 @@ public class RoundManager : MonoBehaviour
         if (arr.allocationNum <= 0)
         {
             arr.Cancel();
+            var item = FindAllocationItem(alloc.End, alloc.Begin);
+            if (item != null)
+            {
+                item.Arrow.GetComponent<BookAllocationArrow>().isDoubleDirection = false;
+            }
         }
         BookAllocationItems.Remove(alloc);
         // 触发分配变化事件

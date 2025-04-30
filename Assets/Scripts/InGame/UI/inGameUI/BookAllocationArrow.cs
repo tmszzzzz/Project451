@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ public class BookAllocationArrow : MonoBehaviour
     public float deltaYText = 2.0f;
     private Animator anim;
     public bool displayNum = true;
-
+    public bool isDoubleDirection = false;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -43,8 +44,17 @@ public class BookAllocationArrow : MonoBehaviour
     {
         Vector3 start = pointA.position + Vector3.up * nodeHeight;
         Vector3 end = pointB.position + Vector3.up * nodeHeight;
-        Vector3 middle = (start + end) / 2 + Vector3.up * (curveHeight + nodeHeight);
-
+        Vector3 middle;
+        if (isDoubleDirection)
+        {
+            middle = new Vector3(start.x, end.y + curveHeight + nodeHeight, end.z);
+        }
+        else
+        {
+            middle = (start + end) / 2 + Vector3.up * (curveHeight + nodeHeight);
+            // 修改text的位置?
+        }
+        
         // 生成曲线的点
         for (int i = 0; i < curveResolution; i++)
         {
