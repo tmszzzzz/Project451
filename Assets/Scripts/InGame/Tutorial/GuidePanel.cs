@@ -82,17 +82,17 @@ public class GuidePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Test1",5);
+        Invoke("Test1",1);
         // Invoke("Test1",10);
     }
 
     void Test1()
     {
-        steps[0].target =
-            CanvasBehavior.instance.GetNodeList()[0].GetComponent<NodeBehavior>().GetBookMarkList()[0]
-                .GetComponentInChildren<Image>().GetComponent<RectTransform>();
+        // steps[0].target =
+        //     CanvasBehavior.instance.GetNodeList()[0].GetComponent<NodeBehavior>().GetBookMarkList()[0]
+        //         .GetComponentInChildren<Image>().GetComponent<RectTransform>();
         ExecuteTask(0);
-        Invoke("Test2",3);
+        // Invoke("Test2",3);
     }
 
     void Test2()
