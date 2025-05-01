@@ -80,8 +80,9 @@ public class InfluenceBarBehavior : MonoBehaviour
         }
         else
         {
-            // 防止float值始终不能变为0
-            basicInfluence = statePrediction.basicInfluence;
+            // 防止float值始终不能变到目标值
+            // 为0时留有一点
+            basicInfluence = statePrediction.basicInfluence == 0 ? 0.2f : statePrediction.basicInfluence;
         }
     }
     void OnDestroy()
