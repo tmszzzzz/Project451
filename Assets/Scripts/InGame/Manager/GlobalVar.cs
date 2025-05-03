@@ -146,7 +146,9 @@ public class GlobalVar : MonoBehaviour
 
     }
 
-
-
+    public void Test1()
+    {
+        Debug.Log("Test1");
+    }
     
 }
