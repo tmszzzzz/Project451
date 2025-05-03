@@ -24,6 +24,8 @@ public class PanelController : MonoBehaviour
     [SerializeField] private Slider BookSlider;
     [SerializeField] private Slider InfluenceSlider;
     [SerializeField] private TextMeshProUGUI fallThresholdText;
+    [SerializeField] private GameObject borrowBooksContent;
+    [SerializeField] private GameObject borrowBooksItemPrefab;
     
     private Vector3 _nodeInfoPanelOffset = new Vector3(20, -20, 0);
     [SerializeField] private GameObject _ResourceUsagePanel;
@@ -89,15 +91,39 @@ public class PanelController : MonoBehaviour
             exposeThresholdText.text = "暴露阈值: " + properties.exposeThreshold;
             numOfBooksText.text = "持有书籍: " + properties.books.Count;
             influenceText.text = "当前受影响: " + node.NowState().basicInfluence;
-            fallThresholdText.text = "维持阈值：" + properties.fallThreshold; 
+            fallThresholdText.text = "维持阈值：" + properties.fallThreshold;
 
+            GenerateBorrowBooks(properties.borrowBooks);
+            
             BookSlider.value = 0.5f;
             InfluenceSlider.value = node.NowState().basicInfluence / (float)properties.exposeThreshold;
             //Debug.Log(InfluenceSlider.value);
         }
         NodeInfoPanel.transform.position = mainCamera.WorldToScreenPoint(node.transform.position) + _nodeInfoPanelOffset;
     }
-    
+
+    private void GenerateBorrowBooks(List<BookManager.Book> borrowBooks = null)
+    {
+        foreach (Transform child in borrowBooksContent.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        if (borrowBooks == null)
+        {
+            Debug.LogWarning("该书不含有借书单.");
+            return;
+        }
+        else
+        {
+            foreach (BookManager.Book book in borrowBooks)
+            {
+                GameObject bookItem = Instantiate(borrowBooksItemPrefab, borrowBooksContent.transform);
+                bookItem.GetComponent<BorrowBookItemInfo>()._book = book;
+            }
+        }
+    }
+
     public void EnableNodeInfoPanel(NodeBehavior node)
     {   
         if (NodeInfoPanel == null)
@@ -149,3 +175,4 @@ public class PanelController : MonoBehaviour
         }
     }
 }
+
