@@ -68,13 +68,13 @@ public class GlobalVar : MonoBehaviour
     [SerializeField] private int infoResourcePoint = 0;
     public void InfoResourcePointIncrement(int v)
     {
-        if (resourcePoint <= 0)
+        if (resourcePoint <= 1)
         {
-            Debug.Log("no resource point");
+            Debug.Log("资源点不足");
             return;
         }
 
-        resourcePoint--;
+        resourcePoint -= 2;
         infoResourcePoint += v;
         while (infoResourcePoint >= resourcePointPerInfoIncrement)
         {
@@ -86,13 +86,13 @@ public class GlobalVar : MonoBehaviour
     [SerializeField] private int distanceResourcePoint = 0;
     public void DistanceResourcePointIncrement(int v)
     {
-        if (resourcePoint <= 0)
+        if (resourcePoint <= 1)
         {
-            Debug.Log("no resource point");
+            Debug.Log("资源点不足");
             return;
         }
 
-        resourcePoint--;
+        resourcePoint -= 2;
         distanceResourcePoint += v;
         while (distanceResourcePoint >= resourcePointPerDistanceIncrement)
         {
@@ -104,13 +104,13 @@ public class GlobalVar : MonoBehaviour
 
     public void AllocationLimitResourcePointIncrement(int v)
     {
-        if (resourcePoint <= 0)
+        if (resourcePoint <= 1)
         {
-            Debug.Log("no resource point");
+            Debug.Log("资源点不足");
             return;
         }
 
-        resourcePoint--;
+        resourcePoint -= 2;
         allocationLimitResourcePoint += v;
         while (allocationLimitResourcePoint >= resourcePointPerAllocationLimitIncrement)
         {
@@ -123,7 +123,7 @@ public class GlobalVar : MonoBehaviour
     {
         if (resourcePoint <= 0)
         {
-            Debug.Log("no resource point");
+            Debug.Log("资源点不足");
             return;
         }
 
