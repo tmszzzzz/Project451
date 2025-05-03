@@ -41,9 +41,12 @@ public class BorrowBookItemInfo : MonoBehaviour
 
     private void CheckStatus()
     {
-        if (GlobalVar.instance.allBooks.Contains(_book))
+        foreach (BookManager.Book book in GlobalVar.instance.allBooks)
         {
-            _color.color = BookTypeColors[_book.type];
+            if (book.id == _book.id)
+            {
+                _color.color = BookTypeColors[_book.type];
+            }
         }
     }
 }

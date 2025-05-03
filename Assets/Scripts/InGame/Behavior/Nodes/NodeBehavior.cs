@@ -297,6 +297,7 @@ public class NodeBehavior : BaseNodeBehavior
         
     }
 
+    
     public void SetABooksState(BookManager.Book book,int pin,int pout)
     {
         //传入的两个参数取值为任意，规则是：如果为正，对应in/out字段设为true，为负则设为false，否则保持原状。

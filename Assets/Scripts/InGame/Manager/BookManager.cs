@@ -112,7 +112,9 @@ public class BookManager : MonoBehaviour
         if (illustration.Count == 0) return null;
         int index = Random.Range(0, illustration.Count);
         // illustration[index].runtimeId = assignRuntimeId++;
-        return new Book(illustration[index]);
+        Book book = new Book(illustration[index]);
+        GlobalVar.instance.allBooks.Add(book);
+        return book;
     }
 }
 
