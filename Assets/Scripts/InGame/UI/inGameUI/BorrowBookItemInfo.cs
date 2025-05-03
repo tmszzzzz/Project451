@@ -1,25 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class BorrowBookItemInfo : MonoBehaviour
 {
-    [SerializeField] private Image _color;
+    [SerializeField] private Image _image;
     [SerializeField] private TextMeshProUGUI _name;
     public BookManager.Book _book;
-    // Start is called before the first frame update
-    void Start()
-    {
-        InitItem();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        CheckStatus();
-    }
+    private Color _color = new Color(0.5f, 0.5f, 0.5f, 1f);
 
     public static readonly Dictionary<BookManager.Book.BookType, Color> BookTypeColors = new Dictionary<BookManager.Book.BookType, Color>()
     {
@@ -32,21 +24,35 @@ public class BorrowBookItemInfo : MonoBehaviour
         { BookManager.Book.BookType.zhishi, new Color(0.9f, 0.9f, 0, 1f) },
         { BookManager.Book.BookType.Unknown, new Color(0.5f, 0.5f, 0.5f, 1f) }
     };
-    
-    private void InitItem()
+
+    public void UpdateItem()
     {
         _name.text = _book.name;
-        _color.color = new Color(0.5f, 0.5f, 0.5f, 1f);
+        _image.color = GetBookColor(_book.id); // 优化查找逻辑
+        
+        // 延迟一帧再计算位置
+        StartCoroutine(UpdatePositionNextFrame());
     }
-
-    private void CheckStatus()
+    
+    private IEnumerator UpdatePositionNextFrame()
     {
-        foreach (BookManager.Book book in GlobalVar.instance.allBooks)
+        yield return null; // 等待一帧，确保布局完成
+    
+        // 强制刷新布局
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_name.rectTransform);
+    
+        float textWidth = _name.preferredWidth;
+    
+        _name.rectTransform.anchoredPosition = new Vector2(textWidth / 2 + 5, 0);
+        _image.rectTransform.anchoredPosition = new Vector2(textWidth + 10, 0);
+    }
+    
+    private Color GetBookColor(int bookId)
+    {
+        if (GlobalVar.instance.allBooks.Contains(bookId))
         {
-            if (book.id == _book.id)
-            {
-                _color.color = BookTypeColors[_book.type];
-            }
+            return BookTypeColors[_book.type];
         }
+        return _color;
     }
 }

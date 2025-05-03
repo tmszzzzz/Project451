@@ -14,6 +14,7 @@ public class PanelController : MonoBehaviour
     public GameObject NodeInfoPanel;
     private Camera mainCamera;
     public GameObject currentNode; // 当前选中的物体
+    public GameObject lastNode;     // 上次选中的物体
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI stateText;
     [SerializeField] private TextMeshProUGUI identityText;
@@ -30,7 +31,6 @@ public class PanelController : MonoBehaviour
     private Vector3 _nodeInfoPanelOffset = new Vector3(20, -20, 0);
     [SerializeField] private GameObject _ResourceUsagePanel;
     [SerializeField] private Image _ImageThatSeperateResourceUsagePanel;
-    
     // Start is called before the first frame update
     void Awake()
     {
@@ -81,6 +81,10 @@ public class PanelController : MonoBehaviour
     private void _changeNodeInfoPanleContenAndPosition(NodeBehavior node)
     {
         currentNode = node.gameObject;
+        if (lastNode == null)
+        {
+            lastNode = currentNode;
+        }
         Properties properties = node.properties;
         if (properties != null && NodeInfoPanel.activeSelf)
         {
@@ -92,9 +96,11 @@ public class PanelController : MonoBehaviour
             numOfBooksText.text = "持有书籍: " + properties.books.Count;
             influenceText.text = "当前受影响: " + node.NowState().basicInfluence;
             fallThresholdText.text = "维持阈值：" + properties.fallThreshold;
-
-            GenerateBorrowBooks(properties.borrowBooks);
-            
+            if (lastNode != currentNode)
+            {
+                GenerateBorrowBooks(properties.borrowBooks);
+            }
+            lastNode = currentNode;
             BookSlider.value = 0.5f;
             InfluenceSlider.value = node.NowState().basicInfluence / (float)properties.exposeThreshold;
             //Debug.Log(InfluenceSlider.value);
@@ -102,24 +108,24 @@ public class PanelController : MonoBehaviour
         NodeInfoPanel.transform.position = mainCamera.WorldToScreenPoint(node.transform.position) + _nodeInfoPanelOffset;
     }
 
-    private void GenerateBorrowBooks(List<BookManager.Book> borrowBooks = null)
+    private void GenerateBorrowBooks(List<BookManager.Book> borrowBooks)
     {
         foreach (Transform child in borrowBooksContent.transform)
         {
             Destroy(child.gameObject);
         }
-
         if (borrowBooks == null)
         {
             Debug.LogWarning("该书不含有借书单.");
-            return;
         }
         else
         {
             foreach (BookManager.Book book in borrowBooks)
             {
                 GameObject bookItem = Instantiate(borrowBooksItemPrefab, borrowBooksContent.transform);
-                bookItem.GetComponent<BorrowBookItemInfo>()._book = book;
+                var itemInfo = bookItem.GetComponent<BorrowBookItemInfo>();
+                itemInfo._book = book;
+                itemInfo.UpdateItem();
             }
         }
     }

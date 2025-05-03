@@ -58,7 +58,7 @@ public class GlobalVar : MonoBehaviour
     public bool skipCameraOverview = true;
     public int dealStartRound = 0;
     public int nowPlaying = 0;
-    public List<BookManager.Book> allBooks = new List<BookManager.Book>();
+    public HashSet<int> allBooks = new HashSet<int>();
     
     public void AddResourcePoint(int value)
     {
