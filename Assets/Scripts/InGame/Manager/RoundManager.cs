@@ -312,7 +312,7 @@ public class RoundManager : MonoBehaviour
         alloc.End.GetComponent<NodeBehavior>().RemoveABook(alloc.EndBook);
         alloc.BeginBook.isPreallocatedOut = false;
         alloc.Begin.GetComponent<NodeBehavior>().SetABooksState(alloc.BeginBook,0,-1);
-        alloc.Begin.GetComponent<NodeBehavior>().GenerateBookmarks();
+        alloc.Begin.GetComponent<NodeBehavior>().nodeUI.GenerateBookmarks();
         var arr = alloc.Arrow.GetComponent<BookAllocationArrow>();
         arr.allocationNum--;
         if (arr.allocationNum <= 0)

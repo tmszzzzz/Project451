@@ -17,14 +17,9 @@ public class NodeBehavior : BaseNodeBehavior
     public string description = "";
     public string plotFileName = "";
     public Sprite pageSprite;
-    [SerializeField] protected GameObject bookmarkPrefab; // 书签预制体
-    private List<GameObject> spawnedBookmarks = new List<GameObject>();
-    public float bookmarkSpacing = 1f;                      // 书签间距
-    public float height = 1.3f;                             // 书签高度
-    public float xScale = 1f;
-    public float yScale = 1f;
     public Slider slider;
     public Material sliderMaterial;
+    public NodeUI nodeUI;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -36,11 +31,6 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = MessageBar.instance;
-        if (properties.state > 0)
-        {
-            // 生成书签
-            GenerateBookmarks();
-        }
     }
 
     protected virtual void Update()
@@ -228,59 +218,11 @@ public class NodeBehavior : BaseNodeBehavior
 
         properties.state = stateEnum;
     }
-
-    // 生成书签
-    public void GenerateBookmarks()
-    {
-        CanvasBehavior.instance.RefreshPreviewExposureValue();
-        Transform canvas = transform.Find("NodeUICanvas");
-        ClearBookmarks();
-        List<float> offsets = new List<float>();
-        int count = properties.books.Count;
-        bool isOdd = count % 2 == 1;
-        
-        if (isOdd) {
-            int initial = - count / 2;
-            for (int i = 0; i < count; ++i)
-            {
-                offsets.Add(initial);
-                initial += 1;
-            }
-        } else {
-            float initial = - count / 2 + 0.5f;
-            for (int i = 0; i < count; ++i)
-            {
-                offsets.Add(initial);
-                initial += 1;
-            }
-        }
-
-        foreach (var book in properties.books) {
-            // 实例化书签
-            GameObject bookmarkObj = Instantiate(
-                bookmarkPrefab,
-                canvas.transform
-            );
-            bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, height, 0f);
-            bookmarkObj.transform.localRotation = Quaternion.identity;
-            bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
-            // 配置书签
-            bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
-            spawnedBookmarks.Add(bookmarkObj);
-        }
-    }
-    
-    void ClearBookmarks() {
-        foreach (var bm in spawnedBookmarks) {
-            Destroy(bm.gameObject);
-        }
-        spawnedBookmarks.Clear();
-    }
     
     public void AddABook(BookManager.Book book)
     {
         properties.books.Add(book);
-        GenerateBookmarks();
+        nodeUI.GenerateBookmarks();
     }
     
     public void RemoveABook(BookManager.Book book)
@@ -288,7 +230,7 @@ public class NodeBehavior : BaseNodeBehavior
         if (properties.books.Contains(book))
         {
             properties.books.Remove(book);
-            GenerateBookmarks();
+            nodeUI.GenerateBookmarks();
         }
         else
         {
@@ -303,12 +245,6 @@ public class NodeBehavior : BaseNodeBehavior
         //传入的两个参数取值为任意，规则是：如果为正，对应in/out字段设为true，为负则设为false，否则保持原状。
         if (pin != 0) book.isPreallocatedIn = pin > 0;
         if (pout != 0) book.isPreallocatedOut = pout > 0;
-        //TODO
-    }
-
-    public List<GameObject> GetBookMarkList()
-    {
-        return this.spawnedBookmarks;
     }
 
     public int GetExposureValue()
