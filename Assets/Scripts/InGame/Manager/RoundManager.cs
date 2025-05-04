@@ -517,7 +517,7 @@ public class RoundManager : MonoBehaviour
                     {
                         selectedBookMark = bookMark;
                         selected = true;
-                        // 选中并高亮的效果展示
+                        // 选中的效果展示
                         BookMarkOutline();
                     }
                     else
@@ -569,20 +569,25 @@ public class RoundManager : MonoBehaviour
     public void BookMarkOutline()
     {
         selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
-        selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
+        // selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
         selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
-        selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
-        selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
+        AudioSource audioSource = selectedBookMark.GetComponent<AudioSource>();
+        if (audioSource != null && audioSource.clip != null) 
+        {
+            audioSource.Play(); // 播放音效
+        }
+        else 
+        {
+            Debug.LogWarning("AudioSource 或 AudioClip 未设置！");
+        }
     }
     
     public void CancelBookMarkOutline()
     {
-        selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
-        selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
+        // selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
+        // selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
         selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
         selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
-        selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
-        selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
     }
     
     public BookAllocationItem  getCancelItemInfo(int mouseButton, RaycastHit hit)
