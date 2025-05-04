@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class NodeUI : MonoBehaviour
 {
@@ -8,9 +9,9 @@ public class NodeUI : MonoBehaviour
     [SerializeField] protected GameObject bookmarkPrefab; // 书签预制体
     private List<GameObject> spawnedBookmarks = new List<GameObject>();
     public float bookmarkSpacing = 1f;                      // 书签间距
-    public float height = 1.3f;                             // 书签高度
-    public float xScale = 1f;
-    public float yScale = 1f;
+    public float heightFromTheNode = 1.3f;                             // 书签高度
+    public float width = 150f;
+    public float height = 150f;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,9 +55,10 @@ public class NodeUI : MonoBehaviour
                 bookmarkPrefab,
                 canvas.transform
             );
-            bookmarkObj.transform.localPosition = new Vector3(offsets[nb.properties.books.IndexOf(book)] * bookmarkSpacing, height, 0f);
+            bookmarkObj.transform.localPosition = new Vector3(offsets[nb.properties.books.IndexOf(book)] * bookmarkSpacing, heightFromTheNode, 0f);
             bookmarkObj.transform.localRotation = Quaternion.identity;
-            bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
+            // bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
+            bookmarkObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
             // 配置书签
             bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
             spawnedBookmarks.Add(bookmarkObj);
