@@ -14,7 +14,6 @@ public class GameProcessManager : MonoBehaviour
     [SerializeField] int initialProbabilityOfInfo = 30;
     [SerializeField] public GameObject probabilityOfInfoPanel;
     [SerializeField] public TutorialsController _tutorialsController;
-    [SerializeField] public GuidePanel _GuidePanel;
 
     public void ProcessManagerCheckingForMaxExposureValue()
     {

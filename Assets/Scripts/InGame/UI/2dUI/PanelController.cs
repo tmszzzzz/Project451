@@ -42,8 +42,6 @@ public class PanelController : MonoBehaviour
             return;
         }
         instance = this;
-        LockOrganizeIndex();
-        LockContactInformant();
     }
 
     void Start()
@@ -66,52 +64,6 @@ public class PanelController : MonoBehaviour
         _ResourceUsagePanel.SetActive(!_ResourceUsagePanel.activeSelf);
     }
 
-    public void UNLockContactInformant()
-    {
-        var v = _ResourceUsagePanel.transform.GetChild(4);
-        v.GetChild(0).GetChild(0).gameObject.SetActive(false);
-        StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));
-        v.GetComponent<Button>().interactable = true;
-    }
-    
-    public void LockContactInformant()
-    {
-        _ResourceUsagePanel.transform.GetChild(4).GetComponent<Button>().interactable = false;
-    }
-    
-    public void UNLockOrganizeIndex()
-    {
-        var v = _ResourceUsagePanel.transform.GetChild(3);
-        v.GetChild(0).GetChild(0).gameObject.SetActive(false);
-        StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));
-        v.GetComponent<Button>().interactable = true;
-    }
-    
-    public void LockOrganizeIndex()
-    {
-        _ResourceUsagePanel.transform.GetChild(3).GetComponent<Button>().interactable = false;
-    }
-    
-    // 颜色渐变协程
-    private IEnumerator FadeImageColor(Image image)
-    {
-        float duration = 1f; // 渐变持续时间（秒）
-        float elapsed = 0f;
-        Color startColor = image.color; // 当前颜色
-        Color targetColor = new Color(0, 0, 0f, 0); // 目标颜色（完全不透明色）
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsed / duration); // 插值比例（0→1）
-            image.color = Color.Lerp(startColor, targetColor, t);
-            yield return null; // 等待下一帧
-        }
-
-        // 确保最终颜色准确
-        image.color = targetColor;
-    }
-    
     public void NodePanelControl(RaycastHit hit)
     {
         GameObject hoveredObject = hit.collider.gameObject;

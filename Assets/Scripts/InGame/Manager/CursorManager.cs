@@ -33,7 +33,7 @@ public class CursorManager : MonoBehaviour
     }
     private void Update()
     {
-        if(!CameraBehavior.instance.isCameraFixed) HandleCameraDrag();
+        HandleCameraDrag();
         if (!EventSystem.current.IsPointerOverGameObject() && !RoundManager.instance.operationForbidden)
             // if (!RoundManager.instance.operationForbidden)
         {

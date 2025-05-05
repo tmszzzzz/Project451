@@ -59,7 +59,7 @@ public class GlobalVar : MonoBehaviour
     public int dealStartRound = 0;
     public int nowPlaying = 0;
     public HashSet<int> allBooks = new HashSet<int>();
-    public bool firstSelectBookMark = false;
+    
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;
@@ -68,13 +68,13 @@ public class GlobalVar : MonoBehaviour
     [SerializeField] private int infoResourcePoint = 0;
     public void InfoResourcePointIncrement(int v)
     {
-        if (resourcePoint <= 1)
+        if (resourcePoint <= 0)
         {
-            Debug.Log("资源点不足");
+            Debug.Log("no resource point");
             return;
         }
 
-        resourcePoint -= 2;
+        resourcePoint--;
         infoResourcePoint += v;
         while (infoResourcePoint >= resourcePointPerInfoIncrement)
         {
@@ -86,13 +86,13 @@ public class GlobalVar : MonoBehaviour
     [SerializeField] private int distanceResourcePoint = 0;
     public void DistanceResourcePointIncrement(int v)
     {
-        if (resourcePoint <= 1)
+        if (resourcePoint <= 0)
         {
-            Debug.Log("资源点不足");
+            Debug.Log("no resource point");
             return;
         }
 
-        resourcePoint -= 2;
+        resourcePoint--;
         distanceResourcePoint += v;
         while (distanceResourcePoint >= resourcePointPerDistanceIncrement)
         {
@@ -104,13 +104,13 @@ public class GlobalVar : MonoBehaviour
 
     public void AllocationLimitResourcePointIncrement(int v)
     {
-        if (resourcePoint <= 1)
+        if (resourcePoint <= 0)
         {
-            Debug.Log("资源点不足");
+            Debug.Log("no resource point");
             return;
         }
 
-        resourcePoint -= 2;
+        resourcePoint--;
         allocationLimitResourcePoint += v;
         while (allocationLimitResourcePoint >= resourcePointPerAllocationLimitIncrement)
         {
@@ -123,7 +123,7 @@ public class GlobalVar : MonoBehaviour
     {
         if (resourcePoint <= 0)
         {
-            Debug.Log("资源点不足");
+            Debug.Log("no resource point");
             return;
         }
 
@@ -146,9 +146,7 @@ public class GlobalVar : MonoBehaviour
 
     }
 
-    public void Test1()
-    {
-        Debug.Log("Test1");
-    }
+
+
     
 }

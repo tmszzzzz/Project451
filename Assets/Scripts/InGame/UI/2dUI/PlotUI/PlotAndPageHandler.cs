@@ -63,7 +63,7 @@ public class PlotAndPageHandler : MonoBehaviour
         if (isPaging)
         {
             //Debug.Log("Node" + " is paging " + pageSprite.name);
-            GlobalVar.instance.AddResourcePoint(2);
+            GlobalVar.instance.AddResourcePoint(1);
             BookController.instance.AddOnePageToBook(pageSprite);
             
             isPaging = false;
