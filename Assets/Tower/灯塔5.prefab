@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8682383976205084362
 Transform:
   m_ObjectHideFlags: 0
@@ -212,6 +212,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8a75fb4be8b3a4c4da6c733652c5a070, type: 2}
+    - target: {fileID: -3625988144291209875, guid: 7b94afd7898e6bc4ab49c67b798a2636,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 790018a58829f5840b4a1f987dbedf79, type: 2}
     - target: {fileID: -2511334840116017857, guid: 7b94afd7898e6bc4ab49c67b798a2636,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -236,6 +241,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: "\u706F\u5854 1"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565606205066862478, guid: 7b94afd7898e6bc4ab49c67b798a2636,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.9496855
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565606205066862478, guid: 7b94afd7898e6bc4ab49c67b798a2636,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.54682046
+      objectReference: {fileID: 0}
+    - target: {fileID: 3565606205066862478, guid: 7b94afd7898e6bc4ab49c67b798a2636,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.34941247
       objectReference: {fileID: 0}
     - target: {fileID: 5457137306980772790, guid: 7b94afd7898e6bc4ab49c67b798a2636,
         type: 3}
