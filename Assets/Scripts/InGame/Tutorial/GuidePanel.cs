@@ -23,8 +23,8 @@ public class GuidePanel : MonoBehaviour
 
     private void InitTasks()
     {
-        steps = new Step[transform.childCount];
-        for (int i = 0; i < transform.childCount; i++)
+        steps = new Step[transform.childCount - 1];
+        for (int i = 0; i < transform.childCount - 1; i++)
         {
             steps[i] = transform.GetChild(i).GetComponent<Step>();
         }
@@ -47,27 +47,36 @@ public class GuidePanel : MonoBehaviour
         if (index >= 0 && index < steps.Length)
         {
             steps[index].Execute(guideController, canvas, this.lastData);
+            if (steps[index].name != "书签")
+            {
+                
+                Invoke("SetButtonOn",2);
+            }
+        }
+        else
+        {
+            Finish();
         }
     }
 
-    public void NextTask(string eventName)
+    public void NextTask()
     {
-        if (eventName == steps[this.currentTask].eventName)
+        if (steps[this.currentTask].target != null)
         {
             this.lastData = getLastData(steps[this.currentTask].target);
-            this.currentTask++;
-            ExecuteTask(this.currentTask);
         }
-        
+        this.currentTask++;
+        ExecuteTask(this.currentTask);
     }
     
-    // 隐藏所有任务
+    // 隐藏所有任务和点击按钮
     private void HideAllTasks()
     {
         for (int i = 0; i < steps.Length; i++)
         {
             steps[i].gameObject.SetActive(false);
         }
+        this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(false);
     }
     
     public LastData getLastData(RectTransform target)
@@ -82,29 +91,26 @@ public class GuidePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("Test1",1);
-        // Invoke("Test1",10);
-    }
-
-    void Test1()
-    {
-        // steps[0].target =
-        //     CanvasBehavior.instance.GetNodeList()[0].GetComponent<NodeBehavior>().GetBookMarkList()[0]
-        //         .GetComponentInChildren<Image>().GetComponent<RectTransform>();
+        CameraBehavior.instance.TestCamera();
         ExecuteTask(0);
-        // Invoke("Test2",3);
-    }
-
-    void Test2()
-    {
-        NextTask(steps[currentTask].eventName);
-    }
-
-    
-    // Update is called once per frame
-    void Update()
-    {
-        
+        StartCoroutine(WaitForFirstSelectBookMark());
     }
     
+    private IEnumerator WaitForFirstSelectBookMark()
+    {
+        while (!GlobalVar.instance.firstSelectBookMark)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+    }
+    public void SetButtonOn()
+    {
+        this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
+    }
+
+    public void Finish()
+    {
+        this.gameObject.SetActive(false);
+    }
 }

@@ -110,8 +110,10 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
             case RenderType.Screen:
                 if (target == null)
                 {
-                    return true;    // 事件不会渗透
+                    this.transform.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
+                    return false;    // 事件不会渗透
                 }
+                this.transform.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.88f);
                 return !RectTransformUtility.RectangleContainsScreenPoint(target, sp);
             case RenderType.World:
                 return !RectTransformUtility.RectangleContainsScreenPoint(target, sp, Camera.main);

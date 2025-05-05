@@ -312,7 +312,7 @@ public class RoundManager : MonoBehaviour
         alloc.End.GetComponent<NodeBehavior>().RemoveABook(alloc.EndBook);
         alloc.BeginBook.isPreallocatedOut = false;
         alloc.Begin.GetComponent<NodeBehavior>().SetABooksState(alloc.BeginBook,0,-1);
-        alloc.Begin.GetComponent<NodeBehavior>().GenerateBookmarks();
+        alloc.Begin.GetComponent<NodeBehavior>().nodeUI.GenerateBookmarks();
         var arr = alloc.Arrow.GetComponent<BookAllocationArrow>();
         arr.allocationNum--;
         if (arr.allocationNum <= 0)
@@ -517,8 +517,12 @@ public class RoundManager : MonoBehaviour
                     {
                         selectedBookMark = bookMark;
                         selected = true;
-                        // 选中并高亮的效果展示
+                        // 选中的效果展示
                         BookMarkOutline();
+                        if (!GlobalVar.instance.firstSelectBookMark)
+                        {
+                            GlobalVar.instance.firstSelectBookMark = true;
+                        }
                     }
                     else
                     {
@@ -558,31 +562,36 @@ public class RoundManager : MonoBehaviour
                 {
                     messageBar.AddMessage("此书已属于该成员.");
                 }
-            }else if (selected && selectedBookMark != null) // 取消选中
-            {
-                CancelBookMarkOutline();
-                selected = false;
-            }
+            }// else if (selected && selectedBookMark != null) // 取消选中
+            // {
+            //     CancelBookMarkOutline();
+            //     selected = false;
+            // }
         }
     }
 
     public void BookMarkOutline()
     {
         selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", selectedBookMark.book.basicInfluence);
-        selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
+        // selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = selectedBookMark.litMaterial;
         selectedBookMark.transform.GetChild(2).gameObject.SetActive(true);
-        selectedBookMark.transform.GetChild(3).gameObject.SetActive(true);
-        selectedBookMark.transform.GetChild(4).gameObject.SetActive(true);
+        AudioSource audioSource = selectedBookMark.GetComponent<AudioSource>();
+        if (audioSource != null && audioSource.clip != null) 
+        {
+            audioSource.Play(); // 播放音效
+        }
+        else 
+        {
+            Debug.LogWarning("AudioSource 或 AudioClip 未设置！");
+        }
     }
     
     public void CancelBookMarkOutline()
     {
-        selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
-        selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
+        // selectedBookMark.transform.GetChild(1).GetComponent<Image>().material = null;
+        // selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().sprite = selectedBookMark.sprite;
         selectedBookMark.getParentNode().GetComponent<NodeBehavior>().sliderMaterial.SetFloat("_HighlightCount", 0);
         selectedBookMark.transform.GetChild(2).gameObject.SetActive(false);
-        selectedBookMark.transform.GetChild(3).gameObject.SetActive(false);
-        selectedBookMark.transform.GetChild(4).gameObject.SetActive(false);
     }
     
     public BookAllocationItem  getCancelItemInfo(int mouseButton, RaycastHit hit)

@@ -24,6 +24,7 @@ public class NodeBehavior : BaseNodeBehavior
     [SerializeField] private GameObject bookMarkContainer;
     public Slider slider;
     public Material sliderMaterial;
+    public NodeUI nodeUI;
     // Start is called before the first frame update
     protected virtual void Start()
     {
@@ -280,7 +281,7 @@ public class NodeBehavior : BaseNodeBehavior
     public void AddABook(BookManager.Book book)
     {
         properties.books.Add(book);
-        GenerateBookmarks();
+        nodeUI.GenerateBookmarks();
     }
     
     public void RemoveABook(BookManager.Book book)
@@ -288,7 +289,7 @@ public class NodeBehavior : BaseNodeBehavior
         if (properties.books.Contains(book))
         {
             properties.books.Remove(book);
-            GenerateBookmarks();
+            nodeUI.GenerateBookmarks();
         }
         else
         {
@@ -303,12 +304,6 @@ public class NodeBehavior : BaseNodeBehavior
         //传入的两个参数取值为任意，规则是：如果为正，对应in/out字段设为true，为负则设为false，否则保持原状。
         if (pin != 0) book.isPreallocatedIn = pin > 0;
         if (pout != 0) book.isPreallocatedOut = pout > 0;
-        //TODO
-    }
-
-    public List<GameObject> GetBookMarkList()
-    {
-        return this.spawnedBookmarks;
     }
 
     public int GetExposureValue()

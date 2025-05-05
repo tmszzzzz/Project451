@@ -3,6 +3,12 @@ using UnityEngine;
 
 public class BookManager : MonoBehaviour
 {
+    public class BookRandomConfig
+    {
+        public float[] LevelWeights; // 等级权重
+        public HashSet<Book.BookType> AllowedTypes; // 允许的类型
+    }
+    
     public static BookManager instance;
 
     [System.Serializable]
@@ -51,7 +57,7 @@ public class BookManager : MonoBehaviour
         public bool isPreallocatedIn; // 是否被预分配入
         public bool isPreallocatedOut; // 是否被预分配出
         public int parentId; // 所属节点ID
-
+        
         public Book(Book book)
         {
             this.id = book.id;
@@ -107,14 +113,96 @@ public class BookManager : MonoBehaviour
     }
 
     // 随机获取一本书
-    public Book GetRandomBook()
+    public Book GetRandomBook(BookRandomConfig config = null)
     {
         if (illustration.Count == 0) return null;
-        int index = Random.Range(0, illustration.Count);
-        // illustration[index].runtimeId = assignRuntimeId++;
-        Book book = new Book(illustration[index]);
+        config ??= new BookRandomConfig
+        {
+            LevelWeights = new float[] { 1f, 0f, 0f },
+            AllowedTypes = new HashSet<Book.BookType>()
+            {
+                Book.BookType.fankang,
+                Book.BookType.fansi,
+                Book.BookType.huanxiang,
+                Book.BookType.shijiao,
+                Book.BookType.wangxi,
+                Book.BookType.yuyan,
+                Book.BookType.zhishi
+            }
+        };
+        // 可获得的类型的书按照基础影响力分为三类
+        List<List<Book>> accessBooks = GenerateTypeList(config.AllowedTypes);
+        // 按概率获取去哪一类的基础影响力获得书籍
+        int levelIndex = getLevelIndex(config.LevelWeights);
+        int index = Random.Range(0, accessBooks[levelIndex].Count);
+        Book book = new Book(accessBooks[levelIndex][index]);
+        // 借书单判断用
         GlobalVar.instance.allBooks.Add(book.id);
         return book;
+    }
+
+    public List<List<Book>> GenerateTypeList(HashSet<Book.BookType> AllowedTypes)
+    {
+        List<List<Book>> typeList = new List<List<Book>>()
+        {
+            new List<Book>(), // 基础影响力0级
+            new List<Book>(), // 基础影响力1级
+            new List<Book>()  // 基础影响力2级
+        };
+        for (int i = 0; i < illustration.Count; i++)
+        {
+            if (AllowedTypes.Contains(illustration[i].type))
+            {
+                typeList[illustration[i].basicInfluence - 1].Add(illustration[i]);
+            } 
+        }
+        return typeList;
+    }
+
+    public int getLevelIndex(float[] levelWeights)
+    {
+        // 参数合法性校验
+        if (levelWeights == null || levelWeights.Length == 0)
+        {
+            Debug.LogError("概率配置错误：权重数组不能为空");
+            return -1;
+        }
+
+        // 计算总权重并校验负值
+        float totalWeight = 0;
+        foreach (float weight in levelWeights)
+        {
+            if (weight < 0)
+            {
+                Debug.LogError("概率配置错误：权重值不能为负数");
+                return -1;
+            }
+            totalWeight += weight;
+        }
+
+        if (totalWeight <= 0)
+        {
+            Debug.LogError("概率配置错误：总权重小于0");
+            return -1;
+        }
+
+        // 生成随机采样点
+        float randomValue = Random.Range(0f, totalWeight);
+    
+        // 累加权重寻找命中区间
+        float cumulative = 0f;
+        for (int i = 0; i < levelWeights.Length; i++)
+        {
+            cumulative += levelWeights[i];
+            if (randomValue <= cumulative)
+            {
+                return i;
+            }
+        }
+
+        // 兜底逻辑（理论上不会执行到这里）
+        Debug.LogWarning("存在未知错误");
+        return levelWeights.Length - 1;
     }
 }
 

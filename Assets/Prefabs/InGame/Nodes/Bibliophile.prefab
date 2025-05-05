@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5843517541521317700}
   - component: {fileID: 1798037882938609769}
   - component: {fileID: 723446590447260333}
+  - component: {fileID: 3248178144489604442}
   m_Layer: 0
   m_Name: Bibliophile
   m_TagString: Untagged
@@ -137,14 +138,28 @@ MonoBehaviour:
   description: 
   plotFileName: null
   pageSprite: {fileID: 0}
-  bookmarkPrefab: {fileID: 5906648441195115135, guid: c2f955f4b8ede894ba3a596b9f64d341,
-    type: 3}
-  bookmarkSpacing: 1.3
-  height: 2.3
-  xScale: 1.5
-  yScale: 1.5
   slider: {fileID: 1303407680020113908}
   sliderMaterial: {fileID: 0}
+  nodeUI: {fileID: 3248178144489604442}
+--- !u!114 &3248178144489604442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072412832155264516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c11c1972ce84cdc4ab480dfad0b713a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nb: {fileID: 723446590447260333}
+  bookmarkPrefab: {fileID: 5906648441195115135, guid: c2f955f4b8ede894ba3a596b9f64d341,
+    type: 3}
+  bookmarkSpacing: 1
+  heightFromTheNode: 1.3
+  width: 150
+  height: 150
 --- !u!1 &6269738846779890422
 GameObject:
   m_ObjectHideFlags: 0
