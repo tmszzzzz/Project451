@@ -61,7 +61,10 @@ public class GuidePanel : MonoBehaviour
 
     public void NextTask()
     {
-        this.lastData = getLastData(steps[this.currentTask].target);
+        if (steps[this.currentTask].target != null)
+        {
+            this.lastData = getLastData(steps[this.currentTask].target);
+        }
         this.currentTask++;
         ExecuteTask(this.currentTask);
     }
@@ -90,14 +93,16 @@ public class GuidePanel : MonoBehaviour
     {
         CameraBehavior.instance.TestCamera();
         ExecuteTask(0);
+        StartCoroutine(WaitForFirstSelectBookMark());
     }
     
-    private void Update()
+    private IEnumerator WaitForFirstSelectBookMark()
     {
-        if (GlobalVar.instance.firstSelectBookMark)
+        while (!GlobalVar.instance.firstSelectBookMark)
         {
-            NextTask();
+            yield return null; // 等待一帧
         }
+        NextTask();
     }
     public void SetButtonOn()
     {
