@@ -267,11 +267,17 @@ public class CameraBehavior : MonoBehaviour
 
     public void TestCamera()
     {
+        // CameraBehavior.instance.SetCameraFixed(
+        //     true,
+        //     new Vector3(0.04f, 58.91f, 7.04f),    // 位置
+        //     Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
+        //     36f                             // FOV
+        // );
         CameraBehavior.instance.SetCameraFixed(
             true,
-            new Vector3(0.04f, 58.91f, 7.04f),    // 位置
-            Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
-            36f                             // FOV
+            new Vector3(-11.88f, 58.91f, 22.63f),    // 位置
+            Quaternion.Euler(56.58f, 60.24f, 0f), // 旋转
+            19f                             // FOV
         );
     }
     
