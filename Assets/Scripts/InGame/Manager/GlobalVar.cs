@@ -59,7 +59,7 @@ public class GlobalVar : MonoBehaviour
     public int dealStartRound = 0;
     public int nowPlaying = 0;
     public HashSet<int> allBooks = new HashSet<int>();
-    
+    public bool firstSelectBookMark = false;
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;

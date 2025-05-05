@@ -519,6 +519,10 @@ public class RoundManager : MonoBehaviour
                         selected = true;
                         // 选中的效果展示
                         BookMarkOutline();
+                        if (!GlobalVar.instance.firstSelectBookMark)
+                        {
+                            GlobalVar.instance.firstSelectBookMark = true;
+                        }
                     }
                     else
                     {
@@ -558,11 +562,11 @@ public class RoundManager : MonoBehaviour
                 {
                     messageBar.AddMessage("此书已属于该成员.");
                 }
-            }else if (selected && selectedBookMark != null) // 取消选中
-            {
-                CancelBookMarkOutline();
-                selected = false;
-            }
+            }// else if (selected && selectedBookMark != null) // 取消选中
+            // {
+            //     CancelBookMarkOutline();
+            //     selected = false;
+            // }
         }
     }
 

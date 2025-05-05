@@ -47,7 +47,11 @@ public class GuidePanel : MonoBehaviour
         if (index >= 0 && index < steps.Length)
         {
             steps[index].Execute(guideController, canvas, this.lastData);
-            Invoke("SetButtonOn",2);
+            if (steps[index].name != "书签")
+            {
+                
+                Invoke("SetButtonOn",2);
+            }
         }
         else
         {
@@ -87,7 +91,14 @@ public class GuidePanel : MonoBehaviour
         CameraBehavior.instance.TestCamera();
         ExecuteTask(0);
     }
-
+    
+    private void Update()
+    {
+        if (GlobalVar.instance.firstSelectBookMark)
+        {
+            NextTask();
+        }
+    }
     public void SetButtonOn()
     {
         this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
