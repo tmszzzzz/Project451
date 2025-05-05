@@ -21,8 +21,7 @@ public class NodeBehavior : BaseNodeBehavior
     private List<GameObject> spawnedBookmarks = new List<GameObject>();
     public float bookmarkSpacing = 1f;                      // 书签间距
     public float height = 1.3f;                             // 书签高度
-    public float xScale = 1f;
-    public float yScale = 1f;
+    [SerializeField] private GameObject bookMarkContainer;
     public Slider slider;
     public Material sliderMaterial;
     // Start is called before the first frame update
@@ -41,6 +40,8 @@ public class NodeBehavior : BaseNodeBehavior
             // 生成书签
             GenerateBookmarks();
         }
+        Transform canvas = transform.Find("NodeUICanvas");
+        bookMarkContainer = canvas.Find("BookMarkContainer").gameObject;
     }
 
     protected virtual void Update()
@@ -233,7 +234,6 @@ public class NodeBehavior : BaseNodeBehavior
     public void GenerateBookmarks()
     {
         CanvasBehavior.instance.RefreshPreviewExposureValue();
-        Transform canvas = transform.Find("NodeUICanvas");
         ClearBookmarks();
         List<float> offsets = new List<float>();
         int count = properties.books.Count;
@@ -259,11 +259,11 @@ public class NodeBehavior : BaseNodeBehavior
             // 实例化书签
             GameObject bookmarkObj = Instantiate(
                 bookmarkPrefab,
-                canvas.transform
+                bookMarkContainer.transform
             );
-            bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, height, 0f);
+            // bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, height, 0f);
             bookmarkObj.transform.localRotation = Quaternion.identity;
-            bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
+            bookmarkObj.transform.localScale = new Vector3(1, 1, 1);
             // 配置书签
             bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
             spawnedBookmarks.Add(bookmarkObj);
