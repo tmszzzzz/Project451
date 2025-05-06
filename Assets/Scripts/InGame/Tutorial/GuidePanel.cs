@@ -46,15 +46,19 @@ public class GuidePanel : MonoBehaviour
         currentTask = index;
         if (index >= 0 && index < steps.Length)
         {
-            steps[index].Execute(guideController, canvas, this.lastData);
-            if (steps[index].name != "书签")
+            if (steps[index].name == "消防员")
             {
-                
+                CameraBehavior.instance.FixedCamera2();
+            }
+            steps[index].Execute(guideController, canvas, this.lastData);
+            if (steps[index].eventName != "取消按钮")
+            {
                 Invoke("SetButtonOn",2);
             }
         }
         else
         {
+            Debug.Log("结束了.");
             Finish();
         }
     }
@@ -91,7 +95,7 @@ public class GuidePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CameraBehavior.instance.TestCamera();
+        CameraBehavior.instance.FixedCamera1();
         ExecuteTask(0);
         StartCoroutine(WaitForFirstSelectBookMark());
     }
@@ -103,14 +107,52 @@ public class GuidePanel : MonoBehaviour
             yield return null; // 等待一帧
         }
         NextTask();
+        StartCoroutine(WaitForFirstAllocation());
     }
-    public void SetButtonOn()
+    private IEnumerator WaitForFirstAllocation()
+    {
+        while (!GlobalVar.instance.firstAllocation)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+        StartCoroutine(WaitForFirstNext());
+    }
+    
+    private IEnumerator WaitForFirstNext()
+    {
+        while (!GlobalVar.instance.firstNext)
+        {
+            yield return null; // 等待一帧
+        }
+        CameraBehavior.instance.isCameraFixed = false;
+        NextTask();
+        Invoke("OpenInfoPanel",5);
+    }
+    
+    private IEnumerator WaitForCloseInfoPanel()
+    {
+        while (!GlobalVar.instance.closeInfoPanel)
+        {
+            yield return null; // 等待一帧
+        }
+        Debug.Log("CloseInfoPanel");
+        CameraBehavior.instance.FixedCamera1();
+        NextTask();
+    }
+    private void SetButtonOn()
     {
         this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
     }
 
-    public void Finish()
+    private void Finish()
     {
         this.gameObject.SetActive(false);
+    }
+    
+    private void OpenInfoPanel()
+    {
+        GlobalVar.instance.openInfoPanel = true;
+        StartCoroutine(WaitForCloseInfoPanel());
     }
 }

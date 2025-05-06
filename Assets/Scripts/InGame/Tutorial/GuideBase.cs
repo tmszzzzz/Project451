@@ -58,7 +58,6 @@ public class GuideBase : MonoBehaviour
         material = transform.GetComponent<Image>().material;
         this.lastData = lastData;
         this.target = target;
-        
         // 获取中心点
         target.GetWorldCorners(targetCorners);
         

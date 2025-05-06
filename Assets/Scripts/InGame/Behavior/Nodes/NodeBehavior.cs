@@ -17,12 +17,6 @@ public class NodeBehavior : BaseNodeBehavior
     public string description = "";
     public string plotFileName = "";
     public Sprite pageSprite;
-    [SerializeField] protected GameObject bookmarkPrefab; // 书签预制体
-    private List<GameObject> spawnedBookmarks = new List<GameObject>();
-    public float bookmarkSpacing = 1f;                      // 书签间距
-    public float height = 1.3f;                             // 书签高度
-    public float xScale = 1f;
-    public float yScale = 1f;
     public Slider slider;
     public Material sliderMaterial;
     public NodeUI nodeUI;

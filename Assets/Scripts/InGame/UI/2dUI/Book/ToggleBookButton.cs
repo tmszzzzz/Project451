@@ -28,6 +28,7 @@ public class ToggleBookButton : MonoBehaviour
     public void ToggleBook()
     {
         isBookOpen = !isBookOpen;
+        GlobalVar.instance.closeInfoPanel = true;
         if (isBookOpen)
         {
             RoundManager.instance.OperationForbidden();
@@ -41,6 +42,11 @@ public class ToggleBookButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GlobalVar.instance.openInfoPanel)
+        {
+            isBookOpen = !isBookOpen;
+            GlobalVar.instance.openInfoPanel = false;
+        }
         if (isBookOpen)
         {
             book.transform.position = Vector3.Lerp(book.transform.position, bookActivatedPosition.position, Time.deltaTime * 3f);

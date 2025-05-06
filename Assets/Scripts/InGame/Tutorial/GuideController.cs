@@ -111,7 +111,7 @@ public class GuideController : MonoBehaviour, ICanvasRaycastFilter
                 if (target == null)
                 {
                     this.transform.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0f);
-                    return false;    // 事件不会渗透
+                    return false;    // 此时没有遮罩，事件会渗透同时背景变透明
                 }
                 this.transform.GetComponent<Image>().color = new Color(0f, 0f, 0f, 0.88f);
                 return !RectTransformUtility.RectangleContainsScreenPoint(target, sp);

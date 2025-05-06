@@ -374,6 +374,10 @@ public class RoundManager : MonoBehaviour
     
     public async void NextRound()
     {
+        if (!GlobalVar.instance.firstNext)
+        {
+            GlobalVar.instance.firstNext = true;
+        }
         if (selectedBookMark != null)
         {
             CancelBookMarkOutline();
@@ -556,6 +560,10 @@ public class RoundManager : MonoBehaviour
                         CancelBookMarkOutline();
                         selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color = new Color(1, 1, 1, 0.4f);
                         selected = false;
+                        if (!GlobalVar.instance.firstAllocation)
+                        {
+                            GlobalVar.instance.firstAllocation = true;
+                        }
                     }
                 }
                 else

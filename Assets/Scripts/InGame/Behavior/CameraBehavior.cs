@@ -265,19 +265,32 @@ public class CameraBehavior : MonoBehaviour
         GetComponent<AudioSource>().PlayOneShot(pageSound);
     }
 
-    public void TestCamera()
+    public void FixedCamera1()
     {
+        // 第一部分
+        CameraBehavior.instance.SetCameraFixed(
+            true,
+            new Vector3(-11.88f, 58.91f, 22.63f),    // 位置
+            Quaternion.Euler(56.58f, 60.24f, 0f), // 旋转
+            19f                             // FOV
+        );
+    }
+    
+    public void FixedCamera2()
+    {
+        // 第二部分
         // CameraBehavior.instance.SetCameraFixed(
         //     true,
         //     new Vector3(0.04f, 58.91f, 7.04f),    // 位置
         //     Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
         //     36f                             // FOV
         // );
+        // 消防员视角
         CameraBehavior.instance.SetCameraFixed(
             true,
-            new Vector3(-11.88f, 58.91f, 22.63f),    // 位置
-            Quaternion.Euler(56.58f, 60.24f, 0f), // 旋转
-            19f                             // FOV
+            new Vector3(-27.94f, 58.91f, -20.23f),    // 位置
+            Quaternion.Euler(56.57f, 352.24f, 0f), // 旋转
+            14.5f                             // FOV
         );
     }
     
