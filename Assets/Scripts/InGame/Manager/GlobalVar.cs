@@ -69,6 +69,9 @@ public class GlobalVar : MonoBehaviour
     public bool closeInfoPanel = false;
     public int allocationSuccess = 0;
     public bool firstCancellAllocation = false;
+    public bool firstGetResourcePoint = false;
+    public bool firstOpenPointUsage = false;
+    public bool firstUseResourcePoint = false;
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;
@@ -82,7 +85,10 @@ public class GlobalVar : MonoBehaviour
             Debug.Log("资源点不足");
             return;
         }
-
+        if (!firstUseResourcePoint)
+        {
+            firstUseResourcePoint = true;
+        }
         resourcePoint -= 2;
         infoResourcePoint += v;
         while (infoResourcePoint >= resourcePointPerInfoIncrement)
@@ -99,6 +105,10 @@ public class GlobalVar : MonoBehaviour
         {
             Debug.Log("资源点不足");
             return;
+        }
+        if (!firstUseResourcePoint)
+        {
+            firstUseResourcePoint = true;
         }
 
         resourcePoint -= 2;
@@ -118,6 +128,10 @@ public class GlobalVar : MonoBehaviour
             Debug.Log("资源点不足");
             return;
         }
+        if (!firstUseResourcePoint)
+        {
+            firstUseResourcePoint = true;
+        }
 
         resourcePoint -= 2;
         allocationLimitResourcePoint += v;
@@ -134,6 +148,10 @@ public class GlobalVar : MonoBehaviour
         {
             Debug.Log("资源点不足");
             return;
+        }
+        if (!firstUseResourcePoint)
+        {
+            firstUseResourcePoint = true;
         }
 
         resourcePoint--;

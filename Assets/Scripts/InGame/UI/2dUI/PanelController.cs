@@ -66,6 +66,10 @@ public class PanelController : MonoBehaviour
     public void ToggleResourceUsagePanel()
     {
         _ResourceUsagePanel.SetActive(!_ResourceUsagePanel.activeSelf);
+        if (!GlobalVar.instance.firstOpenPointUsage)
+        {
+            GlobalVar.instance.firstOpenPointUsage = true;
+        }
     }
 
     public void UNLockContactInformant()

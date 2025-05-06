@@ -173,16 +173,38 @@ public class GuidePanel : MonoBehaviour
             yield return null; // 等待一帧
         }
         NextTask();
-        StartCoroutine(WaitForChapter1());
+        StartCoroutine(WaitForFirstGetResourcePoint());
     }
     
-    private IEnumerator WaitForChapter1()
+    private IEnumerator WaitForFirstGetResourcePoint()
     {
-        // while (!GlobalVar.instance.firstCancellAllocation)
+        while (!GlobalVar.instance.firstGetResourcePoint)
         {
             yield return null; // 等待一帧
         }
         NextTask();
+        StartCoroutine(WaitForFirstOpenPointUsage());
+    }
+    
+    private IEnumerator WaitForFirstOpenPointUsage()
+    {
+        while (!GlobalVar.instance.firstOpenPointUsage)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+        StartCoroutine(WaitForFirstUseResourcePoint());
+    }
+    
+    private IEnumerator WaitForFirstUseResourcePoint()
+    {
+        while (!GlobalVar.instance.firstUseResourcePoint)
+        {
+            yield return null; // 等待一帧
+        }
+        // TODO
+        // 轮询暴露值和看火者
+        // NextTask();
     }
     
     private void SetButtonOn()

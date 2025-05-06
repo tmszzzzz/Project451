@@ -70,6 +70,10 @@ public class PlotAndPageHandler : MonoBehaviour
             //clear pageSprite  
             pageSprite = null;
             pageButton.GetComponent<BreathingEffect>().enabled = false;
+            if (!GlobalVar.instance.firstGetResourcePoint)
+            {
+                GlobalVar.instance.firstGetResourcePoint = true;
+            }
             CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(CameraBehavior.instance.pop);
         }
     }
