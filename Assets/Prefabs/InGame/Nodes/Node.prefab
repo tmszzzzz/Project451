@@ -138,6 +138,11 @@ MonoBehaviour:
   description: 
   plotFileName: 
   pageSprite: {fileID: 0}
+  bookmarkPrefab: {fileID: 0}
+  bookmarkSpacing: 1
+  height: 1.3
+  xScale: 1
+  yScale: 1
   slider: {fileID: 3575641854857515005}
   sliderMaterial: {fileID: 0}
   nodeUI: {fileID: 3252711785587143563}
@@ -150,7 +155,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8508593265475076950}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c11c1972ce84cdc4ab480dfad0b713a7, type: 3}
+  m_Script: {fileID: 11500000, guid: d7da8e2e28f97a2479e10a8b07806402, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nb: {fileID: 3926578069804042716}
@@ -158,8 +163,8 @@ MonoBehaviour:
     type: 3}
   bookmarkSpacing: 1
   heightFromTheNode: 1.3
-  width: 150
-  height: 150
+  width: 2.5
+  height: 2.5
 --- !u!1001 &1796190036625346765
 PrefabInstance:
   m_ObjectHideFlags: 0

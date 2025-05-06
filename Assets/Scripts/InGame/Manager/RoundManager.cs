@@ -605,7 +605,12 @@ public class RoundManager : MonoBehaviour
                 selected = false;
             }
             BookMark bookMark = hit.collider.GetComponent<BookMark>();
-            if (bookMark != null && mouseButton == 1)
+            if (bookMark == null)
+            {
+                messageBar.AddMessage("不是可取消分配的对象.");
+                return null;
+            }
+            else if (bookMark != null && mouseButton == 1)
             {
                 foreach (BookAllocationItem i in BookAllocationItems)
                 {

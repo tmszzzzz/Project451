@@ -57,8 +57,7 @@ public class NodeUI : MonoBehaviour
             );
             bookmarkObj.transform.localPosition = new Vector3(offsets[nb.properties.books.IndexOf(book)] * bookmarkSpacing, heightFromTheNode, 0f);
             bookmarkObj.transform.localRotation = Quaternion.identity;
-            // bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
-            bookmarkObj.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+            bookmarkObj.transform.localScale = new Vector3(width / 2.5f, height / 2.5f, 1);
             // 配置书签
             bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
             spawnedBookmarks.Add(bookmarkObj);

@@ -37,11 +37,6 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = MessageBar.instance;
-        if (properties.state > 0)
-        {
-            // 生成书签
-            GenerateBookmarks();
-        }
     }
 
     protected virtual void Update()
@@ -228,54 +223,6 @@ public class NodeBehavior : BaseNodeBehavior
         }
 
         properties.state = stateEnum;
-    }
-
-    // 生成书签
-    public void GenerateBookmarks()
-    {
-        CanvasBehavior.instance.RefreshPreviewExposureValue();
-        Transform canvas = transform.Find("NodeUICanvas");
-        ClearBookmarks();
-        List<float> offsets = new List<float>();
-        int count = properties.books.Count;
-        bool isOdd = count % 2 == 1;
-        
-        if (isOdd) {
-            int initial = - count / 2;
-            for (int i = 0; i < count; ++i)
-            {
-                offsets.Add(initial);
-                initial += 1;
-            }
-        } else {
-            float initial = - count / 2 + 0.5f;
-            for (int i = 0; i < count; ++i)
-            {
-                offsets.Add(initial);
-                initial += 1;
-            }
-        }
-
-        foreach (var book in properties.books) {
-            // 实例化书签
-            GameObject bookmarkObj = Instantiate(
-                bookmarkPrefab,
-                canvas.transform
-            );
-            bookmarkObj.transform.localPosition = new Vector3(offsets[properties.books.IndexOf(book)] * bookmarkSpacing, height, 0f);
-            bookmarkObj.transform.localRotation = Quaternion.identity;
-            bookmarkObj.transform.localScale = new Vector3(xScale, yScale, 1);
-            // 配置书签
-            bookmarkObj.GetComponent<BookMark>().ConfigureBookmark(book,CanvasBehavior.instance.GetNodeList().IndexOf(this.gameObject));
-            spawnedBookmarks.Add(bookmarkObj);
-        }
-    }
-    
-    void ClearBookmarks() {
-        foreach (var bm in spawnedBookmarks) {
-            Destroy(bm.gameObject);
-        }
-        spawnedBookmarks.Clear();
     }
     
     public void AddABook(BookManager.Book book)
