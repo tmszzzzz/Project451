@@ -28,13 +28,13 @@ public class ToggleBookButton : MonoBehaviour
     public void ToggleBook()
     {
         isBookOpen = !isBookOpen;
-        GlobalVar.instance.closeInfoPanel = true;
         if (isBookOpen)
         {
             RoundManager.instance.OperationForbidden();
         }
         else
         {
+            GlobalVar.instance.closeInfoPanel = true;
             RoundManager.instance.OperationRelease();
         }
     } 

@@ -31,6 +31,10 @@ public class NodeBehavior : BaseNodeBehavior
         ColorMap.Add(1, Color.yellow);
         ColorMap.Add(2, Color.red);
         mb = MessageBar.instance;
+        if (this.name == "Node_0")
+        {
+            AddABook(BookManager.instance.GetRandomBook());
+        }
     }
 
     protected virtual void Update()

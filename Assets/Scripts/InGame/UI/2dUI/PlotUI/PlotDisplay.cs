@@ -68,11 +68,20 @@ public class PlotDisplay : MonoBehaviour
         {
             Debug.Log("Plot is not open already");
         }
-
-        Debug.Log("Plot is not open already");
         _isPlotting = false;
         plotDisplayArea.GetComponent<PlotDisplayArea>().ClosePlots();
-        plotSelectionArea.GetComponent<PlotSelectionArea>().ClosePlots(); 
+        plotSelectionArea.GetComponent<PlotSelectionArea>().ClosePlots();
+        if (!PanelController.instance._tutorialPanel.GetComponent<GuidePanel>().completed)
+        {
+            if (!PanelController.instance._tutorialPanel.activeSelf)
+            {
+                PanelController.instance._tutorialPanel.SetActive(true);
+            }
+            else
+            {
+                PanelController.instance._tutorialPanel.GetComponent<GuidePanel>().NextTask();
+            } 
+        }
     }
 
     // 开始新剧情时调用

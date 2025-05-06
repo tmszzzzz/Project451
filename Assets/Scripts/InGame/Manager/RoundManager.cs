@@ -327,6 +327,7 @@ public class RoundManager : MonoBehaviour
         BookAllocationItems.Remove(alloc);
         // 触发分配变化事件
         BookAllocationChange?.Invoke();
+        GlobalVar.instance.firstCancellAllocation = true;
     }
     
     public int BookAllocationNum()
@@ -555,14 +556,18 @@ public class RoundManager : MonoBehaviour
             {
                 if (selectedBookMark.getParentNode() != nb.gameObject)
                 {
+                    if (!GlobalVar.instance.firstAllocation)
+                    {
+                        GlobalVar.instance.firstAllocation = true;
+                    }
                     if (BookAllocation(selectedBookMark.book, selectedBookMark.getParentNode(), nb.gameObject))
                     {
                         CancelBookMarkOutline();
                         selectedBookMark.transform.GetChild(1).transform.GetComponent<Image>().color = new Color(1, 1, 1, 0.4f);
                         selected = false;
-                        if (!GlobalVar.instance.firstAllocation)
+                        if (GlobalVar.instance.allocationSuccess < 2)
                         {
-                            GlobalVar.instance.firstAllocation = true;
+                            GlobalVar.instance.allocationSuccess++;
                         }
                     }
                 }
@@ -620,6 +625,10 @@ public class RoundManager : MonoBehaviour
             }
             else if (bookMark != null && mouseButton == 1)
             {
+                if (GlobalVar.instance.firstCancellAllocation)
+                {
+                    GlobalVar.instance.firstCancellAllocation = true;
+                }
                 foreach (BookAllocationItem i in BookAllocationItems)
                 {
                     if (bookMark.book == i.EndBook || bookMark.book == i.BeginBook)

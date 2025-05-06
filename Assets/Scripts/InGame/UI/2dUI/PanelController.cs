@@ -31,6 +31,8 @@ public class PanelController : MonoBehaviour
     private Vector3 _nodeInfoPanelOffset = new Vector3(20, -20, 0);
     [SerializeField] private GameObject _ResourceUsagePanel;
     [SerializeField] private Image _ImageThatSeperateResourceUsagePanel;
+    
+    public GameObject _tutorialPanel;
     // Start is called before the first frame update
     void Awake()
     {

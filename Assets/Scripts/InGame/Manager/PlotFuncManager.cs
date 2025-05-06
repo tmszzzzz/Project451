@@ -96,7 +96,7 @@ public class PlotFuncManager : MonoBehaviour
     public void openQuest0()
     {
         QuestPanel.instance.AddQuest("Zero");
-        Button.ToggleBook();   
+        // Button.ToggleBook();   
     }
 
     public void gainTwoNewMembers()

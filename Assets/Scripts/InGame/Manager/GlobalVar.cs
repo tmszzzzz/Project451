@@ -67,6 +67,8 @@ public class GlobalVar : MonoBehaviour
     public bool firstNext = false;
     public bool openInfoPanel = false;
     public bool closeInfoPanel = false;
+    public int allocationSuccess = 0;
+    public bool firstCancellAllocation = false;
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;

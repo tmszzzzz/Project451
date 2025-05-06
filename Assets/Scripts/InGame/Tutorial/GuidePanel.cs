@@ -13,6 +13,7 @@ public class GuidePanel : MonoBehaviour
     private Step[] steps;
     private int currentTask;
     private LastData lastData;
+    public bool completed = false;
     private void Awake()
     {
         canvas = transform.GetComponentInParent<Canvas>();
@@ -50,10 +51,14 @@ public class GuidePanel : MonoBehaviour
             {
                 CameraBehavior.instance.FixedCamera2();
             }
+            else if(steps[index].name == "任务面板")
+            {
+                CameraBehavior.instance.FixedCamera1();
+            }
             steps[index].Execute(guideController, canvas, this.lastData);
             if (steps[index].eventName != "取消按钮")
             {
-                Invoke("SetButtonOn",2);
+                Invoke("SetButtonOn",1);
             }
         }
         else
@@ -98,6 +103,8 @@ public class GuidePanel : MonoBehaviour
         CameraBehavior.instance.FixedCamera1();
         ExecuteTask(0);
         StartCoroutine(WaitForFirstSelectBookMark());
+        
+        // 快速测试
     }
     
     private IEnumerator WaitForFirstSelectBookMark()
@@ -127,7 +134,14 @@ public class GuidePanel : MonoBehaviour
         }
         CameraBehavior.instance.isCameraFixed = false;
         NextTask();
-        Invoke("OpenInfoPanel",5);
+        Invoke("OpenInfoPanel",3);
+    }
+    
+    private void OpenInfoPanel()
+    {
+        GlobalVar.instance.openInfoPanel = true;
+        NextTask();
+        StartCoroutine(WaitForCloseInfoPanel());
     }
     
     private IEnumerator WaitForCloseInfoPanel()
@@ -139,7 +153,38 @@ public class GuidePanel : MonoBehaviour
         Debug.Log("CloseInfoPanel");
         CameraBehavior.instance.FixedCamera1();
         NextTask();
+        StartCoroutine(WaitForSecondAllocationSuccess());
     }
+    
+    private IEnumerator WaitForSecondAllocationSuccess()
+    {
+        while (GlobalVar.instance.allocationSuccess < 2)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+        StartCoroutine(WaitForFirstCancellAllocation());
+    }
+    
+    private IEnumerator WaitForFirstCancellAllocation()
+    {
+        while (!GlobalVar.instance.firstCancellAllocation)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+        StartCoroutine(WaitForChapter1());
+    }
+    
+    private IEnumerator WaitForChapter1()
+    {
+        // while (!GlobalVar.instance.firstCancellAllocation)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+    }
+    
     private void SetButtonOn()
     {
         this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
@@ -148,11 +193,6 @@ public class GuidePanel : MonoBehaviour
     private void Finish()
     {
         this.gameObject.SetActive(false);
-    }
-    
-    private void OpenInfoPanel()
-    {
-        GlobalVar.instance.openInfoPanel = true;
-        StartCoroutine(WaitForCloseInfoPanel());
+        completed = true;
     }
 }
