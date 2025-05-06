@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 
 public class CameraBehavior : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class CameraBehavior : MonoBehaviour
     private Vector3 savedPos;
     private float savedZoom;
     private Quaternion savedRotation;
+    public bool isCameraFixed = false;
 
     private Camera cam;
     [SerializeField] private float rotationSpeed = 50f; 
@@ -113,18 +115,21 @@ public class CameraBehavior : MonoBehaviour
 
     void Update()
     {
+        if (isCameraFixed) return;
         if (!RoundManager.instance.operationForbidden)
         {
             HandleMovement();
             HandleRotation();
             HandleZoom();
         }
-
+        
+        // 打印当前摄像机状态（方便调试）
+        // Debug.Log($"Position: {realPosition}, Rotation: {realRotation.eulerAngles}, FOV: {realFieldOfView}");
+        
         //transform.position = HandleOutBound(transform.position, oldPosition);
         transform.position = Vector3.Lerp(transform.position, realPosition, lerpSpeed);
         transform.rotation = Quaternion.Lerp(transform.rotation, realRotation, lerpSpeed*1.5f);
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, realFieldOfView, lerpSpeed);
-
 
     }
 
@@ -258,5 +263,66 @@ public class CameraBehavior : MonoBehaviour
     public void PageSound()
     {
         GetComponent<AudioSource>().PlayOneShot(pageSound);
+    }
+
+    public void TestCamera()
+    {
+        // CameraBehavior.instance.SetCameraFixed(
+        //     true,
+        //     new Vector3(0.04f, 58.91f, 7.04f),    // 位置
+        //     Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
+        //     36f                             // FOV
+        // );
+        CameraBehavior.instance.SetCameraFixed(
+            true,
+            new Vector3(-11.88f, 58.91f, 22.63f),    // 位置
+            Quaternion.Euler(56.58f, 60.24f, 0f), // 旋转
+            19f                             // FOV
+        );
+    }
+    
+    public void SetCameraFixed(bool isFixed, Vector3? fixedPosition = null, Quaternion? fixedRotation = null, float? fixedFOV = null)
+    {
+        isCameraFixed = isFixed;
+        if (isFixed)
+        {
+            // 应用传入的固定参数（若未传入则保持当前位置）
+            realPosition = fixedPosition ?? realPosition;
+            realRotation = fixedRotation ?? realRotation;
+            realFieldOfView = fixedFOV ?? realFieldOfView;
+            // 强制立即应用插值（跳过Update的禁用逻辑）
+            StartCoroutine(ForceLerpToTarget());
+        }
+    }
+
+    private IEnumerator ForceLerpToTarget()
+    {
+        float elapsedTime = 0f;
+        float duration = 1f;
+        
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+        float startFOV = cam.fieldOfView;
+        
+        Vector3 endPosition = realPosition;
+        Quaternion endRotation = realRotation;
+        float endFOV = realFieldOfView;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            
+            transform.position = Vector3.Lerp(startPosition, endPosition, t);
+            transform.rotation = Quaternion.Slerp(startRotation, endRotation, t);
+            cam.fieldOfView = Mathf.Lerp(startFOV, endFOV, t);
+            
+            yield return null;
+        }
+        
+        // 确保最终完全匹配目标值
+        transform.position = realPosition;
+        transform.rotation = realRotation;
+        cam.fieldOfView = realFieldOfView;
     }
 }
