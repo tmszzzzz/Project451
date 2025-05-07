@@ -134,7 +134,7 @@ public class GuidePanel : MonoBehaviour
         }
         CameraBehavior.instance.isCameraFixed = false;
         NextTask();
-        Invoke("OpenInfoPanel",3);
+        Invoke("OpenInfoPanel",1);
     }
     
     private void OpenInfoPanel()
@@ -150,7 +150,6 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        Debug.Log("CloseInfoPanel");
         CameraBehavior.instance.FixedCamera1();
         NextTask();
         StartCoroutine(WaitForSecondAllocationSuccess());
@@ -162,7 +161,7 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        NextTask();     // 取消分配
         StartCoroutine(WaitForFirstCancellAllocation());
     }
     
@@ -172,7 +171,30 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        NextTask(); // 取消遮罩
+        StartCoroutine(WaitForChapter1());
+    }
+    
+    private IEnumerator WaitForChapter1()
+    {
+        while (!GlobalVar.instance.chapter1)
+        {
+            yield return null; // 等待一帧
+        }
+        CameraBehavior.instance.isCameraFixed = false;
+        StartCoroutine(WaitForChapter1End());
+    }
+    
+    private IEnumerator WaitForChapter1End()
+    {
+        while (RoundManager.instance.switchingPanel1.activeSelf)
+        {
+            yield return null; // 等待一帧
+        }
+
+        Debug.Log("111");
+        CameraBehavior.instance.FixedCamera1();
+        NextTask(); // 获取资源点
         StartCoroutine(WaitForFirstGetResourcePoint());
     }
     
@@ -202,6 +224,7 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
+        NextTask();
         // TODO
         // 轮询暴露值和看火者
         // NextTask();
@@ -216,5 +239,6 @@ public class GuidePanel : MonoBehaviour
     {
         this.gameObject.SetActive(false);
         completed = true;
+        CameraBehavior.instance.isCameraFixed = false;
     }
 }

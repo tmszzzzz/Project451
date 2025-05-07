@@ -60,6 +60,10 @@ public class PanelController : MonoBehaviour
     
     public void CloseResourceUsagePanel()
     {
+        if (!GlobalVar.instance.firstUseResourcePoint)
+        {
+            return;
+        }
         _ResourceUsagePanel.SetActive(false);
     }
     

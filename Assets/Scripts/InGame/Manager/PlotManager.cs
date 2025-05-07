@@ -370,6 +370,7 @@ public class PlotManager : MonoBehaviour
             {
                 RoundManager.instance.mainCamera.GetComponent<AudioSource>().PlayOneShot(RoundManager.instance.s1,0.7f);
                 RoundManager.instance.switchingPanel1.SetActive(true);
+                GlobalVar.instance.chapter1 = true;
                 await RoundManager.instance.mainCamera.SwitchTo1Enter();
                 
                 await Task.Delay(5000);

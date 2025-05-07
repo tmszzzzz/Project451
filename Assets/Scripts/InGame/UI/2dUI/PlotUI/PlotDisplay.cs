@@ -77,10 +77,10 @@ public class PlotDisplay : MonoBehaviour
             {
                 PanelController.instance._tutorialPanel.SetActive(true);
             }
-            else
-            {
-                PanelController.instance._tutorialPanel.GetComponent<GuidePanel>().NextTask();
-            } 
+            // else
+            // {
+            //     PanelController.instance._tutorialPanel.GetComponent<GuidePanel>().NextTask();
+            // } 
         }
     }
 

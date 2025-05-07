@@ -72,6 +72,7 @@ public class GlobalVar : MonoBehaviour
     public bool firstGetResourcePoint = false;
     public bool firstOpenPointUsage = false;
     public bool firstUseResourcePoint = false;
+    public bool chapter1 = false;
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;

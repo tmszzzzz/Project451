@@ -27,6 +27,10 @@ public class ToggleBookButton : MonoBehaviour
     }
     public void ToggleBook()
     {
+        if (PanelController.instance._tutorialPanel.transform.GetChild(7).gameObject.activeSelf)
+        {
+            return;
+        }
         isBookOpen = !isBookOpen;
         if (isBookOpen)
         {
