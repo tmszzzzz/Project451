@@ -26,6 +26,7 @@ public class ImagePlay : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            ImagePlayController.instance.PlayNextPage();
         }
     }
     
