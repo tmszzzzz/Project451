@@ -124,7 +124,7 @@ public class CameraBehavior : MonoBehaviour
         }
         
         // 打印当前摄像机状态（方便调试）
-        // Debug.Log($"Position: {realPosition}, Rotation: {realRotation.eulerAngles}, FOV: {realFieldOfView}");
+        Debug.Log($"Position: {realPosition}, Rotation: {realRotation.eulerAngles}, FOV: {realFieldOfView}");
         
         //transform.position = HandleOutBound(transform.position, oldPosition);
         transform.position = Vector3.Lerp(transform.position, realPosition, lerpSpeed);
@@ -278,19 +278,29 @@ public class CameraBehavior : MonoBehaviour
     
     public void FixedCamera2()
     {
-        // 第二部分
-        // CameraBehavior.instance.SetCameraFixed(
-        //     true,
-        //     new Vector3(0.04f, 58.91f, 7.04f),    // 位置
-        //     Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
-        //     36f                             // FOV
-        // );
         // 消防员视角
         CameraBehavior.instance.SetCameraFixed(
             true,
             new Vector3(-27.94f, 58.91f, -20.23f),    // 位置
             Quaternion.Euler(56.57f, 352.24f, 0f), // 旋转
             14.5f                             // FOV
+        );
+    }
+    
+    public void FixedCamera3()
+    {
+        // CameraBehavior.instance.SetCameraFixed(
+        //     true,
+        //     new Vector3(0.04f, 58.91f, 7.04f),    // 位置
+        //     Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
+        //     36f                             // FOV
+        // );
+        // 暴露节点
+        CameraBehavior.instance.SetCameraFixed(
+            true,
+            new Vector3(-8.81f, 58.91f, 22.43f),    // 位置
+            Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
+            25f                             // FOV
         );
     }
     

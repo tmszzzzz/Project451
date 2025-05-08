@@ -336,6 +336,10 @@ public class CanvasBehavior : MonoBehaviour
             if (nodeBehavior != null && newState == Properties.StateEnum.EXPOSED)
             {
                 GlobalVar.instance.previewExposureValue += nodeBehavior.GetExposureValue();
+                if (!GlobalVar.instance.firstPreviewExpose && GlobalVar.instance.previewExposureValue > 0)
+                {
+                    GlobalVar.instance.firstPreviewExpose = true;
+                }
             }
         }
     }

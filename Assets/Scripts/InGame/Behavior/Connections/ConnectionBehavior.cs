@@ -58,7 +58,7 @@ public class ConnectionBehavior : MonoBehaviour
         }
         if (this.GetComponent<ConnectionBehavior>().startNode.GetComponent<NodeBehavior>().properties.state !=
             Properties.StateEnum.NORMAL
-            && this.GetComponent<ConnectionBehavior>().endNode.GetComponent<NodeBehavior>().properties.state !=
+            || this.GetComponent<ConnectionBehavior>().endNode.GetComponent<NodeBehavior>().properties.state !=
             Properties.StateEnum.NORMAL)
         {
             InfoColor(db);

@@ -54,6 +54,9 @@ public class GuidePanel : MonoBehaviour
             else if(steps[index].name == "任务面板")
             {
                 CameraBehavior.instance.FixedCamera1();
+            }else if (steps[index].name == "取消遮罩等待看火者")
+            {
+                CameraBehavior.instance.isCameraFixed = false;
             }
             steps[index].Execute(guideController, canvas, this.lastData);
             if (steps[index].eventName != "取消按钮")
@@ -224,10 +227,29 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
+        NextTask();     // 取消遮罩
+        CameraBehavior.instance.isCameraFixed = false;
+        StartCoroutine(WaitForFirstPreviewExpose());
+    }
+    
+    private IEnumerator WaitForFirstPreviewExpose()
+    {
+        while (!GlobalVar.instance.firstPreviewExpose)
+        {
+            yield return null; // 等待一帧
+        }
         NextTask();
-        // TODO
-        // 轮询暴露值和看火者
-        // NextTask();
+        CameraBehavior.instance.FixedCamera3();
+        StartCoroutine(WaitForDetective());
+    }
+    
+    private IEnumerator WaitForDetective()
+    {
+        while (!GlobalVar.instance.detective)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
     }
     
     private void SetButtonOn()
