@@ -59,7 +59,21 @@ public class GlobalVar : MonoBehaviour
     public int dealStartRound = 0;
     public int nowPlaying = 0;
     public HashSet<int> allBooks = new HashSet<int>();
-    
+
+    public BookManager.BookRandomConfig bookRandomConfig = new BookManager.BookRandomConfig
+    {
+        LevelWeights = new float[] { 1f, 0f, 0f },
+        AllowedTypes = new HashSet<BookManager.Book.BookType>()
+        {
+            BookManager.Book.BookType.fankang,
+            BookManager.Book.BookType.fansi,
+            BookManager.Book.BookType.huanxiang,
+            BookManager.Book.BookType.shijiao,
+            BookManager.Book.BookType.wangxi,
+            BookManager.Book.BookType.yuyan,
+            BookManager.Book.BookType.zhishi
+        }
+    };
     
     // 教程相关
     public bool firstSelectBookMark = false;

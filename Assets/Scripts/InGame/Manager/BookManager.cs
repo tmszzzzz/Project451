@@ -116,20 +116,7 @@ public class BookManager : MonoBehaviour
     public Book GetRandomBook(BookRandomConfig config = null)
     {
         if (illustration.Count == 0) return null;
-        config ??= new BookRandomConfig
-        {
-            LevelWeights = new float[] { 1f, 0f, 0f },
-            AllowedTypes = new HashSet<Book.BookType>()
-            {
-                Book.BookType.fankang,
-                Book.BookType.fansi,
-                Book.BookType.huanxiang,
-                Book.BookType.shijiao,
-                Book.BookType.wangxi,
-                Book.BookType.yuyan,
-                Book.BookType.zhishi
-            }
-        };
+        config ??= GlobalVar.instance.bookRandomConfig;
         // 可获得的类型的书按照基础影响力分为三类
         List<List<Book>> accessBooks = GenerateTypeList(config.AllowedTypes);
         // 按概率获取去哪一类的基础影响力获得书籍
