@@ -51,8 +51,26 @@ public class InfluenceBarBehavior : MonoBehaviour
         material.SetFloat("_Segments", exposeThreshold);
         material.SetFloat("_Active", basicInfluence);
         // material.SetFloat("_HighlightCount", basicInfluence);
-        material.SetFloat("_Triangle2Index", Mathf.Max(0, fallThreshold - additionalInfluence));
-        material.SetFloat("_Triangle1Index", Mathf.Max(0, awakeThreshold - additionalInfluence));
+        // 维持阈值
+        material.SetFloat("_Triangle2Index", Mathf.Max(0, fallThreshold - additionalInfluence - 1));
+        // 转化阈值
+        material.SetFloat("_Triangle1Index", Mathf.Max(0, awakeThreshold - additionalInfluence - 1));
+        if (awakeThreshold - additionalInfluence <= 0)
+        {
+            material.SetColor("_Triangle1Color", new Color(1,1,1,0));
+        }
+        else
+        {
+            material.SetColor("_Triangle1Color", new Color(1,0.56f,0,1));
+        }
+        if (fallThreshold - additionalInfluence <= 0)
+        {
+            material.SetColor("_Triangle2Color", new Color(0.35f,0.35f,0.35f,0));
+        }
+        else
+        {
+            material.SetColor("_Triangle2Color", new Color(0,0,0,1));
+        }
         // targetValue = Math.Max((float)statePrediction.basicInfluence / (float)exposeThreshold, minValue);
         // if (statePrediction.state == Properties.StateEnum.NORMAL) {
         //     //material.
