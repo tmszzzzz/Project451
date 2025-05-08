@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ImagePlayController : MonoBehaviour
@@ -8,7 +9,8 @@ public class ImagePlayController : MonoBehaviour
     public static ImagePlayController instance;
     public List<ImagePlay> imagePlayPages;
     private int currentPage = 0;
-
+    public bool first = true;
+    public TextMeshProUGUI firstText;
     void Awake()
     {
         if (instance != null && instance != this)

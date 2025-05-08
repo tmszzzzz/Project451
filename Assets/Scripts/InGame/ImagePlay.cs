@@ -8,7 +8,7 @@ public class ImagePlay : MonoBehaviour
     public List<Image> images;
     public float fadeDuration = 1.0f; // 淡入持续时间（秒）
     public AudioSource audioSource;
-    private int currentImage = 0;
+    private int currentImage = -1;
     private void Start()
     {
         for (int i = 0; i < images.Count; i++)
@@ -19,15 +19,30 @@ public class ImagePlay : MonoBehaviour
     
     public void ClickAndPlay()
     {
+        currentImage++;
+        if (ImagePlayController.instance.first)
+        {
+            ImagePlayController.instance.first = false;
+            ImagePlayController.instance.firstText.gameObject.SetActive(false);
+        }
         if (currentImage < images.Count)
         {
-            StartCoroutine(FadeInImage(images[currentImage++], fadeDuration));
+            StartCoroutine(FadeInImage(images[currentImage], fadeDuration));
+            if (currentImage == images.Count - 1)
+            {
+                Invoke("ShowText", 1);
+            }
         }
         else
         {
             gameObject.SetActive(false);
             ImagePlayController.instance.PlayNextPage();
         }
+    }
+
+    private void ShowText()
+    {
+        this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
     }
     
     private IEnumerator FadeInImage(Image image, float duration)
