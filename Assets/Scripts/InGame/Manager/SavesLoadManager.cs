@@ -70,11 +70,8 @@ public class SavesLoadManager : MonoBehaviour
             this.probabilityOfNodesInspectingDetective = globalVar.probabilityOfNodesInspectingDetective;
             this.resourcePoint = globalVar.resourcePoint;
             this.maxResourcePoint = globalVar.maxResourcePoint;
-            this.resourcePointPerInfoIncrement = globalVar.resourcePointPerInfoIncrement;
             this.infoIncreaseBy = globalVar.infoIncreaseBy;
-            this.resourcePointPerDistanceIncrement = globalVar.resourcePointPerDistanceIncrement;
             this.distanceIncreaseBy = globalVar.distanceIncreaseBy;
-            this.resourcePointPerAllocationLimitIncrement = globalVar.resourcePointPerAllocationLimitIncrement;
             this.allocationLimitIncreaseBy = globalVar.allocationLimitIncreaseBy;
             this.exposureValuePerResource = globalVar.exposureValuePerResource;
             this.everReachedPoliceStation = globalVar.everReachedPoliceStation;
@@ -358,13 +355,8 @@ public class SavesLoadManager : MonoBehaviour
                 serializableGlobalVar.probabilityOfNodesInspectingDetective;
             GlobalVar.instance.resourcePoint = serializableGlobalVar.resourcePoint;
             GlobalVar.instance.maxResourcePoint = serializableGlobalVar.maxResourcePoint;
-            GlobalVar.instance.resourcePointPerInfoIncrement = serializableGlobalVar.resourcePointPerInfoIncrement;
             GlobalVar.instance.infoIncreaseBy = serializableGlobalVar.infoIncreaseBy;
-            GlobalVar.instance.resourcePointPerDistanceIncrement =
-                serializableGlobalVar.resourcePointPerDistanceIncrement;
             GlobalVar.instance.distanceIncreaseBy = serializableGlobalVar.distanceIncreaseBy;
-            GlobalVar.instance.resourcePointPerAllocationLimitIncrement =
-                serializableGlobalVar.resourcePointPerAllocationLimitIncrement;
             GlobalVar.instance.allocationLimitIncreaseBy = serializableGlobalVar.allocationLimitIncreaseBy;
             GlobalVar.instance.exposureValuePerResource = serializableGlobalVar.exposureValuePerResource;
             GlobalVar.instance.everReachedPoliceStation = serializableGlobalVar.everReachedPoliceStation;

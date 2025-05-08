@@ -106,6 +106,10 @@ public class CursorManager : MonoBehaviour
         var v = hit.collider.gameObject;
         if (v.GetComponent<BookMark>() != null)
         {
+            if (bookMark != null)
+            {
+                bookMark.transform.GetChild(0).gameObject.SetActive(false);
+            }
             this.bookMark = v;
             v.transform.GetChild(0).gameObject.SetActive(true);
         }

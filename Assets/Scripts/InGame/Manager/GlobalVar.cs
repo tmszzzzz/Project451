@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GlobalVar : MonoBehaviour
 {
@@ -56,7 +57,8 @@ public class GlobalVar : MonoBehaviour
     public int dealStartRound = 0;
     public int nowPlaying = 0;
     public HashSet<int> allBooks = new HashSet<int>();
-
+    public bool showBookMark;
+    
     public BookManager.BookRandomConfig bookRandomConfig = new BookManager.BookRandomConfig
     {
         LevelWeights = new float[] { 1f, 0f, 0f },
@@ -116,7 +118,6 @@ public class GlobalVar : MonoBehaviour
         resourcePoint += value;
         resourcePoint = Math.Min(resourcePoint, maxResourcePoint);
     }
-    [SerializeField] private int infoResourcePoint = 0;
     public void InfoResourcePointIncrement(int v)
     {
         if (resourcePoint <= 1)
@@ -132,7 +133,6 @@ public class GlobalVar : MonoBehaviour
         probabilityOfNodesInspectingDetective += v;
     }
     
-    [SerializeField] private int distanceResourcePoint = 0;
     public void DistanceResourcePointIncrement(int v)
     {
         if (resourcePoint <= 1)
@@ -148,7 +148,6 @@ public class GlobalVar : MonoBehaviour
         resourcePoint -= 2;
         numOfMaximumBookDeliverRange += v;
     }
-    [SerializeField] private int allocationLimitResourcePoint = 0;
 
     public void AllocationLimitResourcePointIncrement(int v)
     {
@@ -207,10 +206,31 @@ public class GlobalVar : MonoBehaviour
     {
         if (resourcePoint <= 0)
         {
-            Debug.Log("");
+            Debug.Log("资源点不足");
             return;
         }
-
+        List<GameObject> nodes = new List<GameObject>();
+        foreach (var n in CanvasBehavior.instance.GetNodeList())
+        {
+            if (n.GetComponent<NodeBehavior>().NowState().state > 0)
+            {
+                nodes.Add(n);
+            }
+        }
+        if (nodes.Count < 3)
+        {
+            Debug.LogWarning("已转化节点少于三个");
+            return;
+        }
+        int n1 = Random.Range(0, nodes.Count);
+        nodes[n1].GetComponent<NodeBehavior>().AddABook(BookManager.instance.GetRandomBook());
+        MessageBar.instance.AddMessage(NameManager.instance.ConvertNodeNameToName(nodes[n1].name) + "获得了1本书");
+        int n2 = Random.Range(0, nodes.Count);
+        nodes[n2].GetComponent<NodeBehavior>().AddABook(BookManager.instance.GetRandomBook());
+        MessageBar.instance.AddMessage(NameManager.instance.ConvertNodeNameToName(nodes[n2].name) + "获得了1本书");
+        int n3 = Random.Range(0, nodes.Count);
+        nodes[n3].GetComponent<NodeBehavior>().AddABook(BookManager.instance.GetRandomBook());
+        MessageBar.instance.AddMessage(NameManager.instance.ConvertNodeNameToName(nodes[n3].name) + "获得了1本书");
         resourcePoint -= 1;
     }
     
