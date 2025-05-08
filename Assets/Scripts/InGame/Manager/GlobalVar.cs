@@ -40,11 +40,8 @@ public class GlobalVar : MonoBehaviour
     // 需要序列化
     public int maxResourcePoint = 9;
     
-    public int resourcePointPerInfoIncrement = 1;
     public int infoIncreaseBy = 5;
-    public int resourcePointPerDistanceIncrement = 1;
     public int distanceIncreaseBy = 1;
-    public int resourcePointPerAllocationLimitIncrement = 1;
     public int allocationLimitIncreaseBy = 1;
     public int exposureValuePerResource = 30;
     public bool everReachedPoliceStation = false;
@@ -65,14 +62,38 @@ public class GlobalVar : MonoBehaviour
         LevelWeights = new float[] { 1f, 0f, 0f },
         AllowedTypes = new HashSet<BookManager.Book.BookType>()
         {
-            BookManager.Book.BookType.fankang,
             BookManager.Book.BookType.fansi,
             BookManager.Book.BookType.huanxiang,
-            BookManager.Book.BookType.shijiao,
-            BookManager.Book.BookType.wangxi,
-            BookManager.Book.BookType.yuyan,
-            BookManager.Book.BookType.zhishi
         }
+    };
+    
+    [SerializeField] private List<BookManager.BookRandomConfig> _remainedBookRandomConfig = new List<BookManager.BookRandomConfig>()
+    {
+        new BookManager.BookRandomConfig
+        {
+            LevelWeights = new float[] { 0.8f, 0.2f, 0f },
+            AllowedTypes = new HashSet<BookManager.Book.BookType>
+            {
+                BookManager.Book.BookType.fankang,
+                BookManager.Book.BookType.fansi,
+                BookManager.Book.BookType.huanxiang,
+                BookManager.Book.BookType.shijiao,
+            }
+        },
+        new BookManager.BookRandomConfig
+        {
+            LevelWeights = new float[] { 0.6f, 0.2f, 0.2f },
+            AllowedTypes = new HashSet<BookManager.Book.BookType>
+            {
+                BookManager.Book.BookType.fankang,
+                BookManager.Book.BookType.fansi,
+                BookManager.Book.BookType.huanxiang,
+                BookManager.Book.BookType.shijiao,
+                BookManager.Book.BookType.wangxi,
+                BookManager.Book.BookType.yuyan,
+                BookManager.Book.BookType.zhishi
+            }
+        },
     };
     
     // 教程相关
@@ -108,12 +129,7 @@ public class GlobalVar : MonoBehaviour
             firstUseResourcePoint = true;
         }
         resourcePoint -= 2;
-        infoResourcePoint += v;
-        while (infoResourcePoint >= resourcePointPerInfoIncrement)
-        {
-            infoResourcePoint -= resourcePointPerInfoIncrement;
-            probabilityOfNodesInspectingDetective += infoIncreaseBy;
-        }
+        probabilityOfNodesInspectingDetective += v;
     }
     
     [SerializeField] private int distanceResourcePoint = 0;
@@ -130,12 +146,7 @@ public class GlobalVar : MonoBehaviour
         }
 
         resourcePoint -= 2;
-        distanceResourcePoint += v;
-        while (distanceResourcePoint >= resourcePointPerDistanceIncrement)
-        {
-            distanceResourcePoint -= resourcePointPerDistanceIncrement;
-            numOfMaximumBookDeliverRange+=distanceIncreaseBy;
-        }
+        numOfMaximumBookDeliverRange += v;
     }
     [SerializeField] private int allocationLimitResourcePoint = 0;
 
@@ -152,12 +163,7 @@ public class GlobalVar : MonoBehaviour
         }
 
         resourcePoint -= 2;
-        allocationLimitResourcePoint += v;
-        while (allocationLimitResourcePoint >= resourcePointPerAllocationLimitIncrement)
-        {
-            allocationLimitResourcePoint -= resourcePointPerAllocationLimitIncrement;
-            allocationLimit += allocationLimitIncreaseBy;
-        }
+        allocationLimit += v;
     }
 
     public void DecreaseExposureValueByResource()
@@ -175,6 +181,39 @@ public class GlobalVar : MonoBehaviour
         resourcePoint--;
         globalExposureValue = Math.Max(globalExposureValue - exposureValuePerResource, 0);
     }
+    
+    public void levelUpBookRandomConfig()
+    {
+        if (resourcePoint <= 3)
+        {
+            Debug.Log("资源点不足");
+            return;
+        }
+        
+        
+        if (_remainedBookRandomConfig.Count == 0)
+        {
+            Debug.Log("没有更多的书籍随机配置可用");
+            return;
+        }
+        
+        bookRandomConfig = _remainedBookRandomConfig[0];
+        
+        // 从列表中移除已使用的配置
+        _remainedBookRandomConfig.RemoveAt(0);
+    }
+
+    public void getAShipmentOfBooks()
+    {
+        if (resourcePoint <= 0)
+        {
+            Debug.Log("");
+            return;
+        }
+
+        resourcePoint -= 1;
+    }
+    
 
     //采用单例模式，任意代码段可通过类名的静态变量Instance引用此唯一实例。
     private void Awake()
@@ -188,7 +227,6 @@ public class GlobalVar : MonoBehaviour
 
         // 将当前实例设为单例实例
         instance = this;
-
     }
 
     public void Test1()
