@@ -124,7 +124,7 @@ public class CameraBehavior : MonoBehaviour
         }
         
         // 打印当前摄像机状态（方便调试）
-        Debug.Log($"Position: {realPosition}, Rotation: {realRotation.eulerAngles}, FOV: {realFieldOfView}");
+        // Debug.Log($"Position: {realPosition}, Rotation: {realRotation.eulerAngles}, FOV: {realFieldOfView}");
         
         //transform.position = HandleOutBound(transform.position, oldPosition);
         transform.position = Vector3.Lerp(transform.position, realPosition, lerpSpeed);
