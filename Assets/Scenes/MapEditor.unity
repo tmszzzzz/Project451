@@ -7766,10 +7766,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adf4917e3a0940646a86d47db85012aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
-  zoomSpeed: 6
+  moveSpeed: 5
+  zoomSpeed: 2
   minZoom: 2
-  maxZoom: 88.9
+  maxZoom: 10
 --- !u!1 &350390607
 GameObject:
   m_ObjectHideFlags: 0
@@ -45407,7 +45407,7 @@ PrefabInstance:
         type: 3}
       propertyPath: BookListSO
       value: 
-      objectReference: {fileID: 11400000, guid: 4e9c061ce9f157946aa4dbf620f77381,
+      objectReference: {fileID: 11400000, guid: 12fb6a61d44088b419d115e1b7eb1aed,
         type: 2}
     - target: {fileID: 4711712327747280792, guid: 6dd2cf5b3a20ee14b8049bb4a79e1988,
         type: 3}
