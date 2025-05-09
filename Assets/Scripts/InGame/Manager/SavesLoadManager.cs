@@ -39,7 +39,7 @@ public class SavesLoadManager : MonoBehaviour
         public bool everReachedPoliceStation;
         public bool everReachedFirehouse;
         public bool everLearnedAboutDetectiveAndInfo;
-        public bool everLearnedAboutKeepNodesDontFall;
+        public bool everLearnedAboutNodeInfoPanel;
         public bool everAwakeAllNodes;
         public bool noStartingPlot;
         public bool everReachingMaxExposureValue;
@@ -73,7 +73,7 @@ public class SavesLoadManager : MonoBehaviour
             this.everReachedPoliceStation = globalVar.everReachedPoliceStation;
             this.everReachedFirehouse = globalVar.everReachedFirehouse;
             this.everLearnedAboutDetectiveAndInfo = globalVar.everLearnedAboutDetectiveAndInfo;
-            this.everLearnedAboutKeepNodesDontFall = globalVar.everLearnedAboutKeepNodesDontFall;
+            this.everLearnedAboutNodeInfoPanel = globalVar.everLearnedAboutNodeInfoPanel;
             this.everAwakeAllNodes = globalVar.everAwakeAllNodes;
             this.noStartingPlot = globalVar.noStartingPlot;
             this.everReachingMaxExposureValue = globalVar.everReachingMaxExposureValue;
@@ -362,8 +362,8 @@ public class SavesLoadManager : MonoBehaviour
             {
                 GameProcessManager.instance.probabilityOfInfoPanel.SetActive(true);
             }
-            GlobalVar.instance.everLearnedAboutKeepNodesDontFall =
-                serializableGlobalVar.everLearnedAboutKeepNodesDontFall;
+            GlobalVar.instance.everLearnedAboutNodeInfoPanel =
+                serializableGlobalVar.everLearnedAboutNodeInfoPanel;
             GlobalVar.instance.everAwakeAllNodes = serializableGlobalVar.everAwakeAllNodes;
             GlobalVar.instance.noStartingPlot = serializableGlobalVar.noStartingPlot;
             GlobalVar.instance.everReachingMaxExposureValue = serializableGlobalVar.everReachingMaxExposureValue;

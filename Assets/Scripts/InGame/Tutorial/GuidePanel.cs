@@ -195,7 +195,6 @@ public class GuidePanel : MonoBehaviour
             yield return null; // 等待一帧
         }
 
-        Debug.Log("111");
         CameraBehavior.instance.FixedCamera1();
         NextTask(); // 获取资源点
         StartCoroutine(WaitForFirstGetResourcePoint());
@@ -241,6 +240,7 @@ public class GuidePanel : MonoBehaviour
         NextTask();
         CameraBehavior.instance.FixedCamera3();
         StartCoroutine(WaitForDetective());
+        StartCoroutine(WaitForNodeInfoPanel());
     }
     
     private IEnumerator WaitForDetective()
@@ -251,14 +251,21 @@ public class GuidePanel : MonoBehaviour
         }
         NextTask();
         CameraBehavior.instance.FixedCamera4();
-        StartCoroutine(WaitForFall());
     }
-    private IEnumerator WaitForFall()
+    private IEnumerator WaitForNodeInfoPanel()
     {
-        while (!GlobalVar.instance.firstFall)
+        while (!GlobalVar.instance.everLearnedAboutNodeInfoPanel)
         {
             yield return null; // 等待一帧
         }
+        Invoke("NodeInfoPanel",8);
+    }
+
+    private void NodeInfoPanel()
+    {
+        CameraBehavior.instance.FixedCamera4();
+        GlobalVar.instance.allowNodeInfoPanel = true;
+        PanelController.instance.EnableNodeInfoPanel(GlobalVar.instance.nodeBehavior);
         NextTask();
     }
     
@@ -272,5 +279,7 @@ public class GuidePanel : MonoBehaviour
         this.gameObject.SetActive(false);
         completed = true;
         CameraBehavior.instance.isCameraFixed = false;
+        GlobalVar.instance.allowPlot = true;
+        GlobalVar.instance.NodeInfoPanelIntroductionFinished = true;
     }
 }

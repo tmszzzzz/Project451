@@ -45,6 +45,8 @@ public class BorrowBookItemInfo : MonoBehaviour
     
         _name.rectTransform.anchoredPosition = new Vector2(textWidth / 2 + 5, 0);
         _image.rectTransform.anchoredPosition = new Vector2(textWidth + 10, 0);
+        
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_name.rectTransform);
     }
     
     private Color GetBookColor(int bookId)

@@ -224,7 +224,6 @@ public class PanelController : MonoBehaviour
             Debug.LogWarning("NodeInfoPanel is not assigned in the inspector.");
             return;
         }
-
         if (GlobalVar.instance.NodeInfoPanelIntroductionFinished)
         {
             currentNode = null;

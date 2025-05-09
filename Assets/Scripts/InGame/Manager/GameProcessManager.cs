@@ -111,17 +111,18 @@ public class GameProcessManager : MonoBehaviour
             FirstReachPoliceStation();
         }
 
-        if (GlobalVar.instance.nodesAwakendOnce.Count >= 12  && !GlobalVar.instance.everLearnedAboutDetectiveAndInfo)
+        if (GlobalVar.instance.nodesAwakendOnce.Count >= 5  && !GlobalVar.instance.everLearnedAboutDetectiveAndInfo)
         {
             PresentDetectiveAndInofSystem();
             GlobalVar.instance.detective = true;
             PanelController.instance.UNLockInsertInformant();
         }
         
-
-        if (!GlobalVar.instance.everLearnedAboutKeepNodesDontFall && thisnode.GetComponent<NodeBehavior>().properties.fallThreshold != 0)
+        if (!GlobalVar.instance.everLearnedAboutNodeInfoPanel && thisnode.GetComponent<NodeBehavior>().properties.borrowBooks.Count != 0)
         {
-            GlobalVar.instance.everLearnedAboutKeepNodesDontFall = true;
+            GlobalVar.instance.everLearnedAboutNodeInfoPanel = true;
+            GlobalVar.instance.allowPlot = false;
+            GlobalVar.instance.nodeBehavior = thisnode.GetComponent<NodeBehavior>();
         }
 
         if (!GlobalVar.instance.everAwakeAllNodes && GlobalVar.instance.nodesAwakendOnce.Count == canvasBehavior.GetNodeList().Count)

@@ -37,10 +37,8 @@ public class GlobalVar : MonoBehaviour
     public int probabilityOfNodesInspectingDetective = 0;
     public int resourcePoint = 0;
     public float previewExposureValue = 0;
-    public string bookName = "";
     // 需要序列化
     public int maxResourcePoint = 9;
-    
     public int infoIncreaseBy = 5;
     public int distanceIncreaseBy = 1;
     public int allocationLimitIncreaseBy = 1;
@@ -48,7 +46,7 @@ public class GlobalVar : MonoBehaviour
     public bool everReachedPoliceStation = false;
     public bool everReachedFirehouse = false;
     public bool everLearnedAboutDetectiveAndInfo = false;
-    public bool everLearnedAboutKeepNodesDontFall = false;
+    public bool everLearnedAboutNodeInfoPanel = false;
     public bool everAwakeAllNodes = false;
     public bool noStartingPlot = false;
     public bool everReachingMaxExposureValue = false;
@@ -58,6 +56,27 @@ public class GlobalVar : MonoBehaviour
     public int nowPlaying = 0;
     public HashSet<int> allBooks = new HashSet<int>();
     public bool showBookMark;
+    public string bookName = "";
+    
+    // 教程相关
+    public bool firstSelectBookMark = false;
+    public bool firstAllocation = false;
+    public bool firstNext = false;
+    public bool openInfoPanel = false;
+    public bool closeInfoPanel = false;
+    public int allocationSuccess = 0;
+    public bool firstCancellAllocation = false;
+    public bool firstGetResourcePoint = false;
+    public bool firstOpenPointUsage = false;
+    public bool firstUseResourcePoint = false;
+    public bool chapter1 = false;
+    public bool firstPreviewExpose = false;
+    public bool detective = false;
+    public bool allowNodeInfoPanel = false;
+    public bool NodeInfoPanelIntroductionFinished = false;
+    public bool allowPlot = true;
+    public NodeBehavior nodeBehavior;
+    
     
     public BookManager.BookRandomConfig bookRandomConfig = new BookManager.BookRandomConfig
     {
@@ -98,23 +117,7 @@ public class GlobalVar : MonoBehaviour
         },
     };
     
-    // 教程相关
-    public bool firstSelectBookMark = false;
-    public bool firstAllocation = false;
-    public bool firstNext = false;
-    public bool openInfoPanel = false;
-    public bool closeInfoPanel = false;
-    public int allocationSuccess = 0;
-    public bool firstCancellAllocation = false;
-    public bool firstGetResourcePoint = false;
-    public bool firstOpenPointUsage = false;
-    public bool firstUseResourcePoint = false;
-    public bool chapter1 = false;
-    public bool firstPreviewExpose = false;
-    public bool detective = false;
-    public bool firstFall = false;
-    public bool allowNodeInfoPanel = false;
-    public bool NodeInfoPanelIntroductionFinished = false;
+    
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;

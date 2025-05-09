@@ -188,15 +188,29 @@ public class NodeBehavior : BaseNodeBehavior
             hadAwakenedBefore = true;
             if(plotFileName != "null")
             {
-                if (this is KeyNodeBehavior)
+                if (GlobalVar.instance.allowPlot)
                 {
-                    PlotManager.instance.AddPlotQueue(plotFileName, gameObject);
-                    Debug.Log($"{gameObject.name} 增加了一段focus剧情，聚焦于{gameObject.name}");
+                    if (this is KeyNodeBehavior)
+                    {
+                        PlotManager.instance.AddPlotQueue(plotFileName, gameObject);
+                        Debug.Log($"{gameObject.name} 增加了一段focus剧情，聚焦于{gameObject.name}");
+                    }
+                    else
+                    {
+                        PlotManager.instance.AddPlotQueue(plotFileName, null);
+                        Debug.Log($"{gameObject.name} 增加了一段普通剧情");
+                    }
                 }
                 else
                 {
-                    PlotManager.instance.AddPlotQueue(plotFileName, null);
-                    Debug.Log($"{gameObject.name} 增加了一段普通剧情");
+                    if (this is KeyNodeBehavior)
+                    {
+                        StartCoroutine("WaitPlot1");
+                    }
+                    else
+                    {
+                        StartCoroutine("WaitPlot2");
+                    }
                 }
             }
         }
@@ -221,6 +235,23 @@ public class NodeBehavior : BaseNodeBehavior
         }
 
         properties.state = stateEnum;
+    }
+
+    private IEnumerator WaitPlot1()
+    {
+        while (!GlobalVar.instance.allowPlot)
+        {
+            yield return null; // 等待一帧
+        }
+        PlotManager.instance.AddPlotQueue(plotFileName, gameObject);
+    }
+    private IEnumerator WaitPlot2()
+    {
+        while (!GlobalVar.instance.allowPlot)
+        {
+            yield return null; // 等待一帧
+        }
+        PlotManager.instance.AddPlotQueue(plotFileName, null);
     }
     
     public void AddABook(BookManager.Book book)
