@@ -36,8 +36,8 @@ public class GlobalVar : MonoBehaviour
     public int numOfDetectiveOnStart = 4;
     public int probabilityOfNodesInspectingDetective = 0;
     public int resourcePoint = 0;
-    public float previewExposureValue = 0;
     // 需要序列化
+    public float previewExposureValue = 0;
     public int maxResourcePoint = 9;
     public int infoIncreaseBy = 5;
     public int distanceIncreaseBy = 1;

@@ -21,6 +21,7 @@ public class SavesLoadManager : MonoBehaviour
         public int globalExposureValue;
         public int roundNum;
         public int maxGlobalExposureValue;
+        public int exposureValueAdditionOfExposedNode;
         public int exposureValueAdditionOfDetective;
         public int exposureValueAccelerationOfDetective;
         public int exposureValueReductionOfNoExposedNode;
@@ -31,6 +32,7 @@ public class SavesLoadManager : MonoBehaviour
         public int numOfDetectiveOnStart;
         public int probabilityOfNodesInspectingDetective;
         public int resourcePoint;
+        public float previewExposureValue;
         public int maxResourcePoint;
         public int infoIncreaseBy;
         public int distanceIncreaseBy;
@@ -47,14 +49,33 @@ public class SavesLoadManager : MonoBehaviour
         public bool skipCameraOverview;
         public int dealStartRound;
         public int nowPlaying;
-
+        public HashSet<int> allBooks;
+        public bool showBookMark;
+        public string bookName;
+        public bool firstSelectBookMark = false;
+        public bool firstAllocation = false;
+        public bool firstNext = false;
+        public bool openInfoPanel = false;
+        public bool closeInfoPanel = false;
+        public int allocationSuccess = 0;
+        public bool firstCancellAllocation = false;
+        public bool firstGetResourcePoint = false;
+        public bool firstOpenPointUsage = false;
+        public bool firstUseResourcePoint = false;
+        public bool chapter1 = false;
+        public bool firstPreviewExpose = false;
+        public bool detective = false;
+        public bool allowNodeInfoPanel = false;
+        public bool NodeInfoPanelIntroductionFinished = false;
+        public bool allowPlot = true;
+        public NodeBehavior nodeBehavior;
         // 构造函数，用于从 GlobalVar 初始化
         public SerializableGlobalVar(GlobalVar globalVar)
         {
             this.globalExposureValue = globalVar.globalExposureValue;
             this.roundNum = globalVar.roundNum;
             this.maxGlobalExposureValue = globalVar.maxGlobalExposureValue;
-            // this.exposureValueAdditionOfExposedNode = globalVar.exposureValueAdditionOfExposedNode;
+            this.exposureValueAdditionOfExposedNode = globalVar.exposureValueAdditionOfExposedNode;
             this.exposureValueAdditionOfDetective = globalVar.exposureValueAdditionOfDetective;
             this.exposureValueAccelerationOfDetective = globalVar.exposureValueAccelerationOfDetective;
             this.exposureValueReductionOfNoExposedNode = globalVar.exposureValueReductionOfNoExposedNode;
@@ -65,6 +86,7 @@ public class SavesLoadManager : MonoBehaviour
             this.numOfDetectiveOnStart = globalVar.numOfDetectiveOnStart;
             this.probabilityOfNodesInspectingDetective = globalVar.probabilityOfNodesInspectingDetective;
             this.resourcePoint = globalVar.resourcePoint;
+            this.previewExposureValue = globalVar.previewExposureValue;
             this.maxResourcePoint = globalVar.maxResourcePoint;
             this.infoIncreaseBy = globalVar.infoIncreaseBy;
             this.distanceIncreaseBy = globalVar.distanceIncreaseBy;
@@ -81,6 +103,26 @@ public class SavesLoadManager : MonoBehaviour
             this.skipCameraOverview = globalVar.skipCameraOverview;
             this.dealStartRound = globalVar.dealStartRound;
             this.nowPlaying = globalVar.nowPlaying;
+            this.allBooks = new HashSet<int>(globalVar.allBooks);
+            this.showBookMark = globalVar.showBookMark;
+            this.bookName = globalVar.bookName;
+            this.firstSelectBookMark = globalVar.firstSelectBookMark;
+            this.firstAllocation = globalVar.firstAllocation;
+            this.firstNext = globalVar.firstNext;
+            this.openInfoPanel = globalVar.openInfoPanel;
+            this.closeInfoPanel = globalVar.closeInfoPanel;
+            this.allocationSuccess = globalVar.allocationSuccess;
+            this.firstCancellAllocation = globalVar.firstCancellAllocation;
+            this.firstGetResourcePoint = globalVar.firstGetResourcePoint;
+            this.firstOpenPointUsage = globalVar.firstOpenPointUsage;
+            this. firstUseResourcePoint = globalVar.firstUseResourcePoint;
+            this.chapter1 = globalVar.chapter1;
+            this.firstPreviewExpose = globalVar.firstPreviewExpose;
+            this.detective = globalVar.detective;
+            this.allowNodeInfoPanel = globalVar.allowNodeInfoPanel;
+            this.NodeInfoPanelIntroductionFinished = globalVar.NodeInfoPanelIntroductionFinished;
+            this.allowPlot = globalVar.allowPlot;
+            this.nodeBehavior = globalVar.nodeBehavior;
         }
     }
 
