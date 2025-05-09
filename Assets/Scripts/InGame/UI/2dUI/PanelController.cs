@@ -79,7 +79,7 @@ public class PanelController : MonoBehaviour
     
     public void UNLockInsertInformant()
     {
-        MessageBar.instance.AddMessage("你现在也可以使用情报点提升获取信息的概率.");
+        MessageBar.instance.AddMessage("你现在可以使用情报点提升获取信息的概率.");
         var v = _ResourceUsagePanel.transform.GetChild(2);
         v.GetChild(0).GetChild(0).gameObject.SetActive(false);
         StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));
@@ -93,6 +93,7 @@ public class PanelController : MonoBehaviour
     
     public void UNLockContactInformant()
     {
+        MessageBar.instance.AddMessage("你现在可以使用情报点联系线人.");
         var v = _ResourceUsagePanel.transform.GetChild(4);
         v.GetChild(0).GetChild(0).gameObject.SetActive(false);
         StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));
@@ -106,6 +107,7 @@ public class PanelController : MonoBehaviour
     
     public void UNLockOrganizeIndex()
     {
+        MessageBar.instance.AddMessage("你现在可以使用情报点整理索引.");
         var v = _ResourceUsagePanel.transform.GetChild(3);
         v.GetChild(0).GetChild(0).gameObject.SetActive(false);
         StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));

@@ -137,6 +137,7 @@ public class GlobalVar : MonoBehaviour
         }
         resourcePoint -= 2;
         probabilityOfNodesInspectingDetective += v;
+        MessageBar.instance.AddMessage("情报覆盖率增加.");
     }
     
     public void DistanceResourcePointIncrement(int v)
@@ -154,6 +155,8 @@ public class GlobalVar : MonoBehaviour
 
         resourcePoint -= 2;
         numOfMaximumBookDeliverRange += v;
+        
+        MessageBar.instance.AddMessage("书籍最大传输距离增加.");
     }
 
     public void AllocationLimitResourcePointIncrement(int v)
@@ -171,6 +174,7 @@ public class GlobalVar : MonoBehaviour
 
         resourcePoint -= 2;
         allocationLimit += v;
+        MessageBar.instance.AddMessage("每日可分配书籍上限增加.");
     }
 
     public void DecreaseExposureValueByResource()
@@ -188,6 +192,8 @@ public class GlobalVar : MonoBehaviour
 
         resourcePoint--;
         globalExposureValue = Math.Max(globalExposureValue - exposureValuePerResource, 0);
+        
+        MessageBar.instance.AddMessage("暴露值已减少.");
     }
     
     public void levelUpBookRandomConfig()
@@ -210,6 +216,7 @@ public class GlobalVar : MonoBehaviour
         
         // 从列表中移除已使用的配置
         _remainedBookRandomConfig.RemoveAt(0);
+        MessageBar.instance.AddMessage("索引整理成功.");
     }
 
     public void getAShipmentOfBooks()
