@@ -21,7 +21,6 @@ public class SavesLoadManager : MonoBehaviour
         public int globalExposureValue;
         public int roundNum;
         public int maxGlobalExposureValue;
-        public int exposureValueAdditionOfExposedNode;
         public int exposureValueAdditionOfDetective;
         public int exposureValueAccelerationOfDetective;
         public int exposureValueReductionOfNoExposedNode;
@@ -33,11 +32,8 @@ public class SavesLoadManager : MonoBehaviour
         public int probabilityOfNodesInspectingDetective;
         public int resourcePoint;
         public int maxResourcePoint;
-        public int resourcePointPerInfoIncrement;
         public int infoIncreaseBy;
-        public int resourcePointPerDistanceIncrement;
         public int distanceIncreaseBy;
-        public int resourcePointPerAllocationLimitIncrement;
         public int allocationLimitIncreaseBy;
         public int exposureValuePerResource;
         public bool everReachedPoliceStation;
@@ -328,6 +324,7 @@ public class SavesLoadManager : MonoBehaviour
 
     public void DeserializeAll(string filePath)
     {
+        Debug.Log(filePath);
         if (System.IO.File.Exists(filePath))
         {
             string json = System.IO.File.ReadAllText(filePath);
@@ -338,8 +335,6 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.globalExposureValue = serializableGlobalVar.globalExposureValue;
             GlobalVar.instance.roundNum = serializableGlobalVar.roundNum;
             GlobalVar.instance.maxGlobalExposureValue = serializableGlobalVar.maxGlobalExposureValue;
-            // GlobalVar.instance.exposureValueAdditionOfExposedNode =
-                // serializableGlobalVar.exposureValueAdditionOfExposedNode;
             GlobalVar.instance.exposureValueAdditionOfDetective =
                 serializableGlobalVar.exposureValueAdditionOfDetective;
             GlobalVar.instance.exposureValueAccelerationOfDetective =

@@ -182,8 +182,10 @@ public class CanvasBehavior : MonoBehaviour
                         awakeThreshold = loadedProperties.awakeThreshold != 0 ? loadedProperties.awakeThreshold : 0,
                         exposeThreshold = loadedProperties.exposeThreshold != 0 ? loadedProperties.exposeThreshold : 0,
                         fallThreshold = loadedProperties.fallThreshold != 0 ? loadedProperties.fallThreshold : 0,
+                        books = loadedProperties.books ?? new List<BookManager.Book>(),
                         unlockTag = loadedProperties.unlockTag != 0 ? loadedProperties.unlockTag : 0,
-                        region = loadedProperties.region != 0 ? loadedProperties.region : 0
+                        region = loadedProperties.region != 0 ? loadedProperties.region : 0,
+                        borrowBooks = loadedProperties.borrowBooks ?? new List<BookManager.Book>()
                     };
                     nodeBehavior.description = description.GetDescriptionByID(position.id);
                     nodeBehavior.plotFileName = node2PlotAndPageData.GetPlotFileNameByID(position.id);
@@ -238,7 +240,7 @@ public class CanvasBehavior : MonoBehaviour
         nodeList = new List<GameObject>();
         connectionList = new List<GameObject>();
         connectionCreating = new List<GameObject>();
-        LoadConfiguration("Assets/Maps/map.json");
+        LoadConfiguration("Assets/Maps/newmap.json");
         Initialization();
     }
 

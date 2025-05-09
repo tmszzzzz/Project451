@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using UnityEngine;
 
 public class BookManager : MonoBehaviour
@@ -73,6 +74,7 @@ public class BookManager : MonoBehaviour
         }
 
         // 带参数的构造函数
+        [JsonConstructor]
         public Book(int id, string name, string description, int basicInfluence, int additionalInfluence, BookType type,
             bool isPreallocatedIn, bool isPreallocatedOut, int parentId)
         {
