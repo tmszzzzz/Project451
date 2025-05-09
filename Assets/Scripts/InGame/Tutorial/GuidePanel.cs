@@ -54,7 +54,7 @@ public class GuidePanel : MonoBehaviour
             else if(steps[index].name == "任务面板")
             {
                 CameraBehavior.instance.FixedCamera1();
-            }else if (steps[index].name == "取消遮罩等待看火者")
+            }else if (steps[index].name == "取消遮罩并解锁相机")
             {
                 CameraBehavior.instance.isCameraFixed = false;
             }
@@ -246,6 +246,16 @@ public class GuidePanel : MonoBehaviour
     private IEnumerator WaitForDetective()
     {
         while (!GlobalVar.instance.detective)
+        {
+            yield return null; // 等待一帧
+        }
+        NextTask();
+        CameraBehavior.instance.FixedCamera4();
+        StartCoroutine(WaitForFall());
+    }
+    private IEnumerator WaitForFall()
+    {
+        while (!GlobalVar.instance.firstFall)
         {
             yield return null; // 等待一帧
         }

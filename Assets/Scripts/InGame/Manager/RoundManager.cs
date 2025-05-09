@@ -462,14 +462,15 @@ public class RoundManager : MonoBehaviour
         
         forbidden.SetActive(false);
         
-        if (isDetectiveComing)
-        {
-            bookC.TurnPageTo(13);
-            bookC.book.UpdateSprites();
-            ToggleBookButton.Instance.isBookOpen = true;
-            OperationForbidden();
-            isDetectiveComing = false;
-        }
+        // 不打开原来的教程面板
+        // if (isDetectiveComing)
+        // {
+        //     bookC.TurnPageTo(13);
+        //     bookC.book.UpdateSprites();
+        //     ToggleBookButton.Instance.isBookOpen = true;
+        //     OperationForbidden();
+        //     isDetectiveComing = false;
+        // }
         
         SavesLoadManager.instance.AutoSerializeAll(GlobalVar.instance.roundNum - 1);
     }

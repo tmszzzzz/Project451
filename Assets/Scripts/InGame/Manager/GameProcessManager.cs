@@ -75,6 +75,7 @@ public class GameProcessManager : MonoBehaviour
     {
         GlobalVar.instance.skipCameraOverview = false;   // 重新开启摄像机视角
         
+        // 原来的教程信息相关
         _tutorialsController.canShowTutorial4 = true;
         _bookController.subsititute(page1, 13);
         _bookController.subsititute(page2, 14);
@@ -113,6 +114,8 @@ public class GameProcessManager : MonoBehaviour
         if (GlobalVar.instance.nodesAwakendOnce.Count >= 12  && !GlobalVar.instance.everLearnedAboutDetectiveAndInfo)
         {
             PresentDetectiveAndInofSystem();
+            GlobalVar.instance.detective = true;
+            PanelController.instance.UNLockInsertInformant();
         }
         
 

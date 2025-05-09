@@ -304,6 +304,17 @@ public class CameraBehavior : MonoBehaviour
         );
     }
     
+    public void FixedCamera4()
+    {
+        // 看火者（连线信息
+        CameraBehavior.instance.SetCameraFixed(
+             true,
+             new Vector3(0.04f, 58.91f, 7.04f),    // 位置
+             Quaternion.Euler(56.58f, 59.69f, 0f), // 旋转
+             36f                             // FOV
+         );
+    }
+    
     public void SetCameraFixed(bool isFixed, Vector3? fixedPosition = null, Quaternion? fixedRotation = null, float? fixedFOV = null)
     {
         isCameraFixed = isFixed;

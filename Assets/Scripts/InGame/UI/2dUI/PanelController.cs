@@ -46,6 +46,7 @@ public class PanelController : MonoBehaviour
         instance = this;
         LockOrganizeIndex();
         LockContactInformant();
+        LockInsertInformant();
     }
 
     void Start()
@@ -75,7 +76,21 @@ public class PanelController : MonoBehaviour
             GlobalVar.instance.firstOpenPointUsage = true;
         }
     }
-
+    
+    public void UNLockInsertInformant()
+    {
+        MessageBar.instance.AddMessage("你现在也可以使用情报点提升获取信息的概率.");
+        var v = _ResourceUsagePanel.transform.GetChild(2);
+        v.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));
+        v.GetComponent<Button>().interactable = true;
+    }
+    
+    public void LockInsertInformant()
+    {
+        _ResourceUsagePanel.transform.GetChild(2).GetComponent<Button>().interactable = false;
+    }
+    
     public void UNLockContactInformant()
     {
         var v = _ResourceUsagePanel.transform.GetChild(4);
@@ -196,8 +211,11 @@ public class PanelController : MonoBehaviour
             return;
         }
 
-        NodeInfoPanel.SetActive(true);
-        _changeNodeInfoPanleContenAndPosition(node);
+        if (GlobalVar.instance.allowNodeInfoPanel)
+        {
+            NodeInfoPanel.SetActive(true);
+            _changeNodeInfoPanleContenAndPosition(node);
+        }
     }
     public void DisableNodeInfoPanel()
     {
@@ -206,8 +224,12 @@ public class PanelController : MonoBehaviour
             Debug.LogWarning("NodeInfoPanel is not assigned in the inspector.");
             return;
         }
-        currentNode = null;
-        NodeInfoPanel.SetActive(false);
+
+        if (GlobalVar.instance.NodeInfoPanelIntroductionFinished)
+        {
+            currentNode = null;
+            NodeInfoPanel.SetActive(false);
+        }
     }
     
     public void UpdateInfo(RaycastHit hit)

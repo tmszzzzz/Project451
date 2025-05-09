@@ -112,7 +112,9 @@ public class GlobalVar : MonoBehaviour
     public bool chapter1 = false;
     public bool firstPreviewExpose = false;
     public bool detective = false;
-    
+    public bool firstFall = false;
+    public bool allowNodeInfoPanel = false;
+    public bool NodeInfoPanelIntroductionFinished = false;
     public void AddResourcePoint(int value)
     {
         resourcePoint += value;
@@ -123,6 +125,7 @@ public class GlobalVar : MonoBehaviour
         if (resourcePoint <= 1)
         {
             Debug.Log("资源点不足");
+            MessageBar.instance.AddMessage("资源点不足.");
             return;
         }
         if (!firstUseResourcePoint)
@@ -138,6 +141,7 @@ public class GlobalVar : MonoBehaviour
         if (resourcePoint <= 1)
         {
             Debug.Log("资源点不足");
+            MessageBar.instance.AddMessage("资源点不足.");
             return;
         }
         if (!firstUseResourcePoint)
@@ -154,6 +158,7 @@ public class GlobalVar : MonoBehaviour
         if (resourcePoint <= 1)
         {
             Debug.Log("资源点不足");
+            MessageBar.instance.AddMessage("资源点不足.");
             return;
         }
         if (!firstUseResourcePoint)
@@ -170,6 +175,7 @@ public class GlobalVar : MonoBehaviour
         if (resourcePoint <= 0)
         {
             Debug.Log("资源点不足");
+            MessageBar.instance.AddMessage("资源点不足.");
             return;
         }
         if (!firstUseResourcePoint)
@@ -186,6 +192,7 @@ public class GlobalVar : MonoBehaviour
         if (resourcePoint <= 3)
         {
             Debug.Log("资源点不足");
+            MessageBar.instance.AddMessage("资源点不足.");
             return;
         }
         
@@ -207,6 +214,7 @@ public class GlobalVar : MonoBehaviour
         if (resourcePoint <= 0)
         {
             Debug.Log("资源点不足");
+            MessageBar.instance.AddMessage("资源点不足.");
             return;
         }
         List<GameObject> nodes = new List<GameObject>();
