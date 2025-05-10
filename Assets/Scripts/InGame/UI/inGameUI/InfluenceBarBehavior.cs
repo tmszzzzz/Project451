@@ -71,15 +71,6 @@ public class InfluenceBarBehavior : MonoBehaviour
         {
             material.SetColor("_Triangle2Color", new Color(0,0,0,1));
         }
-        // targetValue = Math.Max((float)statePrediction.basicInfluence / (float)exposeThreshold, minValue);
-        // if (statePrediction.state == Properties.StateEnum.NORMAL) {
-        //     //material.
-        //     influenceBarSlider.fillRect.GetComponent<Image>().color = normalColor;
-        // } else if (statePrediction.state == Properties.StateEnum.AWAKENED) {
-        //     influenceBarSlider.fillRect.GetComponent<Image>().color = awakenedColor;
-        // } else if (statePrediction.state == Properties.StateEnum.EXPOSED) {
-        //     influenceBarSlider.fillRect.GetComponent<Image>().color = exposedColor;
-        // }
     }
 
     // Update is called once per frame
