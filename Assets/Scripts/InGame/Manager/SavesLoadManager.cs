@@ -71,6 +71,9 @@ public class SavesLoadManager : MonoBehaviour
         public NodeBehavior nodeBehavior;
         public int currentTask;
         public float exposureCoefficient;
+        public BookManager.BookRandomConfig bookRandomConfig;
+        public List<BookManager.BookRandomConfig> _remainedBookRandomConfig;
+        
         // 构造函数，用于从 GlobalVar 初始化
         public SerializableGlobalVar(GlobalVar globalVar)
         {
@@ -127,6 +130,8 @@ public class SavesLoadManager : MonoBehaviour
             this.nodeBehavior = globalVar.nodeBehavior;
             this.currentTask = globalVar.currentTask;
             this.exposureCoefficient = globalVar.exposureCoefficient;
+            this.bookRandomConfig = new BookManager.BookRandomConfig(globalVar.bookRandomConfig);
+            this._remainedBookRandomConfig = new List<BookManager.BookRandomConfig>(globalVar._remainedBookRandomConfig);
         }
     }
 
@@ -438,7 +443,9 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.allowPlot = serializableGlobalVar.allowPlot;
             GlobalVar.instance.nodeBehavior = serializableGlobalVar.nodeBehavior;
             GlobalVar.instance.exposureCoefficient = serializableGlobalVar.exposureCoefficient;
-
+            GlobalVar.instance.bookRandomConfig = new BookManager.BookRandomConfig(serializableGlobalVar.bookRandomConfig);
+            GlobalVar.instance._remainedBookRandomConfig = new List<BookManager.BookRandomConfig>(serializableGlobalVar._remainedBookRandomConfig);
+            
             List<SerializableNodeBehavior> serializableNodeBehaviors = deserializedData.nodeBehaviors;
             var nodeL = canvas.GetNodeList();
             int l = nodeL.Count;

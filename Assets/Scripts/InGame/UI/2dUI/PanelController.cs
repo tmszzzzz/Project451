@@ -56,6 +56,8 @@ public class PanelController : MonoBehaviour
         {
             _tutorialPanel.SetActive(true);
         }
+
+        RefreshBookIndex();
     }
     
     public void OpenResourceUsagePanel()
@@ -263,6 +265,104 @@ public class PanelController : MonoBehaviour
             //Debug.Log(2);
             var node = currentNode.GetComponent<NodeBehavior>();
             _changeNodeInfoPanleContenAndPosition(node);
+        }
+    }
+
+    public void RefreshBookIndex()
+    {
+        Transform indexPanel = _ResourceUsagePanel.transform.GetChild(7);
+        Transform level1 = indexPanel.GetChild(3);
+        Transform level2 = indexPanel.GetChild(4);
+        Transform level3 = indexPanel.GetChild(5);
+        Transform fansi = indexPanel.GetChild(6);
+        Transform huanxiang = indexPanel.GetChild(7);
+        Transform fankang = indexPanel.GetChild(8);
+        Transform shijiao = indexPanel.GetChild(9);
+        Transform wangxi = indexPanel.GetChild(10);
+        Transform yuyan = indexPanel.GetChild(11);
+        Transform zhishi = indexPanel.GetChild(12);
+        Color color = new Color(1f, 1f, 1f, 0.117f);
+        // 等级
+        if (GlobalVar.instance.bookRandomConfig.LevelWeights[0] > 0)
+        {
+            level1.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            level1.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.LevelWeights[1] > 0)
+        {
+            level2.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            level2.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.LevelWeights[2] > 0)
+        {
+            level3.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            level3.GetComponent<Image>().color = color;
+        }
+        // 类型
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.fansi))
+        {
+            fansi.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            fansi.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.huanxiang))
+        {
+            huanxiang.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            huanxiang.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.yuyan))
+        {
+            yuyan.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            yuyan.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.zhishi))
+        {
+            zhishi.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            zhishi.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.wangxi))
+        {
+            wangxi.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            wangxi.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.fankang))
+        {
+            fankang.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            fankang.GetComponent<Image>().color = color;
+        }
+        if (GlobalVar.instance.bookRandomConfig.AllowedTypes.Contains(BookManager.Book.BookType.shijiao))
+        {
+            shijiao.GetComponent<Image>().color = Color.white;
+        }
+        else
+        {
+            shijiao.GetComponent<Image>().color = color;
         }
     }
 }

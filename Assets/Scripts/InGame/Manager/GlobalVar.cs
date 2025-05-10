@@ -81,20 +81,20 @@ public class GlobalVar : MonoBehaviour
     
     public BookManager.BookRandomConfig bookRandomConfig = new BookManager.BookRandomConfig
     {
-        LevelWeights = new float[] { 1f, 0f, 0f },
-        AllowedTypes = new HashSet<BookManager.Book.BookType>()
+        LevelWeights = new List<float>() { 1f, 0f, 0f },
+        AllowedTypes = new List<BookManager.Book.BookType>()
         {
             BookManager.Book.BookType.fansi,
             BookManager.Book.BookType.huanxiang,
         }
     };
     
-    [SerializeField] private List<BookManager.BookRandomConfig> _remainedBookRandomConfig = new List<BookManager.BookRandomConfig>()
+    public List<BookManager.BookRandomConfig> _remainedBookRandomConfig = new List<BookManager.BookRandomConfig>()
     {
         new BookManager.BookRandomConfig
         {
-            LevelWeights = new float[] { 0.8f, 0.2f, 0f },
-            AllowedTypes = new HashSet<BookManager.Book.BookType>
+            LevelWeights = new List<float>() { 0.8f, 0.2f, 0f },
+            AllowedTypes = new List<BookManager.Book.BookType>
             {
                 BookManager.Book.BookType.fankang,
                 BookManager.Book.BookType.fansi,
@@ -104,8 +104,8 @@ public class GlobalVar : MonoBehaviour
         },
         new BookManager.BookRandomConfig
         {
-            LevelWeights = new float[] { 0.6f, 0.2f, 0.2f },
-            AllowedTypes = new HashSet<BookManager.Book.BookType>
+            LevelWeights = new List<float>() { 0.6f, 0.2f, 0.2f },
+            AllowedTypes = new List<BookManager.Book.BookType>
             {
                 BookManager.Book.BookType.fankang,
                 BookManager.Book.BookType.fansi,
@@ -210,11 +210,12 @@ public class GlobalVar : MonoBehaviour
         if (_remainedBookRandomConfig.Count == 0)
         {
             Debug.Log("没有更多的书籍随机配置可用");
+            MessageBar.instance.AddMessage("索引整理已完毕.");
             return;
         }
         
         bookRandomConfig = _remainedBookRandomConfig[0];
-        
+        PanelController.instance.RefreshBookIndex();
         // 从列表中移除已使用的配置
         _remainedBookRandomConfig.RemoveAt(0);
         MessageBar.instance.AddMessage("索引整理成功.");

@@ -4,11 +4,27 @@ using UnityEngine;
 
 public class BookManager : MonoBehaviour
 {
+    [System.Serializable]
     public class BookRandomConfig
     {
-        public float[] LevelWeights; // 等级权重
-        public HashSet<Book.BookType> AllowedTypes; // 允许的类型
+        public List<float> LevelWeights; // 等级权重
+        public List<Book.BookType> AllowedTypes; // 允许的类型
+        
+        // 无参构造
+        public BookRandomConfig()
+        {
+            LevelWeights = new List<float>();
+            AllowedTypes = new List<Book.BookType>();
+        }
+        
+        public BookRandomConfig(BookRandomConfig config)
+        {
+            // 使用null合并运算符提供默认值
+            LevelWeights = new List<float>(config.LevelWeights);
+            AllowedTypes = new List<Book.BookType>(config.AllowedTypes);
+        }
     }
+    
     
     public static BookManager instance;
 
@@ -130,7 +146,7 @@ public class BookManager : MonoBehaviour
         return book;
     }
 
-    public List<List<Book>> GenerateTypeList(HashSet<Book.BookType> AllowedTypes)
+    public List<List<Book>> GenerateTypeList(List<Book.BookType> AllowedTypes)
     {
         List<List<Book>> typeList = new List<List<Book>>()
         {
@@ -148,10 +164,10 @@ public class BookManager : MonoBehaviour
         return typeList;
     }
 
-    public int getLevelIndex(float[] levelWeights)
+    public int getLevelIndex(List<float> levelWeights)
     {
         // 参数合法性校验
-        if (levelWeights == null || levelWeights.Length == 0)
+        if (levelWeights == null || levelWeights.Count == 0)
         {
             Debug.LogError("概率配置错误：权重数组不能为空");
             return -1;
@@ -180,7 +196,7 @@ public class BookManager : MonoBehaviour
     
         // 累加权重寻找命中区间
         float cumulative = 0f;
-        for (int i = 0; i < levelWeights.Length; i++)
+        for (int i = 0; i < levelWeights.Count; i++)
         {
             cumulative += levelWeights[i];
             if (randomValue <= cumulative)
@@ -191,7 +207,7 @@ public class BookManager : MonoBehaviour
 
         // 兜底逻辑（理论上不会执行到这里）
         Debug.LogWarning("存在未知错误");
-        return levelWeights.Length - 1;
+        return levelWeights.Count - 1;
     }
 }
 
