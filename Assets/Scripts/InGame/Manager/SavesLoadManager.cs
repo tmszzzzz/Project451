@@ -70,6 +70,7 @@ public class SavesLoadManager : MonoBehaviour
         public bool allowPlot = true;
         public NodeBehavior nodeBehavior;
         public int currentTask;
+        public float exposureCoefficient;
         // 构造函数，用于从 GlobalVar 初始化
         public SerializableGlobalVar(GlobalVar globalVar)
         {
@@ -125,6 +126,7 @@ public class SavesLoadManager : MonoBehaviour
             this.allowPlot = globalVar.allowPlot;
             this.nodeBehavior = globalVar.nodeBehavior;
             this.currentTask = globalVar.currentTask;
+            this.exposureCoefficient = globalVar.exposureCoefficient;
         }
     }
 
@@ -435,6 +437,7 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.NodeInfoPanelIntroductionFinished = serializableGlobalVar.NodeInfoPanelIntroductionFinished;
             GlobalVar.instance.allowPlot = serializableGlobalVar.allowPlot;
             GlobalVar.instance.nodeBehavior = serializableGlobalVar.nodeBehavior;
+            GlobalVar.instance.exposureCoefficient = serializableGlobalVar.exposureCoefficient;
 
             List<SerializableNodeBehavior> serializableNodeBehaviors = deserializedData.nodeBehaviors;
             var nodeL = canvas.GetNodeList();

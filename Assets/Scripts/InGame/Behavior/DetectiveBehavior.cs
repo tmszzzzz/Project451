@@ -190,7 +190,16 @@ public class DetectiveBehavior : MonoBehaviour
             Vector3 pos = LightconeCenter.position + 3f * horizontalDirection; 
             Vector3 facing = target.transform.position - pos;
             Lightcones.Add(Instantiate(LightconePrefab, pos, Quaternion.LookRotation(facing)));
-            GlobalVar.instance.AddGlobalExposureValue(GlobalVar.instance.exposureValueAdditionOfDetective);
+            int v = GlobalVar.instance.exposureValueAdditionOfDetective;
+            if (GlobalVar.instance.exposureCoefficient == 0.8f)
+            {
+                v = v * 4 / 5;
+            }
+            if (GlobalVar.instance.exposureCoefficient == 1.2f)
+            {
+                v = v * 6 / 5;
+            }
+            GlobalVar.instance.AddGlobalExposureValue(v);
             CameraBehavior.instance.GetComponent<AudioSource>().PlayOneShot(spotlight);
             await Task.Delay(250);
 

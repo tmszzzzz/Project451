@@ -106,7 +106,6 @@ public class GuidePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(GlobalVar.instance.currentTask);
         ExecuteTask(GlobalVar.instance.currentTask);
         StartCoroutine(WaitForFirstSelectBookMark());
         
