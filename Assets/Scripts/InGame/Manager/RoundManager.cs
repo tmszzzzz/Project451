@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class RoundManager : MonoBehaviour
 {
@@ -456,7 +457,7 @@ public class RoundManager : MonoBehaviour
         
         await PlotManager.instance.ReadPlotQueue();
 
-        
+        RefreshExposureCoefficient();
         
         OperationRelease();//释放操作屏蔽
         
@@ -642,4 +643,50 @@ public class RoundManager : MonoBehaviour
         }
         return null;
     }
+
+    private void RefreshExposureCoefficient()
+    {
+        float[] weights = new float[] { 0.1f, 0.7f, 0.2f };
+        if (GlobalVar.instance.everReachedPoliceStation)
+        {
+            weights = new float[] { 0.2f, 0.7f, 0.1f };
+        }
+        if (GlobalVar.instance.everReachedFirehouse)
+        {
+            weights = new float[] { 0.4f, 0.5f, 0.1f };
+        }
+        float totalWeight = 1f;
+
+        // 生成随机采样点
+        float randomValue = Random.Range(0f, 1f);
+        Debug.Log(randomValue);
+        // 累加权重寻找命中区间
+        float cumulative = 0f;
+        for (int i = 0; i < weights.Length; i++)
+        {
+            cumulative += weights[i];
+            Debug.Log(cumulative);
+            if (randomValue <= cumulative)
+            {
+                Debug.Log(i);
+                if (i == 0)
+                {
+                    GlobalVar.instance.exposureCoefficient = 1.2f;
+                    break;
+                }
+                if (i == 1)
+                {
+                    GlobalVar.instance.exposureCoefficient = 1f;
+                    break;
+                }
+                if (i == 2)
+                {
+                    GlobalVar.instance.exposureCoefficient = 0.8f;
+                    break;
+                }
+            }
+        }
+        Debug.Log(GlobalVar.instance.exposureCoefficient);
+    }
+    
 }

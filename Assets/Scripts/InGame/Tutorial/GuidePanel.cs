@@ -11,7 +11,6 @@ public class GuidePanel : MonoBehaviour
     private GuideController guideController;
     private Canvas canvas;
     private Step[] steps;
-    private int currentTask;
     private LastData lastData;
     public bool completed = false;
     private void Awake()
@@ -42,9 +41,13 @@ public class GuidePanel : MonoBehaviour
     // 执行某一个任务
     public void ExecuteTask(int index)
     {
+        if (index == 0)
+        {
+            CameraBehavior.instance.FixedCamera1();
+        }
         this.gameObject.SetActive(true);
         HideAllTasks();
-        currentTask = index;
+        GlobalVar.instance.currentTask = index;
         if (index >= 0 && index < steps.Length)
         {
             if (steps[index].name == "消防员")
@@ -73,12 +76,12 @@ public class GuidePanel : MonoBehaviour
 
     public void NextTask()
     {
-        if (steps[this.currentTask].target != null)
+        if (steps[GlobalVar.instance.currentTask].target != null)
         {
-            this.lastData = getLastData(steps[this.currentTask].target);
+            this.lastData = getLastData(steps[GlobalVar.instance.currentTask].target);
         }
-        this.currentTask++;
-        ExecuteTask(this.currentTask);
+        GlobalVar.instance.currentTask++;
+        ExecuteTask(GlobalVar.instance.currentTask);
     }
     
     // 隐藏所有任务和点击按钮
@@ -103,8 +106,7 @@ public class GuidePanel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CameraBehavior.instance.FixedCamera1();
-        ExecuteTask(0);
+        ExecuteTask(GlobalVar.instance.currentTask);
         StartCoroutine(WaitForFirstSelectBookMark());
         
         // 快速测试
@@ -116,7 +118,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        if (GlobalVar.instance.currentTask == 3)
+        {
+            NextTask();
+        }
         StartCoroutine(WaitForFirstAllocation());
     }
     private IEnumerator WaitForFirstAllocation()
@@ -125,7 +130,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        if (GlobalVar.instance.currentTask == 4)
+        {
+            NextTask();
+        }
         StartCoroutine(WaitForFirstNext());
     }
     
@@ -136,14 +144,20 @@ public class GuidePanel : MonoBehaviour
             yield return null; // 等待一帧
         }
         CameraBehavior.instance.isCameraFixed = false;
-        NextTask();
+        if (GlobalVar.instance.currentTask == 5)
+        {
+            NextTask();     // 取消遮罩
+        }
         Invoke("OpenInfoPanel",1);
     }
     
     private void OpenInfoPanel()
     {
         GlobalVar.instance.openInfoPanel = true;
-        NextTask();
+        if (GlobalVar.instance.currentTask == 6)
+        {
+            NextTask(); //  关闭信息面板
+        }
         StartCoroutine(WaitForCloseInfoPanel());
     }
     
@@ -154,7 +168,10 @@ public class GuidePanel : MonoBehaviour
             yield return null; // 等待一帧
         }
         CameraBehavior.instance.FixedCamera1();
-        NextTask();
+        if (GlobalVar.instance.currentTask == 8)
+        {
+            NextTask(); //  关键节点
+        }
         StartCoroutine(WaitForSecondAllocationSuccess());
     }
     
@@ -164,7 +181,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();     // 取消分配
+        if (GlobalVar.instance.currentTask == 14)
+        {
+            NextTask(); // 取消分配
+        }
         StartCoroutine(WaitForFirstCancellAllocation());
     }
     
@@ -174,7 +194,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask(); // 取消遮罩
+        if (GlobalVar.instance.currentTask == 15)
+        {
+            NextTask(); // 取消遮罩
+        }
         StartCoroutine(WaitForChapter1());
     }
     
@@ -194,9 +217,11 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-
         CameraBehavior.instance.FixedCamera1();
-        NextTask(); // 获取资源点
+        if (GlobalVar.instance.currentTask == 16)
+        {
+            NextTask(); // 获取资源点
+        }
         StartCoroutine(WaitForFirstGetResourcePoint());
     }
     
@@ -206,7 +231,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        if (GlobalVar.instance.currentTask == 17)
+        {
+            NextTask(); // 主信息面板
+        }
         StartCoroutine(WaitForFirstOpenPointUsage());
     }
     
@@ -216,7 +244,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        if (GlobalVar.instance.currentTask == 19)
+        {
+            NextTask(); // 情报点使用
+        }
         StartCoroutine(WaitForFirstUseResourcePoint());
     }
     
@@ -226,7 +257,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();     // 取消遮罩
+        if (GlobalVar.instance.currentTask == 20)
+        {
+            NextTask(); // 取消遮罩
+        }
         CameraBehavior.instance.isCameraFixed = false;
         StartCoroutine(WaitForFirstPreviewExpose());
     }
@@ -237,7 +271,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        if (GlobalVar.instance.currentTask == 21)
+        {
+            NextTask(); // 暴露节点
+        }
         CameraBehavior.instance.FixedCamera3();
         StartCoroutine(WaitForDetective());
         StartCoroutine(WaitForNodeInfoPanel());
@@ -249,7 +286,10 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        NextTask();
+        if (GlobalVar.instance.currentTask == 24)
+        {
+            NextTask(); // 看火者介绍
+        }
         CameraBehavior.instance.FixedCamera4();
     }
     private IEnumerator WaitForNodeInfoPanel()
@@ -266,7 +306,10 @@ public class GuidePanel : MonoBehaviour
         CameraBehavior.instance.FixedCamera4();
         GlobalVar.instance.allowNodeInfoPanel = true;
         PanelController.instance.EnableNodeInfoPanel(GlobalVar.instance.nodeBehavior);
-        NextTask();
+        if (GlobalVar.instance.currentTask == 28)
+        {
+            NextTask(); // 节点信息面板介绍
+        }
     }
     
     private void SetButtonOn()

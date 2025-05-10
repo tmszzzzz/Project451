@@ -25,7 +25,7 @@ public class GlobalVar : MonoBehaviour
     public int globalExposureValue = 0;
     public int roundNum = 1;
     public int maxGlobalExposureValue = 100;
-    public int exposureValueAdditionOfExposedNode = 10;
+    public int exposureValueAdditionOfExposedNode = 5;
     public int exposureValueAdditionOfDetective = 2;
     public int exposureValueAccelerationOfDetective = 1;
     public int exposureValueReductionOfNoExposedNode = 5;
@@ -57,7 +57,8 @@ public class GlobalVar : MonoBehaviour
     public HashSet<int> allBooks = new HashSet<int>();
     public bool showBookMark;
     public string bookName = "";
-    
+    public int currentTask = 0;
+    public float exposureCoefficient = 0.8f;
     // 教程相关
     public bool firstSelectBookMark = false;
     public bool firstAllocation = false;
