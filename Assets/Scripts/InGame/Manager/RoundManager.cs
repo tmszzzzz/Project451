@@ -659,16 +659,13 @@ public class RoundManager : MonoBehaviour
 
         // 生成随机采样点
         float randomValue = Random.Range(0f, 1f);
-        Debug.Log(randomValue);
         // 累加权重寻找命中区间
         float cumulative = 0f;
         for (int i = 0; i < weights.Length; i++)
         {
             cumulative += weights[i];
-            Debug.Log(cumulative);
             if (randomValue <= cumulative)
             {
-                Debug.Log(i);
                 if (i == 0)
                 {
                     GlobalVar.instance.exposureCoefficient = 1.2f;
@@ -686,7 +683,6 @@ public class RoundManager : MonoBehaviour
                 }
             }
         }
-        Debug.Log(GlobalVar.instance.exposureCoefficient);
     }
     
 }

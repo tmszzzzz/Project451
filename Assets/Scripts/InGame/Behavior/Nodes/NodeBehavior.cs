@@ -280,18 +280,18 @@ public class NodeBehavior : BaseNodeBehavior
 
     public int GetExposureValue()
     {
-        int overInfluence = this.NowState().basicInfluence - this.properties.exposeThreshold;
+        int overInfluence = Math.Max(this.NowState().basicInfluence - this.properties.exposeThreshold, 0);
         int pow = overInfluence * 2 / this.properties.exposeThreshold;
         int result = IntPow(GlobalVar.instance.exposureValueAdditionOfExposedNode, pow);
         if (GlobalVar.instance.exposureCoefficient == 0.8f)
         {
-            return result * 4 / 5;
+            return result * 4 / 5 + 1;
         }
         if (GlobalVar.instance.exposureCoefficient == 1.2f)
         {
-            return result * 6 / 5;
+            return result * 6 / 5 + 1;
         }
-        return result;
+        return result + 1;
     }
     
     public static int IntPow(int x, int pow)

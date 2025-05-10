@@ -49,7 +49,7 @@ public class SavesLoadManager : MonoBehaviour
         public bool skipCameraOverview;
         public int dealStartRound;
         public int nowPlaying;
-        public HashSet<int> allBooks;
+        public List<int> allBooks;
         public bool showBookMark;
         public string bookName;
         public bool firstSelectBookMark = false;
@@ -105,7 +105,7 @@ public class SavesLoadManager : MonoBehaviour
             this.skipCameraOverview = globalVar.skipCameraOverview;
             this.dealStartRound = globalVar.dealStartRound;
             this.nowPlaying = globalVar.nowPlaying;
-            this.allBooks = globalVar.allBooks;
+            this.allBooks = new List<int>(globalVar.allBooks);
             this.showBookMark = globalVar.showBookMark;
             this.bookName = globalVar.bookName;
             this.firstSelectBookMark = globalVar.firstSelectBookMark;
@@ -416,7 +416,7 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.skipCameraOverview = serializableGlobalVar.skipCameraOverview;
             GlobalVar.instance.dealStartRound = serializableGlobalVar.dealStartRound;
             GlobalVar.instance.nowPlaying = serializableGlobalVar.nowPlaying;
-            GlobalVar.instance.allBooks = serializableGlobalVar.allBooks;
+            GlobalVar.instance.allBooks = new List<int>(serializableGlobalVar.allBooks);
             GlobalVar.instance.showBookMark = serializableGlobalVar.showBookMark;
             GlobalVar.instance.bookName = serializableGlobalVar.bookName;
             GlobalVar.instance.currentTask = serializableGlobalVar.currentTask;

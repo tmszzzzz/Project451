@@ -56,10 +56,6 @@ public class PanelController : MonoBehaviour
         {
             _tutorialPanel.SetActive(true);
         }
-        else
-        {
-            Debug.Log(GlobalVar.instance.currentTask);
-        }
     }
     
     public void OpenResourceUsagePanel()

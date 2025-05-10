@@ -54,7 +54,7 @@ public class GlobalVar : MonoBehaviour
     public bool skipCameraOverview = true;
     public int dealStartRound = 0;
     public int nowPlaying = 0;
-    public HashSet<int> allBooks = new HashSet<int>();
+    public List<int> allBooks = new List<int>(){23};
     public bool showBookMark;
     public string bookName = "";
     public int currentTask = 0;

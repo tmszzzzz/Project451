@@ -298,13 +298,16 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        Invoke("NodeInfoPanel",8);
+        Invoke("NodeInfoPanel",9);
     }
 
     private void NodeInfoPanel()
     {
         CameraBehavior.instance.FixedCamera4();
         GlobalVar.instance.allowNodeInfoPanel = true;
+        // 先加载一次防止加载错误
+        PanelController.instance.EnableNodeInfoPanel(CanvasBehavior.instance.GetNodeByID(5).GetComponent<NodeBehavior>());
+        PanelController.instance.NodeInfoPanel.SetActive(false);
         PanelController.instance.EnableNodeInfoPanel(GlobalVar.instance.nodeBehavior);
         if (GlobalVar.instance.currentTask == 28)
         {
