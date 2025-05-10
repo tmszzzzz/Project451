@@ -85,12 +85,14 @@ public class PlotFuncManager : MonoBehaviour
     {
         RoundManager.instance.switching2 = true;
         QuestPanel.instance.AddQuest("Police");
+        PanelController.instance.UNLockOrganizeIndex();
     }
 
     public void openSceneOfFirehouse()
     {
         RoundManager.instance.switching3 = true;
         QuestPanel.instance.AddQuest("FireHouse");
+        PanelController.instance.UNLockInsertInformant();
     }
 
     public void openQuest0()
