@@ -57,6 +57,7 @@ public class GlobalVar : MonoBehaviour
     public HashSet<int> allBooks = new HashSet<int>();
     public bool showBookMark;
     public string bookName = "";
+    public int currentTask = 0;
     
     // 教程相关
     public bool firstSelectBookMark = false;

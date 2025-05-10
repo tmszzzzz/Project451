@@ -69,6 +69,7 @@ public class SavesLoadManager : MonoBehaviour
         public bool NodeInfoPanelIntroductionFinished = false;
         public bool allowPlot = true;
         public NodeBehavior nodeBehavior;
+        public int currentTask;
         // 构造函数，用于从 GlobalVar 初始化
         public SerializableGlobalVar(GlobalVar globalVar)
         {
@@ -103,7 +104,7 @@ public class SavesLoadManager : MonoBehaviour
             this.skipCameraOverview = globalVar.skipCameraOverview;
             this.dealStartRound = globalVar.dealStartRound;
             this.nowPlaying = globalVar.nowPlaying;
-            this.allBooks = new HashSet<int>(globalVar.allBooks);
+            this.allBooks = globalVar.allBooks;
             this.showBookMark = globalVar.showBookMark;
             this.bookName = globalVar.bookName;
             this.firstSelectBookMark = globalVar.firstSelectBookMark;
@@ -123,6 +124,7 @@ public class SavesLoadManager : MonoBehaviour
             this.NodeInfoPanelIntroductionFinished = globalVar.NodeInfoPanelIntroductionFinished;
             this.allowPlot = globalVar.allowPlot;
             this.nodeBehavior = globalVar.nodeBehavior;
+            this.currentTask = globalVar.currentTask;
         }
     }
 
@@ -272,7 +274,6 @@ public class SavesLoadManager : MonoBehaviour
         public SerializableDetectiveBehavior detectiveBehavior;
         public SerializableQuests quests;
         public SerializableBookPages bookPages;
-
         public SerializableAll(GlobalVar globalVar, CanvasBehavior canvas, DetectiveBehavior detective,QuestPanel quest,Journal book,List<Sprite> sprites)
         {
             this.globalVar = new SerializableGlobalVar(globalVar);
@@ -323,6 +324,7 @@ public class SavesLoadManager : MonoBehaviour
     
     public void AutoSerializeAll(int round)
     {
+        Debug.Log("AutoSerializeAll");
         // 使用包装类创建一个可序列化的对象
         SerializableAll serializableData =
             new SerializableAll(GlobalVar.instance, canvas, detective, QuestPanel.instance, book, SpriteList);
@@ -377,6 +379,8 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.globalExposureValue = serializableGlobalVar.globalExposureValue;
             GlobalVar.instance.roundNum = serializableGlobalVar.roundNum;
             GlobalVar.instance.maxGlobalExposureValue = serializableGlobalVar.maxGlobalExposureValue;
+            GlobalVar.instance.exposureValueAdditionOfExposedNode =
+                serializableGlobalVar.exposureValueAdditionOfExposedNode;
             GlobalVar.instance.exposureValueAdditionOfDetective =
                 serializableGlobalVar.exposureValueAdditionOfDetective;
             GlobalVar.instance.exposureValueAccelerationOfDetective =
@@ -391,6 +395,7 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.probabilityOfNodesInspectingDetective =
                 serializableGlobalVar.probabilityOfNodesInspectingDetective;
             GlobalVar.instance.resourcePoint = serializableGlobalVar.resourcePoint;
+            GlobalVar.instance.previewExposureValue = serializableGlobalVar.previewExposureValue;
             GlobalVar.instance.maxResourcePoint = serializableGlobalVar.maxResourcePoint;
             GlobalVar.instance.infoIncreaseBy = serializableGlobalVar.infoIncreaseBy;
             GlobalVar.instance.distanceIncreaseBy = serializableGlobalVar.distanceIncreaseBy;
@@ -400,10 +405,6 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.everReachedFirehouse = serializableGlobalVar.everReachedFirehouse;
             GlobalVar.instance.everLearnedAboutDetectiveAndInfo =
                 serializableGlobalVar.everLearnedAboutDetectiveAndInfo;
-            if (GlobalVar.instance.everLearnedAboutDetectiveAndInfo)
-            {
-                GameProcessManager.instance.probabilityOfInfoPanel.SetActive(true);
-            }
             GlobalVar.instance.everLearnedAboutNodeInfoPanel =
                 serializableGlobalVar.everLearnedAboutNodeInfoPanel;
             GlobalVar.instance.everAwakeAllNodes = serializableGlobalVar.everAwakeAllNodes;
@@ -413,7 +414,27 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.skipCameraOverview = serializableGlobalVar.skipCameraOverview;
             GlobalVar.instance.dealStartRound = serializableGlobalVar.dealStartRound;
             GlobalVar.instance.nowPlaying = serializableGlobalVar.nowPlaying;
-            
+            GlobalVar.instance.allBooks = serializableGlobalVar.allBooks;
+            GlobalVar.instance.showBookMark = serializableGlobalVar.showBookMark;
+            GlobalVar.instance.bookName = serializableGlobalVar.bookName;
+            GlobalVar.instance.currentTask = serializableGlobalVar.currentTask;
+            GlobalVar.instance.firstSelectBookMark = serializableGlobalVar.firstSelectBookMark;
+            GlobalVar.instance.firstAllocation = serializableGlobalVar.firstAllocation;
+            GlobalVar.instance.firstNext = serializableGlobalVar.firstNext;
+            GlobalVar.instance.openInfoPanel = serializableGlobalVar.openInfoPanel;
+            GlobalVar.instance.closeInfoPanel = serializableGlobalVar.closeInfoPanel;
+            GlobalVar.instance.allocationSuccess = serializableGlobalVar.allocationSuccess;
+            GlobalVar.instance.firstCancellAllocation = serializableGlobalVar.firstCancellAllocation;
+            GlobalVar.instance.firstGetResourcePoint = serializableGlobalVar.firstGetResourcePoint;
+            GlobalVar.instance.firstOpenPointUsage = serializableGlobalVar.firstOpenPointUsage;
+            GlobalVar.instance.firstUseResourcePoint = serializableGlobalVar.firstUseResourcePoint;
+            GlobalVar.instance.chapter1 = serializableGlobalVar.chapter1;
+            GlobalVar.instance.firstPreviewExpose = serializableGlobalVar.firstPreviewExpose;
+            GlobalVar.instance.detective = serializableGlobalVar.detective;
+            GlobalVar.instance.allowNodeInfoPanel = serializableGlobalVar.allowNodeInfoPanel;
+            GlobalVar.instance.NodeInfoPanelIntroductionFinished = serializableGlobalVar.NodeInfoPanelIntroductionFinished;
+            GlobalVar.instance.allowPlot = serializableGlobalVar.allowPlot;
+            GlobalVar.instance.nodeBehavior = serializableGlobalVar.nodeBehavior;
 
             List<SerializableNodeBehavior> serializableNodeBehaviors = deserializedData.nodeBehaviors;
             var nodeL = canvas.GetNodeList();
@@ -504,7 +525,7 @@ public class SavesLoadManager : MonoBehaviour
         detective = RoundManager.instance.detective;
         if (GameLoader.instance == null)
         {
-            DeserializeAll("Assets/Saves/save.json");
+            DeserializeAll("Assets/Saves/save1.json");
         }
         if (GameLoader.instance != null && GameLoader.instance.loadingAnExistingGame)
         {

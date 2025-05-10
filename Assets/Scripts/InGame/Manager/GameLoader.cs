@@ -11,7 +11,8 @@ public class GameLoader : MonoBehaviour
     
 
     public bool loadingAnExistingGame = false;
-    public string loadFilePath = "Assets/Saves/save.json";
+    public string loadFilePath = "Assets/Saves/save1.json";
+    // public string loadFilePath = "Assets/Saves/save.json";
     
     //Used For end scene
     public int usedDays = 0;

@@ -29,6 +29,7 @@ public class ToggleBookButton : MonoBehaviour
     {
         if (PanelController.instance._tutorialPanel.transform.GetChild(7).gameObject.activeSelf)
         {
+            // 禁止介绍时直接关闭面板
             return;
         }
         isBookOpen = !isBookOpen;
@@ -46,7 +47,7 @@ public class ToggleBookButton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalVar.instance.openInfoPanel)
+        if (GlobalVar.instance.openInfoPanel && GlobalVar.instance.currentTask <= 7)
         {
             isBookOpen = !isBookOpen;
             GlobalVar.instance.openInfoPanel = false;
