@@ -8,6 +8,43 @@ public class BookController : MonoBehaviour
     public Journal book;
     public GameObject newContentBookAlertImage;
     public static BookController instance;
+    [SerializeField] private Sprite nodesTutorialPage;
+    [SerializeField] private Sprite bookmarkTutorialPage;
+    [SerializeField] private Sprite nodeTypeTutorialPage;
+    [SerializeField] private Sprite exposureTutorialPage;
+    [SerializeField] private Sprite indexTutorialPage;
+    [SerializeField] private Sprite firewatcherTutorialPage;
+
+    public void addnodesTutorialPage()
+    {
+        AddOnePageToBook(nodesTutorialPage);
+    }
+    
+    public void addBookmarkTutorialPage()
+    {
+        AddOnePageToBook(bookmarkTutorialPage);
+    }
+    
+    public void addNodeTypeTutorialPage()
+    {
+        AddOnePageToBook(nodeTypeTutorialPage);
+    }
+    
+    public void addExposureTutorialPage()
+    {
+        AddOnePageToBook(exposureTutorialPage);
+    }
+    
+    public void addIndexTutorialPage()
+    {
+        AddOnePageToBook(indexTutorialPage);
+    }
+    
+    public void addFirewatcherTutorialPage()
+    {
+        AddOnePageToBook(firewatcherTutorialPage);
+    }
+    
     
     private void Awake()
     {
