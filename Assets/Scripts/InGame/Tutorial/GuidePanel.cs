@@ -108,8 +108,6 @@ public class GuidePanel : MonoBehaviour
     {
         ExecuteTask(GlobalVar.instance.currentTask);
         StartCoroutine(WaitForFirstSelectBookMark());
-        
-        // 快速测试
     }
     
     private IEnumerator WaitForFirstSelectBookMark()
@@ -122,6 +120,9 @@ public class GuidePanel : MonoBehaviour
         {
             NextTask();
         }
+        BookController.instance.addnodesTutorialPage();
+        BookController.instance.addBookmarkTutorialPage();
+        BookController.instance.TurnPageTo(1);
         StartCoroutine(WaitForFirstAllocation());
     }
     private IEnumerator WaitForFirstAllocation()
@@ -172,6 +173,7 @@ public class GuidePanel : MonoBehaviour
         {
             NextTask(); //  关键节点
         }
+        BookController.instance.addNodeTypeTutorialPage();
         StartCoroutine(WaitForSecondAllocationSuccess());
     }
     
@@ -275,6 +277,7 @@ public class GuidePanel : MonoBehaviour
         {
             NextTask(); // 暴露节点
         }
+        BookController.instance.addExposureTutorialPage();
         CameraBehavior.instance.FixedCamera3();
         StartCoroutine(WaitForDetective());
         StartCoroutine(WaitForNodeInfoPanel());
@@ -290,6 +293,7 @@ public class GuidePanel : MonoBehaviour
         {
             NextTask(); // 看火者介绍
         }
+        BookController.instance.addFirewatcherTutorialPage();
         CameraBehavior.instance.FixedCamera4();
     }
     private IEnumerator WaitForNodeInfoPanel()
@@ -298,7 +302,7 @@ public class GuidePanel : MonoBehaviour
         {
             yield return null; // 等待一帧
         }
-        Invoke("NodeInfoPanel",9);
+        Invoke("NodeInfoPanel",5);
     }
 
     private void NodeInfoPanel()
@@ -309,6 +313,7 @@ public class GuidePanel : MonoBehaviour
         PanelController.instance.EnableNodeInfoPanel(CanvasBehavior.instance.GetNodeByID(5).GetComponent<NodeBehavior>());
         PanelController.instance.NodeInfoPanel.SetActive(false);
         PanelController.instance.EnableNodeInfoPanel(GlobalVar.instance.nodeBehavior);
+        BookController.instance.addIndexTutorialPage();
         if (GlobalVar.instance.currentTask == 28)
         {
             NextTask(); // 节点信息面板介绍
