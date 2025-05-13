@@ -41,6 +41,8 @@ public class GuidePanel : MonoBehaviour
     // 执行某一个任务
     public void ExecuteTask(int index)
     {
+        Debug.Log("现在的task");
+        Debug.Log(GlobalVar.instance.currentTask);
         if (index == 0)
         {
             CameraBehavior.instance.FixedCamera1();
@@ -307,13 +309,17 @@ public class GuidePanel : MonoBehaviour
 
     private void NodeInfoPanel()
     {
+        Debug.Log("NodeInfoPanel");
         CameraBehavior.instance.FixedCamera4();
         GlobalVar.instance.allowNodeInfoPanel = true;
         // 先加载一次防止加载错误
         PanelController.instance.EnableNodeInfoPanel(CanvasBehavior.instance.GetNodeByID(5).GetComponent<NodeBehavior>());
         PanelController.instance.NodeInfoPanel.SetActive(false);
-        PanelController.instance.EnableNodeInfoPanel(GlobalVar.instance.nodeBehavior);
+        PanelController.instance.EnableNodeInfoPanel(CanvasBehavior.instance.GetNodeByName(GlobalVar.instance.nodeName).GetComponent<NodeBehavior>());
         BookController.instance.addIndexTutorialPage();
+        
+        Debug.Log(GlobalVar.instance.currentTask);
+        while (GlobalVar.instance.currentTask < 28){}
         if (GlobalVar.instance.currentTask == 28)
         {
             NextTask(); // 节点信息面板介绍

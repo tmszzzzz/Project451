@@ -68,7 +68,7 @@ public class SavesLoadManager : MonoBehaviour
         public bool allowNodeInfoPanel = false;
         public bool NodeInfoPanelIntroductionFinished = false;
         public bool allowPlot = true;
-        public NodeBehavior nodeBehavior;
+        public string nodeName;
         public int currentTask;
         public float exposureCoefficient;
         public BookManager.BookRandomConfig bookRandomConfig;
@@ -127,7 +127,7 @@ public class SavesLoadManager : MonoBehaviour
             this.allowNodeInfoPanel = globalVar.allowNodeInfoPanel;
             this.NodeInfoPanelIntroductionFinished = globalVar.NodeInfoPanelIntroductionFinished;
             this.allowPlot = globalVar.allowPlot;
-            this.nodeBehavior = globalVar.nodeBehavior;
+            this.nodeName = globalVar.nodeName;
             this.currentTask = globalVar.currentTask;
             this.exposureCoefficient = globalVar.exposureCoefficient;
             this.bookRandomConfig = new BookManager.BookRandomConfig(globalVar.bookRandomConfig);
@@ -441,7 +441,7 @@ public class SavesLoadManager : MonoBehaviour
             GlobalVar.instance.allowNodeInfoPanel = serializableGlobalVar.allowNodeInfoPanel;
             GlobalVar.instance.NodeInfoPanelIntroductionFinished = serializableGlobalVar.NodeInfoPanelIntroductionFinished;
             GlobalVar.instance.allowPlot = serializableGlobalVar.allowPlot;
-            GlobalVar.instance.nodeBehavior = serializableGlobalVar.nodeBehavior;
+            GlobalVar.instance.nodeName = serializableGlobalVar.nodeName;
             GlobalVar.instance.exposureCoefficient = serializableGlobalVar.exposureCoefficient;
             GlobalVar.instance.bookRandomConfig = new BookManager.BookRandomConfig(serializableGlobalVar.bookRandomConfig);
             GlobalVar.instance._remainedBookRandomConfig = new List<BookManager.BookRandomConfig>(serializableGlobalVar._remainedBookRandomConfig);

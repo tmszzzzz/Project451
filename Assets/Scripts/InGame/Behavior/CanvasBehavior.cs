@@ -26,6 +26,17 @@ public class CanvasBehavior : MonoBehaviour
     {
         return nodeList[id];
     }
+    public GameObject GetNodeByName(string name)
+    {
+        foreach (var node in nodeList)
+        {
+            if (node.name == name)
+            {
+                return node;
+            }
+        }
+        return null;
+    }
     [SerializeField]
     private List<GameObject> connectionList;
     public List<GameObject> GetConnectionList()

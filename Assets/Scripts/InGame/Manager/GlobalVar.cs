@@ -76,7 +76,8 @@ public class GlobalVar : MonoBehaviour
     public bool allowNodeInfoPanel = false;
     public bool NodeInfoPanelIntroductionFinished = false;
     public bool allowPlot = true;
-    public NodeBehavior nodeBehavior;
+    public string nodeName;
+    
     
     
     public BookManager.BookRandomConfig bookRandomConfig = new BookManager.BookRandomConfig
