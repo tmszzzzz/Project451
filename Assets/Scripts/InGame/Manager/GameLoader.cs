@@ -1,15 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Image = UnityEngine.UI.Image;
 
 public class GameLoader : MonoBehaviour
 {
     public static GameLoader instance;
     public Animator loading;
     public Animator bg;
-    
-
+    public GameObject player;
+    public Image image;
     public bool loadingAnExistingGame = false;
     public string loadFilePath = "Assets/Saves/save8.json";
     // public string loadFilePath = "Assets/Saves/save.json";
@@ -90,7 +92,7 @@ public class GameLoader : MonoBehaviour
     {
         loadingAnExistingGame = false;
         StartCoroutine(Fade(1));
-        LoadSceneAsync(1);
+        StartCoroutine(LoadScene());
     }
 
     public void openAGame()
@@ -103,6 +105,28 @@ public class GameLoader : MonoBehaviour
     public void LoadSceneAsync(int scene)
     {
         StartCoroutine(LoadSceneCoroutine(scene));
+    }
+    
+    public IEnumerator LoadScene()
+    {
+        bg.gameObject.SetActive(true);
+        
+        bg.Play("begin");
+
+        // 获取当前动画状态信息
+        AnimatorStateInfo stateInfo = bg.GetCurrentAnimatorStateInfo(0);
+
+        // 等待动画片段长度的时间
+        yield return new WaitForSeconds(stateInfo.length);
+        loading.gameObject.SetActive(true);
+        
+        player.SetActive(true);
+        while (!ImagePlayController.instance.finished)
+        {
+            yield return null;
+        }
+        image.gameObject.SetActive(true);
+        StartCoroutine(LoadSceneCoroutine(1));
     }
 
     private IEnumerator LoadSceneCoroutine(int sceneName)

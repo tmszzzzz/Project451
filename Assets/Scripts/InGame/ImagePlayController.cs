@@ -11,6 +11,7 @@ public class ImagePlayController : MonoBehaviour
     private int currentPage = 0;
     public bool first = true;
     public TextMeshProUGUI firstText;
+    public bool finished = false;
     void Awake()
     {
         if (instance != null && instance != this)
@@ -31,6 +32,11 @@ public class ImagePlayController : MonoBehaviour
         if (currentPage < imagePlayPages.Count && currentPage > -1)
         {
             imagePlayPages[currentPage++].gameObject.SetActive(true);
+        }
+        else
+        {
+            finished = true;
+            // gameObject.SetActive(false);
         }
     }
 }
