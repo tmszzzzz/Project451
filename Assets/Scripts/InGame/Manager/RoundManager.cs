@@ -655,7 +655,6 @@ public class RoundManager : MonoBehaviour
         {
             weights = new float[] { 0.4f, 0.5f, 0.1f };
         }
-        float totalWeight = 1f;
 
         // 生成随机采样点
         float randomValue = Random.Range(0f, 1f);

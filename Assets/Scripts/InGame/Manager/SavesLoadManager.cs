@@ -535,7 +535,7 @@ public class SavesLoadManager : MonoBehaviour
         detective = RoundManager.instance.detective;
         if (GameLoader.instance == null)
         {
-            DeserializeAll("Assets/Saves/save1.json");
+            DeserializeAll("Assets/Saves/save7.json");
         }
         if (GameLoader.instance != null && GameLoader.instance.loadingAnExistingGame)
         {
