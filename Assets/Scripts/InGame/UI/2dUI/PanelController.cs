@@ -52,7 +52,7 @@ public class PanelController : MonoBehaviour
     void Start()
     {
         RoundManager.instance.BookAllocationChange += OnBookAllocationChange;
-        if (!_tutorialPanel.activeSelf && GlobalVar.instance.currentTask != 0 && GlobalVar.instance.currentTask < 28)
+        if (!_tutorialPanel.activeSelf && GlobalVar.instance.currentTask != 0 && GlobalVar.instance.currentTask < 32)
         {
             _tutorialPanel.SetActive(true);
         }

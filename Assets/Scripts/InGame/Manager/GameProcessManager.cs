@@ -122,7 +122,7 @@ public class GameProcessManager : MonoBehaviour
         {
             GlobalVar.instance.everLearnedAboutNodeInfoPanel = true;
             GlobalVar.instance.allowPlot = false;
-            GlobalVar.instance.nodeBehavior = thisnode.GetComponent<NodeBehavior>();
+            GlobalVar.instance.nodeName = thisnode.name;
         }
 
         if (!GlobalVar.instance.everAwakeAllNodes && GlobalVar.instance.nodesAwakendOnce.Count == canvasBehavior.GetNodeList().Count)
