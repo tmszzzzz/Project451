@@ -118,7 +118,7 @@ public class PanelController : MonoBehaviour
         v.GetChild(0).GetChild(0).gameObject.SetActive(false);
         StartCoroutine(FadeImageColor(v.GetChild(0).GetComponent<Image>()));
         v.GetComponent<Button>().interactable = true;
-        _ResourceUsagePanel.transform.GetChild(7).GetChild(0).gameObject.SetActive(false);
+        _ResourceUsagePanel.transform.GetChild(7).GetChild(_ResourceUsagePanel.transform.GetChild(7).childCount - 1).gameObject.SetActive(false);
     }
     
     public void LockOrganizeIndex()

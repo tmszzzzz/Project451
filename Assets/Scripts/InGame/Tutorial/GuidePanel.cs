@@ -298,18 +298,18 @@ public class GuidePanel : MonoBehaviour
         BookController.instance.addFirewatcherTutorialPage();
         CameraBehavior.instance.FixedCamera4();
     }
+    
     private IEnumerator WaitForNodeInfoPanel()
     {
-        while (!GlobalVar.instance.everLearnedAboutNodeInfoPanel)
+        while (!GlobalVar.instance.everLearnedAboutNodeInfoPanel || GlobalVar.instance.currentTask < 28)
         {
             yield return null; // 等待一帧
         }
-        Invoke("NodeInfoPanel",5);
+        Invoke("NodeInfoPanel",6);
     }
 
     private void NodeInfoPanel()
     {
-        Debug.Log("NodeInfoPanel");
         CameraBehavior.instance.FixedCamera4();
         GlobalVar.instance.allowNodeInfoPanel = true;
         // 先加载一次防止加载错误
@@ -317,22 +317,13 @@ public class GuidePanel : MonoBehaviour
         PanelController.instance.NodeInfoPanel.SetActive(false);
         PanelController.instance.EnableNodeInfoPanel(CanvasBehavior.instance.GetNodeByName(GlobalVar.instance.nodeName).GetComponent<NodeBehavior>());
         BookController.instance.addIndexTutorialPage();
-        StartCoroutine("waitforCurrentTask");
-        
-    }
-
-    public IEnumerator waitforCurrentTask()
-    {
-        while (GlobalVar.instance.currentTask < 28)
-        {
-            yield return null;
-        }
         if (GlobalVar.instance.currentTask == 28)
         {
             NextTask(); // 节点信息面板介绍
         }
+        
     }
-
+    
     private void SetButtonOn()
     {
         this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);

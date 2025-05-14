@@ -92,7 +92,7 @@ public class PlotFuncManager : MonoBehaviour
     {
         RoundManager.instance.switching3 = true;
         QuestPanel.instance.AddQuest("FireHouse");
-        PanelController.instance.UNLockInsertInformant();
+        PanelController.instance.UNLockContactInformant();
     }
 
     public void openQuest0()
