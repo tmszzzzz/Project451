@@ -285,13 +285,13 @@ public class NodeBehavior : BaseNodeBehavior
         int result = IntPow(GlobalVar.instance.exposureValueAdditionOfExposedNode, pow);
         if (GlobalVar.instance.exposureCoefficient == 0.8f)
         {
-            return result * 4 / 5 + 1;
+            return result * 4 / 5 + 4;
         }
         if (GlobalVar.instance.exposureCoefficient == 1.2f)
         {
-            return result * 6 / 5 + 1;
+            return result * 6 / 5 + 4;
         }
-        return result + 1;
+        return result + 4;
     }
     
     public static int IntPow(int x, int pow)
