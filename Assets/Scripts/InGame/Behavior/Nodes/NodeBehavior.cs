@@ -133,7 +133,6 @@ public class NodeBehavior : BaseNodeBehavior
             NodeBehavior cub = go.GetComponent<NodeBehavior>();
             if (cub != null && cub.properties.state > 0)
             {
-                types = cub.properties.GetBookType();
                 foreach (var book in cub.properties.books)
                 {
                     if (!book.isPreallocatedOut)
