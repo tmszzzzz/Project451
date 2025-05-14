@@ -317,15 +317,22 @@ public class GuidePanel : MonoBehaviour
         PanelController.instance.NodeInfoPanel.SetActive(false);
         PanelController.instance.EnableNodeInfoPanel(CanvasBehavior.instance.GetNodeByName(GlobalVar.instance.nodeName).GetComponent<NodeBehavior>());
         BookController.instance.addIndexTutorialPage();
+        StartCoroutine("waitforCurrentTask");
         
-        Debug.Log(GlobalVar.instance.currentTask);
-        while (GlobalVar.instance.currentTask < 28){}
+    }
+
+    public IEnumerator waitforCurrentTask()
+    {
+        while (GlobalVar.instance.currentTask < 28)
+        {
+            yield return null;
+        }
         if (GlobalVar.instance.currentTask == 28)
         {
             NextTask(); // 节点信息面板介绍
         }
     }
-    
+
     private void SetButtonOn()
     {
         this.transform.GetChild(this.transform.childCount - 1).gameObject.SetActive(true);
